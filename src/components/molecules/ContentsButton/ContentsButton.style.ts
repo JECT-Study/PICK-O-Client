@@ -2,9 +2,33 @@ import { css } from '@emotion/react';
 import color from '@/styles/color';
 import typo from '@/styles/typo';
 
-export const cardWrapper = (size: 'large' | 'small') => css`
-  width: ${size === 'large' ? '563px' : '432px'};
-  height: ${size === 'large' ? '357px' : '354px'};
+const sizeStyles = {
+  large: {
+    width: '563px',
+    height: '357px',
+    infoHeight: '107px',
+    labelMaxWidth: '440px',
+    imageHeight: '250px',
+  },
+  medium: {
+    width: '432px',
+    height: '354px',
+    infoHeight: '104px',
+    labelMaxWidth: '330px',
+    imageHeight: '250px',
+  },
+  small: {
+    width: '369px',
+    height: '278px',
+    infoHeight: '95px',
+    labelMaxWidth: '315px',
+    imageHeight: '183px',
+  },
+};
+
+export const cardWrapper = (size: 'large' | 'medium' | 'small') => css`
+  width: ${sizeStyles[size].width};
+  height: ${sizeStyles[size].height};
   border-radius: 20px;
   border: 1px solid ${color.GY[2]};
   background-color: ${color.WT};
@@ -32,10 +56,10 @@ export const cardWrapper = (size: 'large' | 'small') => css`
   }
 `;
 
-export const imageContainer = css`
+export const imageContainer = (size: 'large' | 'medium' | 'small') => css`
   display: flex;
   width: 100%;
-  height: 250px;
+  height: ${sizeStyles[size].imageHeight};
   overflow: hidden;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
@@ -63,19 +87,19 @@ export const chipsContainer = css`
   gap: 10px;
 `;
 
-export const infoContainer = (size: 'large' | 'small') => css`
+export const infoContainer = (size: 'large' | 'medium' | 'small') => css`
   width: 100%;
-  height: ${size === 'large' ? '107px' : '104px'};
+  height: ${sizeStyles[size].infoHeight};
   padding: 20px;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
 `;
 
-export const label = (size: 'large' | 'small') => css`
+export const label = (size: 'large' | 'medium' | 'small') => css`
   ${typo.Component.Medium};
   color: ${color.BK};
-  max-width: ${size === 'large' ? '440px' : '330px'};
+  max-width: ${sizeStyles[size].labelMaxWidth};
 `;
 
 export const bookmarkWrapper = css`

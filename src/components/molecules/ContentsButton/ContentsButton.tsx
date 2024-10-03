@@ -11,7 +11,7 @@ export interface ContentsButtonProps extends ComponentPropsWithRef<'div'> {
   subTag: string;
   bookmarked?: BookmarkProps['bookmarked'];
   showBookmark?: boolean;
-  size?: 'large' | 'small';
+  size?: 'large' | 'medium' | 'small';
 }
 const ContentsButton = ({
   optionAImg,
@@ -26,7 +26,7 @@ const ContentsButton = ({
 }: ContentsButtonProps) => {
   return (
     <div css={S.cardWrapper(size)} {...attributes}>
-      <div css={S.imageContainer}>
+      <div css={S.imageContainer(size)}>
         <div css={S.imageWrapper}>
           <img src={optionAImg} alt="option A" css={S.image} />
         </div>
