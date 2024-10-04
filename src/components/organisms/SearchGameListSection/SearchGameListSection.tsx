@@ -36,8 +36,8 @@ const SearchGameListSection = ({ gameList }: SearchGameListSectionProps) => {
   };
 
   return (
-    <div css={S.containerStyle}>
-      <div css={S.titleWrapStyle}>
+    <div css={S.container}>
+      <div css={S.titleWrapper}>
         <div>밸런스게임</div>
         <ToggleGroup
           items={toggleItem}
@@ -48,7 +48,7 @@ const SearchGameListSection = ({ gameList }: SearchGameListSectionProps) => {
       <div>
         <SearchGameList gameList={displayedItems} />
       </div>
-      <div css={S.paginationWrapStyle}>
+      <div css={S.paginationWrapper}>
         <Pagination
           pages={pages}
           selected={selectedPage}

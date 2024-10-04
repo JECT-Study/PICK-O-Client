@@ -1,11 +1,11 @@
 import { css } from '@emotion/react';
 import typo from '@/styles/typo';
 
-export const containerStyle = css`
+export const container = css`
   width: 1147px;
 `;
 
-export const titleWrapStyle = css`
+export const titleWrapper = css`
   ${typo.Title};
   display: flex;
   justify-content: space-between;
@@ -13,7 +13,7 @@ export const titleWrapStyle = css`
   margin-bottom: 40px;
 `;
 
-export const paginationWrapStyle = css`
+export const paginationWrapper = css`
   display: flex;
   justify-content: center;
   margin-top: 60px;
