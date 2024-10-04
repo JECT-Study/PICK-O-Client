@@ -1,24 +1,24 @@
 import React from 'react';
-import ContentsButton from '@/components/molecules/ContentsButton/ContentsButton';
+import ContentsButton, {
+  ContentsButtonProps,
+} from '@/components/molecules/ContentsButton/ContentsButton';
 import * as S from './SearchGameList.style';
 
+export type GameItem = Pick<
+  ContentsButtonProps,
+  'optionAImg' | 'optionBImg' | 'title' | 'mainTag' | 'subTag'
+>;
+
 export interface SearchGameListProps {
-  gameData: {
-    id: string;
-    optionAImg: string;
-    optionBImg: string;
-    title: string;
-    mainTag: string;
-    subTag: string;
-  }[];
+  gameList: GameItem[];
 }
 
-const SearchGameList = ({ gameData }: SearchGameListProps) => {
+const SearchGameList = ({ gameList }: SearchGameListProps) => {
   return (
     <div css={S.container}>
-      {gameData.map((game) => (
+      {gameList.map((game) => (
         <ContentsButton
-          key={game.id}
+          key={game.title}
           optionAImg={game.optionAImg}
           optionBImg={game.optionBImg}
           title={game.title}
