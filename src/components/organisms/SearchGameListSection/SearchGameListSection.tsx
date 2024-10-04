@@ -38,7 +38,7 @@ const SearchGameListSection = ({ gameList }: SearchGameListSectionProps) => {
   return (
     <div css={S.containerStyle}>
       <div css={S.titleWrapStyle}>
-        <div>밸런스 게임</div>
+        <div>밸런스게임</div>
         <ToggleGroup
           items={toggleItem}
           selectedValue={selectedValue}
