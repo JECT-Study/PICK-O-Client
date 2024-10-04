@@ -14,7 +14,7 @@ const meta: Meta<typeof SearchGameList> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const gameDataSample = {
+const gameListSample = {
   id: '',
   optionAImg: SampleFirst,
   optionBImg: SampleSecond,
@@ -25,8 +25,8 @@ const gameDataSample = {
 
 export const Default: Story = {
   args: {
-    gameData: Array.from({ length: 9 }, (_, index) => ({
-      ...gameDataSample,
+    gameList: Array.from({ length: 9 }, (_, index) => ({
+      ...gameListSample,
       id: `game-${index + 1}`,
       title: `${index + 1}번 - 유진 VS 민지 사복 고르기`,
     })),
@@ -35,8 +35,8 @@ export const Default: Story = {
 
 export const All: Story = {
   args: {
-    gameData: Array.from({ length: 9 }, (_, index) => ({
-      ...gameDataSample,
+    gameList: Array.from({ length: 9 }, (_, index) => ({
+      ...gameListSample,
       id: `game-${index + 1}`,
       title: `${index + 1}번 - 유진 VS 민지 사복 고르기`,
     })),
