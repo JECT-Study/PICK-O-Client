@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import TopBanner from '@/components/molecules/TopBanner/TopBanner';
 import SearchTagBar from '@/components/molecules/SearchTagBar/SearchTagBar';
 import CategoryBox from '@/components/molecules/CategoryBox/CategoryBox';
 import BalanceGameList from '@/components/organisms/BalanceGameList/BalanceGameList';
 import { SampleFirst, SampleSecond } from '@/assets';
 import { useTodayTalkPickQuery } from '@/hooks/api/talk-pick/useTodayTalkPickQuery';
+import { useNavigate } from 'react-router-dom';
 import * as S from './LandingPage.style';
 
 const LandingPage = () => {
@@ -172,11 +173,17 @@ const LandingPage = () => {
   ];
   const { todayTalkPick } = useTodayTalkPickQuery();
 
+  const navigate = useNavigate();
+
+  const handleSearch = (query: string) => {
+    navigate(`/result/search?query=${query}`);
+  };
+
   return (
     <div>
       <TopBanner todayTalkPick={todayTalkPick} />
       <div css={S.contentWrapStyle}>
-        <SearchTagBar />
+        <SearchTagBar onSearch={handleSearch} />
         <div css={S.categoryBoxStyle}>
           <CategoryBox />
         </div>
