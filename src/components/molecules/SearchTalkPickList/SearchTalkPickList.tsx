@@ -18,9 +18,9 @@ const SearchTalkPickList = ({
         <div key={searchItem.title}>
           <SearchTalkPickItem
             title={searchItem.title}
-            date={searchItem.date}
+            createdAt={searchItem.createdAt}
             content={searchItem.content}
-            imgUrl={searchItem.imgUrl}
+            firstImgUrl={searchItem.firstImgUrl}
           />
           {idx < searchTalkPickList.length - 1 && (
             <div css={S.dividerStyle}>
