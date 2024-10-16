@@ -1,42 +1,40 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState } from 'react';
+import React from 'react';
 import ToggleGroup, {
   ToggleGroupItem,
 } from '@/components/atoms/ToggleGroup/ToggleGroup';
 import { SearchTalkPickItemProps } from '@/components/atoms/SearchTalkPickItem/SearchTalkPickItem';
-import SearchTalkPickList, {
-  SearchTalkPickListProps,
-} from '@/components/molecules/SearchTalkPickList/SearchTalkPickList';
+import SearchTalkPickList from '@/components/molecules/SearchTalkPickList/SearchTalkPickList';
 import Pagination from '@/components/atoms/Pagination/Pagination';
-import { calculateTotalPages, generatePageNumbers } from '@/utils/pagination';
+import { generatePageNumbers } from '@/utils/pagination';
+import { NoResultsMessage } from '@/components/atoms/NoResultsMessage/NoResultsMessage';
 import * as S from './SearchTalkPickListSection.style';
+
+interface SearchTalkPickSectionProps {
+  searchTalkPickList: SearchTalkPickItemProps[];
+  keyword: string;
+  selectedPage: number;
+  totalPages: number;
+  sort: string;
+  onPageChange: (page: number) => void;
+  onSortChange: (sort: string) => void;
+}
 
 const SearchTalkPickListSection = ({
   searchTalkPickList,
-}: SearchTalkPickListProps) => {
-  const [selectedPage, setSelectedPage] = useState<number>(1);
-  const [selectedValue, setSelectedValue] = useState<string>('trend');
-  const [searchTalkPickItems, setSearchTalkPickItems] = useState<
-    SearchTalkPickItemProps[]
-  >([]);
-
+  keyword,
+  selectedPage,
+  totalPages,
+  sort,
+  onPageChange,
+  onSortChange,
+}: SearchTalkPickSectionProps) => {
   const toggleItem: ToggleGroupItem[] = [
-    {
-      label: '최신순',
-      value: 'recent',
-    },
-    {
-      label: '인기순',
-      value: 'trend',
-    },
+    { label: '인기순', value: 'views' },
+    { label: '최신순', value: 'createdAt' },
   ];
 
   const commentsPerPage = 10;
-
-  const totalPages = calculateTotalPages(
-    searchTalkPickList.length,
-    commentsPerPage,
-  );
   const pages = generatePageNumbers(totalPages);
 
   const displayedItems = searchTalkPickList.slice(
@@ -44,31 +42,35 @@ const SearchTalkPickListSection = ({
     selectedPage * commentsPerPage,
   );
 
-  const handlePageChange = (page: number) => {
-    setSelectedPage(page);
-  };
-
   return (
-    <div css={S.containerStyle}>
-      <div css={S.titleWrapStyle}>
-        <div>톡픽</div>
-        <ToggleGroup
-          items={toggleItem}
-          selectedValue={selectedValue}
-          onClick={setSelectedValue}
-        />
-      </div>
-      <div>
-        <SearchTalkPickList searchTalkPickList={displayedItems} />
-      </div>
-      <div css={S.paginationWrapStyle}>
-        <Pagination
-          pages={pages}
-          selected={selectedPage}
-          maxPage={totalPages}
-          onChangeNavigate={handlePageChange}
-        />
-      </div>
+    <div css={S.container}>
+      {searchTalkPickList.length > 0 ? (
+        <>
+          <div css={S.titleWrapper}>
+            <div>톡픽</div>
+            <ToggleGroup
+              items={toggleItem}
+              selectedValue={sort}
+              onClick={onSortChange}
+            />
+          </div>
+          <div css={S.contentWrapper}>
+            <SearchTalkPickList searchTalkPickList={displayedItems} />
+          </div>
+          <div css={S.paginationWrapper}>
+            <Pagination
+              pages={pages}
+              selected={selectedPage}
+              maxPage={totalPages}
+              onChangeNavigate={onPageChange}
+            />
+          </div>
+        </>
+      ) : (
+        <div css={S.noResultWrapper}>
+          <NoResultsMessage searchChoice="talkPick" keyword={keyword} />
+        </div>
+      )}
     </div>
   );
 };
