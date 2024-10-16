@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '@/components/atoms/Button/Button';
 import SearchBar from '@/components/atoms/SearchBar/SearchBar';
 import * as S from './SearchResultBar.style';
@@ -6,9 +6,23 @@ import * as S from './SearchResultBar.style';
 export interface SearchResultBarProps {
   selectedValue: 'all' | 'talkpick' | 'game';
   onClick?: (value: 'all' | 'talkpick' | 'game') => void;
+  onSearch: (query: string) => void;
 }
 
-const SearchResultBar = ({ selectedValue, onClick }: SearchResultBarProps) => {
+const SearchResultBar = ({
+  selectedValue,
+  onClick,
+  onSearch,
+}: SearchResultBarProps) => {
+  const [inputValue, setInputValue] = useState('');
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  };
+
+  const handleSearchClick = () => {
+    onSearch(inputValue);
+  };
   const resultButtons: { value: 'all' | 'talkpick' | 'game'; label: string }[] =
     [
       { value: 'all', label: '전체' },
@@ -18,7 +32,11 @@ const SearchResultBar = ({ selectedValue, onClick }: SearchResultBarProps) => {
 
   return (
     <div css={S.searchBarContainerStyling}>
-      <SearchBar />
+      <SearchBar
+        onInputChange={handleInputChange}
+        onSearchClick={handleSearchClick}
+        value={inputValue}
+      />
       <div css={S.btnWrapperStyling}>
         {resultButtons.map((button) => (
           <Button
