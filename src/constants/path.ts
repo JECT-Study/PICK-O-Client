@@ -3,6 +3,7 @@ export const PATH = {
   PW: 'findPassword',
   SIGN_UP: 'signup',
   MYPAGE: 'mypage',
+  SEARCH: 'search',
   HISTORY: {
     MAIN: 'history',
     POSTS: 'posts',
