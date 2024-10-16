@@ -10,12 +10,13 @@ import { PATH } from './constants/path';
 import { useMemberQuery } from './hooks/api/member/useMemberQuery';
 import { useParseJwt } from './hooks/common/useParseJwt';
 import { useTokenRefresh } from './hooks/common/useTokenRefresh';
-import { Layout, LayoutMypage, LayoutNoSearch } from './layout/layout';
+import { Layout, LayoutNoFooter, LayoutNoSearch } from './layout/layout';
 import CreatePostPage from './pages/CreatePostPage/CreatePostPage';
 // import FindPasswordPage from './pages/FindPasswordPage/FindPasswordPage';
 import LandingPage from './pages/LandingPage/LandingPage';
 import LoginPage from './pages/LoginPage/LoginPage';
 import TodayTalkPickPage from './pages/TodayTalkPickPage/TodayTalkPickPage';
+import SearchResultsPage from './pages/SearchResultsPage/SearchResultsPage';
 // import DeletePage from './pages/MyPage/DeletePage/DeletePage';
 // import HistoryPage from './pages/MyPage/HistoryPage/HistoryPage';
 // import BookmarksPage from './pages/MyPage/HistoryPage/TabPage/BookmarksPage/BookmarksPage';
@@ -47,6 +48,7 @@ const App: React.FC = () => {
           <Route path="/todaytalkpick" element={<TodayTalkPickPage />} />
           <Route path="/talkpickplace" element={<TalkPickPlacePage />} />
           <Route path="/post/create" element={<CreatePostPage />} />
+          {/* <Route path="/search" element={<SearchResultsPage />} /> */}
           {/* <Route path="posts" element={<PostList />} />
           <Route path="posts/:id" element={<PostPage />} />
           <Route path="searchResult" element={<SearchResultPage />} />
@@ -54,8 +56,11 @@ const App: React.FC = () => {
             <Route path="post/create" element={<CreatePostPage />} />
           </Route> */}
         </Route>
-        <Route path="/mypage" element={<LayoutMypage />}>
+        <Route path="/mypage" element={<LayoutNoFooter />}>
           <Route index element={<MyPage />} />
+        </Route>
+        <Route path="/result" element={<LayoutNoFooter />}>
+          <Route path={PATH.SEARCH} element={<SearchResultsPage />} />
         </Route>
         {/* <Route element={<NotAuthRoutes member={member} />}>
           <Route element={<LayoutNoSearch />}>
