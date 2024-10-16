@@ -3,23 +3,23 @@ import * as S from './SearchTalkPickItem.style';
 
 export interface SearchTalkPickItemProps {
   title: string;
-  date: string;
+  createdAt: string;
   content: string;
-  imgUrl: string;
+  firstImgUrl: string;
 }
 
 const SearchTalkPickItem = ({
   title,
-  date,
+  createdAt,
   content,
-  imgUrl,
+  firstImgUrl,
 }: SearchTalkPickItemProps) => {
   return (
     <div css={S.searchTalkPickItemStyle}>
       <div css={S.leftContentStyle}>
         <div css={S.titleWrapStyle}>
           <div css={S.titleStyle}>{title}</div>
-          <div css={S.dateStyle}>{date}</div>
+          <div css={S.dateStyle}>{createdAt}</div>
         </div>
         <div css={S.contentWrapStyle}>{content}</div>
       </div>
@@ -27,7 +27,7 @@ const SearchTalkPickItem = ({
       <div css={S.imageContainerStyle}>
         <img
           css={S.imageContainerStyle}
-          src={imgUrl}
+          src={firstImgUrl}
           alt="representativeImage"
         />
       </div>
