@@ -186,7 +186,7 @@ const BalanceGameSection = ({
           selectedVote={currentGame.votedOption}
           handleNextStage={handleNextStage}
         />
-        <div css={S.stageBarWrapper}>
+        <div css={S.stageBarBtnWrapper}>
           <button
             type="button"
             css={[

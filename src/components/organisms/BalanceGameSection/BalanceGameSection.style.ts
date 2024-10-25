@@ -82,7 +82,7 @@ export const dateStyling = css(typo.Number.Medium, {
   fontWeight: 'bold',
 });
 
-export const stageBarWrapper = css({
+export const stageBarBtnWrapper = css({
   display: 'flex',
   width: '100%',
   justifyContent: 'space-between',
