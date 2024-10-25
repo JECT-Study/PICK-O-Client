@@ -7,10 +7,12 @@ import * as S from './SearchTalkPickList.style';
 
 export interface SearchTalkPickListProps {
   searchTalkPickList: SearchTalkPickItemProps[];
+  keyword: string;
 }
 
 const SearchTalkPickList = ({
   searchTalkPickList,
+  keyword,
 }: SearchTalkPickListProps) => {
   return (
     <div css={S.listContainerStyle}>
@@ -21,6 +23,7 @@ const SearchTalkPickList = ({
             createdAt={searchItem.createdAt}
             content={searchItem.content}
             firstImgUrl={searchItem.firstImgUrl}
+            keyword={keyword}
           />
           {idx < searchTalkPickList.length - 1 && (
             <div css={S.dividerStyle}>

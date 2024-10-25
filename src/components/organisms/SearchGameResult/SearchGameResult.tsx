@@ -30,7 +30,7 @@ const SearchGameResult = ({ gameList, keyword }: SearchGameResultProps) => {
       </div>
       {hasResults ? (
         <div css={S.contentWRapper}>
-          <SearchGameList gameList={gameList} />
+          <SearchGameList gameList={gameList} keyword={keyword} />
         </div>
       ) : (
         <div css={S.noResultsWrapper}>

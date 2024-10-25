@@ -49,7 +49,10 @@ const SearchTalkPickListSection = ({
             />
           </div>
           <div css={S.contentWrapper}>
-            <SearchTalkPickList searchTalkPickList={searchTalkPickList} />
+            <SearchTalkPickList
+              searchTalkPickList={searchTalkPickList}
+              keyword={keyword}
+            />
           </div>
           <div css={S.paginationWrapper}>
             <Pagination

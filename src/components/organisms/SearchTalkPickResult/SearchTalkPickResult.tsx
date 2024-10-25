@@ -33,7 +33,10 @@ const SearchTalkPickResult = ({
         <MoreButton onClick={handleButtonClick} />
       </div>
       {hasResults ? (
-        <SearchTalkPickList searchTalkPickList={searchTalkPickList} />
+        <SearchTalkPickList
+          searchTalkPickList={searchTalkPickList}
+          keyword={keyword}
+        />
       ) : (
         <div css={S.contentWrapper}>
           <NoResultsMessage searchChoice="default" keyword={keyword} />

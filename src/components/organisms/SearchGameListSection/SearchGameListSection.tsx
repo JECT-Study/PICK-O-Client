@@ -49,7 +49,7 @@ const SearchGameListSection = ({
             />
           </div>
           <div css={S.contentWrapper}>
-            <SearchGameList gameList={gameList} />
+            <SearchGameList gameList={gameList} keyword={keyword} />
           </div>
           <div css={S.paginationWrapper}>
             <Pagination

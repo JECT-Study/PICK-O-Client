@@ -11,9 +11,10 @@ export type GameItem = Pick<
 
 export interface SearchGameListProps {
   gameList: GameItem[];
+  keyword: string;
 }
 
-const SearchGameList = ({ gameList }: SearchGameListProps) => {
+const SearchGameList = ({ gameList, keyword }: SearchGameListProps) => {
   return (
     <div css={S.container}>
       {gameList.map((game) => (
@@ -26,6 +27,7 @@ const SearchGameList = ({ gameList }: SearchGameListProps) => {
           subTag={game.subTag}
           showBookmark={false}
           size="small"
+          keyword={keyword}
         />
       ))}
     </div>
