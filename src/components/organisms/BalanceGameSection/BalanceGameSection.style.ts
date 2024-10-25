@@ -100,6 +100,7 @@ export const buttonStyling = css(typo.Comment.SemiBold, {
   borderRadius: '5px',
   color: color.MAIN,
   cursor: 'pointer',
+
   svg: {
     fill: color.MAIN,
   },
@@ -111,6 +112,7 @@ export const activeButtonStyling = (isAble: boolean) => {
       ':hover': {
         backgroundColor: color.MAIN,
         color: color.WT,
+
         svg: {
           fill: color.WT,
         },
