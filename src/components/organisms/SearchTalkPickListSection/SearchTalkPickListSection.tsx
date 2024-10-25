@@ -34,13 +34,7 @@ const SearchTalkPickListSection = ({
     { label: '최신순', value: 'createdAt' },
   ];
 
-  const commentsPerPage = 10;
   const pages = generatePageNumbers(totalPages);
-
-  const displayedItems = searchTalkPickList.slice(
-    (selectedPage - 1) * commentsPerPage,
-    selectedPage * commentsPerPage,
-  );
 
   return (
     <div css={S.container}>
@@ -55,7 +49,7 @@ const SearchTalkPickListSection = ({
             />
           </div>
           <div css={S.contentWrapper}>
-            <SearchTalkPickList searchTalkPickList={displayedItems} />
+            <SearchTalkPickList searchTalkPickList={searchTalkPickList} />
           </div>
           <div css={S.paginationWrapper}>
             <Pagination

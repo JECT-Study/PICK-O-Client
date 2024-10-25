@@ -34,13 +34,7 @@ const SearchGameListSection = ({
     { label: '최신순', value: 'createdAt' },
   ];
 
-  const gamesPerPage = 9;
   const pages = generatePageNumbers(totalPages);
-
-  const displayedItems = gameList.slice(
-    (selectedPage - 1) * gamesPerPage,
-    selectedPage * gamesPerPage,
-  );
 
   return (
     <div css={S.container}>
@@ -55,7 +49,7 @@ const SearchGameListSection = ({
             />
           </div>
           <div css={S.contentWrapper}>
-            <SearchGameList gameList={displayedItems} />
+            <SearchGameList gameList={gameList} />
           </div>
           <div css={S.paginationWrapper}>
             <Pagination
