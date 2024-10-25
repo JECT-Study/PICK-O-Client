@@ -27,7 +27,7 @@ export interface BalanceGameSectionProps {
   handlePrevGame: () => void;
 }
 
-const gameDetails: GameDetail[] = Array.from({ length: 10 }, () => ({
+const gameDefaultDetail: GameDetail[] = Array.from({ length: 10 }, () => ({
   id: 0,
   title: '',
   description: '',
@@ -50,7 +50,8 @@ const BalanceGameSection = ({
   const initialRender = useRef(true);
   const currentURL: string = window.location.href;
 
-  const gameStages: GameDetail[] = game?.gameDetailResponses ?? gameDetails;
+  const gameStages: GameDetail[] =
+    game?.gameDetailResponses ?? gameDefaultDetail;
   const currentGame: GameDetail = gameStages[currentStage];
 
   const [linkCopied, setLinkCopied] = useState<boolean>(false);
