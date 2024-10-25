@@ -77,8 +77,9 @@ export const nicknameStyling = css(typo.Comment.SemiBold, {
   color: color.GY[1],
 });
 
-export const dateStyling = css(typo.Comment.SemiBold, {
+export const dateStyling = css(typo.Number.Medium, {
   color: color.GY[1],
+  fontWeight: 'bold',
 });
 
 export const stageBarWrapper = css({
