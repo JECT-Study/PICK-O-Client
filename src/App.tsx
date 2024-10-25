@@ -4,13 +4,15 @@ import 'dayjs/locale/ko';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import MyPage from '@/pages/MyPage/MyPage';
+import SearchGamePage from '@/pages/SearchResultsPage/SearchGamePage';
+import SearchTalkPickPage from '@/pages/SearchResultsPage/SearchTalkPickPage';
 import NotAuthRoutes from './components/Routes/NotAuthRoutes';
 import ProtectedRoutes from './components/Routes/ProtectedRoutes';
 import { PATH } from './constants/path';
 import { useMemberQuery } from './hooks/api/member/useMemberQuery';
 import { useParseJwt } from './hooks/common/useParseJwt';
 import { useTokenRefresh } from './hooks/common/useTokenRefresh';
-import { Layout, LayoutNoFooter, LayoutNoSearch } from './layout/layout';
+import { Layout, LayoutNoFooter } from './layout/layout';
 import CreatePostPage from './pages/CreatePostPage/CreatePostPage';
 // import FindPasswordPage from './pages/FindPasswordPage/FindPasswordPage';
 import LandingPage from './pages/LandingPage/LandingPage';
@@ -60,7 +62,10 @@ const App: React.FC = () => {
           <Route index element={<MyPage />} />
         </Route>
         <Route path="/result" element={<LayoutNoFooter />}>
-          <Route path={PATH.SEARCH} element={<SearchResultsPage />} />
+          <Route index element={<SearchResultsPage />} />
+          <Route path={PATH.SEARCH.ALL} element={<SearchResultsPage />} />
+          <Route path={PATH.SEARCH.TALKPICK} element={<SearchTalkPickPage />} />
+          <Route path={PATH.SEARCH.GAME} element={<SearchGamePage />} />
         </Route>
         {/* <Route element={<NotAuthRoutes member={member} />}>
           <Route element={<LayoutNoSearch />}>
