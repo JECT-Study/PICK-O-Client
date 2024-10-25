@@ -1,5 +1,6 @@
 import React from 'react';
 import { highlightText } from '@/utils/highlightText';
+import { formatDateFromISO } from '@/utils/formatData';
 import * as S from './SearchTalkPickItem.style';
 
 export interface SearchTalkPickItemProps {
@@ -26,7 +27,7 @@ const SearchTalkPickItem = ({
               {part.value}
             </span>
           ))}
-          <span css={S.dateStyle}>{createdAt}</span>
+          <span css={S.dateStyle}>{formatDateFromISO(createdAt)}</span>
         </div>
         <div css={S.contentWrapStyle}>
           {highlightText(content, keyword).map((part) => (
