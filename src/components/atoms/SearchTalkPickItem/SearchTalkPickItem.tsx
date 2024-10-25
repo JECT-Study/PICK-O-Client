@@ -1,4 +1,5 @@
 import React from 'react';
+import { highlightText } from '@/utils/highlightText';
 import * as S from './SearchTalkPickItem.style';
 
 export interface SearchTalkPickItemProps {
@@ -6,6 +7,7 @@ export interface SearchTalkPickItemProps {
   createdAt: string;
   content: string;
   firstImgUrl: string;
+  keyword: string;
 }
 
 const SearchTalkPickItem = ({
@@ -13,15 +15,26 @@ const SearchTalkPickItem = ({
   createdAt,
   content,
   firstImgUrl,
+  keyword,
 }: SearchTalkPickItemProps) => {
   return (
     <div css={S.searchTalkPickItemStyle}>
       <div css={S.leftContentStyle}>
         <div css={S.titleWrapStyle}>
-          <div css={S.titleStyle}>{title}</div>
-          <div css={S.dateStyle}>{createdAt}</div>
+          {highlightText(title, keyword).map((part) => (
+            <span key={part.value} css={S.titleStyle(part.highlighted)}>
+              {part.value}
+            </span>
+          ))}
+          <span css={S.dateStyle}>{createdAt}</span>
         </div>
-        <div css={S.contentWrapStyle}>{content}</div>
+        <div css={S.contentWrapStyle}>
+          {highlightText(content, keyword).map((part) => (
+            <span key={part.value} css={S.contentStyle(part.highlighted)}>
+              {part.value}
+            </span>
+          ))}
+        </div>
       </div>
 
       <div css={S.imageContainerStyle}>
