@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import TopBanner from '@/components/molecules/TopBanner/TopBanner';
 import SearchTagBar from '@/components/molecules/SearchTagBar/SearchTagBar';
 import CategoryBox from '@/components/molecules/CategoryBox/CategoryBox';
@@ -176,7 +176,7 @@ const LandingPage = () => {
   const navigate = useNavigate();
 
   const handleSearch = (query: string) => {
-    navigate(`/result/search?query=${query}`);
+    navigate(`/result/search/all?query=${query}`);
   };
 
   return (
