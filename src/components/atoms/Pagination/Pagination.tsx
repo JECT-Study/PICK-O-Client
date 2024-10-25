@@ -24,6 +24,8 @@ const Pagination = ({
   const startPage = Math.floor((selected - 1) / 5) * 5 + 1;
   const endPage = Math.min(startPage + 4, maxPage);
 
+  // TODO: utils의 array를 사용하면 pages props 를 받을 필요 없음. 현재 페이지네이션 사용하는 컴포넌트들이 많으므로 리펙토링 시 수행
+
   const nextGroup = endPage + 1;
   const prevGroup = startPage - 5;
 
@@ -41,7 +43,6 @@ const Pagination = ({
         <KeyboardArrowLeft />
       </button>
 
-      {/* 현재 페이지 그룹(1-5, 6-10 등) */}
       {displayedPages.map((page) => (
         <button
           type="button"
