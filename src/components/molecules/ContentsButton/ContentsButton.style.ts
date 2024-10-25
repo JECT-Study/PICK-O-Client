@@ -92,13 +92,16 @@ export const infoContainer = (size: 'large' | 'medium' | 'small') => css`
   height: ${sizeStyles[size].infoHeight};
   padding: 20px;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: flex-start;
 `;
 
-export const label = (size: 'large' | 'medium' | 'small') => css`
+export const label = (
+  size: 'large' | 'medium' | 'small',
+  highlighted?: boolean,
+) => css`
   ${typo.Component.Medium};
-  color: ${color.BK};
+  color: ${highlighted ? color.MAIN : color.BK};
   max-width: ${sizeStyles[size].labelMaxWidth};
 `;
 

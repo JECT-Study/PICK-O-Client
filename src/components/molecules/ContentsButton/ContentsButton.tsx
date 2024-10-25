@@ -1,6 +1,7 @@
 import React, { ComponentPropsWithRef } from 'react';
 import Chips from '@/components/atoms/Chips/Chips';
 import Bookmark, { BookmarkProps } from '@/components/atoms/Bookmark/Bookmark';
+import { highlightText } from '@/utils/highlightText';
 import * as S from './ContentsButton.style';
 
 export interface ContentsButtonProps extends ComponentPropsWithRef<'div'> {
@@ -12,6 +13,7 @@ export interface ContentsButtonProps extends ComponentPropsWithRef<'div'> {
   bookmarked?: BookmarkProps['bookmarked'];
   showBookmark?: boolean;
   size?: 'large' | 'medium' | 'small';
+  keyword?: string;
 }
 const ContentsButton = ({
   optionAImg,
@@ -22,6 +24,7 @@ const ContentsButton = ({
   bookmarked = false,
   showBookmark = false,
   size = 'large',
+  keyword,
   ...attributes
 }: ContentsButtonProps) => {
   return (
@@ -39,7 +42,11 @@ const ContentsButton = ({
         </div>
       </div>
       <div css={S.infoContainer(size)}>
-        <span css={S.label(size)}>{title}</span>
+        {highlightText(title, keyword || '').map((part) => (
+          <span key={part.value} css={S.label(size, part.highlighted)}>
+            {part.value}
+          </span>
+        ))}
         {showBookmark && (
           <Bookmark bookmarked={bookmarked} css={S.bookmarkWrapper} />
         )}
