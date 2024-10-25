@@ -23,6 +23,7 @@ const SearchResultBar = ({
   const handleSearchClick = () => {
     onSearch(inputValue);
   };
+
   const resultButtons: { value: 'all' | 'talkpick' | 'game'; label: string }[] =
     [
       { value: 'all', label: '전체' },
