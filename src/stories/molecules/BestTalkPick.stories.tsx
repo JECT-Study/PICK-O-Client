@@ -1,6 +1,8 @@
+import React from 'react';
 import { TalkPickListItem } from '@/types/talk-pick';
 import BestTalkPick from '@/components/molecules/BestTalkPick/BestTalkPick';
 import type { Meta, StoryObj } from '@storybook/react';
+import { MemoryRouter } from 'react-router-dom';
 
 const bestTalkPickList: TalkPickListItem[] = [
   {
@@ -32,6 +34,13 @@ const bestTalkPickList: TalkPickListItem[] = [
 const meta = {
   title: 'molecules/BestTalkPick',
   component: BestTalkPick,
+  decorators: [
+    (Story) => (
+      <MemoryRouter>
+        <Story />
+      </MemoryRouter>
+    ),
+  ],
   parameters: {
     layout: 'centered',
   },

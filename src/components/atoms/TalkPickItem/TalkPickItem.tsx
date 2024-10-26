@@ -1,6 +1,7 @@
 import React from 'react';
 import { TalkPickListItem } from '@/types/talk-pick';
 import { formatDate, formatNumber } from '@/utils/formatData';
+import { useNavigate } from 'react-router-dom';
 import * as S from './TalkPickItem.style';
 
 export interface TalkPickListItemProps {
@@ -23,6 +24,7 @@ const TalkPickItem = ({
   rank,
   talkPickItem = headerTalkPick,
 }: TalkPickListItemProps) => {
+  const navigate = useNavigate();
   const getTalkPickId = (): number | undefined => {
     switch (type) {
       case 'default':
@@ -39,6 +41,14 @@ const TalkPickItem = ({
     return typeof item === 'number' ? formatNumber(item) : item;
   };
 
+  const handleClick = () => {
+    if (type !== 'header') {
+      navigate(`/talkpick/${talkPickItem?.id}`, {
+        state: { talkPickId: talkPickItem?.id, isTodayTalkPick: false },
+      });
+    }
+  };
+
   return (
     <div
       css={[
@@ -49,11 +59,13 @@ const TalkPickItem = ({
       <div css={[S.talkPickListId, S.getTalkPickListIdStyling(type)]}>
         {getTalkPickId()}
       </div>
-      <div css={[S.talkPickListTitle, S.getTalkPickListTitleStyling(type)]}>
-        <span css={type !== 'header' && S.talkPickTitleText}>
-          {talkPickItem.title}
-        </span>
-      </div>
+      <button
+        css={[S.talkPickListTitle, S.getTalkPickListTitleStyling(type)]}
+        onClick={handleClick}
+        type="button"
+      >
+        {talkPickItem.title}
+      </button>
       <div
         css={[S.talkPickListWideDetail, S.getTalkPickListWriterStyling(type)]}
       >

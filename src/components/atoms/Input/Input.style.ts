@@ -60,7 +60,7 @@ export const getInputStyling = css({
   paddingRight: 0,
   border: 'none',
   outline: 0,
-  color: color.GY[1],
+  color: color.BK,
 
   '&::placeholder': {
     color: color.GY[1],

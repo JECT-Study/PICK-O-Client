@@ -22,14 +22,19 @@ import ReportModal from '@/components/molecules/ReportModal/ReportModal';
 import { useCreateTalkPickBookmarkMutation } from '@/hooks/api/bookmark/useCreateTalkPickBookmarkMutation';
 import { useDeleteTalkPickBookmarkMutation } from '@/hooks/api/bookmark/useDeleteTalkPickBookmarkMutation';
 import { useDeleteTalkPickMutation } from '@/hooks/api/talk-pick/useDeleteTalkPickMutation';
-import * as S from './TodayTalkPickSection.style';
+import * as S from './TalkPickSection.style';
 
-export interface TodayTalkPickProps {
+export interface TalkPickProps {
   talkPick?: TalkPickDetail;
   myTalkPick: boolean;
+  isTodayTalkPick: boolean;
 }
 
-const TodayTalkPickSection = ({ talkPick, myTalkPick }: TodayTalkPickProps) => {
+const TalkPickSection = ({
+  talkPick,
+  myTalkPick,
+  isTodayTalkPick,
+}: TalkPickProps) => {
   const currentURL: string = window.location.href;
   const navigate = useNavigate();
 
@@ -143,7 +148,7 @@ const TodayTalkPickSection = ({ talkPick, myTalkPick }: TodayTalkPickProps) => {
           onClose={() => setReportModalOpen(false)}
         />
       </div>
-      <div css={S.talkPickTitle}>오늘의 톡픽</div>
+      <div css={S.talkPickTitle}> {isTodayTalkPick && '오늘의 톡픽'}</div>
       <div css={S.talkPickWrapper}>
         <div css={S.talkPickTopStyling}>
           <div css={S.talkPickDetailWrapper}>
@@ -228,4 +233,4 @@ const TodayTalkPickSection = ({ talkPick, myTalkPick }: TodayTalkPickProps) => {
   );
 };
 
-export default TodayTalkPickSection;
+export default TalkPickSection;

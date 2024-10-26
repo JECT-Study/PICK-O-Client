@@ -70,6 +70,9 @@ export const loginButtonStyling = css({
 });
 
 export const toastModalStyling = css({
-  position: 'absolute',
-  top: '-180px',
+  position: 'fixed',
+  top: '110px',
+  left: '50%',
+  transform: 'translate(-50%)',
+  zIndex: '1000',
 });

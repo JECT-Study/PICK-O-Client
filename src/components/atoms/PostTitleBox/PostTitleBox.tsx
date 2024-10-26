@@ -10,6 +10,7 @@ const PostTitleBox = (props: any, ref: ForwardedRef<HTMLInputElement>) => {
         css={S.inputStyle}
         type="text"
         placeholder="제목을 입력하세요."
+        maxLength={50}
         ref={ref}
         {...props}
       />

@@ -24,6 +24,10 @@ export const ERROR = {
     FAIL: '이메일 또는 비밀번호가 일치하지 않습니다. 다시 확인해주세요.',
   },
   CREATE: {
+    OPTION_FORM: '글자 수는 최대 10자까지 입력해주세요.',
+    EMPTY_TITLE: '제목을 작성해주세요!',
+    EMPTY_OPTION: '선택지 2개를 모두 작성해주세요!',
+    EMPTY_CONTENT: '내용을 작성해주세요!',
     FAIL: '게시글 작성에 실패했습니다. 다시 시도해주세요.',
   },
   SAVE: {
