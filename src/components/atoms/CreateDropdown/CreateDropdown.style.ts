@@ -41,11 +41,11 @@ export const optionItemStyling = css(typo.Comment.SemiBold, {
   cursor: 'pointer',
   color: color.BK,
   borderBottom: `1px solid ${color.GY[2]}`,
-  
+
   ':last-child': {
     borderBottom: 'none',
   },
-  
+
   ':hover': {
     color: color.WT,
     backgroundColor: color.MAIN,
