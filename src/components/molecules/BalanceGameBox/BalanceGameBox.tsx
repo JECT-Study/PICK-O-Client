@@ -22,8 +22,8 @@ const BalanceGameBox = ({
   selectedVote,
   handleNextStage,
 }: BalanceGameBoxProps) => {
-  const optionA = options?.[0];
-  const optionB = options?.[1];
+  const optionA = options[0];
+  const optionB = options[1];
 
   const getRandomImages = () => {
     const [randomNumberA, randomNumberB] = getRandomNumbers(

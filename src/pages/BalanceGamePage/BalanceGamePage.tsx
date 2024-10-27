@@ -46,7 +46,7 @@ const BalanceGamePage = () => {
           title={gameSet?.title ?? ''}
           gameSetId={gameSetId}
           isMyGame={isMyGame}
-          myEndBookmark={gameSet?.isEndBookmarked ?? false}
+          isMyEndBookmark={gameSet?.isEndBookmarked ?? false}
         />
       ) : (
         <BalanceGameSection
