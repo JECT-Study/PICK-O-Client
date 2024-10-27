@@ -54,7 +54,7 @@ const BalanceGameBox = ({
         onSuccess: () => {
           const nextStageTimer = setTimeout(() => {
             handleNextStage();
-          }, 700);
+          }, 500);
 
           return () => clearTimeout(nextStageTimer);
         },
