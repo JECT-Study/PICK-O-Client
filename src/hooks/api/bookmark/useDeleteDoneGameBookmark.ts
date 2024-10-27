@@ -26,10 +26,9 @@ export const useDeleteDoneGameBookmarkMutation = (gameSetId: Id) => {
     onError: (err, id, context) => {
       queryClient.setQueryData(['gameSet', gameSetId], context?.prevGame);
     },
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({
+    onSuccess: () =>
+      queryClient.invalidateQueries({
         queryKey: ['gameSet', gameSetId],
-      });
-    },
+      }),
   });
 };
