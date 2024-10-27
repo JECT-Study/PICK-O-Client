@@ -1,4 +1,10 @@
-import React, { useRef, useState, useEffect, useCallback } from 'react';
+import React, {
+  useRef,
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+} from 'react';
 import ImageUploadButton from '@/components/atoms/ImageUploadButton/ImageUploadButton';
 import ImagePreview from '@/components/atoms/ImagePreview/ImagePreview';
 import { RightArrowButton, LeftArrowButton } from '@/assets';
@@ -26,10 +32,10 @@ const ImageUploader = ({
 
   const deleteFileMutation = useDeleteFileMutation();
 
-  const imageList: string[] = [
-    ...imgUrls,
-    ...imageFiles.map((file) => URL.createObjectURL(file)),
-  ];
+  const imageList: string[] = useMemo(
+    () => [...imgUrls, ...imageFiles.map((file) => URL.createObjectURL(file))],
+    [imgUrls, imageFiles],
+  );
 
   const handleDelete = (index: number) => {
     const isObjectUrl: boolean = imageList[index].startsWith('blob:');

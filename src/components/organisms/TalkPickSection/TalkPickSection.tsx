@@ -24,7 +24,7 @@ import { useDeleteTalkPickBookmarkMutation } from '@/hooks/api/bookmark/useDelet
 import { useDeleteTalkPickMutation } from '@/hooks/api/talk-pick/useDeleteTalkPickMutation';
 import * as S from './TalkPickSection.style';
 
-export interface TodayTalkPickProps {
+export interface TalkPickProps {
   talkPick?: TalkPickDetail;
   myTalkPick: boolean;
   isTodayTalkPick: boolean;
@@ -34,7 +34,7 @@ const TalkPickSection = ({
   talkPick,
   myTalkPick,
   isTodayTalkPick,
-}: TodayTalkPickProps) => {
+}: TalkPickProps) => {
   const currentURL: string = window.location.href;
   const navigate = useNavigate();
 

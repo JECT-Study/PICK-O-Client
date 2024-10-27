@@ -59,16 +59,22 @@ export const talkPickListTitle = css({
   color: color.BK,
 });
 
+export const talkPickTitleStyling = css({
+  cursor: 'pointer',
+  textAlign: 'left',
+  ':hover': {
+    textDecoration: 'underline',
+  },
+});
+
 export const getTalkPickListTitleStyling = (
   type: Required<TalkPickListItemProps>['type'],
 ) => {
   const style = {
     header: css(typo.Main.Medium, centerStyling),
-    default: css(typo.Main.Medium, { cursor: 'pointer', textAlign: 'left' }),
-    best: css(typo.Main.SemiBold, {
+    default: css(typo.Main.Medium, talkPickTitleStyling),
+    best: css(typo.Main.SemiBold, talkPickTitleStyling, {
       fontWeight: 'bold',
-      cursor: 'pointer',
-      textAlign: 'left',
     }),
   };
 

@@ -11,12 +11,12 @@ import { ERROR } from '../../constants/message';
 import useInputs from '../common/useInputs';
 import { validateLoginForm } from './validateLoginForm';
 
-const initialState: Pick<MemberForm, 'email' | 'password'> = {
-  email: '',
-  password: '',
-};
-
 export const useLoginForm = () => {
+  const initialState: Pick<MemberForm, 'email' | 'password'> = {
+    email: localStorage.getItem('savedEmail') ?? '',
+    password: '',
+  };
+
   const { form, onChange } =
     useInputs<Pick<MemberForm, 'email' | 'password'>>(initialState);
 
@@ -48,6 +48,7 @@ export const useLoginForm = () => {
 
       localStorage.setItem('accessToken', res);
       localStorage.setItem('rtk', 'rtk');
+      localStorage.setItem('savedEmail', form.email);
 
       setTimeout(() => {
         navigate('/');

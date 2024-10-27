@@ -71,6 +71,7 @@ export { default as RecommendFirst } from './images/recommend-first.png';
 export { default as RecommendSecond } from './images/recommend-second.png';
 export { default as ArrowDown } from './svg/arrow-down.svg';
 export { default as ArrowUp } from './svg/arrow-up.svg';
+export { default as OptionError } from './svg/option-error.svg';
 
 // TODO: 이전 SVG
 export { default as Email } from './svg/email.svg';

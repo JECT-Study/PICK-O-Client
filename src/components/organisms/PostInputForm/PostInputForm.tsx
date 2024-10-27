@@ -1,4 +1,7 @@
+/* eslint-disable consistent-return */
 import React, { useState, useEffect, ForwardedRef, forwardRef } from 'react';
+import { isEmptyString } from '@/utils/validator';
+import { validatePostForm } from '@/utils/validatePostForm';
 import PostTitleBox from '@/components/atoms/PostTitleBox/PostTitleBox';
 import OptionInputBox from '@/components/atoms/OptionInputBox/OptionInputBox';
 import Divider from '@/components/atoms/Divider/Divider';
@@ -6,6 +9,7 @@ import ImageUploader from '@/components/molecules/ImageUploader/ImageUploader';
 import CitationBox from '@/components/atoms/CitationBox/CitationBox';
 import DraftPostButton from '@/components/atoms/DraftPostButton/DraftPostButton';
 import Button from '@/components/atoms/Button/Button';
+import ToastModal from '@/components/atoms/ToastModal/ToastModal';
 import { useFileUploadMutation } from '@/hooks/api/file/useFileUploadMutation';
 import { useTempTalkPickQuery } from '@/hooks/api/talk-pick/useTempTalkPickQuery';
 import { NewTalkPick, TalkPickDetail } from '@/types/talk-pick';
@@ -22,32 +26,51 @@ const PostInputForm = (
   { onSubmit, onEditSubmit, onSave, existingTalkPick }: PostInputFormProps,
   ref: ForwardedRef<HTMLTextAreaElement>,
 ) => {
-  const [title, setTitle] = useState(existingTalkPick?.title || '');
-  const [optionA, setOptionA] = useState(existingTalkPick?.optionA || '');
-  const [optionB, setOptionB] = useState(existingTalkPick?.optionB || '');
-  const [content, setContent] = useState(existingTalkPick?.content || '');
-  const [sourceUrl, setSourceUrl] = useState(existingTalkPick?.sourceUrl || '');
-  const [imgUrls, setImgUrls] = useState<string[]>(
-    existingTalkPick?.imgUrls || [],
+  const [title, setTitle] = useState<string>(existingTalkPick?.title ?? '');
+  const [optionA, setOptionA] = useState<string>(
+    existingTalkPick?.optionA ?? '',
   );
-  const [storedNames, setStoredNames] = useState<string[]>(
-    existingTalkPick?.imgStoredNames || [],
+  const [optionB, setOptionB] = useState<string>(
+    existingTalkPick?.optionB ?? '',
+  );
+  const [content, setContent] = useState<string>(
+    existingTalkPick?.content ?? '',
   );
 
+  const [sourceUrl, setSourceUrl] = useState<string>(
+    existingTalkPick?.sourceUrl ?? '',
+  );
+  const [imgUrls, setImgUrls] = useState<string[]>(
+    existingTalkPick?.imgUrls ?? [],
+  );
+  const [storedNames, setStoredNames] = useState<string[]>(
+    existingTalkPick?.imgStoredNames ?? [],
+  );
   const [imageFiles, setImageFiles] = useState<File[]>([]);
+
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [hasPostError, setHasPostError] = useState<boolean>(false);
+  const [toastMessage, setToastMessage] = useState<string>('');
   const [buttonType, setButtonType] = useState<
     'TALK_PICK' | 'TEMP_TALK_PICK' | null
   >(null);
 
   const { mutate: uploadFiles } = useFileUploadMutation();
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  useEffect(() => {
+    if (hasPostError) {
+      const timer = setTimeout(() => {
+        setHasPostError(false);
+      }, 2000);
+
+      return () => {
+        clearTimeout(timer);
+      };
+    }
+  }, [hasPostError]);
 
   useEffect(() => {
-    if (isSubmitting) {
+    if (isSubmitting && !hasPostError) {
       const postData = {
         title,
         optionA,
@@ -58,10 +81,8 @@ const PostInputForm = (
       };
 
       if (buttonType === 'TEMP_TALK_PICK') {
-        scrollToTop();
         onSave(postData);
       } else if (buttonType === 'TALK_PICK') {
-        scrollToTop();
         if (existingTalkPick) {
           onEditSubmit(postData);
         } else {
@@ -74,6 +95,7 @@ const PostInputForm = (
     }
   }, [
     isSubmitting,
+    hasPostError,
     storedNames,
     title,
     optionA,
@@ -108,6 +130,22 @@ const PostInputForm = (
     }
   };
 
+  const setPostFormError = (message: string) => {
+    setHasPostError(true);
+    setToastMessage(message);
+  };
+
+  const handlePostButton = () => {
+    const postValidation = validatePostForm(title, optionA, optionB, content);
+
+    if (!postValidation.isValid) {
+      setPostFormError(postValidation.message);
+      return;
+    }
+
+    if (!hasPostError) handleFormSubmit('TALK_PICK');
+  };
+
   const { data: tempTalkPick, isSuccess } = useTempTalkPickQuery();
 
   const handleLoadDraft = () => {
@@ -123,14 +161,18 @@ const PostInputForm = (
   };
 
   return (
-    <div css={S.formStyle}>
+    <div css={S.formStyling}>
+      {hasPostError && !isEmptyString(toastMessage) && (
+        <div css={S.toastModalStyling}>
+          <ToastModal bgColor="black">{toastMessage}</ToastModal>
+        </div>
+      )}
       <PostTitleBox
         value={title}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           setTitle(e.target.value)
         }
       />
-
       <div css={S.bodyStyle}>
         <div css={S.optionStyle}>
           <OptionInputBox
@@ -149,18 +191,16 @@ const PostInputForm = (
           />
         </div>
         <Divider length={1080} orientation="width" />
-        <div css={S.inputContainerStyle}>
-          <textarea
-            css={S.inputStyle}
-            placeholder="다른 토커들에게 내 이야기를 공유하고 의견을 들어보세요!"
-            ref={ref}
-            value={content}
-            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-              setContent(e.target.value)
-            }
-          />
-        </div>
-
+        <textarea
+          css={S.inputStyle}
+          placeholder="다른 토커들에게 내 이야기를 공유하고 의견을 들어보세요!"
+          ref={ref}
+          value={content}
+          maxLength={2000}
+          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+            setContent(e.target.value)
+          }
+        />
         <ImageUploader
           imageFiles={imageFiles}
           setImageFiles={setImageFiles}
@@ -169,12 +209,10 @@ const PostInputForm = (
           storedNames={storedNames}
         />
       </div>
-
       <div css={S.otherStyle}>
         <CitationBox value={sourceUrl} setSourceUrl={setSourceUrl} />
         <DraftPostButton onClick={handleLoadDraft} />
       </div>
-
       <div css={S.buttonStyle}>
         <Button
           size="large"
@@ -183,11 +221,7 @@ const PostInputForm = (
         >
           임시저장하기
         </Button>
-        <Button
-          size="large"
-          variant="primarySquare"
-          onClick={() => handleFormSubmit('TALK_PICK')}
-        >
+        <Button size="large" variant="primarySquare" onClick={handlePostButton}>
           등록하기
         </Button>
       </div>
