@@ -16,6 +16,7 @@ export const buttonWrapStyle = (option: 'A' | 'B') =>
     backgroundColor: 'transparent',
     borderRadius: option === 'A' ? '20px 0 0 20px' : '0 20px 20px 0',
     overflow: 'hidden',
+
     '&:hover': {
       zIndex: option === 'A' ? 100 : 'auto',
       boxShadow:
@@ -27,6 +28,7 @@ export const buttonWrapStyle = (option: 'A' | 'B') =>
           ? `2px solid ${color.PINK}`
           : `2px solid  ${color.SKYBLUE}`,
     },
+
     '&:active': {
       backgroundColor:
         option === 'A'

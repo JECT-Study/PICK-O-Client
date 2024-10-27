@@ -3,7 +3,7 @@ import React from 'react';
 import * as S from './BalanceGameButton.style';
 
 export interface BalanceGameButtonProps {
-  id?: number;
+  id: number;
   name: string;
   imgUrl: string | null;
   description: string;
