@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import React, { useEffect, useRef, useState } from 'react';
 import { BookmarkDF, BookmarkPR, NextArrow, PrevArrow, Share } from '@/assets';
-import { ERROR } from '@/constants/message';
+import { ERROR, SUCCESS } from '@/constants/message';
 import { GameDetail, GameSet } from '@/types/game';
 import { formatDateFromISO } from '@/utils/formatData';
 import Chips from '@/components/atoms/Chips/Chips';
@@ -13,6 +13,7 @@ import InteractionButton from '@/components/atoms/InteractionButton/InteractionB
 import ToastModal from '@/components/atoms/ToastModal/ToastModal';
 import ShareModal from '@/components/molecules/ShareModal/ShareModal';
 import BalanceGameBox from '@/components/molecules/BalanceGameBox/BalanceGameBox';
+import useToastModal from '@/hooks/modal/useToastModal';
 import { useCreateGameBookmarkMutation } from '@/hooks/api/bookmark/useCreateGameBookmarkMutation';
 import { useDeleteGameBookmarkMutation } from '@/hooks/api/bookmark/useDeleteGameBookmarkMutation';
 import * as S from './BalanceGameSection.style';
@@ -54,9 +55,8 @@ const BalanceGameSection = ({
     game?.gameDetailResponses ?? gameDefaultDetail;
   const currentGame: GameDetail = gameStages[currentStage];
 
-  const [linkCopied, setLinkCopied] = useState<boolean>(false);
   const [shareModalOpen, setShareModalOpen] = useState<boolean>(false);
-  const [bookmarkError, setBookmarkError] = useState<boolean>(false);
+  const { isVisible, modalText, showToastModal } = useToastModal();
 
   const copyGameLink = (link: string) => {
     navigator.clipboard
@@ -72,11 +72,7 @@ const BalanceGameSection = ({
   const handleCopyButton = (link: string) => {
     copyGameLink(link);
     setShareModalOpen(false);
-    setLinkCopied(true);
-
-    setTimeout(() => {
-      setLinkCopied(false);
-    }, 2000);
+    showToastModal(SUCCESS.COPY.LINK);
   };
 
   useEffect(() => {
@@ -115,10 +111,7 @@ const BalanceGameSection = ({
     if (!game) return;
 
     if (isMyGame) {
-      setBookmarkError(true);
-      setTimeout(() => {
-        setBookmarkError(false);
-      }, 2000);
+      showToastModal(ERROR.BOOKMARK.MY_GAME);
       return;
     }
 
@@ -134,14 +127,9 @@ const BalanceGameSection = ({
 
   return (
     <div css={S.balanceGameStyling}>
-      {linkCopied && (
+      {isVisible && (
         <div css={S.toastModalStyling}>
-          <ToastModal>복사 완료!</ToastModal>
-        </div>
-      )}
-      {bookmarkError && (
-        <div css={S.toastModalStyling}>
-          <ToastModal>{ERROR.BOOKMARK.MY_GAME}</ToastModal>
+          <ToastModal>{modalText}</ToastModal>
         </div>
       )}
       <div css={S.centerStyling}>

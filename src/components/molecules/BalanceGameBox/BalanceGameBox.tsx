@@ -56,7 +56,7 @@ const BalanceGameBox = ({
             handleNextStage();
           }, 700);
 
-          clearTimeout(nextStageTimer);
+          return () => clearTimeout(nextStageTimer);
         },
       });
     } else if (selectedOption === voteOption) {

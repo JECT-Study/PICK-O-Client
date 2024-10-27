@@ -1,13 +1,14 @@
 /* eslint-disable no-console */
 import React, { useState } from 'react';
 import { BookmarkDF, BookmarkPR, GameEnding, Share } from '@/assets';
-import { ERROR } from '@/constants/message';
+import { ERROR, SUCCESS } from '@/constants/message';
 import Divider from '@/components/atoms/Divider/Divider';
 import InteractionButton from '@/components/atoms/InteractionButton/InteractionButton';
 import ToastModal from '@/components/atoms/ToastModal/ToastModal';
 import ShareModal from '@/components/molecules/ShareModal/ShareModal';
 import { useCreateDoneGameBookmarkMutation } from '@/hooks/api/bookmark/useCreateDoneGameBookmark';
 import { useDeleteDoneGameBookmarkMutation } from '@/hooks/api/bookmark/useDeleteDoneGameBookmark';
+import useToastModal from '@/hooks/modal/useToastModal';
 import * as S from './BalanceGameEndingBox.style';
 
 export interface BalanceGameEndingBoxProps {
@@ -25,9 +26,8 @@ const BalanceGameEndingBox = ({
 }: BalanceGameEndingBoxProps) => {
   const currentURL: string = window.location.href;
 
-  const [linkCopied, setLinkCopied] = useState<boolean>(false);
   const [shareModalOpen, setShareModalOpen] = useState<boolean>(false);
-  const [bookmarkError, setBookmarkError] = useState<boolean>(false);
+  const { isVisible, modalText, showToastModal } = useToastModal();
 
   const copyGameLink = (link: string) => {
     navigator.clipboard
@@ -43,11 +43,7 @@ const BalanceGameEndingBox = ({
   const handleCopyButton = (link: string) => {
     copyGameLink(link);
     setShareModalOpen(false);
-    setLinkCopied(true);
-
-    setTimeout(() => {
-      setLinkCopied(false);
-    }, 2000);
+    showToastModal(SUCCESS.COPY.LINK);
   };
 
   const { mutate: createEndBookmark } =
@@ -58,10 +54,7 @@ const BalanceGameEndingBox = ({
 
   const handleEndBookmarkClick = () => {
     if (isMyGame) {
-      setBookmarkError(true);
-      setTimeout(() => {
-        setBookmarkError(false);
-      }, 2000);
+      showToastModal(ERROR.BOOKMARK.MY_GAME);
       return;
     }
 
@@ -74,14 +67,9 @@ const BalanceGameEndingBox = ({
 
   return (
     <div css={S.balanceGameContainer}>
-      {linkCopied && (
+      {isVisible && (
         <div css={S.toastModalStyling}>
-          <ToastModal>복사 완료!</ToastModal>
-        </div>
-      )}
-      {bookmarkError && (
-        <div css={S.toastModalStyling}>
-          <ToastModal>{ERROR.BOOKMARK.MY_GAME}</ToastModal>
+          <ToastModal>{modalText}</ToastModal>
         </div>
       )}
       <div css={S.centerStyling}>
