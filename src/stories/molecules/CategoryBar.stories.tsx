@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
@@ -45,6 +46,7 @@ export const All: Story = {
     const [activeTab, setActiveTab] = useState<CategoryBarProps['activeTab']>(
       args.activeTab,
     );
+    console.log(activeTab);
 
     return (
       <ul css={storyContainer}>

@@ -3,20 +3,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable no-console */
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useLogoutMutation } from '@/hooks/api/member/useLogoutMutation';
 import { useNewSelector } from '@/store';
 import { useParseJwt } from '@/hooks/common/useParseJwt';
 import { useMemberQuery } from '@/hooks/api/member/useMemberQuery';
 import { selectAccessToken } from '@/store/auth';
-import { Logo, WriteIcon, DefaultProfile } from '@/assets';
-import Button from '@/components/atoms/Button/Button';
-import Notification from '@/components/molecules/Notification/Notification';
+import { Logo, DefaultProfile } from '@/assets';
+// import Button from '@/components/atoms/Button/Button';
+// import Notification from '@/components/molecules/Notification/Notification';
 import ProfileIcon from '@/components/atoms/ProfileIcon/ProfileIcon';
 // import { useFetchSSE } from '@/api/notifications';
-import { EventSourcePolyfill, NativeEventSource } from 'event-source-polyfill';
-import { END_POINT } from '@/constants/api';
+// import { EventSourcePolyfill, NativeEventSource } from 'event-source-polyfill';
+// import { END_POINT } from '@/constants/api';
 import { MenuItem } from '@/components/atoms/MenuTap/MenuTap';
 import CreateDropdown from '@/components/atoms/CreateDropdown/CreateDropdown';
 import * as S from './Header.style';
@@ -26,8 +26,8 @@ const Header = () => {
   const accessToken = useNewSelector(selectAccessToken);
   const logout = useLogoutMutation();
   const { member } = useMemberQuery(useParseJwt(accessToken)?.memberId);
-  const [isNew, setIsNew] = useState(false);
   // FIXME:Notification 관련 코드
+  // const [isNew, setIsNew] = useState(false);
   // const [messages, setMessages] = useState([]);
   // const { messages, handleMarkAsRead } = useFetchSSE({
   //   accessToken: accessToken || '',
@@ -145,7 +145,7 @@ const Header = () => {
           >
             {accessToken ? '로그아웃' : '로그인'}
           </button>
-          <Notification isNew={isNew} notifications={notifications} />
+          {/* <Notification isNew={isNew} notifications={notifications} /> */}
           <div css={S.notificationStyle}>
             {accessToken ? (
               <ProfileIcon
