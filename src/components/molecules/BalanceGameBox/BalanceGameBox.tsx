@@ -27,9 +27,9 @@ const BalanceGameBox = ({
 
   const getRandomImages = () => {
     const [randomNumberA, randomNumberB] = getRandomNumbers(
-      S.gameBgArray.length,
+      S.gameBackgrounds.length,
     );
-    return [S.gameBgArray[randomNumberA], S.gameBgArray[randomNumberB]];
+    return [S.gameBackgrounds[randomNumberA], S.gameBackgrounds[randomNumberB]];
   };
 
   const [backgroundImages] = useState<string[]>(getRandomImages);

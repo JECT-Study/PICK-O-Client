@@ -10,7 +10,7 @@ import {
   PurpleGameBg,
 } from '@/assets';
 
-export const gameBgArray: string[] = [
+export const gameBackgrounds: string[] = [
   PurpleGameBg,
   BlueGameBg,
   GrayGameBg,
