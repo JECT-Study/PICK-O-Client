@@ -13,3 +13,11 @@ export const contentWrapStyle = css({
 export const categoryBoxStyle = css({
   margin: '109px 0 137px 0',
 });
+
+export const toastModalStyling = css({
+  position: 'fixed',
+  top: '110px',
+  left: '50%',
+  transform: 'translate(-50%)',
+  zIndex: '1000',
+});

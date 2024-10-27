@@ -94,6 +94,7 @@ export const END_POINT = {
   CREATE_GAME: '/games',
   NEW_GAME: '/games/new',
   BEST_GAME: '/games/best',
+  LATEST_GAME: '/games/latest',
   GAME: (gameId: Id) => `/games/${gameId}`,
   EDIT_GAME: (gameId: Id) => `/games/${gameId}`,
   DELETE_GAME: (gameId: Id) => `/games/${gameId}`,
@@ -101,6 +102,10 @@ export const END_POINT = {
   // report API
   REPORT_COMMENT: (talkPickId: Id, commentId: Id) =>
     `/reports/talks/${talkPickId}/comments/${commentId}`,
+
+  // notification API
+  NOTIFICATON: 'notifications',
+  READ_NOTIFICATION: (msgId: Id) => `/notifications/${msgId}/read`,
 };
 
 export const AXIOS = {
