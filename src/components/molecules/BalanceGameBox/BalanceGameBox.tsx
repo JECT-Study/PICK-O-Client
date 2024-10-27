@@ -10,7 +10,7 @@ import * as S from './BalanceGameBox.style';
 export interface BalanceGameBoxProps {
   gameSetId: number;
   gameId: number;
-  options?: GameOption[];
+  options: GameOption[];
   selectedVote: 'A' | 'B' | null;
   handleNextStage: () => void;
 }
@@ -52,9 +52,11 @@ const BalanceGameBox = ({
     if (!selectedOption) {
       createGameVote(voteOption, {
         onSuccess: () => {
-          setTimeout(() => {
+          const nextStageTimer = setTimeout(() => {
             handleNextStage();
           }, 700);
+
+          clearTimeout(nextStageTimer);
         },
       });
     } else if (selectedOption === voteOption) {
@@ -69,7 +71,7 @@ const BalanceGameBox = ({
   };
 
   return (
-    <div css={[S.containerStyle, S.getOutlineStyle(selectedVote ?? null)]}>
+    <div css={[S.containerStyle, S.getOutlineStyle(selectedVote)]}>
       <BalanceGameButton
         name={optionA?.name ?? ''}
         imgUrl={optionA?.imgUrl ?? null}
