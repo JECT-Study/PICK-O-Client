@@ -5,6 +5,7 @@ import typo from '@/styles/typo';
 export const dropdownStyling = css({
   display: 'flex',
   flexDirection: 'column',
+  position: 'relative',
 });
 
 export const dropdownButtonStyling = css(typo.Main.SemiBold, {
@@ -23,8 +24,9 @@ export const arrowStlying = css({
 
 export const optionStlying = css({
   position: 'absolute',
+  zIndex: '1000',
   marginTop: '68px',
-  right: '420px',
+  right: '5px',
   width: '173px',
   backgroundColor: color.WT,
   border: `1px solid ${color.GY[2]}`,
