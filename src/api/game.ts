@@ -1,7 +1,6 @@
 import { END_POINT } from '@/constants/api';
 import { Game, GameItem, GameContent } from '@/types/game';
 import { Id } from '@/types/api';
-// import { Pageable } from '@/types/pagination';
 import { axiosInstance } from './interceptor';
 
 export const postGame = async (gameData: Game) => {

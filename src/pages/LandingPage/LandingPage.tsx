@@ -41,13 +41,8 @@ const LandingPage = () => {
     isLatestLoading,
   ]);
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
   const handleService = () => {
     setIsServicePreparing(true);
-    scrollToTop();
 
     setTimeout(() => {
       setIsServicePreparing(false);

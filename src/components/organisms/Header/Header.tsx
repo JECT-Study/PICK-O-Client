@@ -27,8 +27,8 @@ const Header = () => {
   const logout = useLogoutMutation();
   const { member } = useMemberQuery(useParseJwt(accessToken)?.memberId);
   const [isNew, setIsNew] = useState(false);
+  // FIXME:Notification 관련 코드
   // const [messages, setMessages] = useState([]);
-
   // const { messages, handleMarkAsRead } = useFetchSSE({
   //   accessToken: accessToken || '',
   //   onLogout: () => {
@@ -37,35 +37,35 @@ const Header = () => {
   //   },
   // });
 
-  useEffect(() => {
-    if (localStorage.getItem('accessToken')) {
-      const EventSource = EventSourcePolyfill || NativeEventSource;
-      const eventSource = new EventSource(
-        `${process.env.API_URL}${END_POINT.NOTIFICATON}`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-          },
-          // withCredentials: true,
-          // heartbeatTimeout: 86400000,
-        },
-      );
+  // useEffect(() => {
+  //   if (localStorage.getItem('accessToken')) {
+  //     const EventSource = EventSourcePolyfill || NativeEventSource;
+  //     const eventSource = new EventSource(
+  //       `${process.env.API_URL}${END_POINT.NOTIFICATON}`,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  //         },
+  //         // withCredentials: true,
+  //         // heartbeatTimeout: 86400000,
+  //       },
+  //     );
 
-      eventSource.onmessage = (e) => {
-        console.log(e.data);
-      };
+  //     eventSource.onmessage = (e) => {
+  //       console.log(e.data);
+  //     };
 
-      eventSource.onerror = (e) => {
-        console.log(e);
-        console.error('Error target: ', e.target);
-        eventSource.close();
-      };
+  //     eventSource.onerror = (e) => {
+  //       console.log(e);
+  //       console.error('Error target: ', e.target);
+  //       eventSource.close();
+  //     };
 
-      return () => {
-        eventSource.close();
-      };
-    }
-  }, []);
+  //     return () => {
+  //       eventSource.close();
+  //     };
+  //   }
+  // }, []);
 
   const notifications = [
     {
@@ -110,11 +110,12 @@ const Header = () => {
     {
       label: '밸런스게임 만들기',
       onClick: () => {
+        // TODO: 밸런스 게임 만들기 이동 로직
         console.log('클릭됨!!');
       },
     },
   ];
-
+  // FIXME:Notification 관련 코드
   // const handleNotificationClick = async (notificationId: number) => {
   //   try {
   //     await handleMarkAsRead(notificationId);
@@ -123,9 +124,9 @@ const Header = () => {
   //   }
   // };
 
-  const handleNotificationClick = (id: number) => {
-    console.log('clicked');
-  };
+  // const handleNotificationClick = (id: number) => {
+  //   console.log('clicked');
+  // };
 
   return (
     <div css={S.containerStyle}>
