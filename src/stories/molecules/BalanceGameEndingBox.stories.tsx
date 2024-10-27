@@ -16,7 +16,7 @@ const meta = {
     title: '결정사 상대방 고르기',
     gameSetId: 0,
     isMyGame: false,
-    myEndBookmark: false,
+    isMyEndBookmark: false,
   },
   decorators: [
     (Story) => (

@@ -6,14 +6,14 @@ export interface BalanceGameEndingSectionProps {
   title: string;
   gameSetId: number;
   isMyGame: boolean;
-  myEndBookmark: boolean;
+  isMyEndBookmark: boolean;
 }
 
 const BalanceGameEndingSection = ({
   title,
   gameSetId,
   isMyGame,
-  myEndBookmark,
+  isMyEndBookmark,
 }: BalanceGameEndingSectionProps) => {
   return (
     <div css={S.balanceGameEndingStyling}>
@@ -21,7 +21,7 @@ const BalanceGameEndingSection = ({
         title={title}
         gameSetId={gameSetId}
         isMyGame={isMyGame}
-        myEndBookmark={myEndBookmark}
+        isMyEndBookmark={isMyEndBookmark}
       />
       {/* 더 많은 밸런스게임 보러 가기 */}
     </div>

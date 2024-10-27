@@ -14,14 +14,14 @@ export interface BalanceGameEndingBoxProps {
   title: string;
   gameSetId: number;
   isMyGame: boolean;
-  myEndBookmark: boolean;
+  isMyEndBookmark: boolean;
 }
 
 const BalanceGameEndingBox = ({
   title,
   gameSetId,
   isMyGame,
-  myEndBookmark,
+  isMyEndBookmark,
 }: BalanceGameEndingBoxProps) => {
   const currentURL: string = window.location.href;
 
@@ -65,7 +65,7 @@ const BalanceGameEndingBox = ({
       return;
     }
 
-    if (myEndBookmark) {
+    if (isMyEndBookmark) {
       deleteEndBookmark();
     } else {
       createEndBookmark();
@@ -106,7 +106,7 @@ const BalanceGameEndingBox = ({
         />
         <InteractionButton
           buttonLabel="이 게임 제법 폼이 좋아?"
-          icon={myEndBookmark ? <BookmarkPR /> : <BookmarkDF />}
+          icon={isMyEndBookmark ? <BookmarkPR /> : <BookmarkDF />}
           iconLabel="저장하기"
           onClick={handleEndBookmarkClick}
         />
