@@ -67,16 +67,16 @@ const Header = () => {
   //   }
   // }, []);
 
-  const notifications = [
-    {
-      id: 1,
-      category: 'MY 톡픽',
-      createdAt: '2024.09.04',
-      postTitle: '바보인 마리아 눈물은 바보다',
-      message: 'MY 댓글에 답글이 달렸어요!',
-      isNew: false,
-    },
-  ];
+  // const notifications = [
+  //   {
+  //     id: 1,
+  //     category: 'MY 톡픽',
+  //     createdAt: '2024.09.04',
+  //     postTitle: '바보인 마리아 눈물은 바보다',
+  //     message: 'MY 댓글에 답글이 달렸어요!',
+  //     isNew: false,
+  //   },
+  // ];
 
   const handleLoginButton = () => {
     if (accessToken) {
