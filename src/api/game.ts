@@ -1,7 +1,6 @@
 import { END_POINT } from '@/constants/api';
-import { Game, GameContent, GamesPagination, GameSet } from '@/types/game';
+import { Game, GameContent, GameSet } from '@/types/game';
 import { Id } from '@/types/api';
-import { Pageable } from '@/types/pagination';
 import { axiosInstance } from './interceptor';
 
 export const postGame = async (gameData: Game) => {
@@ -39,11 +38,21 @@ export const getNewGames = async () => {
   return data;
 };
 
-export const getBestGames = async (pageable: Pageable) => {
-  const { data } = await axiosInstance.get<GamesPagination>(
+export const getBestGames = async (tagName: string) => {
+  const { data } = await axiosInstance.get<GameContent[]>(
     `${END_POINT.BEST_GAME}`,
     {
-      params: pageable,
+      params: { tagName },
+    },
+  );
+  return data;
+};
+
+export const getLatestGames = async (tagName: string) => {
+  const { data } = await axiosInstance.get<GameContent[]>(
+    `${END_POINT.LATEST_GAME}`,
+    {
+      params: { tagName },
     },
   );
   return data;

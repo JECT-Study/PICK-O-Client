@@ -3,13 +3,17 @@ import { css } from '@emotion/react';
 import { Outlet } from 'react-router-dom';
 import Header from '@/components/organisms/Header/Header';
 import Footer from '@/components/organisms/Footer/Footer';
-import Sidebar from '../pages/MyPage/sections/Sidebar/Sidebar';
+// import Sidebar from '../pages/MyPage/sections/Sidebar/Sidebar';
 
 export const Layout = () => {
   return (
     <>
       <Header />
-      <main>
+      <main
+        css={css({
+          paddingTop: '100px',
+        })}
+      >
         <Outlet />
       </main>
       <Footer />
@@ -27,6 +31,7 @@ export const LayoutNoSearch = () => {
           justifyContent: 'center',
           alignItems: 'center',
           height: '100vh',
+          paddingTop: '100px',
         })}
       >
         <Outlet />

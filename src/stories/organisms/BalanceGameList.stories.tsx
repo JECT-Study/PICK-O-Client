@@ -1,68 +1,49 @@
+/* eslint-disable no-console */
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { storyContainer, storyInnerContainer } from '@/stories/story.styles';
 import BalanceGameList from '@/components/organisms/BalanceGameList/BalanceGameList';
 import { SampleFirst, SampleSecond } from '@/assets';
+import { storyContainer, storyInnerContainer } from '@/stories/story.styles';
 
 const meta: Meta<typeof BalanceGameList> = {
   title: 'organisms/BalanceGameList',
   component: BalanceGameList,
-  parameters: {
-    // layout: 'centered',
-  },
-  tags: ['autodocs'],
   argTypes: {
     contents: {
-      control: { type: 'object' },
+      control: 'object',
+    },
+    selectedValue: {
+      control: 'select',
+      options: ['trend', 'recent'],
+    },
+    activeTab: {
+      control: 'select',
+      options: ['인기', '커플', '취향', '월드컵'],
     },
   },
   args: {
     contents: [
       {
-        optionAImg: SampleFirst,
-        optionBImg: SampleSecond,
+        images: [SampleFirst, SampleSecond],
         id: 1,
         title: '만원 지하철 1시간 등교 VS 좌석 널널한 버스 2시간 등교',
         mainTag: '인기',
         subTag: '화제의 중심',
         bookmarkState: true,
-        optionA: '만원 지하철 1시간 등교',
-        optionB: '좌석 널널한 버스 2시간 등교',
       },
       {
-        optionAImg: SampleFirst,
-        optionBImg: SampleSecond,
+        images: [SampleFirst, SampleSecond],
         id: 2,
         title: '만원 지하철 1시간 등교 VS 좌석 널널한 버스 2시간 등교',
         mainTag: '인기',
         subTag: '화제의 중심',
         bookmarkState: false,
-        optionA: '만원 지하철 1시간 등교',
-        optionB: '좌석 널널한 버스 2시간 등교',
-      },
-      {
-        optionAImg: SampleFirst,
-        optionBImg: SampleSecond,
-        id: 3,
-        title: '만원 지하철 1시간 등교 VS 좌석 널널한 버스 2시간 등교',
-        mainTag: '인기',
-        subTag: '화제의 중심',
-        bookmarkState: false,
-        optionA: '만원 지하철 1시간 등교',
-        optionB: '좌석 널널한 버스 2시간 등교',
-      },
-      {
-        optionAImg: SampleFirst,
-        optionBImg: SampleSecond,
-        id: 4,
-        title: '만원 지하철 1시간 등교 VS 좌석 널널한 버스 2시간 등교',
-        mainTag: '인기',
-        subTag: '화제의 중심',
-        bookmarkState: false,
-        optionA: '만원 지하철 1시간 등교',
-        optionB: '좌석 널널한 버스 2시간 등교',
       },
     ],
+    selectedValue: 'trend',
+    activeTab: '인기',
+    setSelectedValue: (value) => console.log('setSelectedValue:', value),
+    setActiveTab: (value) => console.log('setActiveTab:', value),
   },
 };
 
@@ -73,50 +54,26 @@ export const Default: Story = {
   args: {
     contents: [
       {
-        optionAImg: SampleFirst,
-        optionBImg: SampleSecond,
+        images: [SampleFirst, SampleSecond],
         id: 1,
         title: '만원 지하철 1시간 등교 VS 좌석 널널한 버스 2시간 등교',
         mainTag: '인기',
         subTag: '화제의 중심',
-        bookmarkState: false,
-        optionA: '만원 지하철 1시간 등교',
-        optionB: '좌석 널널한 버스 2시간 등교',
+        bookmarkState: true,
       },
       {
-        optionAImg: SampleFirst,
-        optionBImg: SampleSecond,
+        images: [SampleFirst, SampleSecond],
         id: 2,
         title: '만원 지하철 1시간 등교 VS 좌석 널널한 버스 2시간 등교',
         mainTag: '인기',
         subTag: '화제의 중심',
         bookmarkState: false,
-        optionA: '만원 지하철 1시간 등교',
-        optionB: '좌석 널널한 버스 2시간 등교',
-      },
-      {
-        optionAImg: SampleFirst,
-        optionBImg: SampleSecond,
-        id: 3,
-        title: '만원 지하철 1시간 등교 VS 좌석 널널한 버스 2시간 등교',
-        mainTag: '인기',
-        subTag: '화제의 중심',
-        bookmarkState: false,
-        optionA: '만원 지하철 1시간 등교',
-        optionB: '좌석 널널한 버스 2시간 등교',
-      },
-      {
-        optionAImg: SampleFirst,
-        optionBImg: SampleSecond,
-        id: 4,
-        title: '만원 지하철 1시간 등교 VS 좌석 널널한 버스 2시간 등교',
-        mainTag: '인기',
-        subTag: '화제의 중심',
-        bookmarkState: false,
-        optionA: '만원 지하철 1시간 등교',
-        optionB: '좌석 널널한 버스 2시간 등교',
       },
     ],
+    selectedValue: 'trend',
+    activeTab: '인기',
+    setSelectedValue: (value) => console.log('setSelectedValue:', value),
+    setActiveTab: (value) => console.log('setActiveTab:', value),
   },
 };
 
@@ -125,55 +82,74 @@ export const All: Story = {
     <ul css={storyContainer}>
       <li css={storyInnerContainer}>
         <h3>하나의 항목</h3>
-        <BalanceGameList contents={[args.contents[0]]} />
+        <BalanceGameList
+          contents={[args.contents[0]]}
+          selectedValue={args.selectedValue}
+          setSelectedValue={(value) => console.log('setSelectedValue:', value)}
+          activeTab={args.activeTab}
+          setActiveTab={(value) => console.log('setActiveTab:', value)}
+        />
       </li>
 
       <li css={storyInnerContainer}>
         <h3>다수의 항목</h3>
-        <BalanceGameList {...args} />
+        <BalanceGameList
+          {...args}
+          setSelectedValue={(value) => console.log('setSelectedValue:', value)}
+          setActiveTab={(value) => console.log('setActiveTab:', value)}
+        />
       </li>
 
       <li css={storyInnerContainer}>
         <h3>내용 없음</h3>
-        <BalanceGameList contents={[]} />
+        <BalanceGameList
+          contents={[]}
+          selectedValue={args.selectedValue}
+          setSelectedValue={(value) => console.log('setSelectedValue:', value)}
+          activeTab={args.activeTab}
+          setActiveTab={(value) => console.log('setActiveTab:', value)}
+        />
       </li>
     </ul>
   ),
   args: {
     contents: [
       {
-        optionAImg: SampleFirst,
-        optionBImg: SampleSecond,
+        images: [SampleFirst, SampleSecond],
         id: 1,
         title: '만원 지하철 1시간 등교 VS 좌석 널널한 버스 2시간 등교',
         mainTag: '인기',
         subTag: '화제의 중심',
-        bookmarkState: false,
-        optionA: '만원 지하철 1시간 등교',
-        optionB: '좌석 널널한 버스 2시간 등교',
+        bookmarkState: true,
       },
       {
-        optionAImg: SampleFirst,
-        optionBImg: SampleSecond,
+        images: [SampleFirst, SampleSecond],
         id: 2,
         title: '만원 지하철 1시간 등교 VS 좌석 널널한 버스 2시간 등교',
         mainTag: '인기',
         subTag: '화제의 중심',
         bookmarkState: false,
-        optionA: '만원 지하철 1시간 등교',
-        optionB: '좌석 널널한 버스 2시간 등교',
       },
       {
-        optionAImg: SampleFirst,
-        optionBImg: SampleSecond,
+        images: [SampleFirst, SampleSecond],
         id: 3,
         title: '만원 지하철 1시간 등교 VS 좌석 널널한 버스 2시간 등교',
         mainTag: '인기',
         subTag: '화제의 중심',
         bookmarkState: false,
-        optionA: '만원 지하철 1시간 등교',
-        optionB: '좌석 널널한 버스 2시간 등교',
+      },
+      {
+        images: [SampleFirst, SampleSecond],
+        id: 4,
+        title: '만원 지하철 1시간 등교 VS 좌석 널널한 버스 2시간 등교',
+        mainTag: '인기',
+        subTag: '화제의 중심',
+        bookmarkState: false,
       },
     ],
+    selectedValue: 'trend',
+    activeTab: '인기',
+    setSelectedValue: (value) => console.log('setSelectedValue:', value),
+    setActiveTab: (value) => console.log('setActiveTab:', value),
   },
 };

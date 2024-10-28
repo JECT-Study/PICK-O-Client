@@ -31,8 +31,10 @@ export interface GameSet {
 
 export interface Game {
   title: string;
-  optionA: string;
-  optionB: string;
+  mainTag: string;
+  subTag: string;
+  images: string[];
+  bookmarkState?: boolean;
 }
 
 export interface GameContent extends Game {

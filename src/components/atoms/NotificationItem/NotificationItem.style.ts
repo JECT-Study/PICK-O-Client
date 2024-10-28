@@ -5,7 +5,7 @@ import typo from '@/styles/typo';
 export const notificationItemStyle = css({
   display: 'flex',
   flexDirection: 'column',
-  padding: '12px 0 12px 25px',
+  padding: '12px 14px',
   backgroundColor: color.WT,
   position: 'relative',
   borderRadius: '5px',
@@ -16,6 +16,10 @@ export const NewNotificationStyle = css({
   position: 'absolute',
   top: '12px',
   left: '14px',
+});
+
+export const textContainerStyle = css({
+  marginLeft: '11px',
 });
 
 export const headerStyle = css({
@@ -37,8 +41,10 @@ export const titleStyle = css(typo.Main.SemiBold, {
   color: color.BK,
   marginTop: '2px',
   marginBottom: '1px',
+  textAlign: 'start',
 });
 
 export const contentStyle = css(typo.Main.Medium, {
   color: color.GY[1],
+  textAlign: 'start',
 });

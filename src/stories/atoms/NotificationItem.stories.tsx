@@ -22,16 +22,16 @@ const meta = {
   tags: ['autodocs'],
   argTypes: {
     category: { control: { type: 'text' } },
-    date: { control: { type: 'text' } },
-    title: { control: { type: 'text' } },
-    content: { control: { type: 'text' } },
+    createdAt: { control: { type: 'text' } },
+    postTitle: { control: { type: 'text' } },
+    message: { control: { type: 'text' } },
     isNew: { control: { type: 'boolean' } },
   },
   args: {
     category: '카테고리',
-    date: '24.07.29',
-    title: '제목',
-    content: '· 알림 내용',
+    createdAt: '24.07.29',
+    postTitle: '제목',
+    message: '· 알림 내용',
     isNew: false,
   },
 } satisfies Meta<typeof NotificationItem>;
@@ -42,9 +42,9 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     category: '카테고리',
-    date: '24.07.29',
-    title: '제목',
-    content: '· 알림 내용',
+    createdAt: '24.07.29',
+    postTitle: '제목',
+    message: '· 알림 내용',
     isNew: false,
   },
 };
@@ -66,10 +66,10 @@ export const All: Story = {
           <h3>New Notification</h3>
           <NotificationItem
             category="톡픽"
-            date="24.07.16"
-            title="이별 사유 이게 말이 돼?"
-            content="· 작성한 댓글이 하트 10개를 달성했어요."
-            isNew={true}
+            createdAt="24.07.16"
+            postTitle="이별 사유 이게 말이 돼?"
+            message="· 작성한 댓글이 하트 10개를 달성했어요."
+            isNew
           />
         </li>
       </ul>
