@@ -9,6 +9,7 @@ export const useCommentActions = (
   commentData: Comment,
   editText: string,
   setEditButtonClicked: (value: boolean) => void,
+  showToastModal: (message: string) => () => void,
 ) => {
   const { mutate: editComment } = useEditCommentMutation(
     commentData.talkPickId,
@@ -21,23 +22,22 @@ export const useCommentActions = (
     commentData.id,
   );
 
-  const {
-    mutate: createLikeComment,
-    likeModalText,
-    likeModal,
-  } = useCreateLikeCommentMutation(commentData.talkPickId, commentData.id);
+  const { mutate: createLikeComment } = useCreateLikeCommentMutation(
+    commentData.talkPickId,
+    commentData.id,
+    showToastModal,
+  );
 
   const { mutate: deleteLikeComment } = useDeleteLikeCommentMutation(
     commentData.talkPickId,
     commentData.id,
   );
 
-  const {
-    mutate: handleReport,
-    reportModalText,
-    reportModal,
-    setReportModal,
-  } = useReportCommentMutation(commentData.talkPickId, commentData.id);
+  const { mutate: handleReport } = useReportCommentMutation(
+    commentData.talkPickId,
+    commentData.id,
+    showToastModal,
+  );
 
   const handleEditSubmit = () => {
     if (commentData.content === editText) return;
@@ -59,12 +59,7 @@ export const useCommentActions = (
   return {
     handleEditSubmit,
     handleDelete,
-    likeModalText,
-    likeModal,
     handleLikeToggle,
-    reportModalText,
-    reportModal,
-    setReportModal,
     handleReport,
   };
 };

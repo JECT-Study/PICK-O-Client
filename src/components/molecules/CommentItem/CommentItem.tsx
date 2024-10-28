@@ -20,6 +20,7 @@ import CommentProfile from '@/components/atoms/CommentProfile/CommentProfile';
 import TextModal from '@/components/molecules/TextModal/TextModal';
 import ReportModal from '@/components/molecules/ReportModal/ReportModal';
 import ReplyItem from '@/components/molecules/ReplyItem/ReplyItem';
+import useToastModal from '@/hooks/modal/useToastModal';
 import * as S from './CommentItem.style';
 
 export interface CommentItemProps {
@@ -35,6 +36,7 @@ const CommentItem = ({ comment, talkPickWriter }: CommentItemProps) => {
   const isTalkPickWriter: boolean = comment?.nickname === talkPickWriter;
 
   const commentRef = useRef<HTMLDivElement>(null);
+  const { isVisible, modalText, showToastModal } = useToastModal();
 
   const [reportModalOpen, setReportModalOpen] = useState<boolean>(false);
   const [reportTextModalOpen, setReportTextModalOpen] =
@@ -49,17 +51,13 @@ const CommentItem = ({ comment, talkPickWriter }: CommentItemProps) => {
 
   const [visibleReply, setVisibleReply] = useState<number>(10);
 
-  const {
-    handleEditSubmit,
-    handleDelete,
-    likeModalText,
-    likeModal,
-    handleLikeToggle,
-    reportModalText,
-    reportModal,
-    setReportModal,
-    handleReport,
-  } = useCommentActions(comment, editCommentText, setEditCommentClicked);
+  const { handleEditSubmit, handleDelete, handleLikeToggle, handleReport } =
+    useCommentActions(
+      comment,
+      editCommentText,
+      setEditCommentClicked,
+      showToastModal,
+    );
 
   useEffect(() => {
     setEditCommentText(comment.content);
@@ -130,10 +128,6 @@ const CommentItem = ({ comment, talkPickWriter }: CommentItemProps) => {
   const handleReportCommentButton = (reason: string) => {
     handleReport(reason);
     setReportModalOpen(false);
-
-    setTimeout(() => {
-      setReportModal(false);
-    }, 2000);
   };
 
   const handleMoreButton = () => {
@@ -142,11 +136,9 @@ const CommentItem = ({ comment, talkPickWriter }: CommentItemProps) => {
 
   return (
     <div css={S.MainContainer}>
-      {(reportModal || likeModal) && (
+      {isVisible && (
         <div css={S.toastModalStyling}>
-          <ToastModal>
-            {reportModal ? reportModalText : likeModalText}
-          </ToastModal>
+          <ToastModal>{modalText}</ToastModal>
         </div>
       )}
       <div css={S.centerStyling}>

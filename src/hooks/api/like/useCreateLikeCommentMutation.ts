@@ -1,26 +1,22 @@
 import { Id } from '@/types/api';
-import { useState } from 'react';
 import { postLikeComment } from '@/api/like';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosErrorResponse } from '@/api/interceptor';
 import { HTTP_STATUS_CODE } from '@/constants/api';
 import { ERROR } from '@/constants/message';
 
-export const useCreateLikeCommentMutation = (talkPickId: Id, commentId: Id) => {
+export const useCreateLikeCommentMutation = (
+  talkPickId: Id,
+  commentId: Id,
+  showToastModal: (message: string) => () => void,
+) => {
   const queryClient = useQueryClient();
-  const [likeModal, setLikeModal] = useState<boolean>(false);
-  const [likeModalText, setLikeModalText] = useState<string>('');
 
   const likeCommentMutation = useMutation({
     mutationFn: () => postLikeComment(talkPickId, commentId),
     onError: (err: AxiosErrorResponse) => {
       if (err.status === HTTP_STATUS_CODE.FORBIDDEN) {
-        setLikeModal(true);
-        setLikeModalText(ERROR.COMMENT.MY_COMMENT_LIKE);
-
-        setTimeout(() => {
-          setLikeModal(false);
-        }, 2000);
+        showToastModal(ERROR.COMMENT.MY_COMMENT_LIKE);
       }
     },
     onSuccess: () =>
@@ -36,5 +32,5 @@ export const useCreateLikeCommentMutation = (talkPickId: Id, commentId: Id) => {
         }),
       ]),
   });
-  return { ...likeCommentMutation, likeModalText, likeModal };
+  return { ...likeCommentMutation };
 };

@@ -1,15 +1,16 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { postCommentReport } from '@/api/report';
-import { useState } from 'react';
 import { Id } from '@/types/api';
-import { AxiosErrorResponse } from '@/api/interceptor';
-import { HTTP_STATUS_CODE } from '@/constants/api';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { SUCCESS, ERROR } from '@/constants/message';
+import { HTTP_STATUS_CODE } from '@/constants/api';
+import { AxiosErrorResponse } from '@/api/interceptor';
+import { postCommentReport } from '@/api/report';
 
-export const useReportCommentMutation = (talkPickId: Id, commentId: Id) => {
+export const useReportCommentMutation = (
+  talkPickId: Id,
+  commentId: Id,
+  showToastModal: (message: string) => () => void,
+) => {
   const queryClient = useQueryClient();
-  const [reportModal, setReportModal] = useState<boolean>(false);
-  const [reportModalText, setReportModalText] = useState<string>('');
 
   const mutation = useMutation({
     mutationFn: (data: string) =>
@@ -18,21 +19,16 @@ export const useReportCommentMutation = (talkPickId: Id, commentId: Id) => {
       await queryClient.invalidateQueries({
         queryKey: ['talks', talkPickId, 'comments'],
       });
-      setReportModal(true);
-      setReportModalText(SUCCESS.COMMENT.REPORT);
+      showToastModal(SUCCESS.COMMENT.REPORT);
     },
     onError: (err: AxiosErrorResponse) => {
       if (err.status === HTTP_STATUS_CODE.CONFLICT) {
-        setReportModal(true);
-        setReportModalText(ERROR.COMMENT.REPORT_AGAIN);
+        showToastModal(ERROR.COMMENT.REPORT_AGAIN);
       }
     },
   });
 
   return {
     ...mutation,
-    reportModalText,
-    reportModal,
-    setReportModal,
   };
 };

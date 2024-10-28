@@ -13,6 +13,7 @@ import CategoryBarChip from '@/components/atoms/CategoryBarChip/CategoryBarChip'
 import TextArea from '@/components/molecules/TextArea/TextArea';
 import TextModal from '@/components/molecules/TextModal/TextModal';
 import ReportModal from '@/components/molecules/ReportModal/ReportModal';
+import useToastModal from '@/hooks/modal/useToastModal';
 import * as S from './ReplyItem.style';
 
 export interface ReplyItemProps {
@@ -28,6 +29,7 @@ const ReplyItem = ({ reply, talkPickWriter }: ReplyItemProps) => {
   const isTalkPickWriter: boolean = reply?.nickname === talkPickWriter;
 
   const replyRef = useRef<HTMLDivElement>(null);
+  const { isVisible, modalText, showToastModal } = useToastModal();
 
   const [reportModalOpen, setReportModalOpen] = useState<boolean>(false);
   const [reportTextModalOpen, setReportTextModalOpen] =
@@ -38,17 +40,13 @@ const ReplyItem = ({ reply, talkPickWriter }: ReplyItemProps) => {
   const [editReplyClicked, setEditReplyClicked] = useState<boolean>(false);
   const [editReplyText, setEditReplyText] = useState<string>(reply.content);
 
-  const {
-    handleEditSubmit,
-    handleDelete,
-    likeModalText,
-    likeModal,
-    handleLikeToggle,
-    reportModalText,
-    reportModal,
-    setReportModal,
-    handleReport,
-  } = useCommentActions(reply, editReplyText, setEditReplyClicked);
+  const { handleEditSubmit, handleDelete, handleLikeToggle, handleReport } =
+    useCommentActions(
+      reply,
+      editReplyText,
+      setEditReplyClicked,
+      showToastModal,
+    );
 
   useEffect(() => {
     setEditReplyText(reply.content);
@@ -96,19 +94,13 @@ const ReplyItem = ({ reply, talkPickWriter }: ReplyItemProps) => {
   const handleReportReplyButton = (reason: string) => {
     handleReport(reason);
     setReportModalOpen(false);
-
-    setTimeout(() => {
-      setReportModal(false);
-    }, 2000);
   };
 
   return (
     <div css={S.MainContainer}>
-      {(reportModal || likeModal) && (
+      {isVisible && (
         <div css={S.toastModalStyling}>
-          <ToastModal>
-            {reportModal ? reportModalText : likeModalText}
-          </ToastModal>
+          <ToastModal>{modalText}</ToastModal>
         </div>
       )}
       <div css={S.centerStyling}>

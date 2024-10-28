@@ -1,5 +1,5 @@
-import { deleteLikeComment } from '@/api/like';
 import { Id } from '@/types/api';
+import { deleteLikeComment } from '@/api/like';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export const useDeleteLikeCommentMutation = (talkPickId: Id, commentId: Id) => {
