@@ -49,10 +49,16 @@ const CommentsSection = ({
   const { mutate: createComment } = useCreateCommentMutation(talkPickId);
 
   const handleCommentButton = () => {
-    createComment({ content: commentValue });
     setCommentValue('');
-
-    if (selectedValue === 'trend') setToggleValue('recent');
+    createComment(
+      { content: commentValue },
+      {
+        onSuccess: () => {
+          if (selectedValue === 'trend') setToggleValue('recent');
+          handlePageChange(1);
+        },
+      },
+    );
   };
 
   return (
