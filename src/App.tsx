@@ -33,6 +33,7 @@ import { useNewSelector } from './store';
 import { selectAccessToken } from './store/auth';
 import TalkPickPlacePage from './pages/TalkPickPlacePage/TalkPickPlacePage';
 import SignUpPage from './pages/SignUpPage/SignUpPage';
+import BalanceGamePage from './pages/BalanceGamePage/BalanceGamePage';
 
 const App: React.FC = () => {
   const accessToken = useNewSelector(selectAccessToken);
@@ -49,6 +50,7 @@ const App: React.FC = () => {
           <Route path="/talkpick/:talkPickId" element={<TalkPickPage />} />
           <Route path="/talkpickplace" element={<TalkPickPlacePage />} />
           <Route path="/post/create" element={<CreatePostPage />} />
+          <Route path="/balancegame/:setId" element={<BalanceGamePage />} />
           {/* <Route path="posts" element={<PostList />} />
           <Route path="posts/:id" element={<PostPage />} />
           <Route path="searchResult" element={<SearchResultPage />} />

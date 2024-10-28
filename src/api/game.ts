@@ -1,5 +1,5 @@
 import { END_POINT } from '@/constants/api';
-import { Game, GameItem, GameContent } from '@/types/game';
+import { Game, GameContent, GameSet } from '@/types/game';
 import { Id } from '@/types/api';
 import { axiosInstance } from './interceptor';
 
@@ -11,9 +11,9 @@ export const postGame = async (gameData: Game) => {
   return data;
 };
 
-export const getGameById = async (gameId: Id) => {
-  const { data } = await axiosInstance.get<GameItem>(
-    `${END_POINT.GAME(gameId)}`,
+export const getGameBySetId = async (gameSetId: Id) => {
+  const { data } = await axiosInstance.get<GameSet>(
+    `${END_POINT.GAME_SET(gameSetId)}`,
   );
   return data;
 };

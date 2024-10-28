@@ -11,31 +11,29 @@ export const buttonWrapStyle = (option: 'A' | 'B') =>
     flexDirection: 'column',
     alignItems: 'center',
     width: '561px',
+    minHeight: '488px',
+    flexGrow: 1,
     backgroundColor: 'transparent',
     borderRadius: option === 'A' ? '20px 0 0 20px' : '0 20px 20px 0',
+    overflow: 'hidden',
+
     '&:hover': {
+      zIndex: option === 'A' ? 100 : 'auto',
       boxShadow:
         option === 'A'
           ? `-5px 0px 5px rgba(255, 175, 191, 0.2)`
           : `5px 0px 5px rgba(157, 183, 255, 0.3)`,
-      border: 'none',
-      borderTop:
+      outline:
         option === 'A'
           ? `2px solid ${color.PINK}`
           : `2px solid  ${color.SKYBLUE}`,
-      borderRight: option === 'A' ? 'none' : `2px solid  ${color.SKYBLUE}`,
-      borderBottom:
-        option === 'A'
-          ? `2px solid ${color.PINK}`
-          : `2px solid  ${color.SKYBLUE}`,
-      borderLeft: option === 'A' ? `2px solid ${color.PINK}` : 'none',
     },
+
     '&:active': {
       backgroundColor:
         option === 'A'
           ? `-5px 0px 15px ${color.RED}`
           : `5px 0px 15px ${color.BLUE}`,
-      color: color.WT,
     },
   });
 
@@ -48,24 +46,40 @@ export const getButtonStyle = (
       backgroundColor: side === 'A' ? color.RED : color.BLUE,
       color: color.WT,
       outline: 'none',
-      borderRadius: side === 'A' ? '0 0 0 20px' : '0 0 20px 0',
     }),
   });
 
-export const imageStyle = (option: 'A' | 'B') =>
-  css({
-    width: '561px',
+export const textImageStyle = (randomImage: string) =>
+  css(typo.Title, {
+    display: 'flex',
+    width: '100%',
     height: '320px',
-    objectFit: 'cover',
-    borderRadius: option === 'A' ? '20px 0 0 0' : '0 20px 0 0',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundImage: `url(${randomImage})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
   });
 
+export const imageStyle = css({
+  width: '100%',
+  height: '320px',
+  objectFit: 'cover',
+});
+
 export const contentBoxStyle = css({
-  padding: '27px 0 37px 0',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+  width: '561px',
+  flexGrow: 1,
+});
+
+export const contentWrapper = css({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  width: '561px',
 });
 
 export const descriptionStyle = css(typo.Main.Medium, {

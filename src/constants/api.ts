@@ -88,14 +88,17 @@ export const END_POINT = {
 
   // bookmark API
   BOOKMARK_TALKPICK: (talkPickId: Id) => `/bookmarks/talks/${talkPickId}`,
-  BOOKMARK_GAME: (gameId: Id) => `/bookmarks/games/${gameId}`,
+  BOOKMARK_GAME_DONE: (gameSetId: Id) => `/bookmarks/game-sets/${gameSetId}`,
+  BOOKMARK_GAME: (gameSetId: Id, gameId: Id) =>
+    `/bookmarks/game-sets/${gameSetId}/games/${gameId}`,
+  DELETE_BOOKMARK_GAME: (gameSetId: Id) => `/bookmarks/game-sets/${gameSetId}`,
 
   // game API
   CREATE_GAME: '/games',
   NEW_GAME: '/games/new',
   BEST_GAME: '/games/best',
   LATEST_GAME: '/games/latest',
-  GAME: (gameId: Id) => `/games/${gameId}`,
+  GAME_SET: (gameSetId: Id) => `/games/${gameSetId}`,
   EDIT_GAME: (gameId: Id) => `/games/${gameId}`,
   DELETE_GAME: (gameId: Id) => `/games/${gameId}`,
 
