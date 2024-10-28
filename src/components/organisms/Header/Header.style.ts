@@ -10,6 +10,11 @@ export const containerStyle = css({
   justifyContent: 'space-between',
   backgroundColor: color.WT,
   boxShadow: '0px 4px 11px rgba(0, 0, 0, 0.1)',
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  zIndex: 1000,
+  height: '100px',
 });
 
 export const logoStyle = css({

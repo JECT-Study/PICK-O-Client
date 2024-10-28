@@ -7,8 +7,8 @@ import * as S from './MyBalanceGameList.style';
 export interface MyBalanceGameItem {
   id: number;
   editedAt: string;
-  optionAImg: ContentsButtonProps['optionAImg'];
-  optionBImg: ContentsButtonProps['optionBImg'];
+  optionAImg: ContentsButtonProps['images'][0];
+  optionBImg: ContentsButtonProps['images'][1];
   title: ContentsButtonProps['title'];
   mainTag: ContentsButtonProps['mainTag'];
   subTag: ContentsButtonProps['subTag'];
@@ -42,8 +42,10 @@ const MyBalanceGameList = ({ items = [] }: MyBalanceGameListProps) => {
             {groupedItems[date].map((balanceGameItem) => (
               <li key={balanceGameItem.id} css={S.contentItem}>
                 <ContentsButton
-                  optionAImg={balanceGameItem.optionAImg}
-                  optionBImg={balanceGameItem.optionBImg}
+                  images={[
+                    balanceGameItem.optionAImg,
+                    balanceGameItem.optionBImg,
+                  ]}
                   title={balanceGameItem.title}
                   mainTag={balanceGameItem.mainTag}
                   subTag={balanceGameItem.subTag}

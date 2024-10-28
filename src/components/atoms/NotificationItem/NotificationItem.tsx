@@ -1,41 +1,35 @@
 /* eslint-disable react/no-unused-prop-types */
 import React from 'react';
 import { NewDot } from '@/assets';
-import {
-  notificationItemStyle,
-  headerStyle,
-  categoryStyle,
-  dateStyle,
-  titleStyle,
-  contentStyle,
-  NewNotificationStyle,
-} from './NotificationItem.style';
+import * as S from './NotificationItem.style';
 
 export interface NotificationItemProps {
   id?: number;
   category: string;
-  date: string;
-  title: string;
-  content: string;
+  createdAt: string;
+  postTitle: string;
+  message: string;
   isNew?: boolean;
 }
 
 const NotificationItem = ({
   category,
-  date,
-  title,
-  content,
+  createdAt,
+  postTitle,
+  message,
   isNew,
 }: NotificationItemProps) => {
   return (
-    <div css={notificationItemStyle}>
-      {isNew ? <NewDot css={NewNotificationStyle} /> : null}
-      <div css={headerStyle}>
-        <div css={categoryStyle}>{category}</div>
-        <div css={dateStyle}>{date}</div>
+    <div css={S.notificationItemStyle}>
+      {isNew ? <NewDot css={S.NewNotificationStyle} /> : null}
+      <div css={S.textContainerStyle}>
+        <div css={S.headerStyle}>
+          <div css={S.categoryStyle}>{category}</div>
+          <div css={S.dateStyle}>{createdAt}</div>
+        </div>
+        <div css={S.titleStyle}>{postTitle}</div>
+        <div css={S.contentStyle}>· {message}</div>
       </div>
-      <div css={titleStyle}>{title}</div>
-      <div css={contentStyle}>{content}</div>
     </div>
   );
 };

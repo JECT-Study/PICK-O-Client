@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import ReactQueryProvider from '@/providers/ReactQueryProvider';
 import type { Meta, StoryObj } from '@storybook/react';
-import TodayTalkPickSection from '@/components/organisms/TodayTalkPickSection/TodayTalkPickSection';
+import TalkPickSection from '@/components/organisms/TalkPickSection/TalkPickSection';
 
 const defaultTodayTalkPick: TalkPickDetail = {
   id: 0,
@@ -34,15 +34,16 @@ const defaultTodayTalkPick: TalkPickDetail = {
 };
 
 const meta = {
-  title: 'organisms/TodayTalkPickSection',
-  component: TodayTalkPickSection,
+  title: 'organisms/TalkPickSection',
+  component: TalkPickSection,
   parameters: {
     layout: 'centered',
   },
   tags: ['autodocs'],
   args: {
-    todayTalkPick: defaultTodayTalkPick,
+    talkPick: defaultTodayTalkPick,
     myTalkPick: false,
+    isTodayTalkPick: false,
   },
   decorators: [
     (Story) => (
@@ -55,7 +56,7 @@ const meta = {
       </Provider>
     ),
   ],
-} satisfies Meta<typeof TodayTalkPickSection>;
+} satisfies Meta<typeof TalkPickSection>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

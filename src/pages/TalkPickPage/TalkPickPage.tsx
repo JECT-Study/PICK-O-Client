@@ -7,13 +7,14 @@ import { useMemberQuery } from '@/hooks/api/member/useMemberQuery';
 import { useCommentsQuery } from '@/hooks/api/comment/useCommentsQuery';
 import { useBestCommentsQuery } from '@/hooks/api/comment/useBestCommentsQuery';
 import { ToggleGroupItem } from '@/components/atoms/ToggleGroup/ToggleGroup';
-import TodayTalkPickSection from '@/components/organisms/TodayTalkPickSection/TodayTalkPickSection';
+import TalkPickSection from '@/components/organisms/TalkPickSection/TalkPickSection';
 import CommentsSection from '@/components/organisms/CommentsSection/CommentsSection';
 import { useTalkPickDetailQuery } from '@/hooks/api/talk-pick/useTalkPickDetailQuery';
-import * as S from './TodayTalkPickPage.style';
+import * as S from './TalkPickPage.style';
 
 interface State {
   talkPickId: number;
+  isTodayTalkPick: boolean;
 }
 
 const TodayTalkPickPage = () => {
@@ -26,6 +27,7 @@ const TodayTalkPickPage = () => {
   const location = useLocation();
   const state = location.state as State;
   const talkPickId = state?.talkPickId;
+  const isTodayTalkPick = state?.isTodayTalkPick;
 
   const { talkPick } = useTalkPickDetailQuery(talkPickId);
 
@@ -60,7 +62,8 @@ const TodayTalkPickPage = () => {
 
   return (
     <div css={S.contentWrapStyle}>
-      <TodayTalkPickSection
+      <TalkPickSection
+        isTodayTalkPick={isTodayTalkPick}
         talkPick={talkPick}
         myTalkPick={member?.nickname === talkPick?.writer}
       />

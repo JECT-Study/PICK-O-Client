@@ -12,15 +12,13 @@ export const buttonStyle = css({
   cursor: 'pointer',
 });
 
-export const notificationContainerStyle = css({
-  position: 'absolute',
-  top: '30px',
-  right: '10px',
-  zIndex: '1000',
-});
+export const notificationContainerStyle = css({});
 
 export const notificationStyle = css({
-  marginTop: '10px',
+  position: 'absolute',
+  top: '20px',
+  zIndex: '1000',
+  marginTop: '20px',
   display: 'flex',
   flexDirection: 'column',
   backgroundColor: color.GY[3],
@@ -28,17 +26,17 @@ export const notificationStyle = css({
   width: '435px',
   height: '602px',
   borderRadius: '10px',
+  padding: '30px 20px 18px 23px',
 });
 
 export const titleStyle = css(typo.SubTitle, {
   color: color.BK,
-  padding: '30px 0 18px 23px',
 });
 
 export const notificationContentStyle = css({
   flex: 1,
   overflowY: 'auto',
-  padding: '0 0 30px 23px',
+  marginTop: '18px',
 });
 
 export const notificationItemStyle = css({

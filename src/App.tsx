@@ -1,11 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import 'dayjs/locale/ko';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import MyPage from '@/pages/MyPage/MyPage';
-import NotAuthRoutes from './components/Routes/NotAuthRoutes';
-import ProtectedRoutes from './components/Routes/ProtectedRoutes';
+// import NotAuthRoutes from './components/Routes/NotAuthRoutes';
+// import ProtectedRoutes from './components/Routes/ProtectedRoutes';
 import { PATH } from './constants/path';
 import { useMemberQuery } from './hooks/api/member/useMemberQuery';
 import { useParseJwt } from './hooks/common/useParseJwt';
@@ -15,7 +16,7 @@ import CreatePostPage from './pages/CreatePostPage/CreatePostPage';
 // import FindPasswordPage from './pages/FindPasswordPage/FindPasswordPage';
 import LandingPage from './pages/LandingPage/LandingPage';
 import LoginPage from './pages/LoginPage/LoginPage';
-import TodayTalkPickPage from './pages/TodayTalkPickPage/TodayTalkPickPage';
+import TalkPickPage from './pages/TalkPickPage/TalkPickPage';
 // import DeletePage from './pages/MyPage/DeletePage/DeletePage';
 // import HistoryPage from './pages/MyPage/HistoryPage/HistoryPage';
 // import BookmarksPage from './pages/MyPage/HistoryPage/TabPage/BookmarksPage/BookmarksPage';
@@ -32,6 +33,7 @@ import { useNewSelector } from './store';
 import { selectAccessToken } from './store/auth';
 import TalkPickPlacePage from './pages/TalkPickPlacePage/TalkPickPlacePage';
 import SignUpPage from './pages/SignUpPage/SignUpPage';
+import BalanceGamePage from './pages/BalanceGamePage/BalanceGamePage';
 
 const App: React.FC = () => {
   const accessToken = useNewSelector(selectAccessToken);
@@ -44,9 +46,11 @@ const App: React.FC = () => {
           <Route index element={<LandingPage />} />
           <Route path={PATH.SIGN_UP} element={<SignUpPage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/todaytalkpick" element={<TodayTalkPickPage />} />
+          <Route path="/todaytalkpick" element={<TalkPickPage />} />
+          <Route path="/talkpick/:talkPickId" element={<TalkPickPage />} />
           <Route path="/talkpickplace" element={<TalkPickPlacePage />} />
           <Route path="/post/create" element={<CreatePostPage />} />
+          <Route path="/balancegame/:setId" element={<BalanceGamePage />} />
           {/* <Route path="posts" element={<PostList />} />
           <Route path="posts/:id" element={<PostPage />} />
           <Route path="searchResult" element={<SearchResultPage />} />

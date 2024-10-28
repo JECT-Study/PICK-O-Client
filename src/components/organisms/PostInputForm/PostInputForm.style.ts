@@ -2,7 +2,7 @@ import { css } from '@emotion/react';
 import color from '@/styles/color';
 import typo from '@/styles/typo';
 
-export const formStyle = css({
+export const formStyling = css({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
@@ -12,7 +12,6 @@ export const formStyle = css({
 
 export const bodyStyle = css({
   width: '1173px',
-  height: '766px',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
@@ -25,21 +24,12 @@ export const bodyStyle = css({
 
 export const optionStyle = css({
   display: 'flex',
-  alignItems: 'center',
   columnGap: '17px',
 });
 
-export const inputContainerStyle = css(typo.Main.Medium, {
+export const inputStyle = css(typo.Main.Medium, {
   width: '982px',
   height: '432px',
-  display: 'flex',
-  alignItems: 'flex-start',
-});
-
-export const inputStyle = css(typo.Main.Medium, {
-  width: '100%',
-  height: '100%',
-  textAlign: 'left',
   border: 'none',
   resize: 'none',
   outline: 'none',
@@ -60,4 +50,12 @@ export const buttonStyle = css({
   display: 'flex',
   alignItems: 'center',
   columnGap: '30px',
+});
+
+export const toastModalStyling = css({
+  position: 'fixed',
+  top: '110px',
+  left: '50%',
+  transform: 'translate(-50%)',
+  zIndex: '1000',
 });

@@ -24,6 +24,10 @@ export const ERROR = {
     FAIL: '이메일 또는 비밀번호가 일치하지 않습니다. 다시 확인해주세요.',
   },
   CREATE: {
+    OPTION_FORM: '글자 수는 최대 10자까지 입력해주세요.',
+    EMPTY_TITLE: '제목을 작성해주세요!',
+    EMPTY_OPTION: '선택지 2개를 모두 작성해주세요!',
+    EMPTY_CONTENT: '내용을 작성해주세요!',
     FAIL: '게시글 작성에 실패했습니다. 다시 시도해주세요.',
   },
   SAVE: {
@@ -35,6 +39,7 @@ export const ERROR = {
   },
   BOOKMARK: {
     MY_TALKPICK: '본인이 작성한 톡픽은 저장할 수 없습니다.',
+    MY_GAME: '본인이 만든 밸런스게임은 저장할 수 없습니다.',
   },
 } as const;
 
@@ -47,6 +52,9 @@ export const SUCCESS = {
   },
   NICKNAME: {
     AVAILABLE: '사용 가능한 닉네임입니다.',
+  },
+  COPY: {
+    LINK: '복사 완료!',
   },
   COMMENT: {
     REPORT: '신고 완료되었습니다.',

@@ -2,30 +2,30 @@ import React, { useState } from 'react';
 import { AngleSmallDown } from '@/assets';
 import ToggleGroup, {
   ToggleGroupItem,
-  ToggleGroupProps,
 } from '@/components/atoms/ToggleGroup/ToggleGroup';
 import Button from '@/components/atoms/Button/Button';
 import CategoryBar from '@/components/molecules/CategoryBar/CategoryBar';
 import ContentsButton from '@/components/molecules/ContentsButton/ContentsButton';
+import { GameContent } from '@/types/game';
 import * as S from './BalanceGameList.style';
 
-export interface ContentItemProps {
-  optionAImg: string;
-  optionBImg: string;
-  id: number;
-  title: string;
-  mainTag: string;
-  subTag: string;
-  bookmarkState?: boolean;
-  optionA?: string;
-  optionB?: string;
-}
-
 export interface ContentListProps {
-  contents: ContentItemProps[];
+  contents: GameContent[];
+  selectedValue: 'trend' | 'recent';
+  setSelectedValue: React.Dispatch<React.SetStateAction<'trend' | 'recent'>>;
+  activeTab: '인기' | '커플' | '취향' | '월드컵';
+  setActiveTab: React.Dispatch<
+    React.SetStateAction<'인기' | '커플' | '취향' | '월드컵'>
+  >;
 }
 
-const BalanceGameList = ({ contents }: ContentListProps) => {
+const BalanceGameList = ({
+  contents,
+  selectedValue,
+  setSelectedValue,
+  activeTab,
+  setActiveTab,
+}: ContentListProps) => {
   const toggleItem: ToggleGroupItem[] = [
     {
       label: '인기순',
@@ -36,13 +36,13 @@ const BalanceGameList = ({ contents }: ContentListProps) => {
       value: 'recent',
     },
   ];
-  const [selectedValue, setSelectedValue] =
-    useState<ToggleGroupProps['selectedValue']>('trend');
+
   const [visibleItems, setVisibleItems] = useState<number>(4);
 
   const handleLoadMore = () => {
     setVisibleItems((prev) => Math.min(prev + 6, contents.length));
   };
+
   return (
     <div css={S.containerStyle}>
       <div css={S.titleWrapStyle}>
@@ -50,22 +50,21 @@ const BalanceGameList = ({ contents }: ContentListProps) => {
         <ToggleGroup
           items={toggleItem}
           selectedValue={selectedValue}
-          onClick={setSelectedValue}
+          onClick={(value) => setSelectedValue(value as 'trend' | 'recent')}
         />
       </div>
       <div css={S.barStyle}>
-        <CategoryBar activeTab="Popular" />
+        <CategoryBar activeTab={activeTab} setActiveTab={setActiveTab} />
       </div>
       <div css={S.contentStyle}>
         {contents.slice(0, visibleItems).map((content) => (
           <ContentsButton
             key={content.id}
-            bookmarked={content.bookmarkState || false}
-            optionAImg={content.optionAImg}
-            optionBImg={content.optionBImg}
+            images={content.images}
             title={content.title}
             mainTag={content.mainTag}
             subTag={content.subTag}
+            bookmarked={content.bookmarkState || false}
           />
         ))}
         {visibleItems < contents.length && (
