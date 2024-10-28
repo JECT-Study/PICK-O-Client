@@ -64,7 +64,7 @@ const ReplyItem = ({ reply, talkPickWriter }: ReplyItemProps) => {
     return () => window.removeEventListener('mousedown', handleClick);
   }, [replyRef]);
 
-  const handleDeleteCommentButton = () => {
+  const handleDeleteReplyButton = () => {
     setDeleteTextModalOpen(false);
     handleDelete();
   };
@@ -116,7 +116,7 @@ const ReplyItem = ({ reply, talkPickWriter }: ReplyItemProps) => {
           text="작성한 답글을 삭제하시겠습니까?"
           isOpen={deleteTextModalOpen}
           onConfirm={() => {
-            handleDeleteCommentButton();
+            handleDeleteReplyButton();
           }}
           onClose={() => setReportTextModalOpen(false)}
         />

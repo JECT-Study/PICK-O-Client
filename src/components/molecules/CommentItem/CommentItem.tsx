@@ -258,7 +258,7 @@ const CommentItem = ({ comment, talkPickWriter }: CommentItemProps) => {
                 talkPickWriter={talkPickWriter}
               />
             ))}
-          {(replies || []).length > visibleReply && (
+          {(replies ?? []).length > visibleReply && (
             <button
               type="button"
               css={S.moreButtonStyling}
