@@ -6,7 +6,7 @@ import { useNewSelector } from '@/store';
 import { selectAccessToken } from '@/store/auth';
 import { useParseJwt } from '@/hooks/common/useParseJwt';
 import { useMemberQuery } from '@/hooks/api/member/useMemberQuery';
-import { formatDateFromISO } from '@/utils/formatData';
+import { formatDateFromISOWithTime } from '@/utils/formatData';
 import { useCommentActions } from '@/hooks/comment/useCommentActions';
 import { useCreateReplyMutation } from '@/hooks/api/comment/useCreateReplyMutation';
 import { useRepliesQuery } from '@/hooks/api/comment/useRepliesQuery';
@@ -191,7 +191,7 @@ const CommentItem = ({ comment, talkPickWriter }: CommentItemProps) => {
               )}
               <span css={S.nickname}>{comment?.nickname}</span>
               <span css={S.createdTime}>
-                {formatDateFromISO(comment?.createdAt ?? '')}
+                {formatDateFromISOWithTime(comment?.createdAt ?? '')}
               </span>
               {comment.edited && <span css={S.editedText}>수정됨</span>}
             </div>

@@ -4,7 +4,7 @@ import { useNewSelector } from '@/store';
 import { selectAccessToken } from '@/store/auth';
 import { useParseJwt } from '@/hooks/common/useParseJwt';
 import { useMemberQuery } from '@/hooks/api/member/useMemberQuery';
-import { formatDateFromISO } from '@/utils/formatData';
+import { formatDateFromISOWithTime } from '@/utils/formatData';
 import { useCommentActions } from '@/hooks/comment/useCommentActions';
 import MenuTap, { MenuItem } from '@/components/atoms/MenuTap/MenuTap';
 import ToastModal from '@/components/atoms/ToastModal/ToastModal';
@@ -144,7 +144,7 @@ const ReplyItem = ({ reply, talkPickWriter }: ReplyItemProps) => {
               )}
               <span css={S.nickname}>{reply?.nickname}</span>
               <span css={S.createdTime}>
-                {formatDateFromISO(reply?.createdAt ?? '')}
+                {formatDateFromISOWithTime(reply?.createdAt ?? '')}
               </span>
               {reply.edited && <span css={S.editedText}>수정됨</span>}
             </div>
