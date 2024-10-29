@@ -65,7 +65,7 @@ export const All: Story = {
         <h3>타인 댓글</h3>
         <CommentItem {...args} />
         <h3>작성자 댓글</h3>
-        <CommentItem {...args} isMyTalkPick />
+        <CommentItem {...args} talkPickWriter="닉네임 4" />
       </div>
     </div>
   ),

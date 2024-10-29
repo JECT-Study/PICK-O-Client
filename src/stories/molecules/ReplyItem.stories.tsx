@@ -6,6 +6,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import ReactQueryProvider from '@/providers/ReactQueryProvider';
 import { Comment } from '@/types/comment';
 import ReplyItem from '@/components/molecules/ReplyItem/ReplyItem';
+import { storyContainer, storyInnerContainer } from '@/stories/story.styles';
 
 const exampleReply: Comment = {
   id: 1,
@@ -55,3 +56,16 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
+
+export const All: Story = {
+  render: (args) => (
+    <div css={storyContainer}>
+      <div css={storyInnerContainer}>
+        <h3>타인 답글</h3>
+        <ReplyItem {...args} />
+        <h3>작성자 답글</h3>
+        <ReplyItem {...args} talkPickWriter="닉네임 4" />
+      </div>
+    </div>
+  ),
+};
