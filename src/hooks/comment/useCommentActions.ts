@@ -61,7 +61,7 @@ export const useCommentActions = (
   };
 
   const handleLikeToggle = (myLike: boolean) => {
-    if (myLike) {
+    if (myLike === true) {
       deleteLikeComment();
     } else {
       createLikeComment();
