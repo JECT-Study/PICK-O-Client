@@ -119,7 +119,7 @@ const ReplyItem = ({
           onConfirm={() => {
             handleDeleteReplyButton();
           }}
-          onClose={() => setReportTextModalOpen(false)}
+          onClose={() => setDeleteTextModalOpen(false)}
         />
         <TextModal
           text="해당 답글을 신고하시겠습니까?"
