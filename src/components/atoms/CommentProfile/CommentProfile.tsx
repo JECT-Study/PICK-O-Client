@@ -2,7 +2,7 @@ import React from 'react';
 import * as S from './CommentProfile.style';
 
 export interface CommentProfileProps {
-  option?: 'A' | 'B' | null;
+  option: 'A' | 'B' | null;
   imgUrl?: string;
 }
 
