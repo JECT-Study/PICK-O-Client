@@ -171,9 +171,7 @@ const ReplyItem = ({
                 <LikeButton
                   likeCount={reply?.likesCount}
                   likeState={reply?.myLike}
-                  onClick={() => {
-                    handleLikeToggle(reply.myLike);
-                  }}
+                  onClick={handleLikeToggle}
                 />
               </div>
             </>

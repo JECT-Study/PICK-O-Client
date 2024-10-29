@@ -60,8 +60,8 @@ export const useCommentActions = (
     deleteComment();
   };
 
-  const handleLikeToggle = (myLike: boolean) => {
-    if (myLike === true) {
+  const handleLikeToggle = () => {
+    if (commentData.myLike) {
       deleteLikeComment();
     } else {
       createLikeComment();

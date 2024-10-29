@@ -224,9 +224,7 @@ const CommentItem = ({
                 <LikeButton
                   likeCount={comment?.likesCount}
                   likeState={comment?.myLike}
-                  onClick={() => {
-                    handleLikeToggle(comment.myLike);
-                  }}
+                  onClick={handleLikeToggle}
                 />
               </div>
             </>
