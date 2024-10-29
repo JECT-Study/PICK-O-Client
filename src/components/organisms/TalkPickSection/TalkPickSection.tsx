@@ -10,7 +10,7 @@ import {
 } from '@/assets';
 import { useNavigate } from 'react-router-dom';
 import { TalkPickDetail } from '@/types/talk-pick';
-import { ERROR } from '@/constants/message';
+import { ERROR, SUCCESS } from '@/constants/message';
 import { formatDate, formatNumber } from '@/utils/formatData';
 import Button from '@/components/atoms/Button/Button';
 import SummaryBox from '@/components/molecules/SummaryBox/SummaryBox';
@@ -23,6 +23,7 @@ import ReportModal from '@/components/molecules/ReportModal/ReportModal';
 import { useCreateTalkPickBookmarkMutation } from '@/hooks/api/bookmark/useCreateTalkPickBookmarkMutation';
 import { useDeleteTalkPickBookmarkMutation } from '@/hooks/api/bookmark/useDeleteTalkPickBookmarkMutation';
 import { useDeleteTalkPickMutation } from '@/hooks/api/talk-pick/useDeleteTalkPickMutation';
+import useToastModal from '@/hooks/modal/useToastModal';
 import * as S from './TalkPickSection.style';
 
 export interface TalkPickProps {
@@ -40,8 +41,7 @@ const TalkPickSection = ({
   const navigate = useNavigate();
 
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
-  const [linkCopied, setLinkCopied] = useState<boolean>(false);
-  const [bookmarkError, setBookmarkError] = useState<boolean>(false);
+  const { isVisible, modalText, showToastModal } = useToastModal();
 
   const [shareModalOpen, setShareModalOpen] = useState<boolean>(false);
   const [reportModalOpen, setReportModalOpen] = useState<boolean>(false);
@@ -73,11 +73,7 @@ const TalkPickSection = ({
     if (!talkPick) return;
 
     if (myTalkPick) {
-      setBookmarkError(true);
-      setTimeout(() => {
-        setBookmarkError(false);
-      }, 2000);
-
+      showToastModal(ERROR.BOOKMARK.MY_TALKPICK);
       return;
     }
 
@@ -112,23 +108,14 @@ const TalkPickSection = ({
   const handleCopyButton = (link: string) => {
     copyTalkPickLink(link);
     setShareModalOpen(false);
-    setLinkCopied(true);
-
-    setTimeout(() => {
-      setLinkCopied(false);
-    }, 2000);
+    showToastModal(SUCCESS.COPY.LINK);
   };
 
   return (
     <div css={S.todayTalkPickStyling}>
-      {linkCopied && (
+      {isVisible && (
         <div css={S.toastModalStyling}>
-          <ToastModal>복사 완료!</ToastModal>
-        </div>
-      )}
-      {bookmarkError && (
-        <div css={S.toastModalStyling}>
-          <ToastModal>{ERROR.BOOKMARK.MY_TALKPICK}</ToastModal>
+          <ToastModal>{modalText}</ToastModal>
         </div>
       )}
       <div css={S.centerStyling}>

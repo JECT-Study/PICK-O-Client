@@ -17,7 +17,7 @@ interface State {
   isTodayTalkPick: boolean;
 }
 
-const TodayTalkPickPage = () => {
+const TalkPickPage = () => {
   const [selectedPage, setSelectedPage] = useState<number>(1);
   const [selectedValue, setSelectedValue] = useState<string>('trend');
 
@@ -84,4 +84,4 @@ const TodayTalkPickPage = () => {
   );
 };
 
-export default TodayTalkPickPage;
+export default TalkPickPage;
