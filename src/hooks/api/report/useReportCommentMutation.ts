@@ -8,7 +8,9 @@ import { postCommentReport } from '@/api/report';
 export const useReportCommentMutation = (
   talkPickId: Id,
   commentId: Id,
+  selectedPage: number,
   showToastModal: (message: string) => () => void,
+  parentId?: number,
 ) => {
   const queryClient = useQueryClient();
 
@@ -16,9 +18,20 @@ export const useReportCommentMutation = (
     mutationFn: (data: string) =>
       postCommentReport(talkPickId, commentId, data),
     onSuccess: async () => {
-      await queryClient.invalidateQueries({
-        queryKey: ['talks', talkPickId, 'comments'],
-      });
+      await Promise.all([
+        queryClient.invalidateQueries({
+          queryKey: ['talks', talkPickId, 'comments', selectedPage - 1],
+        }),
+        queryClient.invalidateQueries({
+          queryKey: ['talks', talkPickId, 'bestComments', selectedPage - 1],
+        }),
+      ]);
+
+      if (parentId) {
+        await queryClient.invalidateQueries({
+          queryKey: ['talks', talkPickId, parentId, 'replies'],
+        });
+      }
       showToastModal(SUCCESS.COMMENT.REPORT);
     },
     onError: (err: AxiosErrorResponse) => {

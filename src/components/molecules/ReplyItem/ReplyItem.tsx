@@ -18,10 +18,17 @@ import * as S from './ReplyItem.style';
 
 export interface ReplyItemProps {
   reply: Comment;
+  selectedPage: number;
   talkPickWriter: string;
+  parentId: number;
 }
 
-const ReplyItem = ({ reply, talkPickWriter }: ReplyItemProps) => {
+const ReplyItem = ({
+  reply,
+  selectedPage,
+  talkPickWriter,
+  parentId,
+}: ReplyItemProps) => {
   const accessToken = useNewSelector(selectAccessToken);
   const { member } = useMemberQuery(useParseJwt(accessToken).memberId);
 
@@ -44,8 +51,10 @@ const ReplyItem = ({ reply, talkPickWriter }: ReplyItemProps) => {
     useCommentActions(
       reply,
       editReplyText,
+      selectedPage,
       setEditReplyClicked,
       showToastModal,
+      parentId,
     );
 
   useEffect(() => {

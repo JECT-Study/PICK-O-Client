@@ -25,10 +25,15 @@ import * as S from './CommentItem.style';
 
 export interface CommentItemProps {
   comment: Comment;
+  selectedPage: number;
   talkPickWriter: string;
 }
 
-const CommentItem = ({ comment, talkPickWriter }: CommentItemProps) => {
+const CommentItem = ({
+  comment,
+  selectedPage,
+  talkPickWriter,
+}: CommentItemProps) => {
   const accessToken = useNewSelector(selectAccessToken);
   const { member } = useMemberQuery(useParseJwt(accessToken).memberId);
 
@@ -55,6 +60,7 @@ const CommentItem = ({ comment, talkPickWriter }: CommentItemProps) => {
     useCommentActions(
       comment,
       editCommentText,
+      selectedPage,
       setEditCommentClicked,
       showToastModal,
     );
@@ -87,6 +93,7 @@ const CommentItem = ({ comment, talkPickWriter }: CommentItemProps) => {
   const { mutate: createReply } = useCreateReplyMutation(
     comment.talkPickId,
     comment.id,
+    selectedPage,
   );
 
   const handleReplyButton = () => {
@@ -247,7 +254,9 @@ const CommentItem = ({ comment, talkPickWriter }: CommentItemProps) => {
               <ReplyItem
                 key={replyData.id}
                 reply={replyData}
+                selectedPage={selectedPage}
                 talkPickWriter={talkPickWriter}
+                parentId={comment.id}
               />
             ))}
           {(replies ?? []).length > visibleReply && (

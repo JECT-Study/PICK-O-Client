@@ -8,7 +8,9 @@ import { ERROR } from '@/constants/message';
 export const useCreateLikeCommentMutation = (
   talkPickId: Id,
   commentId: Id,
+  selectedPage: number,
   showToastModal: (message: string) => () => void,
+  parentId?: number,
 ) => {
   const queryClient = useQueryClient();
 
@@ -19,18 +21,22 @@ export const useCreateLikeCommentMutation = (
         showToastModal(ERROR.COMMENT.MY_COMMENT_LIKE);
       }
     },
-    onSuccess: () =>
-      Promise.all([
+    onSuccess: async () => {
+      await Promise.all([
         queryClient.invalidateQueries({
-          queryKey: ['talks', talkPickId, commentId],
+          queryKey: ['talks', talkPickId, 'comments', selectedPage - 1],
         }),
         queryClient.invalidateQueries({
-          queryKey: ['talks', talkPickId, commentId, 'replies'],
+          queryKey: ['talks', talkPickId, 'bestComments', selectedPage - 1],
         }),
-        queryClient.invalidateQueries({
-          queryKey: ['talks', talkPickId],
-        }),
-      ]),
+      ]);
+
+      if (parentId) {
+        await queryClient.invalidateQueries({
+          queryKey: ['talks', talkPickId, parentId, 'replies'],
+        });
+      }
+    },
   });
   return { ...likeCommentMutation };
 };
