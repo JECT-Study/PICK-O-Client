@@ -22,6 +22,8 @@ import { useNewSelector } from '@/store';
 import { selectAccessToken } from '@/store/auth';
 import { useMemberQuery } from '@/hooks/api/member/useMemberQuery';
 import { useParseJwt } from '@/hooks/common/useParseJwt';
+import MypageListSkeleton from '@/components/atoms/MypageListSkeleton/MypageListSkeleton';
+import MypageCardSkeleton from '@/components/atoms/MypageCardSkeleton/MypageCardSkeleton';
 import * as S from './MyPage.style';
 
 const MyPage = () => {
@@ -29,7 +31,7 @@ const MyPage = () => {
   const { member } = useMemberQuery(useParseJwt(accessToken).memberId);
   const memberId: number = member!.id;
 
-  const { memberInfo } = useMyInfoQuery(memberId);
+  const { memberInfo, isLoading } = useMyInfoQuery(memberId);
   const myBookmarksQuery = useMyBookmarksQuery();
   const myVotesQuery = useMyVotesQuery();
   const myCommentsQuery = useMyCommentsQuery();
@@ -47,6 +49,10 @@ const MyPage = () => {
     gameVotes: useGameVotesQuery(),
     gameWrittens: useGameWrittensQuery(),
   };
+
+  const queryisLoading = Object.values(queries).some(
+    (query) => query.isLoading,
+  );
 
   const { ref, isFetchingAnyNextPage } = useObserver(queries);
 
@@ -99,6 +105,15 @@ const MyPage = () => {
   ]);
 
   const renderContent = () => {
+    if (queryisLoading) {
+      if (selectedGroup === OptionKeys.TALK_PICK) {
+        return <MypageListSkeleton />;
+      }
+      if (selectedGroup === OptionKeys.BALANCE_GAME) {
+        return <MypageCardSkeleton />;
+      }
+    }
+
     if (!queryResult) {
       return <div>표시할 페이지가 없습니다</div>;
     }
@@ -128,13 +143,17 @@ const MyPage = () => {
 
   return (
     <div css={S.pageContainer}>
-      {memberInfo && (
-        <SideBar
-          nickname={memberInfo.nickname}
-          profileImageUrl={memberInfo.profileImageUrl}
-          postsCount={memberInfo.postsCount}
-          bookmarkedPostsCount={memberInfo.bookmarkedPostsCount}
-        />
+      {isLoading ? (
+        <SideBar isLoading />
+      ) : (
+        memberInfo && (
+          <SideBar
+            nickname={memberInfo.nickname}
+            profileImageUrl={memberInfo.profileImageUrl}
+            postsCount={memberInfo.postsCount}
+            bookmarkedPostsCount={memberInfo.bookmarkedPostsCount}
+          />
+        )
       )}
       <div css={S.contentWrapper}>
         <OptionBar
