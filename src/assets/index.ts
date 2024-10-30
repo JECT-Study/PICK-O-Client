@@ -1,7 +1,5 @@
 export { default as AngleSmallDown } from './svg/angle-small-down.svg';
 export { default as AngleSmallUp } from './svg/angle-small-up.svg';
-export { default as AngleReplyDown } from './svg/angle-reply-down.svg';
-export { default as AngleReplyUp } from './svg/angle-reply-up.svg';
 export { default as BookmarkRR } from './svg/bookmark-rr.svg';
 export { default as BookmarkSR } from './svg/bookmark-sr.svg';
 export { default as Search } from './svg/search.svg';

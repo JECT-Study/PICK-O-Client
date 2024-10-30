@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import React, { useEffect, useRef, useState } from 'react';
 import { Comment } from '@/types/comment';
-import { AngleReplyDown, AngleReplyUp } from '@/assets';
+import { ArrowDown, ArrowUp } from '@/assets';
 import { useNewSelector } from '@/store';
 import { selectAccessToken } from '@/store/auth';
 import { useParseJwt } from '@/hooks/common/useParseJwt';
@@ -218,7 +218,7 @@ const CommentItem = ({
                   css={S.replyButton}
                   onClick={handleReplyToggle}
                 >
-                  {showReply ? <AngleReplyUp /> : <AngleReplyDown />}
+                  {showReply ? <ArrowUp /> : <ArrowDown />}
                   답글 <span>{comment.replyCount}</span>개
                 </button>
                 <LikeButton
