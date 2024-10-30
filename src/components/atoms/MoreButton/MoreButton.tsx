@@ -11,12 +11,7 @@ const MoreButton = (
   ref: ForwardedRef<HTMLButtonElement>,
 ) => {
   return (
-    <button
-      type="button"
-      ref={ref}
-      css={[S.moreButtonStyling, S.getTextColor(icon)]}
-      {...props}
-    >
+    <button type="button" ref={ref} css={S.moreButtonStyling(icon)} {...props}>
       더보기
       {icon === 'plus' ? <More /> : <MoreReply />}
     </button>
