@@ -6,9 +6,18 @@ const meta = {
   component: SearchResultListSkeleton,
   parameters: {},
   tags: ['autodocs'],
+  argTypes: {
+    length: {
+      control: { type: 'number' },
+    },
+  },
 } satisfies Meta<typeof SearchResultListSkeleton>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  args: {
+    length: 10,
+  },
+};
