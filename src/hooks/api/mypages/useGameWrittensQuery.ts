@@ -9,6 +9,7 @@ export const useGameWrittensQuery = () => {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
+    isLoading,
   } = useInfiniteScroll<GameWritten>(
     ['gameWritten'],
     ({ pageParam = 0 }) => getGameWritten(pageParam, 20),
@@ -40,5 +41,6 @@ export const useGameWrittensQuery = () => {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
+    isLoading,
   };
 };
