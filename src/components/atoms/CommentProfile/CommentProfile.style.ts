@@ -10,19 +10,14 @@ export const containerStyle = css`
 `;
 
 export const getProfileColor = (option: 'A' | 'B' | null) => {
-  if (option === 'A') {
-    return css({
-      backgroundColor: color.RED,
-    });
-  }
-  if (option === 'B') {
-    return css({
-      backgroundColor: color.BLUE,
-    });
-  }
+  const backgroundColors = {
+    A: color.RED,
+    B: color.BLUE,
+    null: color.GY[2],
+  };
 
   return css({
-    backgroundColor: color.GY[2],
+    backgroundColor: backgroundColors[option ?? 'null'],
   });
 };
 
