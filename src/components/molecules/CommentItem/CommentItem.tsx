@@ -21,6 +21,7 @@ import TextModal from '@/components/molecules/TextModal/TextModal';
 import ReportModal from '@/components/molecules/ReportModal/ReportModal';
 import ReplyItem from '@/components/molecules/ReplyItem/ReplyItem';
 import useToastModal from '@/hooks/modal/useToastModal';
+import useOutsideClick from '@/hooks/common/useOutsideClick';
 import * as S from './CommentItem.style';
 
 export interface CommentItemProps {
@@ -69,18 +70,7 @@ const CommentItem = ({
     setEditCommentText(comment.content);
   }, [comment.content]);
 
-  useEffect(() => {
-    const handleClick = (e: MouseEvent) => {
-      if (
-        commentRef.current &&
-        !commentRef.current.contains(e.target as Node)
-      ) {
-        setEditCommentClicked(false);
-      }
-    };
-    window.addEventListener('mousedown', handleClick);
-    return () => window.removeEventListener('mousedown', handleClick);
-  }, [commentRef]);
+  useOutsideClick(commentRef, () => setEditCommentClicked(false));
 
   const [showReply, setShowReply] = useState(false);
   const [replyValue, setReplyValue] = useState('');

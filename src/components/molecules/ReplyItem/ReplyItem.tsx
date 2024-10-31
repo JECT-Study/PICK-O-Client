@@ -14,6 +14,7 @@ import TextArea from '@/components/molecules/TextArea/TextArea';
 import TextModal from '@/components/molecules/TextModal/TextModal';
 import ReportModal from '@/components/molecules/ReportModal/ReportModal';
 import useToastModal from '@/hooks/modal/useToastModal';
+import useOutsideClick from '@/hooks/common/useOutsideClick';
 import * as S from './ReplyItem.style';
 
 export interface ReplyItemProps {
@@ -61,15 +62,7 @@ const ReplyItem = ({
     setEditReplyText(reply.content);
   }, [reply.content]);
 
-  useEffect(() => {
-    const handleClick = (e: MouseEvent) => {
-      if (replyRef.current && !replyRef.current.contains(e.target as Node)) {
-        setEditReplyClicked(false);
-      }
-    };
-    window.addEventListener('mousedown', handleClick);
-    return () => window.removeEventListener('mousedown', handleClick);
-  }, [replyRef]);
+  useOutsideClick(replyRef, () => setEditReplyClicked(false));
 
   const handleDeleteReplyButton = () => {
     setDeleteTextModalOpen(false);
