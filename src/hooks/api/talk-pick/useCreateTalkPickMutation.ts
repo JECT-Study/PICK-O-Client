@@ -31,11 +31,11 @@ export const useCreateTalkPickMutation = () => {
       });
       setCreateSuccess(true);
 
+      await postTalkPickSummary(talkPickId);
+
       setTimeout(() => {
         navigate('/talkpickplace');
       }, 2000);
-
-      await postTalkPickSummary(talkPickId);
     },
     onError: (err: AxiosErrorResponse) => {
       if (err.status === HTTP_STATUS_CODE.UNAUTHORIZED) {

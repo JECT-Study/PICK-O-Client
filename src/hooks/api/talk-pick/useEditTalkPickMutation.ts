@@ -19,11 +19,11 @@ export const useEditTalkPickMutation = (talkPickId: Id) => {
       });
       setEditSuccess(true);
 
+      await postTalkPickSummary(talkPickId);
+
       setTimeout(() => {
         navigate('/talkpickplace');
       }, 2000);
-
-      await postTalkPickSummary(talkPickId);
     },
   });
 
