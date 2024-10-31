@@ -39,14 +39,16 @@ const ReplyItem = ({
   const replyRef = useRef<HTMLDivElement>(null);
   const { isVisible, modalText, showToastModal } = useToastModal();
 
-  const [reportModalOpen, setReportModalOpen] = useState<boolean>(false);
-  const [reportTextModalOpen, setReportTextModalOpen] =
-    useState<boolean>(false);
-  const [deleteTextModalOpen, setDeleteTextModalOpen] =
-    useState<boolean>(false);
-
   const [editReplyClicked, setEditReplyClicked] = useState<boolean>(false);
   const [editReplyText, setEditReplyText] = useState<string>(reply.content);
+
+  const [activeModal, setActiveModal] = useState<
+    'reportReply' | 'reportText' | 'deleteText' | 'none'
+  >('none');
+
+  const onCloseModal = () => {
+    setActiveModal('none');
+  };
 
   const { handleEditSubmit, handleDelete, handleLikeToggle, handleReport } =
     useCommentActions(
@@ -65,7 +67,7 @@ const ReplyItem = ({
   useOutsideClick(replyRef, () => setEditReplyClicked(false));
 
   const handleDeleteReplyButton = () => {
-    setDeleteTextModalOpen(false);
+    onCloseModal();
     handleDelete();
   };
 
@@ -79,7 +81,7 @@ const ReplyItem = ({
     {
       label: '삭제',
       onClick: () => {
-        setDeleteTextModalOpen(true);
+        setActiveModal('deleteText');
       },
     },
   ];
@@ -88,14 +90,14 @@ const ReplyItem = ({
     {
       label: '신고',
       onClick: () => {
-        setReportTextModalOpen(true);
+        setActiveModal('reportText');
       },
     },
   ];
 
   const handleReportReplyButton = (reason: string) => {
     handleReport(reason);
-    setReportModalOpen(false);
+    onCloseModal();
   };
 
   return (
@@ -108,25 +110,24 @@ const ReplyItem = ({
       <div css={S.centerStyling}>
         <TextModal
           text="작성한 답글을 삭제하시겠습니까?"
-          isOpen={deleteTextModalOpen}
+          isOpen={activeModal === 'deleteText'}
           onConfirm={() => {
             handleDeleteReplyButton();
           }}
-          onClose={() => setDeleteTextModalOpen(false)}
+          onClose={onCloseModal}
         />
         <TextModal
           text="해당 답글을 신고하시겠습니까?"
-          isOpen={reportTextModalOpen}
+          isOpen={activeModal === 'reportText'}
           onConfirm={() => {
-            setReportTextModalOpen(false);
-            setReportModalOpen(true);
+            setActiveModal('reportReply');
           }}
-          onClose={() => setReportTextModalOpen(false)}
+          onClose={onCloseModal}
         />
         <ReportModal
-          isOpen={reportModalOpen}
+          isOpen={activeModal === 'reportReply'}
           onConfirm={(reason) => handleReportReplyButton(reason)}
-          onClose={() => setReportModalOpen(false)}
+          onClose={onCloseModal}
         />
       </div>
       <div ref={replyRef} css={[S.ReplyContainer, isMyReply && S.myReplyColor]}>
