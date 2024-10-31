@@ -5,7 +5,6 @@ const meta = {
   title: 'atoms/MypageCardSkeleton',
   component: MypageCardSkeleton,
   parameters: {},
-  tags: ['autodocs'],
 } satisfies Meta<typeof MypageCardSkeleton>;
 
 export default meta;

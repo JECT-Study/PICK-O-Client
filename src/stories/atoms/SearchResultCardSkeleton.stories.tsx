@@ -5,7 +5,6 @@ const meta = {
   title: 'atoms/SearchResultCardSkeleton',
   component: SearchResultCardSkeleton,
   parameters: {},
-  tags: ['autodocs'],
 } satisfies Meta<typeof SearchResultCardSkeleton>;
 
 export default meta;

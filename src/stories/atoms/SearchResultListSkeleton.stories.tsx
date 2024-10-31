@@ -5,7 +5,6 @@ const meta = {
   title: 'atoms/SearchResultListSkeleton',
   component: SearchResultListSkeleton,
   parameters: {},
-  tags: ['autodocs'],
   argTypes: {
     length: {
       control: { type: 'number' },

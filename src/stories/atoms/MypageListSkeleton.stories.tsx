@@ -5,7 +5,6 @@ const meta = {
   title: 'atoms/MypageListSkeleton',
   component: MypageListSkeleton,
   parameters: {},
-  tags: ['autodocs'],
 } satisfies Meta<typeof MypageListSkeleton>;
 
 export default meta;
