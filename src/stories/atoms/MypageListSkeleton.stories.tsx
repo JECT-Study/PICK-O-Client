@@ -5,9 +5,18 @@ const meta = {
   title: 'atoms/MypageListSkeleton',
   component: MypageListSkeleton,
   parameters: {},
+  argTypes: {
+    count: {
+      control: { type: 'number' },
+    },
+  },
 } satisfies Meta<typeof MypageListSkeleton>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  args: {
+    count: 8,
+  },
+};

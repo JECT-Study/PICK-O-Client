@@ -41,13 +41,13 @@ const MyPage = () => {
   const gameWrittensQuery = useGameWrittensQuery();
 
   const queries = {
-    myBookmarks: useMyBookmarksQuery(),
-    myVotes: useMyVotesQuery(),
-    myComments: useMyCommentsQuery(),
-    myWrittens: useMyWrittensQuery(),
-    gameBookmarks: useGameBookmarksQuery(),
-    gameVotes: useGameVotesQuery(),
-    gameWrittens: useGameWrittensQuery(),
+    myBookmarks: myBookmarksQuery,
+    myVotes: myVotesQuery,
+    myComments: myCommentsQuery,
+    myWrittens: myWrittensQuery,
+    gameBookmarks: gameBookmarksQuery,
+    gameVotes: gameVotesQuery,
+    gameWrittens: gameWrittensQuery,
   };
 
   const isQueryLoading = Object.values(queries).some(
@@ -106,8 +106,9 @@ const MyPage = () => {
 
   const renderContent = () => {
     if (queryisLoading) {
+      const skeletonCount = queryResult?.content?.length || 8;
       if (selectedGroup === OptionKeys.TALK_PICK) {
-        return <MypageListSkeleton />;
+        return <MypageListSkeleton count={skeletonCount} />;
       }
       if (selectedGroup === OptionKeys.BALANCE_GAME) {
         return <MypageCardSkeleton />;
