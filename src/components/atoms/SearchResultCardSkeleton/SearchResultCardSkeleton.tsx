@@ -2,10 +2,16 @@
 import React from 'react';
 import * as S from './SearchResultCardSkeleton.style';
 
-const SearchResultCardSkeleton = () => {
+interface SearchResultCardSkeletonProps {
+  count: number;
+}
+
+const SearchResultCardSkeleton = ({
+  count = 9,
+}: SearchResultCardSkeletonProps) => {
   return (
     <div css={S.gridContainer}>
-      {Array.from({ length: 9 }).map((_, index) => (
+      {Array.from({ length: count }).map((_, index) => (
         <div key={index} css={S.cardWrapper} />
       ))}
     </div>
