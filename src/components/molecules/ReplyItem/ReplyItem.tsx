@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Comment } from '@/types/comment';
 import { useNewSelector } from '@/store';
 import { selectAccessToken } from '@/store/auth';
@@ -33,8 +33,13 @@ const ReplyItem = ({
   const accessToken = useNewSelector(selectAccessToken);
   const { member } = useMemberQuery(useParseJwt(accessToken).memberId);
 
-  const isMyReply: boolean = reply?.nickname === member?.nickname;
-  const isTalkPickWriter: boolean = reply?.nickname === talkPickWriter;
+  const isMyReply = useMemo(() => {
+    return reply?.nickname === member?.nickname;
+  }, [reply?.nickname, member?.nickname]);
+
+  const isTalkPickWriter = useMemo(() => {
+    return reply?.nickname === talkPickWriter;
+  }, [reply?.nickname, talkPickWriter]);
 
   const replyRef = useRef<HTMLDivElement>(null);
   const { isVisible, modalText, showToastModal } = useToastModal();
@@ -86,7 +91,7 @@ const ReplyItem = ({
     },
   ];
 
-  const otherReply: MenuItem[] = [
+  const reportReply: MenuItem[] = [
     {
       label: '신고',
       onClick: () => {
@@ -144,7 +149,7 @@ const ReplyItem = ({
               {reply.edited && <span css={S.editedText}>수정됨</span>}
             </div>
             {!editReplyClicked && (
-              <MenuTap menuData={isMyReply ? myReply : otherReply} />
+              <MenuTap menuData={isMyReply ? myReply : reportReply} />
             )}
           </div>
           {editReplyClicked ? (

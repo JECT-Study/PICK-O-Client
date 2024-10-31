@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Comment } from '@/types/comment';
 import { ArrowDown, ArrowUp } from '@/assets';
 import { useNewSelector } from '@/store';
@@ -38,8 +38,13 @@ const CommentItem = ({
   const accessToken = useNewSelector(selectAccessToken);
   const { member } = useMemberQuery(useParseJwt(accessToken).memberId);
 
-  const isMyComment: boolean = comment?.nickname === member?.nickname;
-  const isTalkPickWriter: boolean = comment?.nickname === talkPickWriter;
+  const isMyComment = useMemo(() => {
+    return comment?.nickname === member?.nickname;
+  }, [comment?.nickname, member?.nickname]);
+
+  const isTalkPickWriter = useMemo(() => {
+    return comment?.nickname === talkPickWriter;
+  }, [comment?.nickname, talkPickWriter]);
 
   const commentRef = useRef<HTMLDivElement>(null);
   const { isVisible, modalText, showToastModal } = useToastModal();
@@ -115,7 +120,7 @@ const CommentItem = ({
     },
   ];
 
-  const otherComment: MenuItem[] = [
+  const reportComment: MenuItem[] = [
     {
       label: '신고',
       onClick: () => {
@@ -186,7 +191,7 @@ const CommentItem = ({
               {comment.edited && <span css={S.editedText}>수정됨</span>}
             </div>
             {!editCommentClicked && (
-              <MenuTap menuData={isMyComment ? myComment : otherComment} />
+              <MenuTap menuData={isMyComment ? myComment : reportComment} />
             )}
           </div>
           {editCommentClicked ? (
