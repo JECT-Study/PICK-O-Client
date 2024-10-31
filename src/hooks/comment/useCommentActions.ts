@@ -13,46 +13,48 @@ export const useCommentActions = (
   showToastModal: (message: string) => () => void,
   parentId?: number,
 ) => {
+  const { id, talkPickId, content, myLike } = commentData;
+
   const { mutate: editComment } = useEditCommentMutation(
-    commentData.talkPickId,
-    commentData.id,
+    talkPickId,
+    id,
     selectedPage,
     setEditButtonClicked,
     parentId,
   );
 
   const { mutate: deleteComment } = useDeleteCommentMutation(
-    commentData.talkPickId,
-    commentData.id,
+    talkPickId,
+    id,
     selectedPage,
     parentId,
   );
 
   const { mutate: createLikeComment } = useCreateLikeCommentMutation(
-    commentData.talkPickId,
-    commentData.id,
+    talkPickId,
+    id,
     selectedPage,
     showToastModal,
     parentId,
   );
 
   const { mutate: deleteLikeComment } = useDeleteLikeCommentMutation(
-    commentData.talkPickId,
-    commentData.id,
+    talkPickId,
+    id,
     selectedPage,
     parentId,
   );
 
   const { mutate: handleReport } = useReportCommentMutation(
-    commentData.talkPickId,
-    commentData.id,
+    talkPickId,
+    id,
     selectedPage,
     showToastModal,
     parentId,
   );
 
   const handleEditSubmit = () => {
-    if (commentData.content === editText) return;
+    if (content === editText) return;
     editComment({ content: editText });
   };
 
@@ -60,13 +62,8 @@ export const useCommentActions = (
     deleteComment();
   };
 
-  const handleLikeToggle = () => {
-    if (commentData.myLike) {
-      deleteLikeComment();
-    } else {
-      createLikeComment();
-    }
-  };
+  const handleLikeToggle = () =>
+    myLike ? deleteLikeComment() : createLikeComment();
 
   return {
     handleEditSubmit,
