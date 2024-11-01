@@ -24,7 +24,7 @@ const SideBar = ({
   bookmarkedPostsCount,
   isLoading = false,
 }: SideBarProps) => {
-  const profileIconInteraction = profileImageUrl ? 'settings' : 'normal';
+  const profileIconInteraction = profileImageUrl ? 'custom' : 'default';
 
   return (
     <div css={S.sidebarContainer(isLoading)}>

@@ -3,7 +3,7 @@ import { NormalProfile } from '@/assets';
 import { profileWrapper, profileImage } from './ProfileIcon.style';
 
 export interface ProfileProps extends ComponentPropsWithRef<'button'> {
-  interaction: 'normal' | 'settings';
+  interaction: 'default' | 'custom';
   imgUrl?: string;
   size?: 'small' | 'large';
 }
@@ -16,7 +16,7 @@ interface ProfilePropsWithImage extends ComponentPropsWithRef<'button'> {
 
 const ProfileIcon = (
   {
-    interaction = 'normal',
+    interaction = 'default',
     imgUrl,
     size = 'small',
     ...props
