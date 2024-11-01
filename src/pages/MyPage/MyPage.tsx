@@ -50,7 +50,7 @@ const MyPage = () => {
     gameWrittens: useGameWrittensQuery(),
   };
 
-  const queryisLoading = Object.values(queries).some(
+  const isQueryLoading = Object.values(queries).some(
     (query) => query.isLoading,
   );
 
