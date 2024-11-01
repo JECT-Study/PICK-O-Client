@@ -20,7 +20,6 @@ export const profileWrapper = css({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  marginBottom: '40px',
   width: '100%',
 });
 
@@ -35,4 +34,5 @@ export const profileLabelBox = css({
 
 export const sideWrapper = css({
   width: '100%',
+  marginBottom: '40px',
 });
