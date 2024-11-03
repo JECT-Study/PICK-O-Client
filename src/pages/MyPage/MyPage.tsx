@@ -105,7 +105,7 @@ const MyPage = () => {
   ]);
 
   const renderContent = () => {
-    if (queryisLoading) {
+    if (isQueryLoading) {
       const skeletonCount = queryResult?.content?.length || 8;
       if (selectedGroup === OptionKeys.TALK_PICK) {
         return <MypageListSkeleton count={skeletonCount} />;
