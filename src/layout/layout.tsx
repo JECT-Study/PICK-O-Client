@@ -41,7 +41,7 @@ export const LayoutNoSearch = () => {
   );
 };
 
-export const LayoutMypage = () => {
+export const LayoutNoFooter = () => {
   return (
     <>
       <Header />

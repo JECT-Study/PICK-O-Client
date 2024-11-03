@@ -11,7 +11,7 @@ import { PATH } from './constants/path';
 import { useMemberQuery } from './hooks/api/member/useMemberQuery';
 import { useParseJwt } from './hooks/common/useParseJwt';
 import { useTokenRefresh } from './hooks/common/useTokenRefresh';
-import { Layout, LayoutMypage, LayoutNoSearch } from './layout/layout';
+import { Layout, LayoutNoFooter } from './layout/layout';
 import CreatePostPage from './pages/CreatePostPage/CreatePostPage';
 // import FindPasswordPage from './pages/FindPasswordPage/FindPasswordPage';
 import LandingPage from './pages/LandingPage/LandingPage';
@@ -58,7 +58,7 @@ const App: React.FC = () => {
             <Route path="post/create" element={<CreatePostPage />} />
           </Route> */}
         </Route>
-        <Route path="/mypage" element={<LayoutMypage />}>
+        <Route path="/mypage" element={<LayoutNoFooter />}>
           <Route index element={<MyPage />} />
         </Route>
         {/* <Route element={<NotAuthRoutes member={member} />}>

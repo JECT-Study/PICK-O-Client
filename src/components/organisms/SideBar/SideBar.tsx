@@ -1,6 +1,6 @@
 import React from 'react';
 import ProfileIcon, {
-  ProfileIconProps,
+  ProfileProps,
 } from '@/components/atoms/ProfileIcon/ProfileIcon';
 import ProfileLabel, {
   ProfileLabelProps,
@@ -10,10 +10,11 @@ import ActionBox from '@/components/molecules/ActionBox/ActionBox';
 import * as S from './SideBar.style';
 
 export interface SideBarProps {
-  nickname: ProfileLabelProps['nickname'];
-  postsCount: SideBoxProps['postsCount'];
-  bookmarkedPostsCount: SideBoxProps['bookmarkedPostsCount'];
-  profileImageUrl?: ProfileIconProps['imgUrl'];
+  nickname?: ProfileLabelProps['nickname'];
+  postsCount?: SideBoxProps['postsCount'];
+  bookmarkedPostsCount?: SideBoxProps['bookmarkedPostsCount'];
+  profileImageUrl?: ProfileProps['imgUrl'];
+  isLoading?: boolean;
 }
 
 const SideBar = ({
@@ -21,30 +22,35 @@ const SideBar = ({
   profileImageUrl,
   postsCount,
   bookmarkedPostsCount,
+  isLoading = false,
 }: SideBarProps) => {
-  const profileIconInteraction = profileImageUrl ? 'settings' : 'normal';
+  const profileIconInteraction = profileImageUrl ? 'custom' : 'default';
 
   return (
-    <div css={S.sidebarContainer}>
-      <div css={S.profileWrapper}>
-        <ProfileIcon
-          interaction={profileIconInteraction}
-          imgUrl={profileImageUrl}
-          size="large"
-        />
-        <div css={S.profileLabelBox}>
-          <ProfileLabel nickname={nickname} />
-        </div>
-        <div css={S.sideWrapper}>
-          <SideBox
-            postsCount={postsCount}
-            bookmarkedPostsCount={bookmarkedPostsCount}
+    <div css={S.sidebarContainer(isLoading)}>
+      {isLoading ? (
+        <div />
+      ) : (
+        <div css={S.profileWrapper}>
+          <ProfileIcon
+            interaction={profileIconInteraction}
+            imgUrl={profileImageUrl}
+            size="large"
           />
+          <div css={S.profileLabelBox}>
+            <ProfileLabel nickname={nickname} />
+          </div>
+          <div css={S.sideWrapper}>
+            <SideBox
+              postsCount={postsCount}
+              bookmarkedPostsCount={bookmarkedPostsCount}
+            />
+          </div>
+          <div css={S.actionWrapper}>
+            <ActionBox />
+          </div>
         </div>
-      </div>
-      <div css={S.actionWrapper}>
-        <ActionBox />
-      </div>
+      )}
     </div>
   );
 };
