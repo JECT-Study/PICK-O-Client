@@ -1,14 +1,25 @@
 import { css } from '@emotion/react';
 import color from '@/styles/color';
 
-export const containerStyle = (stance: 'A' | 'B') => css`
+export const containerStyle = css`
   display: inline-flex;
   padding: 5px;
   align-items: center;
   gap: 10px;
   border-radius: 50px 50px 0 50px;
-  background: ${stance === 'A' ? color.RED : color.BLUE};
 `;
+
+export const getProfileColor = (option: 'A' | 'B' | null) => {
+  const backgroundColors = {
+    A: color.RED,
+    B: color.BLUE,
+    null: color.GY[2],
+  };
+
+  return css({
+    backgroundColor: backgroundColors[option ?? 'null'],
+  });
+};
 
 export const profileWrapper = css({
   width: '45px',

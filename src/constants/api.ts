@@ -84,7 +84,10 @@ export const END_POINT = {
     `/likes/talks/${talkPickId}/comments/${commentId}`,
   DELETE_LIKE_COMMENT: (talkPickId: Id, commentId: Id) =>
     `/likes/talks/${talkPickId}/comments/${commentId}`,
-  CREATE_REPLY: (commentId: Id) => `talks/comments/${commentId}/replies`,
+  REPLIES: (talkPickId: Id, commentId: Id) =>
+    `talks/${talkPickId}/comments/${commentId}/replies`,
+  CREATE_REPLY: (talkPickId: Id, commentId: Id) =>
+    `talks/${talkPickId}/comments/${commentId}/replies`,
 
   // bookmark API
   BOOKMARK_TALKPICK: (talkPickId: Id) => `/bookmarks/talks/${talkPickId}`,

@@ -33,7 +33,12 @@ export const ERROR = {
   SAVE: {
     FAIL: '게시글 임시 저장에 실패했습니다. 다시 시도해주세요.',
   },
+  COMMENT: {
+    MY_COMMENT_LIKE: `본인의 댓글에는 '좋아요' 할 수 없습니다.`,
+    REPORT_AGAIN: '이미 신고한 댓글입니다.',
+  },
   BOOKMARK: {
+    MY_TALKPICK: '본인이 작성한 톡픽은 저장할 수 없습니다.',
     MY_GAME: '본인이 만든 밸런스게임은 저장할 수 없습니다.',
   },
 } as const;
@@ -50,6 +55,9 @@ export const SUCCESS = {
   },
   COPY: {
     LINK: '복사 완료!',
+  },
+  COMMENT: {
+    REPORT: '신고 완료되었습니다.',
   },
 } as const;
 
