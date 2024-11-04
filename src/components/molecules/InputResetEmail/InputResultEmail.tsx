@@ -28,7 +28,9 @@ const InputResetEmail = ({
 
   return (
     <div css={S.inputResetEmailContainer}>
-      <Label id="emailForReset">이메일</Label>
+      <Label id="emailForReset" css={S.labelStyling}>
+        이메일
+      </Label>
       <Input
         id="email"
         name="email"

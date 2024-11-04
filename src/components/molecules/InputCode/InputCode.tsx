@@ -5,7 +5,7 @@ import React, { ChangeEvent, useEffect } from 'react';
 import Button from '@/components/atoms/Button/Button';
 import Input from '@/components/atoms/Input/Input';
 import Label from '@/components/atoms/Label/Label';
-import { inputCodeBtnStyling, inputCodeContainer } from './InputCode.style';
+import * as S from './InputCode.style';
 
 interface InputCodeProps {
   value: Pick<MemberForm, 'email' | 'verificationCode'>;
@@ -32,8 +32,10 @@ const InputCode = ({
   }, [errorMessage]);
 
   return (
-    <div css={inputCodeContainer}>
-      <Label id="verificationCode">인증번호</Label>
+    <div css={S.inputCodeContainer}>
+      <Label id="verificationCode" css={S.labelStyling}>
+        인증번호
+      </Label>
       <Input
         id="verificationCode"
         name="verificationCode"
@@ -45,7 +47,7 @@ const InputCode = ({
         ref={inputRef}
         onChange={onChange}
         btn={
-          <Button onClick={handleSubmit} css={inputCodeBtnStyling}>
+          <Button onClick={handleSubmit} css={S.inputCodeBtnStyling}>
             확인
           </Button>
         }

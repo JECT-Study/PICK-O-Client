@@ -35,7 +35,9 @@ const InputPwConfirm = ({
 
   return (
     <div css={S.inputPwConfirmContainer}>
-      <Label id="passwordConfirm">비밀번호 확인</Label>
+      <Label id="passwordConfirm" css={S.labelStyling}>
+        비밀번호 확인
+      </Label>
       <Input
         id="passwordConfirm"
         name="passwordConfirm"

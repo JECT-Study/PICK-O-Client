@@ -3,7 +3,7 @@ import Input from '@/components/atoms/Input/Input';
 import Label from '@/components/atoms/Label/Label';
 import { useCheckPasswordCheck } from '@/hooks/common/inputsUserInfo/useCheckPasswordCheck';
 import React, { ChangeEvent, useEffect } from 'react';
-import { inputPwCheckContainer } from './InputPwCheck.style';
+import * as S from './InputPwCheck.style';
 
 interface InputPwCheckProps {
   value: string;
@@ -34,8 +34,10 @@ const InputPwCheck = ({
   }, [errorMessage]);
 
   return (
-    <div css={inputPwCheckContainer}>
-      <Label id="passwordCheck">비밀번호 확인</Label>
+    <div css={S.inputPwCheckContainer}>
+      <Label id="passwordCheck" css={S.labelStyling}>
+        비밀번호 확인
+      </Label>
       <Input
         id="passwordCheck"
         name="passwordCheck"

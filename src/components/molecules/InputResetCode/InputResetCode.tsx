@@ -28,7 +28,9 @@ const InputResetCode = ({
 
   return (
     <div css={S.inputResetCodeContainer}>
-      <Label id="resetCode">인증번호</Label>
+      <Label id="resetCode" css={S.labelStyling}>
+        인증번호
+      </Label>
       <Input
         id="verificationCode"
         name="verificationCode"

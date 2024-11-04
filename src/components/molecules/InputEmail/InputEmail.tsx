@@ -4,7 +4,7 @@ import Input from '@/components/atoms/Input/Input';
 import Label from '@/components/atoms/Label/Label';
 import { useCheckEmail } from '@/hooks/common/inputsUserInfo/useCheckEmail';
 import React, { ChangeEvent, useEffect } from 'react';
-import { inputEmailBtnStyling, inputEmailContainer } from './InputEmail.style';
+import * as S from './InputEmail.style';
 
 interface InputEmailProps {
   type: string;
@@ -31,8 +31,10 @@ const InputEmail = ({
   }, [errorMessage]);
 
   return (
-    <div css={inputEmailContainer}>
-      <Label id="email">이메일</Label>
+    <div css={S.inputEmailContainer}>
+      <Label id="email" css={S.labelStyling}>
+        이메일
+      </Label>
       <Input
         id="email"
         name="email"
@@ -44,7 +46,7 @@ const InputEmail = ({
         ref={inputRef}
         onChange={onChange}
         btn={
-          <Button onClick={handleSubmit} css={inputEmailBtnStyling}>
+          <Button onClick={handleSubmit} css={S.inputEmailBtnStyling}>
             {type === 'signup' ? '인증' : '발송'}
           </Button>
         }
