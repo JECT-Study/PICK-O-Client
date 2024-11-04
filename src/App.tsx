@@ -16,6 +16,7 @@ import CreatePostPage from './pages/CreatePostPage/CreatePostPage';
 // import FindPasswordPage from './pages/FindPasswordPage/FindPasswordPage';
 import LandingPage from './pages/LandingPage/LandingPage';
 import LoginPage from './pages/LoginPage/LoginPage';
+import ChangePasswordPage from './pages/ChangePasswordPage/ChangePasswordPage';
 import TalkPickPage from './pages/TalkPickPage/TalkPickPage';
 // import DeletePage from './pages/MyPage/DeletePage/DeletePage';
 // import HistoryPage from './pages/MyPage/HistoryPage/HistoryPage';
@@ -46,6 +47,7 @@ const App: React.FC = () => {
           <Route index element={<LandingPage />} />
           <Route path={PATH.SIGN_UP} element={<SignUpPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/changePassword" element={<ChangePasswordPage />} />
           <Route path="/todaytalkpick" element={<TalkPickPage />} />
           <Route path="/talkpick/:talkPickId" element={<TalkPickPage />} />
           <Route path="/talkpickplace" element={<TalkPickPlacePage />} />

@@ -63,7 +63,9 @@ const LoginForm = ({ withSignInText }: LoginFormProps) => {
           <div css={S.textStyling}>회원가입</div>
         </Link>
         <Divider orientation="height" length={14} />
-        <div css={S.textStyling}>비밀번호 찾기</div>
+        <Link to="/changePassword">
+          <div css={S.textStyling}>비밀번호 찾기</div>
+        </Link>
       </div>
       <Divider orientation="width" length={522} />
       {withSignInText && (
