@@ -1,39 +1,76 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { LogoLarge } from '@/assets';
 import Button from '@/components/atoms/Button/Button';
 import InputResetEmail from '@/components/molecules/InputResetEmail/InputResultEmail';
-import InputResetCode from '@/components/molecules/InputResetCode/InputResetCode';
+import InputCode from '@/components/molecules/InputCode/InputCode';
 import InputPw from '@/components/molecules/InputPw/InputPw';
-import InputPwCheck from '@/components/molecules/InputPwCheck/InputPwCheck';
+import InputPwConfirm from '@/components/molecules/InputPwConfirm/InputPwConfirm';
+import ToastModal from '@/components/atoms/ToastModal/ToastModal';
+import { useChangePwForm } from '@/hooks/changePassword/useChangePwForm';
 import * as S from './ChangePasswordPage.style';
 
 const ChangePasswordPage = () => {
+  const {
+    resetSuccess,
+    form,
+    onChange,
+    onSuccessChange,
+    handleSubmit,
+    handleCancle,
+  } = useChangePwForm();
+
+  const [verifySuccess, setVerifySuccess] = useState<boolean>(false);
+
   return (
-    <div css={S.changePasswordPageContainer}>
+    <form onSubmit={handleSubmit} css={S.changePasswordPageContainer}>
+      {resetSuccess && (
+        <div css={S.toastModalStyling}>
+          <ToastModal bgColor="black">변경 완료!</ToastModal>
+        </div>
+      )}
       <LogoLarge />
       <span css={S.changePasswordTextStying}>비밀번호 재설정</span>
       <div css={S.changePasswordFormStyling}>
-        <InputResetEmail />
-        <InputResetCode />
-        <div css={S.changePasswordStyling}>
-          <InputPw value="" onChange={() => {}} onSuccessChange={() => {}} />
-          <InputPwCheck
-            value=""
-            onChange={() => {}}
-            onSuccessChange={() => {}}
-            pw=""
-          />
-          <div css={S.btnContainer}>
-            <Button variant="outlineSecondary" css={S.btnStyling}>
-              취소
-            </Button>
-            <Button variant="roundPrimary2" css={S.btnStyling}>
-              변경하기
-            </Button>
+        <InputResetEmail
+          value={form.email}
+          onChange={onChange}
+          onSuccessChange={onSuccessChange}
+        />
+        <InputCode
+          value={{ email: form.email, verificationCode: form.verificationCode }}
+          onChange={onChange}
+          onSuccessChange={onSuccessChange}
+          handleVerifySuccess={setVerifySuccess}
+        />
+        {verifySuccess && (
+          <div css={S.changePasswordStyling}>
+            <InputPw
+              value={form.password}
+              onChange={onChange}
+              onSuccessChange={onSuccessChange}
+            />
+            <InputPwConfirm
+              value={form.passwordConfirm}
+              onChange={onChange}
+              onSuccessChange={onSuccessChange}
+              pw={form.password}
+            />
+            <div css={S.btnContainer}>
+              <Button
+                variant="outlineSecondary"
+                css={S.btnStyling}
+                onClick={handleCancle}
+              >
+                취소
+              </Button>
+              <Button type="submit" variant="roundPrimary2" css={S.btnStyling}>
+                변경하기
+              </Button>
+            </div>
           </div>
-        </div>
+        )}
       </div>
-    </div>
+    </form>
   );
 };
 

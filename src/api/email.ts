@@ -35,7 +35,9 @@ export const postEmailVerify = async (value: MemberVerifyForm) => {
   return data;
 };
 
-export const postPasswordReset = async (value: MemberResetForm) => {
+export const postPasswordReset = async (
+  value: Pick<MemberResetForm, 'email' | 'password' | 'passwordConfirm'>,
+) => {
   const { data } = await axiosInstance.post<ServerResponse>(
     `${END_POINT.EMAIL_RESET}`,
     value,

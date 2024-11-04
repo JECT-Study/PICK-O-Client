@@ -26,6 +26,7 @@ export type MemberVerifyForm = Pick<MemberForm, 'email' | 'verificationCode'>;
 
 export interface MemberResetForm {
   email: string;
+  verificationCode: string;
   password: string;
   passwordConfirm: string;
 }

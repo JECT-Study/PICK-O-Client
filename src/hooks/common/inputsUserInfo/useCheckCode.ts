@@ -7,7 +7,10 @@ import { isEmptyString } from '@/utils/validator';
 import { useMutation } from '@tanstack/react-query';
 import { useRef, useState } from 'react';
 
-export const useCheckCode = (value: MemberVerifyForm) => {
+export const useCheckCode = (
+  value: MemberVerifyForm,
+  handleVerifySuccess?: React.Dispatch<React.SetStateAction<boolean>>,
+) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
     undefined,
@@ -18,6 +21,7 @@ export const useCheckCode = (value: MemberVerifyForm) => {
     onSuccess: () => {
       setIsError(false);
       setErrorMessage(SUCCESS.CODE.MATCH);
+      handleVerifySuccess?.(true);
     },
     onError: (err: AxiosErrorResponse) => {
       if (err.status === HTTP_STATUS_CODE.BAD_REQUEST) {

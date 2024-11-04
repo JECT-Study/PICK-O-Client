@@ -11,10 +11,19 @@ interface InputCodeProps {
   value: Pick<MemberForm, 'email' | 'verificationCode'>;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   onSuccessChange: (name: string, value: boolean) => void;
+  handleVerifySuccess?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const InputCode = ({ value, onChange, onSuccessChange }: InputCodeProps) => {
-  const { inputRef, isError, errorMessage, handleSubmit } = useCheckCode(value);
+const InputCode = ({
+  value,
+  onChange,
+  onSuccessChange,
+  handleVerifySuccess,
+}: InputCodeProps) => {
+  const { inputRef, isError, errorMessage, handleSubmit } = useCheckCode(
+    value,
+    handleVerifySuccess,
+  );
 
   useEffect(() => {
     if (value.verificationCode) {

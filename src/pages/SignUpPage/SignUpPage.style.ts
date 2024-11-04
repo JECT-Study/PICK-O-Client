@@ -38,7 +38,9 @@ export const btnSignup = css({
 });
 
 export const signupToastModalStyling = css({
-  zIndex: 1,
   position: 'fixed',
-  top: '130px',
+  top: '110px',
+  left: '50%',
+  transform: 'translate(-50%)',
+  zIndex: '1000',
 });

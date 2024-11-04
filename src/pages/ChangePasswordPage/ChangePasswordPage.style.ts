@@ -7,6 +7,7 @@ export const changePasswordPageContainer = css({
   flexDirection: 'column',
   alignItems: 'center',
   width: '100%',
+  minHeight: '850px',
   padding: '118px 0',
   background: color.GY[3],
 });
@@ -44,4 +45,12 @@ export const btnContainer = css({
 export const btnStyling = css({
   width: '100%',
   borderRadius: '50px',
+});
+
+export const toastModalStyling = css({
+  position: 'fixed',
+  top: '110px',
+  left: '50%',
+  transform: 'translate(-50%)',
+  zIndex: '1000',
 });
