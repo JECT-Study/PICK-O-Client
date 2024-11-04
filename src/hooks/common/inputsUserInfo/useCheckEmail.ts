@@ -1,4 +1,4 @@
-import { getFindPw, postEmailRequest } from '@/api/email';
+import { getFindPw, postSignUpCode } from '@/api/email';
 import { AxiosErrorResponse } from '@/api/interceptor';
 import { HTTP_STATUS_CODE } from '@/constants/api';
 import { ERROR, SUCCESS } from '@/constants/message';
@@ -23,7 +23,7 @@ export const useCheckEmail = (type: string, value: string) => {
   };
 
   const emailRequest = useMutation({
-    mutationFn: () => postEmailRequest(value),
+    mutationFn: () => postSignUpCode(value),
     onSuccess: () => {
       setIsError(false);
       setErrorMessage(SUCCESS.EMAIL.AVAILABLE);
