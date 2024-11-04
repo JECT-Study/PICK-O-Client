@@ -21,3 +21,11 @@ export interface MemberForm {
 export interface MemberSuccesForm {
   [key: string]: boolean;
 }
+
+export type MemberVerifyForm = Pick<MemberForm, 'email' | 'verificationCode'>;
+
+export interface MemberResetForm {
+  email: string;
+  password: string;
+  passwordConfirm: string;
+}

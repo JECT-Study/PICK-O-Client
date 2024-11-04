@@ -33,6 +33,11 @@ export const END_POINT = {
   EMAIL_REQUEST: '/email/request',
   FIND_PW: '/email/password',
 
+  // verify API
+  VERIFY_EMAIL: '/verify/send',
+  VERIFY_CODE: '/verify/validate',
+  VERIFY_RESET: '/verify/reset',
+
   // mypage API
   MYPAGE_POSTS: '/myPage/history/posts',
   MYPAGE_COMMENTS: '/myPage/history/comments',
