@@ -3,6 +3,7 @@ import React, { ChangeEvent, useEffect } from 'react';
 import Button from '@/components/atoms/Button/Button';
 import Input from '@/components/atoms/Input/Input';
 import Label from '@/components/atoms/Label/Label';
+import { isEmptyString } from '@/utils/validator';
 import { useCheckExistEmail } from '@/hooks/common/inputsUserInfo/useCheckExistEmail';
 import * as S from './InputResetEmail.style';
 
@@ -10,15 +11,19 @@ interface InputResetEmailProps {
   value: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   onSuccessChange?: (name: string, value: boolean) => void;
+  handleSendSuccess?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const InputResetEmail = ({
   value,
   onChange,
   onSuccessChange,
+  handleSendSuccess,
 }: InputResetEmailProps) => {
-  const { inputRef, isError, errorMessage, handleSubmit } =
-    useCheckExistEmail(value);
+  const { inputRef, isError, errorMessage, handleSubmit } = useCheckExistEmail(
+    value,
+    handleSendSuccess,
+  );
 
   useEffect(() => {
     if (value && onSuccessChange) {
@@ -42,7 +47,10 @@ const InputResetEmail = ({
         ref={inputRef}
         onChange={onChange}
         btn={
-          <Button onClick={handleSubmit} css={S.inputResetEmailBtnStyling}>
+          <Button
+            onClick={handleSubmit}
+            css={S.inputResetEmailBtnStyling(isEmptyString(value))}
+          >
             인증
           </Button>
         }

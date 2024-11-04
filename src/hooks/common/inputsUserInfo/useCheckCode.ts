@@ -9,6 +9,7 @@ import { useRef, useState } from 'react';
 
 export const useCheckCode = (
   value: MemberVerifyForm,
+  sendSuccess: boolean,
   handleVerifySuccess?: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -32,6 +33,8 @@ export const useCheckCode = (
   });
 
   const handleSubmit = () => {
+    if (!sendSuccess) return;
+
     if (isEmptyString(value.verificationCode)) {
       setIsError(true);
       setErrorMessage(ERROR.CODE.EMPTY);

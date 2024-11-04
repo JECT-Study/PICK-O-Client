@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { LogoLarge } from '@/assets';
 import Button from '@/components/atoms/Button/Button';
-import InputResetEmail from '@/components/molecules/InputResetEmail/InputResultEmail';
+import InputResetEmail from '@/components/molecules/InputResetEmail/InputResetEmail';
 import InputCode from '@/components/molecules/InputCode/InputCode';
 import InputPw from '@/components/molecules/InputPw/InputPw';
 import InputPwConfirm from '@/components/molecules/InputPwConfirm/InputPwConfirm';
@@ -19,6 +19,7 @@ const ChangePasswordPage = () => {
     handleCancle,
   } = useChangePwForm();
 
+  const [sendSuccess, setSendSuccess] = useState<boolean>(false);
   const [verifySuccess, setVerifySuccess] = useState<boolean>(false);
 
   return (
@@ -35,11 +36,13 @@ const ChangePasswordPage = () => {
           value={form.email}
           onChange={onChange}
           onSuccessChange={onSuccessChange}
+          handleSendSuccess={setSendSuccess}
         />
         <InputCode
           value={{ email: form.email, verificationCode: form.verificationCode }}
           onChange={onChange}
           onSuccessChange={onSuccessChange}
+          sendSuccess={sendSuccess}
           handleVerifySuccess={setVerifySuccess}
         />
         {verifySuccess && (

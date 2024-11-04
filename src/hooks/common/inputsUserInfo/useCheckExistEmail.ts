@@ -6,7 +6,10 @@ import { isEmptyString } from '@/utils/validator';
 import { useMutation } from '@tanstack/react-query';
 import { useRef, useState } from 'react';
 
-export const useCheckExistEmail = (value: string) => {
+export const useCheckExistEmail = (
+  value: string,
+  handleSendSuccess?: React.Dispatch<React.SetStateAction<boolean>>,
+) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
     undefined,
@@ -23,6 +26,7 @@ export const useCheckExistEmail = (value: string) => {
     onSuccess: () => {
       setIsError(false);
       setErrorMessage(SUCCESS.EMAIL.AVAILABLE);
+      handleSendSuccess?.(true);
     },
     onError: (err: AxiosErrorResponse) => {
       if (err.status === HTTP_STATUS_CODE.NOT_FOUND) {
@@ -34,9 +38,10 @@ export const useCheckExistEmail = (value: string) => {
 
   const handleSubmit = () => {
     if (isEmptyString(value)) {
-      setIsError(true);
-      setErrorMessage(ERROR.EMAIL.EMPTY);
-    } else if (!isValidEmailFormat(value)) {
+      return;
+    }
+
+    if (!isValidEmailFormat(value)) {
       setIsError(true);
       setErrorMessage(ERROR.EMAIL.FORM);
     } else {

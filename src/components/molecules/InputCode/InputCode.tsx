@@ -11,6 +11,7 @@ interface InputCodeProps {
   value: Pick<MemberForm, 'email' | 'verificationCode'>;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   onSuccessChange: (name: string, value: boolean) => void;
+  sendSuccess: boolean;
   handleVerifySuccess?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -18,10 +19,12 @@ const InputCode = ({
   value,
   onChange,
   onSuccessChange,
+  sendSuccess,
   handleVerifySuccess,
 }: InputCodeProps) => {
   const { inputRef, isError, errorMessage, handleSubmit } = useCheckCode(
     value,
+    sendSuccess,
     handleVerifySuccess,
   );
 
@@ -47,7 +50,10 @@ const InputCode = ({
         ref={inputRef}
         onChange={onChange}
         btn={
-          <Button onClick={handleSubmit} css={S.inputCodeBtnStyling}>
+          <Button
+            onClick={handleSubmit}
+            css={S.inputCodeBtnStyling(sendSuccess)}
+          >
             확인
           </Button>
         }
