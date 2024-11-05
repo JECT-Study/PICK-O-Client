@@ -1,9 +1,23 @@
 import { PaginationType } from '@/types/pagination';
-import { GameItem } from '@/components/molecules/SearchGameList/SearchGameList';
-import { SearchTalkPickItemProps } from '@/components/atoms/SearchTalkPickItem/SearchTalkPickItem';
+
+interface GameItem {
+  optionAImg: string;
+  optionBImg: string;
+  title: string;
+  mainTag: string;
+  subTag: string;
+}
+
+interface SearchTalkPickItem {
+  title: string;
+  createdAt: string;
+  content: string;
+  firstImgUrl: string;
+  keyword: string;
+}
 
 export interface TalkPickResult extends PaginationType {
-  content: SearchTalkPickItemProps[];
+  content: SearchTalkPickItem[];
   query: string;
 }
 
