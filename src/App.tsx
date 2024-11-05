@@ -34,6 +34,7 @@ import { selectAccessToken } from './store/auth';
 import TalkPickPlacePage from './pages/TalkPickPlacePage/TalkPickPlacePage';
 import SignUpPage from './pages/SignUpPage/SignUpPage';
 import BalanceGamePage from './pages/BalanceGamePage/BalanceGamePage';
+import BalanceGameCreationPage from './pages/BalanceGameCreationPage/BalanceGameCreationPage';
 
 const App: React.FC = () => {
   const accessToken = useNewSelector(selectAccessToken);
@@ -60,6 +61,7 @@ const App: React.FC = () => {
         </Route>
         <Route path="/mypage" element={<LayoutNoFooter />}>
           <Route index element={<MyPage />} />
+          <Route path={PATH.CREATE} element={<BalanceGameCreationPage />} />
         </Route>
         {/* <Route element={<NotAuthRoutes member={member} />}>
           <Route element={<LayoutNoSearch />}>
