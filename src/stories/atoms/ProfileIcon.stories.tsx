@@ -13,7 +13,7 @@ const meta = {
   tags: ['autodocs'],
   argTypes: {
     interaction: {
-      options: ['normal', 'settings'],
+      options: ['default', 'custom'],
       control: { type: 'radio' },
     },
     imgUrl: { control: { type: 'text' } },
@@ -23,7 +23,7 @@ const meta = {
     },
   },
   args: {
-    interaction: 'normal',
+    interaction: 'default',
     size: 'small',
   },
 } satisfies Meta<typeof ProfileIcon>;
@@ -38,19 +38,19 @@ export const All: Story = {
     <ul css={storyContainer}>
       <li css={storyInnerContainer}>
         <h3>기본 Small</h3>
-        <ProfileIcon {...args} interaction="normal" size="small" />
+        <ProfileIcon {...args} interaction="default" size="small" />
         <h3>기본 Large</h3>
-        <ProfileIcon {...args} interaction="normal" size="large" />
+        <ProfileIcon {...args} interaction="default" size="large" />
 
         <h3>별도 img 있을때 Small</h3>
         <ProfileIcon
-          interaction="settings"
+          interaction="custom"
           imgUrl={ProfileInfoSample}
           size="small"
         />
         <h3>별도 img 있을때 Large</h3>
         <ProfileIcon
-          interaction="settings"
+          interaction="custom"
           imgUrl={ProfileInfoSample}
           size="large"
         />
