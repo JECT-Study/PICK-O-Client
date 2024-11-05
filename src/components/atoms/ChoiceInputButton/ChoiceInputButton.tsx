@@ -8,41 +8,42 @@ export interface ChoiceInputBoxProps {
   option: 'A' | 'B';
   choiceInputProps?: ComponentPropsWithoutRef<'input'>;
   infoInputProps?: ComponentPropsWithoutRef<'input'>;
+  resetInfoInput: boolean;
 }
 
 const ChoiceInputButton = ({
   option = 'A',
   choiceInputProps,
   infoInputProps,
+  resetInfoInput,
 }: ChoiceInputBoxProps) => {
   const [infoInputClicked, setInfoButtonClicked] = useState<boolean>(false);
   const [withText, setWithText] = useState<boolean>(false);
 
-  const [choiceInputValue, setChoiceInputValue] = useState<string>('');
-  const [infoInputValue, setInfoInputValue] = useState<string>('');
-
   useEffect(() => {
-    if (choiceInputValue.trim() || infoInputValue.trim()) {
-      setWithText(true);
-    } else {
+    if (resetInfoInput) {
+      setInfoButtonClicked(false);
       setWithText(false);
     }
-  }, [choiceInputValue, infoInputValue]);
+  }, [resetInfoInput]);
+
+  useEffect(() => {
+    setWithText(
+      Boolean(
+        String(choiceInputProps?.value).trim() ||
+          String(infoInputProps?.value).trim(),
+      ),
+    );
+  }, [choiceInputProps?.value, infoInputProps?.value]);
 
   return (
-    <div
-      css={[
-        S.choiceInputContainer,
-        withText && S.choiceInputWithText(withText, option),
-      ]}
-    >
+    <div css={S.choiceInputContainer(withText, option)}>
       <div css={S.choiceInputWrapper}>
         <input
           type="text"
           placeholder={`${option} 선택지를 입력하세요.`}
           maxLength={30}
           css={S.choiceInputStyling}
-          onChange={(e) => setChoiceInputValue(e.target.value)}
           {...choiceInputProps}
         />
         {!infoInputClicked && (
@@ -60,14 +61,12 @@ const ChoiceInputButton = ({
               placeholder="해당 선택지에 대해 추가로 설명을 입력할 수 있어요!"
               maxLength={50}
               css={S.choiceInputStyling}
-              onChange={(e) => setInfoInputValue(e.target.value)}
               {...infoInputProps}
             />
             <button
               type="button"
               onClick={() => {
                 setInfoButtonClicked(false);
-                setInfoInputValue('');
               }}
             >
               <ChoiceMinus />
