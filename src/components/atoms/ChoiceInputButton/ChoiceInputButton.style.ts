@@ -2,16 +2,22 @@ import { css } from '@emotion/react';
 import color from '@/styles/color';
 import typo from '@/styles/typo';
 
-export const choiceInputContainer = (withText: boolean, option: 'A' | 'B') =>
-  css({
+export const choiceInputContainer = (withText: boolean, option: 'A' | 'B') => {
+  const borderColor = (() => {
+    if (!withText) return color.GY[2];
+    return option === 'A' ? color.RED : color.BLUE;
+  })();
+
+  return css({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     width: '578px',
     backgroundColor: withText ? color.WT : color.GY[3],
     borderRadius: '20px',
-    border: `1px solid ${withText ? (option === 'A' ? color.RED : color.BLUE) : color.GY[2]}`,
+    border: `1px solid ${borderColor}`,
   });
+};
 
 export const choiceInputWrapper = css({
   display: 'flex',
