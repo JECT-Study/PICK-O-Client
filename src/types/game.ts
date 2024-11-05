@@ -71,3 +71,38 @@ export interface BalanceGame {
   subTag: string;
   games: BalanceGameSet[];
 }
+
+export interface TempGame {
+  mainTag: string;
+  subTag: string;
+  tempGames: TempGameSet[];
+}
+
+export interface TempGameSet {
+  title: string;
+  description: string;
+  tempGameOptions: {
+    name: string;
+    imgUrl: string;
+    storedName: string;
+    description: string;
+    optionType: 'A' | 'B';
+  }[];
+}
+
+export interface TempGameOptionResponse {
+  name: string;
+  description: string;
+  imgUrl: string;
+  optionType: 'A' | 'B';
+}
+
+export interface TempGameDetailResponse {
+  title: string;
+  description: string;
+  tempGameOptions: TempGameOptionResponse[];
+}
+
+export interface TempGameResponse {
+  tempGameDetailResponses: TempGameDetailResponse[];
+}
