@@ -64,3 +64,10 @@ export interface BalanceGameSet {
   description: string;
   gameOptions: BalanceGameOption[];
 }
+
+export interface BalanceGame {
+  title: string;
+  mainTag: string;
+  subTag: string;
+  games: BalanceGameSet[];
+}
