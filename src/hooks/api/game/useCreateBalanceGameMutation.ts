@@ -7,7 +7,7 @@ export const useCreateBalanceGameMutation = () => {
 
   const mutation = useMutation({
     mutationFn: async (gameData: BalanceGame) => postBalanceGame(gameData),
-    onSuccess: async (response) => {
+    onSuccess: async () => {
       await queryClient.invalidateQueries({
         queryKey: ['games'],
       });
@@ -18,11 +18,7 @@ export const useCreateBalanceGameMutation = () => {
   });
 
   const handleCreateBalanceGame = async (gameData: BalanceGame) => {
-    try {
-      await mutation.mutateAsync(gameData);
-    } catch (error) {
-      throw error;
-    }
+    await mutation.mutateAsync(gameData);
   };
 
   return {
