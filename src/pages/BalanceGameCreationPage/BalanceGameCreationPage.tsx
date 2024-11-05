@@ -87,34 +87,30 @@ const BalanceGameCreationPage = () => {
   ) => {
     setIsTagModalOpen(false);
 
-    try {
-      const allUploadedImages = await uploadAllImages(games);
+    const allUploadedImages = await uploadAllImages(games);
 
-      let imageIndex = 0;
-      const updatedGames = games.map((game) => ({
-        description,
-        gameOptions: game.gameOptions.map((option) => {
-          const { imgUrls, storedNames } = allUploadedImages[imageIndex];
-          imageIndex += 1;
-          return {
-            ...option,
-            imgUrl: imgUrls[0],
-            storedName: storedNames[0],
-          };
-        }),
-      }));
+    let imageIndex = 0;
+    const updatedGames = games.map((game) => ({
+      description,
+      gameOptions: game.gameOptions.map((option) => {
+        const { imgUrls, storedNames } = allUploadedImages[imageIndex];
+        imageIndex += 1;
+        return {
+          ...option,
+          imgUrl: imgUrls[0],
+          storedName: storedNames[0],
+        };
+      }),
+    }));
 
-      const gameData: BalanceGame = {
-        title,
-        mainTag: selectedMainTag,
-        subTag: selectedSubTag,
-        games: updatedGames,
-      };
+    const gameData: BalanceGame = {
+      title,
+      mainTag: selectedMainTag,
+      subTag: selectedSubTag,
+      games: updatedGames,
+    };
 
-      await handleCreateBalanceGame(gameData);
-    } catch (error) {
-      throw error;
-    }
+    await handleCreateBalanceGame(gameData);
   };
 
   const handleSaveDraft = async () => {
@@ -136,14 +132,9 @@ const BalanceGameCreationPage = () => {
         },
       ],
     };
-
-    try {
-      await handleSaveTempGame(tempGameData);
-      setShowToast(true);
-      setTimeout(() => setShowToast(false), 2000);
-    } catch (error) {
-      throw error;
-    }
+    await handleSaveTempGame(tempGameData);
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 2000);
   };
 
   return (
