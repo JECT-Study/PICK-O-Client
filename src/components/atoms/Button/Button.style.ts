@@ -148,7 +148,9 @@ export const getSizeByVariantStyling = (
       large: css(typo.Main.SemiBold, {
         padding: '15.5px 105.5px',
       }),
-      medium: css({}),
+      medium: css(typo.Main.SemiBold_16, {
+        padding: '8px 16px',
+      }),
     },
     outlineShadow: {
       large: css(typo.Main.SemiBold, {
