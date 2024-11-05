@@ -61,12 +61,7 @@ const BalanceGameCreationPage = () => {
     imageFiles.forEach((file) => {
       formData.append('file', file);
     });
-
-    try {
-      return await uploadImage({ formData, params: { type: 'GAME' } });
-    } catch (error) {
-      throw error;
-    }
+    return uploadImage({ formData, params: { type: 'GAME' } });
   };
 
   const uploadAllImages = async (
@@ -74,12 +69,8 @@ const BalanceGameCreationPage = () => {
   ): Promise<UploadedImage[]> => {
     const uploadPromises = BalanceGameSets.flatMap((game) =>
       game.gameOptions.map(async (option) => {
-        try {
-          const imageFile = option.imageFile as File;
-          return await handleImageUpload([imageFile]);
-        } catch (error) {
-          throw error;
-        }
+        const imageFile = option.imageFile as File;
+        return handleImageUpload([imageFile]);
       }),
     );
 
