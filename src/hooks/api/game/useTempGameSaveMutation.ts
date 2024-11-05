@@ -8,22 +8,20 @@ export const useSaveTempGameMutation = () => {
   const mutation = useMutation({
     mutationFn: async (tempGameData: TempGame) => postTempGame(tempGameData),
     onSuccess: async (response) => {
-      console.log('임시 저장 성공:', response.data);
       await queryClient.invalidateQueries({
         queryKey: ['tempGames'],
       });
     },
     onError: (error) => {
-      console.error('임시 저장 실패:', error);
+      throw error;
     },
   });
 
   const handleSaveTempGame = async (tempGameData: TempGame) => {
     try {
       await mutation.mutateAsync(tempGameData);
-      console.log('임시 저장 요청 성공:', tempGameData);
     } catch (error) {
-      console.error('임시 저장 요청 중 오류 발생:', error);
+      throw error;
     }
   };
 

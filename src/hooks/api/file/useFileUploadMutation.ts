@@ -10,7 +10,6 @@ export const useFileUploadMutation = () => {
     mutationFn: (data: { formData: FormData; params: FileUploadType }) =>
       postFile(data.formData, data.params),
     onSuccess: async (response: UploadedImage) => {
-      console.log(response);
       await queryClient.invalidateQueries({
         queryKey: ['uploadedFiles'],
       });

@@ -51,7 +51,6 @@ const BalanceGameCreationPage = () => {
           })),
         })),
       );
-      console.log('임시 저장된 게임 데이터를 불러왔습니다:', data);
     }
   };
 
@@ -66,7 +65,6 @@ const BalanceGameCreationPage = () => {
     try {
       return await uploadImage({ formData, params: { type: 'GAME' } });
     } catch (error) {
-      console.error('이미지 업로드 중 오류가 발생했습니다:', error);
       throw error;
     }
   };
@@ -80,7 +78,6 @@ const BalanceGameCreationPage = () => {
           const imageFile = option.imageFile as File;
           return await handleImageUpload([imageFile]);
         } catch (error) {
-          console.error('해당 옵션의 이미지 업로드 실패:', error);
           throw error;
         }
       }),
@@ -124,10 +121,8 @@ const BalanceGameCreationPage = () => {
       };
 
       await handleCreateBalanceGame(gameData);
-      console.log('전송할 gameData:', gameData);
-      console.log('게임 생성이 완료되었습니다!');
     } catch (error) {
-      console.error('게임 생성 중 오류가 발생했습니다:', error);
+      throw error;
     }
   };
 
@@ -155,16 +150,13 @@ const BalanceGameCreationPage = () => {
       await handleSaveTempGame(tempGameData);
       setShowToast(true);
       setTimeout(() => setShowToast(false), 2000);
-      console.log('임시 저장 성공:', tempGameData);
     } catch (error) {
-      console.error('임시 저장 중 오류:', error);
+      throw error;
     }
   };
 
   const handleTagSubmitWrapper = (mainTag: string, subTag: string) => {
-    handleTagSubmit(mainTag, subTag).catch((error) =>
-      console.error('태그 제출 중 에러 발생:', error),
-    );
+    handleTagSubmit(mainTag, subTag);
   };
 
   return (
