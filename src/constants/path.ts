@@ -12,4 +12,5 @@ export const PATH = {
   },
   UPDATE: 'update',
   DELETE: 'delete',
+  CREATE: 'create',
 } as const;
