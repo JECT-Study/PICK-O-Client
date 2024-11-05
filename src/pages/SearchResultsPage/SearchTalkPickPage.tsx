@@ -48,7 +48,7 @@ const SearchGamePage = () => {
         onSearch={(newQuery) => searchParams.set('query', newQuery)}
       />
       <div css={S.dividerWrapper}>
-        <Divider length={1133} orientation="width" />{' '}
+        <Divider length={1133} orientation="width" />
       </div>
       <div css={S.resultsWrapper}>
         <SearchTalkPickListSection
