@@ -45,6 +45,16 @@ export const useBalanceGameCreation = (totalStage: number) => {
     setCurrentOptions(games[currentStage].gameOptions);
   }, [currentStage, games]);
 
+  const updateGameOptions = (
+    options: BalanceGameOption[],
+    optionType: 'A' | 'B',
+    newOption: Partial<BalanceGameOption>,
+  ) => {
+    return options.map((opt) =>
+      opt.optionType === optionType ? { ...opt, ...newOption } : opt,
+    );
+  };
+
   const updateOption = (
     stageIndex: number,
     optionType: 'A' | 'B',
@@ -54,10 +64,11 @@ export const useBalanceGameCreation = (totalStage: number) => {
       prevGames.map((game, idx) => {
         if (idx !== stageIndex) return game;
 
-        const updatedOptions = game.gameOptions.map((opt) =>
-          opt.optionType === optionType ? { ...opt, ...newOption } : opt,
+        const updatedOptions = updateGameOptions(
+          game.gameOptions,
+          optionType,
+          newOption,
         );
-
         return {
           ...game,
           gameOptions: updatedOptions,
