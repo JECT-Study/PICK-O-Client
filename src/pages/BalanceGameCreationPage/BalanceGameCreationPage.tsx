@@ -155,10 +155,6 @@ const BalanceGameCreationPage = () => {
     }
   };
 
-  const handleTagSubmitWrapper = (mainTag: string, subTag: string) => {
-    handleTagSubmit(mainTag, subTag);
-  };
-
   return (
     <div css={S.pageContainer}>
       <span css={S.subLabel}>
@@ -193,7 +189,7 @@ const BalanceGameCreationPage = () => {
             <TagModal
               isOpen={isTagModalOpen}
               onClose={() => setIsTagModalOpen(false)}
-              onTagSubmit={handleTagSubmitWrapper}
+              onTagSubmit={handleTagSubmit}
             />
           </div>
         </>
