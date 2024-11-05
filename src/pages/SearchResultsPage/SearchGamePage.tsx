@@ -36,10 +36,6 @@ const SearchGamePage = () => {
     setPage(0);
   };
 
-  if (isLoading) {
-    return <div>스켈레톤 준비중...</div>;
-  }
-
   return (
     <div css={S.container}>
       <SearchResultBarContainer
@@ -52,13 +48,14 @@ const SearchGamePage = () => {
       </div>
       <div css={S.resultsWrapper}>
         <SearchGameListSection
-          gameList={gameResults}
+          gameList={isLoading ? [] : gameResults}
           keyword={query}
           selectedPage={page + 1}
           totalPages={gameTotalPages}
           sort={sort}
           onPageChange={handlePageChange}
           onSortChange={handleSortChange}
+          isLoading={isLoading}
         />
       </div>
     </div>

@@ -18,6 +18,7 @@ interface SearchTalkPickSectionProps {
   sort: string;
   onPageChange: (page: number) => void;
   onSortChange: (sort: string) => void;
+  isLoading: boolean;
 }
 
 const SearchTalkPickListSection = ({
@@ -28,6 +29,7 @@ const SearchTalkPickListSection = ({
   sort,
   onPageChange,
   onSortChange,
+  isLoading,
 }: SearchTalkPickSectionProps) => {
   const toggleItem: ToggleGroupItem[] = [
     { label: '인기순', value: 'views' },
@@ -36,38 +38,42 @@ const SearchTalkPickListSection = ({
 
   const pages = generatePageNumbers(totalPages);
 
+  if (isLoading) {
+    return <div>스켈레톤 준비중...</div>;
+  }
+
+  if (searchTalkPickList.length === 0) {
+    return (
+      <div css={S.noResultWrapper}>
+        <NoResultsMessage searchChoice="talkPick" keyword={keyword} />
+      </div>
+    );
+  }
+
   return (
     <div css={S.container}>
-      {searchTalkPickList.length > 0 ? (
-        <>
-          <div css={S.titleWrapper}>
-            <div>톡픽</div>
-            <ToggleGroup
-              items={toggleItem}
-              selectedValue={sort}
-              onClick={onSortChange}
-            />
-          </div>
-          <div css={S.contentWrapper}>
-            <SearchTalkPickList
-              searchTalkPickList={searchTalkPickList}
-              keyword={keyword}
-            />
-          </div>
-          <div css={S.paginationWrapper}>
-            <Pagination
-              pages={pages}
-              selected={selectedPage}
-              maxPage={totalPages}
-              onChangeNavigate={onPageChange}
-            />
-          </div>
-        </>
-      ) : (
-        <div css={S.noResultWrapper}>
-          <NoResultsMessage searchChoice="talkPick" keyword={keyword} />
-        </div>
-      )}
+      <div css={S.titleWrapper}>
+        <div>톡픽</div>
+        <ToggleGroup
+          items={toggleItem}
+          selectedValue={sort}
+          onClick={onSortChange}
+        />
+      </div>
+      <div css={S.contentWrapper}>
+        <SearchTalkPickList
+          searchTalkPickList={searchTalkPickList}
+          keyword={keyword}
+        />
+      </div>
+      <div css={S.paginationWrapper}>
+        <Pagination
+          pages={pages}
+          selected={selectedPage}
+          maxPage={totalPages}
+          onChangeNavigate={onPageChange}
+        />
+      </div>
     </div>
   );
 };
