@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '@/components/atoms/Button/Button';
 import ToastModal from '@/components/atoms/ToastModal/ToastModal';
 import InputCode from '@/components/molecules/InputCode/InputCode';
@@ -20,6 +20,9 @@ const SignUpPage = () => {
     handleSubmit,
     handleCancle,
   } = useSignupForm();
+
+  const [sendSuccess, setSendSuccess] = useState<boolean>(false);
+
   return (
     <form onSubmit={handleSubmit} css={S.signupContainer}>
       {signupSuccess && (
@@ -35,11 +38,13 @@ const SignUpPage = () => {
           value={form.email}
           onChange={onChange}
           onSuccessChange={onSuccessChange}
+          handleSendSuccess={setSendSuccess}
         />
         <InputCode
           value={{ verificationCode: form.verificationCode, email: form.email }}
           onChange={onChange}
           onSuccessChange={onSuccessChange}
+          sendSuccess={sendSuccess}
         />
         <InputNickname
           value={form.nickname}
@@ -59,15 +64,15 @@ const SignUpPage = () => {
         />
       </div>
       <div css={S.btnContainer}>
-        <Button type="submit" variant="roundPrimary2" css={S.btnSignup}>
-          회원가입
-        </Button>
         <Button
           onClick={handleCancle}
           variant="outlineSecondary"
           css={S.btnSignup}
         >
           취소
+        </Button>
+        <Button type="submit" variant="roundPrimary2" css={S.btnSignup}>
+          회원가입
         </Button>
       </div>
     </form>

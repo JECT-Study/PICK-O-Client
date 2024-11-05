@@ -8,7 +8,11 @@ import { useMutation } from '@tanstack/react-query';
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export const useCheckEmail = (type: string, value: string) => {
+export const useCheckEmail = (
+  type: string,
+  value: string,
+  handleSendSuccess?: React.Dispatch<React.SetStateAction<boolean>>,
+) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
     undefined,
@@ -27,6 +31,7 @@ export const useCheckEmail = (type: string, value: string) => {
     onSuccess: () => {
       setIsError(false);
       setErrorMessage(SUCCESS.EMAIL.AVAILABLE);
+      handleSendSuccess?.(true);
     },
     onError: (err: AxiosErrorResponse) => {
       if (err.status === HTTP_STATUS_CODE.CONFLICT) {
@@ -53,9 +58,10 @@ export const useCheckEmail = (type: string, value: string) => {
 
   const handleSubmit = () => {
     if (isEmptyString(value)) {
-      setIsError(true);
-      setErrorMessage(ERROR.EMAIL.EMPTY);
-    } else if (!isValidEmailFormat(value)) {
+      return;
+    }
+
+    if (!isValidEmailFormat(value)) {
       setIsError(true);
       setErrorMessage(ERROR.EMAIL.FORM);
     } else if (type === 'signup') {

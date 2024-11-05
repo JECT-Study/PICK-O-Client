@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import color from '@/styles/color';
 
 export const inputEmailContainer = css({
   display: 'flex',
@@ -6,9 +7,18 @@ export const inputEmailContainer = css({
   width: '100%',
 });
 
-export const inputEmailBtnStyling = css({
-  padding: '10px 25px',
-});
+export const inputEmailBtnStyling = (isEmpty: boolean) => {
+  if (!isEmpty) {
+    return css({
+      padding: '10px 25px',
+    });
+  }
+  return css({
+    backgroundColor: color.GY[2],
+    padding: '10px 25px',
+    cursor: 'not-allowed',
+  });
+};
 
 export const labelStyling = css({
   marginTop: '20px',

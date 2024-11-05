@@ -4,6 +4,7 @@ import Button from '@/components/atoms/Button/Button';
 import Input from '@/components/atoms/Input/Input';
 import Label from '@/components/atoms/Label/Label';
 import { useCheckNickname } from '@/hooks/common/inputsUserInfo/useCheckNickname';
+import { isEmptyString } from '@/utils/validator';
 import * as S from './InputNickname.style';
 
 interface InputNicknameProps {
@@ -42,7 +43,10 @@ const InputNickname = ({
         ref={inputRef}
         onChange={onChange}
         btn={
-          <Button onClick={handleSubmit} css={S.inputNicknameBtnStyling}>
+          <Button
+            onClick={handleSubmit}
+            css={S.inputNicknameBtnStyling(isEmptyString(value))}
+          >
             확인
           </Button>
         }
