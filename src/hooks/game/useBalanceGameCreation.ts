@@ -51,16 +51,18 @@ export const useBalanceGameCreation = (totalStage: number) => {
     newOption: Partial<BalanceGameOption>,
   ) => {
     setGames((prevGames) =>
-      prevGames.map((game, idx) =>
-        idx === stageIndex
-          ? {
-              ...game,
-              gameOptions: game.gameOptions.map((opt) =>
-                opt.optionType === optionType ? { ...opt, ...newOption } : opt,
-              ),
-            }
-          : game,
-      ),
+      prevGames.map((game, idx) => {
+        if (idx !== stageIndex) return game;
+
+        const updatedOptions = game.gameOptions.map((opt) =>
+          opt.optionType === optionType ? { ...opt, ...newOption } : opt,
+        );
+
+        return {
+          ...game,
+          gameOptions: updatedOptions,
+        };
+      }),
     );
   };
 
