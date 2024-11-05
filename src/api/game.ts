@@ -1,7 +1,31 @@
 import { END_POINT } from '@/constants/api';
-import { Game, GameContent, GameSet } from '@/types/game';
+import {
+  BalanceGame,
+  Game,
+  GameContent,
+  GameSet,
+  TempGame,
+  TempGameResponse,
+} from '@/types/game';
 import { Id } from '@/types/api';
 import { axiosInstance } from './interceptor';
+
+export const postBalanceGame = async (gameData: BalanceGame) => {
+  const response = await axiosInstance.post(END_POINT.CREATE_GAME, gameData);
+  return response;
+};
+
+export const postTempGame = async (tempGameData: TempGame) => {
+  const response = await axiosInstance.post(END_POINT.TEMP_GAME, tempGameData);
+  return response;
+};
+
+export const getTempGame = async () => {
+  const { data } = await axiosInstance.get<TempGameResponse>(
+    END_POINT.TEMP_GAME,
+  );
+  return data;
+};
 
 export const postGame = async (gameData: Game) => {
   const { data } = await axiosInstance.post<GameContent>(
