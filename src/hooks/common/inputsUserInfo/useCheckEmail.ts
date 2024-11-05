@@ -22,12 +22,16 @@ export const useCheckEmail = (
   const navigate = useNavigate();
 
   const isValidEmailFormat = (email: string): boolean => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailRegex = /^[a-zA-Z0-9]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
 
   const emailRequest = useMutation({
-    mutationFn: () => postSignUpCode(value),
+    mutationFn: () => {
+      setIsError(false);
+      setErrorMessage(undefined);
+      return postSignUpCode(value);
+    },
     onSuccess: () => {
       setIsError(false);
       setErrorMessage(SUCCESS.EMAIL.AVAILABLE);

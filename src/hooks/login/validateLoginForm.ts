@@ -2,7 +2,7 @@ import { ERROR } from '@/constants/message';
 import { isEmptyString } from '@/utils/validator';
 
 const isValidEmailFormat = (email: string): boolean => {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const emailRegex = /^[a-zA-Z0-9]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
 };
 

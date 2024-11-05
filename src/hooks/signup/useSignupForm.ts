@@ -13,17 +13,17 @@ const initialState: MemberForm = {
   verificationCode: '',
   nickname: '',
   password: '',
-  passwordCheck: '',
+  passwordConfirm: '',
   profileImgUrl: '',
   role: 'USER',
 };
 
 const successState: MemberSuccesForm = {
-  email: false,
-  verificationCode: false,
-  nickname: false,
+  email: true,
+  verificationCode: true,
+  nickname: true,
   password: false,
-  passwordCheck: false,
+  passwordConfirm: false,
 };
 
 export const useSignupForm = () => {
@@ -35,7 +35,7 @@ export const useSignupForm = () => {
   const { focus } = useFocusFalse<MemberSuccesForm>(successForm);
 
   const createNewForm = (prevForm: MemberForm) => {
-    const { verificationCode, passwordCheck, ...newForm } = prevForm;
+    const { verificationCode, ...newForm } = prevForm;
     return newForm;
   };
 

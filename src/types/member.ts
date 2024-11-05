@@ -13,7 +13,7 @@ export interface MemberForm {
   verificationCode: string;
   nickname: string;
   password: string;
-  passwordCheck: string;
+  passwordConfirm: string;
   profileImgUrl: string;
   role: 'USER';
 }

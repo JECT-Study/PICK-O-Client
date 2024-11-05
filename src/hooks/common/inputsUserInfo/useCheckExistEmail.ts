@@ -17,12 +17,16 @@ export const useCheckExistEmail = (
   const [isError, setIsError] = useState<boolean>(false);
 
   const isValidEmailFormat = (email: string): boolean => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailRegex = /^[a-zA-Z0-9]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
 
   const verifyEmail = useMutation({
-    mutationFn: () => postResetCode(value),
+    mutationFn: () => {
+      setIsError(false);
+      setErrorMessage(undefined);
+      return postResetCode(value);
+    },
     onSuccess: () => {
       setIsError(false);
       setErrorMessage(SUCCESS.EMAIL.AVAILABLE);

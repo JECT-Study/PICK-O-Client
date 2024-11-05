@@ -6,7 +6,7 @@ import InputEmail from '@/components/molecules/InputEmail/InputEmail';
 import InputNickname from '@/components/molecules/InputNickname/InputNickname';
 import InputProfileImage from '@/components/molecules/InputProfileImage/InputProfileImage';
 import InputPw from '@/components/molecules/InputPw/InputPw';
-import InputPwCheck from '@/components/molecules/InputPwCheck/InputPwCheck';
+import InputPwConfirm from '@/components/molecules/InputPwConfirm/InputPwConfirm';
 import { useSignupForm } from '@/hooks/signup/useSignupForm';
 import * as S from './SignUpPage.style';
 
@@ -56,8 +56,8 @@ const SignUpPage = () => {
           onChange={onChange}
           onSuccessChange={onSuccessChange}
         />
-        <InputPwCheck
-          value={form.passwordCheck}
+        <InputPwConfirm
+          value={form.passwordConfirm}
           onChange={onChange}
           onSuccessChange={onSuccessChange}
           pw={form.password}
