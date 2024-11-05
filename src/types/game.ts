@@ -49,3 +49,18 @@ export interface GameItem extends GameContent {
 export interface GamesPagination extends PaginationType {
   content: GameContent[];
 }
+
+export interface BalanceGameOption {
+  id: number;
+  name: string;
+  imgUrl: string;
+  storedName: string;
+  description: string;
+  optionType: 'A' | 'B';
+  imageFile?: File | null;
+}
+
+export interface BalanceGameSet {
+  description: string;
+  gameOptions: BalanceGameOption[];
+}
