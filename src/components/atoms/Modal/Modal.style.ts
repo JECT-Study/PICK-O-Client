@@ -35,6 +35,10 @@ export const getModalSize = (action: Required<ModalProps>['action']) => {
       width: '516px',
       padding: '38px 35px',
     }),
+    tag: css({
+      width: '616px',
+      height: '486px',
+    }),
   };
 
   return style[action as keyof typeof style];
