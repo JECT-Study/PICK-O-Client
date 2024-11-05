@@ -7,7 +7,7 @@ export const useSaveTempGameMutation = () => {
 
   const mutation = useMutation({
     mutationFn: async (tempGameData: TempGame) => postTempGame(tempGameData),
-    onSuccess: async (response) => {
+    onSuccess: async () => {
       await queryClient.invalidateQueries({
         queryKey: ['tempGames'],
       });
@@ -18,11 +18,7 @@ export const useSaveTempGameMutation = () => {
   });
 
   const handleSaveTempGame = async (tempGameData: TempGame) => {
-    try {
-      await mutation.mutateAsync(tempGameData);
-    } catch (error) {
-      throw error;
-    }
+    await mutation.mutateAsync(tempGameData);
   };
 
   return {
