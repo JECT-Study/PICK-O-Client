@@ -98,6 +98,7 @@ export const END_POINT = {
 
   // game API
   CREATE_GAME: '/games',
+  TEMP_GAME: '/games/temp',
   NEW_GAME: '/games/new',
   BEST_GAME: '/games/best',
   LATEST_GAME: '/games/latest',
