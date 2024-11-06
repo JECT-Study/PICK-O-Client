@@ -16,7 +16,7 @@ const SearchResultBar = ({
   onClick,
   onSearch,
 }: SearchResultBarProps) => {
-  const [inputValue, setInputValue] = useState(query || '');
+  const [inputValue, setInputValue] = useState(query ?? '');
 
   useEffect(() => {
     if (query !== undefined) {
