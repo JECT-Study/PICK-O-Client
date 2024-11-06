@@ -44,8 +44,10 @@ const SearchTalkPickListSection = ({
 
   if (searchTalkPickList.length === 0) {
     return (
-      <div css={S.noResultWrapper}>
-        <NoResultsMessage searchChoice="talkPick" keyword={keyword} />
+      <div css={S.container}>
+        <div css={S.noResultWrapper}>
+          <NoResultsMessage searchChoice="talkPick" keyword={keyword} />
+        </div>
       </div>
     );
   }

@@ -44,8 +44,10 @@ const SearchGameListSection = ({
 
   if (gameList.length === 0) {
     return (
-      <div css={S.noResultWrapper}>
-        <NoResultsMessage searchChoice="balanceGame" keyword={keyword} />
+      <div css={S.container}>
+        <div css={S.noResultWrapper}>
+          <NoResultsMessage searchChoice="balanceGame" keyword={keyword} />
+        </div>
       </div>
     );
   }
