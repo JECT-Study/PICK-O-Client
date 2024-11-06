@@ -18,7 +18,7 @@ import CreatePostPage from './pages/CreatePostPage/CreatePostPage';
 // import FindPasswordPage from './pages/FindPasswordPage/FindPasswordPage';
 import LandingPage from './pages/LandingPage/LandingPage';
 import LoginPage from './pages/LoginPage/LoginPage';
-import TodayTalkPickPage from './pages/TodayTalkPickPage/TodayTalkPickPage';
+// import TodayTalkPickPage from './pages/TodayTalkPickPage/TodayTalkPickPage';
 import SearchResultsPage from './pages/SearchResultsPage/SearchResultsPage';
 import TalkPickPage from './pages/TalkPickPage/TalkPickPage';
 // import DeletePage from './pages/MyPage/DeletePage/DeletePage';
