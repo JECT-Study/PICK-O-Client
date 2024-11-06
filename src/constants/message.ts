@@ -59,6 +59,11 @@ export const SUCCESS = {
   COMMENT: {
     REPORT: '신고 완료되었습니다.',
   },
+  POST: {
+    CREATE: '등록 완료!',
+    EDIT: '수정 완료!',
+    SAVE: '임시저장 완료!',
+  },
 } as const;
 
 export const NULL = {

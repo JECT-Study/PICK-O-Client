@@ -5,7 +5,7 @@ import { Id } from '@/types/api';
 import { NewTalkPick } from '@/types/talk-pick';
 import { useNavigate } from 'react-router-dom';
 import { AxiosErrorResponse } from '@/api/interceptor';
-import { ERROR } from '@/constants/message';
+import { ERROR, SUCCESS } from '@/constants/message';
 
 export const useCreateTalkPickMutation = (
   showToastModal: (message: string) => () => void,
@@ -19,7 +19,7 @@ export const useCreateTalkPickMutation = (
       await queryClient.invalidateQueries({
         queryKey: ['talkPick'],
       });
-      showToastModal('등록 완료!');
+      showToastModal(SUCCESS.POST.CREATE);
 
       setTimeout(() => {
         navigate('/talkpickplace');

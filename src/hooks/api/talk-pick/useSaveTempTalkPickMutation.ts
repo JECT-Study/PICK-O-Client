@@ -3,7 +3,7 @@ import { HTTP_STATUS_CODE } from '@/constants/api';
 import { postTempTalkPick } from '@/api/talk-pick';
 import { NewTalkPick } from '@/types/talk-pick';
 import { AxiosErrorResponse } from '@/api/interceptor';
-import { ERROR } from '@/constants/message';
+import { ERROR, SUCCESS } from '@/constants/message';
 
 export const useSaveTempTalkPickMutation = (
   showToastModal: (message: string) => () => void,
@@ -17,7 +17,7 @@ export const useSaveTempTalkPickMutation = (
         queryKey: ['tempTalkPick'],
       });
 
-      showToastModal('임시저장 완료!');
+      showToastModal(SUCCESS.POST.SAVE);
     },
     onError: (err: AxiosErrorResponse) => {
       if (err.status === HTTP_STATUS_CODE.UNAUTHORIZED) {

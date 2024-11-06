@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { putTalkPick, postTalkPickSummary } from '@/api/talk-pick';
 import { NewTalkPick } from '@/types/talk-pick';
+import { SUCCESS } from '@/constants/message';
 
 export const useEditTalkPickMutation = (
   talkPickId: Id,
@@ -18,7 +19,7 @@ export const useEditTalkPickMutation = (
       await queryClient.invalidateQueries({
         queryKey: ['talkPick', talkPickId],
       });
-      showToastModal('수정 완료!');
+      showToastModal(SUCCESS.POST.EDIT);
 
       setTimeout(() => {
         navigate('/talkpickplace');
