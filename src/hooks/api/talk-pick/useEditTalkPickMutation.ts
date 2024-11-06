@@ -1,13 +1,14 @@
 import { Id } from '@/types/api';
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { putTalkPick, postTalkPickSummary } from '@/api/talk-pick';
 import { NewTalkPick } from '@/types/talk-pick';
 
-export const useEditTalkPickMutation = (talkPickId: Id) => {
+export const useEditTalkPickMutation = (
+  talkPickId: Id,
+  showToastModal: (message: string) => () => void,
+) => {
   const queryClient = useQueryClient();
-  const [editSuccess, setEditSuccess] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
@@ -17,18 +18,15 @@ export const useEditTalkPickMutation = (talkPickId: Id) => {
       await queryClient.invalidateQueries({
         queryKey: ['talkPick', talkPickId],
       });
-      setEditSuccess(true);
-
-      await postTalkPickSummary(talkPickId);
+      showToastModal('수정 완료!');
 
       setTimeout(() => {
         navigate('/talkpickplace');
       }, 2000);
+
+      await postTalkPickSummary(talkPickId);
     },
   });
 
-  return {
-    ...mutation,
-    editSuccess,
-  };
+  return { ...mutation };
 };

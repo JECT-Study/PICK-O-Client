@@ -1,5 +1,5 @@
 /* eslint-disable consistent-return */
-import React, { useState } from 'react';
+import React from 'react';
 import { isEmptyString } from '@/utils/validator';
 import PostTitleBox from '@/components/atoms/PostTitleBox/PostTitleBox';
 import OptionInputBox from '@/components/atoms/OptionInputBox/OptionInputBox';
@@ -9,76 +9,27 @@ import CitationBox from '@/components/atoms/CitationBox/CitationBox';
 import DraftPostButton from '@/components/atoms/DraftPostButton/DraftPostButton';
 import Button from '@/components/atoms/Button/Button';
 import ToastModal from '@/components/atoms/ToastModal/ToastModal';
-import usePostTalkPickForm from '@/hooks/post/usePostTalkPickForm';
-import { NewTalkPick, TalkPickDetail } from '@/types/talk-pick';
-import { useTempTalkPickQuery } from '@/hooks/api/talk-pick/useTempTalkPickQuery';
-import { validatePostForm } from '@/utils/validatePostForm';
-import useToastModal from '@/hooks/modal/useToastModal';
+import { TalkPickDetail } from '@/types/talk-pick';
+import { usePostTalkPickForm } from '@/hooks/post/usePostTalkPickForm';
 import * as S from './PostInputForm.style';
 
 interface PostInputFormProps {
-  onSubmit: (data: NewTalkPick) => void;
-  onEditSubmit: (data: NewTalkPick) => void;
-  onSave: (data: NewTalkPick) => void;
   existingTalkPick?: TalkPickDetail;
 }
 
-const PostInputForm = ({
-  onSubmit,
-  onEditSubmit,
-  onSave,
-  existingTalkPick,
-}: PostInputFormProps) => {
-  const initialState: NewTalkPick = {
-    baseFields: {
-      title: existingTalkPick?.baseFields.title ?? '',
-      optionA: existingTalkPick?.baseFields.optionA ?? '',
-      optionB: existingTalkPick?.baseFields.optionB ?? '',
-      content: existingTalkPick?.baseFields.content ?? '',
-      sourceUrl: existingTalkPick?.baseFields.sourceUrl ?? '',
-    },
-    fileIds: existingTalkPick?.fileIds ?? [],
-  };
-
-  const { form, onChange, setEach } = usePostTalkPickForm(initialState);
-  const { isVisible, modalText, showToastModal } = useToastModal();
-
-  const [imgUrls, setImgUrls] = useState<string[]>(
-    existingTalkPick?.imgUrls ?? [],
-  );
-
-  const { data: tempTalkPick, isSuccess } = useTempTalkPickQuery();
-
-  const handleDraftButton = () => {
-    if (isSuccess && tempTalkPick) {
-      setEach('title', tempTalkPick.baseFields.title);
-      setEach('optionA', tempTalkPick.baseFields.optionA);
-      setEach('optionB', tempTalkPick.baseFields.optionB);
-      setEach('content', tempTalkPick.baseFields.content);
-      setEach('sourceUrl', tempTalkPick.baseFields.sourceUrl);
-      setEach('fileIds', tempTalkPick.fileIds);
-      setImgUrls(tempTalkPick.imgUrls);
-    }
-  };
-
-  const handleTempTalkPick = () => {
-    onSave(form);
-  };
-
-  const handleTalkPick = () => {
-    const postValidation = validatePostForm(form.baseFields);
-
-    if (!postValidation.isValid) {
-      showToastModal(postValidation.message);
-      return;
-    }
-
-    if (existingTalkPick) {
-      onEditSubmit(form);
-    } else {
-      onSubmit(form);
-    }
-  };
+const PostInputForm = ({ existingTalkPick }: PostInputFormProps) => {
+  const {
+    form,
+    onChange,
+    setEach,
+    isVisible,
+    modalText,
+    imgUrls,
+    setImgUrls,
+    handleDraftButton,
+    handleTempTalkPick,
+    handleTalkPick,
+  } = usePostTalkPickForm(existingTalkPick);
 
   return (
     <form css={S.formStyling}>

@@ -1,55 +1,82 @@
-import { useState, ChangeEvent, useCallback } from 'react';
-import { NewTalkPick } from '@/types/talk-pick';
+import { useState } from 'react';
+import { NewTalkPick, TalkPickDetail } from '@/types/talk-pick';
+import { validatePostForm } from '@/hooks/post/validatePostForm';
+import useToastModal from '../modal/useToastModal';
+import useTalkPickInputs from './useTalkPickInputs';
+import { useCreateTalkPickMutation } from '../api/talk-pick/useCreateTalkPickMutation';
+import { useEditTalkPickMutation } from '../api/talk-pick/useEditTalkPickMutation';
+import { useSaveTempTalkPickMutation } from '../api/talk-pick/useSaveTempTalkPickMutation';
+import { useTempTalkPickQuery } from '../api/talk-pick/useTempTalkPickQuery';
 
-function useInputs(initialState: NewTalkPick) {
-  const [form, setForm] = useState<NewTalkPick>(initialState);
-
-  // onChange로 baseFields의 특정 필드를 업데이트
-  const onChange = useCallback(
-    (
-      e: ChangeEvent<
-        HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-      >,
-    ) => {
-      const { name, value } = e.target;
-
-      // name이 baseFields 내의 필드를 가리킬 경우
-      if (name in form.baseFields) {
-        setForm((prevForm) => ({
-          ...prevForm,
-          baseFields: {
-            ...prevForm.baseFields,
-            [name]: value, // baseFields 내에서 해당 name을 찾아 업데이트
-          },
-        }));
-      } else {
-        // 그 외 필드가 있으면 일반적인 업데이트 처리
-        setForm((prevForm) => ({ ...prevForm, [name]: value }));
-      }
+export const usePostTalkPickForm = (existingTalkPick?: TalkPickDetail) => {
+  const initialState: NewTalkPick = {
+    baseFields: {
+      title: existingTalkPick?.baseFields.title ?? '',
+      optionA: existingTalkPick?.baseFields.optionA ?? '',
+      optionB: existingTalkPick?.baseFields.optionB ?? '',
+      content: existingTalkPick?.baseFields.content ?? '',
+      sourceUrl: existingTalkPick?.baseFields.sourceUrl ?? '',
     },
-    [form],
+    fileIds: existingTalkPick?.fileIds ?? [],
+  };
+
+  const { form, onChange, setEach } = useTalkPickInputs(initialState);
+  const { isVisible, modalText, showToastModal } = useToastModal();
+
+  const { mutate: createTalkPick } = useCreateTalkPickMutation(showToastModal);
+  const { mutate: editTalkPick } = useEditTalkPickMutation(
+    existingTalkPick?.id ?? 0,
+    showToastModal,
+  );
+  const { mutate: saveTempTalkPick } =
+    useSaveTempTalkPickMutation(showToastModal);
+  const { data: tempTalkPick, isSuccess } = useTempTalkPickQuery();
+
+  const [imgUrls, setImgUrls] = useState<string[]>(
+    existingTalkPick?.imgUrls ?? [],
   );
 
-  const setEach = useCallback(
-    <U>(name: string, value: U) => {
-      // name이 baseFields 내의 필드를 가리킬 경우
-      if (name in form.baseFields) {
-        setForm((prevForm) => ({
-          ...prevForm,
-          baseFields: {
-            ...prevForm.baseFields,
-            [name]: value, // baseFields 내에서 해당 name을 찾아 업데이트
-          },
-        }));
-      } else {
-        // 그 외 필드는 일반적으로 업데이트
-        setForm((prevForm) => ({ ...prevForm, [name]: value }));
-      }
-    },
-    [form],
-  );
+  const handleDraftButton = () => {
+    if (isSuccess && tempTalkPick) {
+      setEach('title', tempTalkPick.baseFields.title);
+      setEach('optionA', tempTalkPick.baseFields.optionA);
+      setEach('optionB', tempTalkPick.baseFields.optionB);
+      setEach('content', tempTalkPick.baseFields.content);
+      setEach('sourceUrl', tempTalkPick.baseFields.sourceUrl);
+      setEach('fileIds', tempTalkPick.fileIds);
+      setImgUrls(tempTalkPick.imgUrls);
+    }
+  };
 
-  return { form, onChange, setEach };
-}
+  const handleTempTalkPick = () => {
+    saveTempTalkPick(form);
+  };
 
-export default useInputs;
+  const handleTalkPick = () => {
+    const postValidation = validatePostForm(form.baseFields);
+
+    if (!postValidation.isValid) {
+      showToastModal(postValidation.message);
+      return;
+    }
+
+    if (existingTalkPick) {
+      editTalkPick(form);
+    } else {
+      createTalkPick(form);
+    }
+  };
+
+  return {
+    form,
+    onChange,
+    setEach,
+    isVisible,
+    modalText,
+    imgUrls,
+    setImgUrls,
+    handleDraftButton,
+    handleTempTalkPick,
+    handleTalkPick,
+  };
+};
