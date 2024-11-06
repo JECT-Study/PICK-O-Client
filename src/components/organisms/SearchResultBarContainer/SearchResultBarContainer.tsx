@@ -16,6 +16,7 @@ const SearchResultBarContainer = ({
 }: SearchResultBarContainerProps) => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const query = searchParams.get('query') || '';
 
   const getSearchPath = (value: 'all' | 'talkpick' | 'game') => {
     return {
@@ -40,6 +41,7 @@ const SearchResultBarContainer = ({
       selectedValue={selectedValue}
       onClick={handleTagClick}
       onSearch={handleSearch}
+      query={query}
     />
   );
 };

@@ -1,20 +1,28 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '@/components/atoms/Button/Button';
 import SearchBar from '@/components/atoms/SearchBar/SearchBar';
 import * as S from './SearchResultBar.style';
 
 export interface SearchResultBarProps {
   selectedValue: 'all' | 'talkpick' | 'game';
+  query?: string;
   onClick?: (value: 'all' | 'talkpick' | 'game') => void;
   onSearch: (query: string) => void;
 }
 
 const SearchResultBar = ({
   selectedValue,
+  query,
   onClick,
   onSearch,
 }: SearchResultBarProps) => {
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState(query || '');
+
+  useEffect(() => {
+    if (query !== undefined) {
+      setInputValue(query);
+    }
+  }, [query]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
