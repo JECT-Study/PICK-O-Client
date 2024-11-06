@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { Plus } from '@/assets';
-import type { ComponentPropsWithoutRef } from 'react';
+import type { ComponentPropsWithoutRef, ForwardedRef } from 'react';
 import {
   profileImageWrapper,
   profilePlusImageWrapper,
@@ -13,10 +13,10 @@ export interface ProfileSettingProps extends ComponentPropsWithoutRef<'img'> {
   isSetting?: boolean;
 }
 
-const ProfileSetting = ({
-  isSetting = false,
-  ...attributes
-}: ProfileSettingProps) => {
+const ProfileSetting = (
+  { isSetting = false, ...attributes }: ProfileSettingProps,
+  ref: ForwardedRef<HTMLImageElement>,
+) => {
   return (
     <div css={profileSettingContainer}>
       {isSetting ? (
@@ -25,6 +25,7 @@ const ProfileSetting = ({
             <img
               alt="프로필 이미지"
               {...attributes}
+              ref={ref}
               css={profileImageWrapper}
             />
           </div>
@@ -36,6 +37,7 @@ const ProfileSetting = ({
         <div
           css={[profileSettingInnerContainer, profilePlusImageWrapper]}
           {...attributes}
+          ref={ref}
         >
           <Plus />
         </div>
@@ -44,4 +46,4 @@ const ProfileSetting = ({
   );
 };
 
-export default ProfileSetting;
+export default forwardRef(ProfileSetting);
