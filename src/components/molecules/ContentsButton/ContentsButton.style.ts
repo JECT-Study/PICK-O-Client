@@ -1,6 +1,9 @@
 import { css } from '@emotion/react';
 import color from '@/styles/color';
 import typo from '@/styles/typo';
+import type { ContentsButtonProps } from './ContentsButton';
+
+type SizeType = Required<ContentsButtonProps>['size'];
 
 const sizeStyles = {
   large: {
@@ -26,7 +29,7 @@ const sizeStyles = {
   },
 };
 
-export const cardWrapper = (size: 'large' | 'medium' | 'small') => css`
+export const cardWrapper = (size: SizeType) => css`
   width: ${sizeStyles[size].width};
   height: ${sizeStyles[size].height};
   border-radius: 20px;
@@ -56,7 +59,7 @@ export const cardWrapper = (size: 'large' | 'medium' | 'small') => css`
   }
 `;
 
-export const imageContainer = (size: 'large' | 'medium' | 'small') => css`
+export const imageContainer = (size: SizeType) => css`
   display: flex;
   width: 100%;
   height: ${sizeStyles[size].imageHeight};
@@ -87,7 +90,7 @@ export const chipsContainer = css`
   gap: 10px;
 `;
 
-export const infoContainer = (size: 'large' | 'medium' | 'small') => css`
+export const infoContainer = (size: SizeType) => css`
   width: 100%;
   height: ${sizeStyles[size].infoHeight};
   padding: 20px;
@@ -96,10 +99,7 @@ export const infoContainer = (size: 'large' | 'medium' | 'small') => css`
   align-items: flex-start;
 `;
 
-export const label = (
-  size: 'large' | 'medium' | 'small',
-  highlighted?: boolean,
-) => css`
+export const label = (size: SizeType, highlighted?: boolean) => css`
   ${typo.Component.Medium};
   color: ${highlighted ? color.MAIN : color.BK};
   max-width: ${sizeStyles[size].labelMaxWidth};
