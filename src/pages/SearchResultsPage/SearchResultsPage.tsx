@@ -10,7 +10,7 @@ import { useSearchParams } from 'react-router-dom';
 import * as S from './SearchResultsPage.style';
 
 const SearchResultsPage = () => {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get('query') || '';
   const [selectedTag, setSelectedTag] = useState<'all' | 'talkpick' | 'game'>(
     'all',
@@ -30,6 +30,10 @@ const SearchResultsPage = () => {
 
   const handleTagClick = (value: 'all' | 'talkpick' | 'game') => {
     setSelectedTag(value);
+  };
+
+  const handleSearch = (newQuery: string) => {
+    setSearchParams({ query: newQuery });
   };
 
   const renderResults = () => {
@@ -64,7 +68,7 @@ const SearchResultsPage = () => {
       <SearchResultBarContainer
         selectedValue={selectedTag}
         onClick={handleTagClick}
-        onSearch={(newQuery) => searchParams.set('query', newQuery)}
+        onSearch={handleSearch}
       />
       <div css={S.dividerWrapper}>
         <Divider length={1133} orientation="width" />

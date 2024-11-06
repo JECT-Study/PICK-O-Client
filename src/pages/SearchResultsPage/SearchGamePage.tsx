@@ -26,6 +26,10 @@ const SearchGamePage = () => {
     setSelectedTag(value);
   };
 
+  const handleSearch = (newQuery: string) => {
+    setSearchParams({ query: newQuery });
+  };
+
   const handlePageChange = (newPage: number) => {
     setPage(newPage - 1);
     setSearchParams({ query, page: (newPage - 1).toString() });
@@ -41,7 +45,7 @@ const SearchGamePage = () => {
       <SearchResultBarContainer
         selectedValue={selectedTag}
         onClick={handleTagClick}
-        onSearch={(newQuery) => searchParams.set('query', newQuery)}
+        onSearch={handleSearch}
       />
       <div css={S.dividerWrapper}>
         <Divider length={1133} orientation="width" />
