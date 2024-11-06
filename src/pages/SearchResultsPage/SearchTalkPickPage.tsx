@@ -6,7 +6,7 @@ import SearchTalkPickListSection from '@/components/organisms/SearchTalkPickList
 import { useSearchParams } from 'react-router-dom';
 import { useTalkPickResultQuery } from '@/hooks/api/search/useTalkPickResultQuery';
 
-const SearchGamePage = () => {
+const SearchTalkPickPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get('query') || '';
   const [selectedTag, setSelectedTag] = useState<'all' | 'talkpick' | 'game'>(
@@ -62,4 +62,4 @@ const SearchGamePage = () => {
   );
 };
 
-export default SearchGamePage;
+export default SearchTalkPickPage;
