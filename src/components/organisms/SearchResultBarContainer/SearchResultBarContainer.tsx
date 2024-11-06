@@ -8,7 +8,7 @@ type SearchCategory = 'all' | 'talkpick' | 'game';
 interface SearchResultBarContainerProps {
   selectedValue: SearchCategory;
   onClick: (value: SearchCategory) => void;
-  onSearch: () => void;
+  onSearch: (query: string) => void;
 }
 
 const SearchResultBarContainer = ({
@@ -33,9 +33,9 @@ const SearchResultBarContainer = ({
     navigate(`${getSearchPath(value)}?query=${searchParams.get('query')}`);
   };
 
-  const handleSearch = () => {
-    onSearch();
-    navigate(`${getSearchPath(selectedValue)}?query=${query}`);
+  const handleSearch = (newQuery: string) => {
+    onSearch(newQuery);
+    navigate(`${getSearchPath(selectedValue)}?query=${newQuery}`);
   };
 
   return (
