@@ -18,6 +18,7 @@ export const titleWrapper = css(typo.Title, {
 export const contentWrapper = css({
   minHeight: '1240px',
 });
+
 export const paginationWrapper = css({
   display: 'flex',
   justifyContent: 'center',
