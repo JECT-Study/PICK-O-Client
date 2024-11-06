@@ -42,7 +42,7 @@ const ContentsButton = ({
         </div>
       </div>
       <div css={S.infoContainer(size)}>
-        {highlightText(title, keyword || '').map((part) => (
+        {highlightText(title, keyword ?? '').map((part) => (
           <span key={part.value} css={S.label(size, part.highlighted)}>
             {part.value}
           </span>
