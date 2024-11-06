@@ -1,4 +1,3 @@
-/* eslint-disable consistent-return */
 import React from 'react';
 import { isEmptyString } from '@/utils/validator';
 import PostTitleBox from '@/components/atoms/PostTitleBox/PostTitleBox';

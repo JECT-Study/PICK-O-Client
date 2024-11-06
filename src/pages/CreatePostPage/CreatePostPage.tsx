@@ -1,4 +1,3 @@
-/* eslint-disable consistent-return */
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { TalkPickDetail } from '@/types/talk-pick';
