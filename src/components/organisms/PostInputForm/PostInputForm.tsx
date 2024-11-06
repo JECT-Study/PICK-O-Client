@@ -31,6 +31,8 @@ const PostInputForm = ({ existingTalkPick }: PostInputFormProps) => {
     handleTalkPick,
   } = usePostTalkPickForm(existingTalkPick);
 
+  console.log(existingTalkPick);
+
   return (
     <form css={S.formStyling}>
       {isVisible && !isEmptyString(modalText ?? '') && (
@@ -84,7 +86,7 @@ const PostInputForm = ({ existingTalkPick }: PostInputFormProps) => {
           onChange={onChange}
           autoComplete="off"
         />
-        <DraftPostButton onClick={handleDraftButton} />
+        {!existingTalkPick && <DraftPostButton onClick={handleDraftButton} />}
       </div>
       <div css={S.buttonStyle}>
         <Button
