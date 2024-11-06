@@ -31,8 +31,6 @@ const PostInputForm = ({ existingTalkPick }: PostInputFormProps) => {
     handleTalkPick,
   } = usePostTalkPickForm(existingTalkPick);
 
-  console.log(existingTalkPick);
-
   return (
     <form css={S.formStyling}>
       {isVisible && !isEmptyString(modalText ?? '') && (
