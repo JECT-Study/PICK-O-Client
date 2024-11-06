@@ -3,9 +3,11 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import SearchResultBar from '@/components/molecules/SearchResultBar/SearchResultBar';
 import { PATH } from '@/constants/path';
 
+type SearchCategory = 'all' | 'talkpick' | 'game';
+
 interface SearchResultBarContainerProps {
-  selectedValue: 'all' | 'talkpick' | 'game';
-  onClick: (value: 'all' | 'talkpick' | 'game') => void;
+  selectedValue: SearchCategory;
+  onClick: (value: SearchCategory) => void;
   onSearch: (query: string) => void;
 }
 
@@ -18,7 +20,7 @@ const SearchResultBarContainer = ({
   const [searchParams] = useSearchParams();
   const query = searchParams.get('query') || '';
 
-  const getSearchPath = (value: 'all' | 'talkpick' | 'game') => {
+  const getSearchPath = (value: SearchCategory) => {
     return {
       all: `/result/${PATH.SEARCH.ALL}`,
       talkpick: `/result/${PATH.SEARCH.TALKPICK}`,
@@ -26,7 +28,7 @@ const SearchResultBarContainer = ({
     }[value];
   };
 
-  const handleTagClick = (value: 'all' | 'talkpick' | 'game') => {
+  const handleTagClick = (value: SearchCategory) => {
     onClick(value);
     navigate(`${getSearchPath(value)}?query=${searchParams.get('query')}`);
   };
