@@ -7,8 +7,6 @@ import { Route, Routes } from 'react-router-dom';
 import MyPage from '@/pages/MyPage/MyPage';
 import SearchGamePage from '@/pages/SearchResultsPage/SearchGamePage';
 import SearchTalkPickPage from '@/pages/SearchResultsPage/SearchTalkPickPage';
-import NotAuthRoutes from './components/Routes/NotAuthRoutes';
-import ProtectedRoutes from './components/Routes/ProtectedRoutes';
 // import NotAuthRoutes from './components/Routes/NotAuthRoutes';
 // import ProtectedRoutes from './components/Routes/ProtectedRoutes';
 import { PATH } from './constants/path';
