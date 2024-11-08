@@ -25,20 +25,25 @@ export const titleWrapStyle = css({
   alignItems: 'center',
 });
 
-export const titleStyle = css(typo.Main.Medium, {
-  color: color.BK,
-  marginRight: '9px',
-});
+export const titleStyle = (highlighted: boolean) =>
+  css(typo.Main.Medium, {
+    color: highlighted ? color.MAIN : color.BK,
+  });
 
 export const dateStyle = css(typo.Number.Regular, {
   color: color.GY[1],
+  marginLeft: '9px',
 });
 
-export const contentWrapStyle = css(typo.Comment.Regular, {
-  overflowY: 'hidden',
-  height: '45px',
-  color: color.GY[1],
+export const contentWrapStyle = css({
+  display: 'flex',
 });
+export const contentStyle = (highlighted: boolean) =>
+  css(typo.Comment.Regular, {
+    overflowY: 'hidden',
+    height: '45px',
+    color: highlighted ? color.MAIN : color.GY[1],
+  });
 
 export const imageContainerStyle = css({
   width: '100px',

@@ -55,6 +55,12 @@ export const END_POINT = {
   MYPAGES_GAMES_BOOKMARKS: (page: number, size: number) =>
     `/my/games/bookmarks?page=${page}&size=${size}`,
 
+  // search API
+  SEARCH_GAME: (query: string, page: number, size: number, sort: string) =>
+    `/search/game?query=${query}&page=${page}&size=${size}&sort=${sort}`,
+  SEARCH_TALKPICK: (query: string, page: number, size: number, sort: string) =>
+    `/talks/search?query=${query}&page=${page}&size=${size}&sort=${sort}`,
+
   // file API
   FILE_UPLOAD: '/images',
   FILE_DELETE: (storedName: string) => `/images/${storedName}`,

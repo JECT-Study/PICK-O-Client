@@ -5,9 +5,7 @@ import { selectAccessToken } from '@/store/auth';
 import { TalkPickBubble } from '@/assets';
 import { createRangeArray } from '@/utils/array';
 import { TalkPickListPagination } from '@/types/talk-pick';
-import ToggleGroup, {
-  ToggleGroupItem,
-} from '@/components/atoms/ToggleGroup/ToggleGroup';
+import ToggleGroup from '@/components/atoms/ToggleGroup/ToggleGroup';
 import Button from '@/components/atoms/Button/Button';
 import Pagination from '@/components/atoms/Pagination/Pagination';
 import TalkPickList from '@/components/molecules/TalkPickList/TalkPickList';
@@ -15,7 +13,6 @@ import * as S from './TalkPickListSection.style';
 
 export interface TalkPickListProps {
   talkPickList?: TalkPickListPagination;
-  toggleItem: ToggleGroupItem[];
   selectedValue: string;
   setToggleValue: React.Dispatch<React.SetStateAction<string>>;
   selectedPage: number;
@@ -24,7 +21,6 @@ export interface TalkPickListProps {
 
 const TalkPickListSection = ({
   talkPickList,
-  toggleItem,
   selectedValue,
   setToggleValue,
   selectedPage,
@@ -46,11 +42,7 @@ const TalkPickListSection = ({
   return (
     <div css={S.talkPickListContainer}>
       <div css={S.talkPickBtnWrapper}>
-        <ToggleGroup
-          items={toggleItem}
-          selectedValue={selectedValue}
-          onClick={setToggleValue}
-        />
+        <ToggleGroup selectedValue={selectedValue} onClick={setToggleValue} />
         <div css={S.talkPickWriteBtnWrapper}>
           <TalkPickBubble />
           <Button

@@ -13,4 +13,8 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  args: {
+    onSearch: (query: string) => alert(`${query} 검색어로 검색 실행됨!`),
+  },
+};

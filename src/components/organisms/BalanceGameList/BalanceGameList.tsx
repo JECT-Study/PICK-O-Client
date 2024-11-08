@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { AngleSmallDown } from '@/assets';
-import ToggleGroup, {
-  ToggleGroupItem,
-} from '@/components/atoms/ToggleGroup/ToggleGroup';
+import ToggleGroup from '@/components/atoms/ToggleGroup/ToggleGroup';
 import Button from '@/components/atoms/Button/Button';
 import CategoryBar from '@/components/molecules/CategoryBar/CategoryBar';
 import ContentsButton from '@/components/molecules/ContentsButton/ContentsButton';
@@ -11,8 +9,8 @@ import * as S from './BalanceGameList.style';
 
 export interface ContentListProps {
   contents: GameContent[];
-  selectedValue: 'trend' | 'recent';
-  setSelectedValue: React.Dispatch<React.SetStateAction<'trend' | 'recent'>>;
+  selectedValue: 'views' | 'createdAt';
+  setSelectedValue: React.Dispatch<React.SetStateAction<'views' | 'createdAt'>>;
   activeTab: '인기' | '커플' | '취향' | '월드컵';
   setActiveTab: React.Dispatch<
     React.SetStateAction<'인기' | '커플' | '취향' | '월드컵'>
@@ -26,17 +24,6 @@ const BalanceGameList = ({
   activeTab,
   setActiveTab,
 }: ContentListProps) => {
-  const toggleItem: ToggleGroupItem[] = [
-    {
-      label: '인기순',
-      value: 'trend',
-    },
-    {
-      label: '최신순',
-      value: 'recent',
-    },
-  ];
-
   const [visibleItems, setVisibleItems] = useState<number>(4);
 
   const handleLoadMore = () => {
@@ -47,11 +34,7 @@ const BalanceGameList = ({
     <div css={S.containerStyle}>
       <div css={S.titleWrapStyle}>
         <div>주제별 밸런스 게임</div>
-        <ToggleGroup
-          items={toggleItem}
-          selectedValue={selectedValue}
-          onClick={(value) => setSelectedValue(value as 'trend' | 'recent')}
-        />
+        <ToggleGroup selectedValue={selectedValue} onClick={setSelectedValue} />
       </div>
       <div css={S.barStyle}>
         <CategoryBar activeTab={activeTab} setActiveTab={setActiveTab} />
