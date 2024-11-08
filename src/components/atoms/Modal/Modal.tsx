@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useRef, useEffect, ReactNode } from 'react';
+import React, { useRef, ReactNode } from 'react';
 import { ModalClose } from '@/assets';
+import useOutsideClick from '@/hooks/common/useOutsideClick';
 import { getModalSize, modalCloseStyling, modalStyling } from './Modal.style';
 
 export interface ModalProps {
@@ -20,15 +21,7 @@ const Modal = ({
 }: ModalProps) => {
   const modalRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const handleClick = (e: MouseEvent) => {
-      if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
-        onClose?.();
-      }
-    };
-    window.addEventListener('mousedown', handleClick);
-    return () => window.removeEventListener('mousedown', handleClick);
-  }, [modalRef]);
+  useOutsideClick(modalRef, () => onClose?.());
 
   return (
     <div>

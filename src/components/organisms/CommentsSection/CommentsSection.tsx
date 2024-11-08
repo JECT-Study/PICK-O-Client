@@ -1,9 +1,16 @@
 import React, { useState } from 'react';
+import { useNewSelector } from '@/store';
+import { selectAccessToken } from '@/store/auth';
+import { useParseJwt } from '@/hooks/common/useParseJwt';
+import { useMemberQuery } from '@/hooks/api/member/useMemberQuery';
 import { CommentsPagination } from '@/types/comment';
 import Pagination from '@/components/atoms/Pagination/Pagination';
 import TextArea from '@/components/molecules/TextArea/TextArea';
 import Toggle from '@/components/atoms/Toggle/Toggle';
 import ToastModal from '@/components/atoms/ToastModal/ToastModal';
+import ToggleGroup, {
+  ToggleGroupItem,
+} from '@/components/atoms/ToggleGroup/ToggleGroup';
 import { createRangeArray } from '@/utils/array';
 import CommentItem from '@/components/molecules/CommentItem/CommentItem';
 import { useCreateCommentMutation } from '@/hooks/api/comment/useCreateCommentMutation';
@@ -11,8 +18,11 @@ import * as S from './CommentsSection.style';
 
 export interface CommentsSectionProps {
   talkPickId: number;
-  myOption: 'A' | 'B' | null;
+  talkPickWriter: string;
   commentList?: CommentsPagination;
+  toggleItem: ToggleGroupItem[];
+  selectedValue: string;
+  setToggleValue: React.Dispatch<React.SetStateAction<string>>;
   selectedPage: number;
   handlePageChange: React.Dispatch<React.SetStateAction<number>>;
   voted: boolean;
@@ -20,36 +30,52 @@ export interface CommentsSectionProps {
 
 const CommentsSection = ({
   talkPickId,
-  myOption,
+  talkPickWriter,
   commentList,
+  toggleItem,
+  selectedValue,
+  setToggleValue,
   selectedPage,
   handlePageChange,
   voted,
 }: CommentsSectionProps) => {
+  const accessToken = useNewSelector(selectAccessToken);
+  const { member } = useMemberQuery(useParseJwt(accessToken).memberId);
+  const isMyTalkPick: boolean = talkPickWriter === member?.nickname;
+
   const pages = createRangeArray(selectedPage, commentList?.totalPages || 0);
   const [commentValue, setCommentValue] = useState<string>('');
 
   const { mutate: createComment } = useCreateCommentMutation(
     talkPickId,
-    'comments',
+    selectedPage,
   );
 
   const handleCommentButton = () => {
-    if (!myOption) return;
-
-    createComment({
-      content: commentValue,
-      option: myOption,
-      parentId: talkPickId,
-    });
     setCommentValue('');
+    createComment(
+      { content: commentValue },
+      {
+        onSuccess: () => {
+          if (selectedValue === 'trend') setToggleValue('recent');
+          handlePageChange(1);
+        },
+      },
+    );
   };
 
   return (
     <div css={S.commentsSectionContainer}>
-      <Toggle count={commentList?.totalElements ?? 0} label="톡댓톡" />
+      <div css={S.commentTopWrapper}>
+        <Toggle count={commentList?.totalElements ?? 0} label="톡댓톡" />
+        <ToggleGroup
+          items={toggleItem}
+          selectedValue={selectedValue}
+          onClick={setToggleValue}
+        />
+      </div>
       <div css={S.loggedInBackground}>
-        {!voted && (
+        {!isMyTalkPick && !voted && (
           <div css={S.loggedOutBackground}>
             <div css={S.toastModalWrapper}>
               <ToastModal bgColor="black">
@@ -70,7 +96,12 @@ const CommentsSection = ({
         />
         <div css={S.commentsWrapper}>
           {commentList?.content.map((commentData) => (
-            <CommentItem comment={commentData} />
+            <CommentItem
+              key={commentData.id}
+              comment={commentData}
+              selectedPage={selectedPage}
+              talkPickWriter={talkPickWriter}
+            />
           ))}
         </div>
       </div>

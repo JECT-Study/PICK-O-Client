@@ -11,9 +11,14 @@ const meta = {
   },
   tags: ['autodocs'],
   argTypes: {
+    variant: {
+      options: ['outline', 'roundOutline'],
+      control: { type: 'radio' },
+    },
     children: { control: { type: 'text' } },
   },
   args: {
+    variant: 'outline',
     children: 'CHIP',
   },
 } satisfies Meta<typeof Chips>;
@@ -32,7 +37,8 @@ export const All: Story = {
       </li>
       <li css={storyContainer}>
         <h3>Variant</h3>
-        <Chips>Outline</Chips>
+        <Chips>outline</Chips>
+        <Chips variant="roundOutline">roundOutline</Chips>
       </li>
     </ul>
   ),

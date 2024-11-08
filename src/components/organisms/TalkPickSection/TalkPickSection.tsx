@@ -10,6 +10,7 @@ import {
 } from '@/assets';
 import { useNavigate } from 'react-router-dom';
 import { TalkPickDetail } from '@/types/talk-pick';
+import { ERROR, SUCCESS } from '@/constants/message';
 import { formatDate, formatNumber } from '@/utils/formatData';
 import Button from '@/components/atoms/Button/Button';
 import SummaryBox from '@/components/molecules/SummaryBox/SummaryBox';
@@ -22,9 +23,10 @@ import ReportModal from '@/components/molecules/ReportModal/ReportModal';
 import { useCreateTalkPickBookmarkMutation } from '@/hooks/api/bookmark/useCreateTalkPickBookmarkMutation';
 import { useDeleteTalkPickBookmarkMutation } from '@/hooks/api/bookmark/useDeleteTalkPickBookmarkMutation';
 import { useDeleteTalkPickMutation } from '@/hooks/api/talk-pick/useDeleteTalkPickMutation';
+import useToastModal from '@/hooks/modal/useToastModal';
 import * as S from './TalkPickSection.style';
 
-export interface TodayTalkPickProps {
+export interface TalkPickProps {
   talkPick?: TalkPickDetail;
   myTalkPick: boolean;
   isTodayTalkPick: boolean;
@@ -34,12 +36,12 @@ const TalkPickSection = ({
   talkPick,
   myTalkPick,
   isTodayTalkPick,
-}: TodayTalkPickProps) => {
+}: TalkPickProps) => {
   const currentURL: string = window.location.href;
   const navigate = useNavigate();
 
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
-  const [linkCopied, setLinkCopied] = useState<boolean>(false);
+  const { isVisible, modalText, showToastModal } = useToastModal();
 
   const [shareModalOpen, setShareModalOpen] = useState<boolean>(false);
   const [reportModalOpen, setReportModalOpen] = useState<boolean>(false);
@@ -70,6 +72,11 @@ const TalkPickSection = ({
   const handleBookmarkClick = () => {
     if (!talkPick) return;
 
+    if (myTalkPick) {
+      showToastModal(ERROR.BOOKMARK.MY_TALKPICK);
+      return;
+    }
+
     if (talkPick.myBookmark) {
       deleteBookmark();
     } else {
@@ -98,26 +105,17 @@ const TalkPickSection = ({
     talkPick?.id ?? 0,
   );
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
   const handleCopyButton = (link: string) => {
     copyTalkPickLink(link);
     setShareModalOpen(false);
-    setLinkCopied(true);
-    scrollToTop();
-
-    setTimeout(() => {
-      setLinkCopied(false);
-    }, 2000);
+    showToastModal(SUCCESS.COPY.LINK);
   };
 
   return (
     <div css={S.todayTalkPickStyling}>
-      {linkCopied && (
+      {isVisible && (
         <div css={S.toastModalStyling}>
-          <ToastModal>복사 완료!</ToastModal>
+          <ToastModal>{modalText}</ToastModal>
         </div>
       )}
       <div css={S.centerStyling}>

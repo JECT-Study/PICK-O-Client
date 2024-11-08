@@ -1,33 +1,47 @@
 import React from 'react';
+import { highlightText } from '@/utils/highlightText';
+import { formatDateFromISO } from '@/utils/formatData';
 import * as S from './SearchTalkPickItem.style';
 
 export interface SearchTalkPickItemProps {
   title: string;
-  date: string;
+  createdAt: string;
   content: string;
-  imgUrl: string;
+  firstImgUrl: string;
+  keyword: string;
 }
 
 const SearchTalkPickItem = ({
   title,
-  date,
+  createdAt,
   content,
-  imgUrl,
+  firstImgUrl,
+  keyword,
 }: SearchTalkPickItemProps) => {
   return (
     <div css={S.searchTalkPickItemStyle}>
       <div css={S.leftContentStyle}>
         <div css={S.titleWrapStyle}>
-          <div css={S.titleStyle}>{title}</div>
-          <div css={S.dateStyle}>{date}</div>
+          {highlightText(title, keyword).map((part) => (
+            <span key={part.value} css={S.titleStyle(part.highlighted)}>
+              {part.value}
+            </span>
+          ))}
+          <span css={S.dateStyle}>{formatDateFromISO(createdAt)}</span>
         </div>
-        <div css={S.contentWrapStyle}>{content}</div>
+        <div css={S.contentWrapStyle}>
+          {highlightText(content, keyword).map((part) => (
+            <span key={part.value} css={S.contentStyle(part.highlighted)}>
+              {part.value}
+            </span>
+          ))}
+        </div>
       </div>
 
       <div css={S.imageContainerStyle}>
         <img
           css={S.imageContainerStyle}
-          src={imgUrl}
+          src={firstImgUrl}
           alt="representativeImage"
         />
       </div>

@@ -5,17 +5,21 @@ import 'dayjs/locale/ko';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import MyPage from '@/pages/MyPage/MyPage';
+import SearchGamePage from '@/pages/SearchResultsPage/SearchGamePage';
+import SearchTalkPickPage from '@/pages/SearchResultsPage/SearchTalkPickPage';
 // import NotAuthRoutes from './components/Routes/NotAuthRoutes';
 // import ProtectedRoutes from './components/Routes/ProtectedRoutes';
 import { PATH } from './constants/path';
 import { useMemberQuery } from './hooks/api/member/useMemberQuery';
 import { useParseJwt } from './hooks/common/useParseJwt';
 import { useTokenRefresh } from './hooks/common/useTokenRefresh';
-import { Layout, LayoutMypage, LayoutNoSearch } from './layout/layout';
+import { Layout, LayoutNoFooter } from './layout/layout';
 import CreatePostPage from './pages/CreatePostPage/CreatePostPage';
 // import FindPasswordPage from './pages/FindPasswordPage/FindPasswordPage';
 import LandingPage from './pages/LandingPage/LandingPage';
 import LoginPage from './pages/LoginPage/LoginPage';
+// import TodayTalkPickPage from './pages/TodayTalkPickPage/TodayTalkPickPage';
+import SearchResultsPage from './pages/SearchResultsPage/SearchResultsPage';
 import TalkPickPage from './pages/TalkPickPage/TalkPickPage';
 // import DeletePage from './pages/MyPage/DeletePage/DeletePage';
 // import HistoryPage from './pages/MyPage/HistoryPage/HistoryPage';
@@ -33,6 +37,7 @@ import { useNewSelector } from './store';
 import { selectAccessToken } from './store/auth';
 import TalkPickPlacePage from './pages/TalkPickPlacePage/TalkPickPlacePage';
 import SignUpPage from './pages/SignUpPage/SignUpPage';
+import BalanceGamePage from './pages/BalanceGamePage/BalanceGamePage';
 
 const App: React.FC = () => {
   const accessToken = useNewSelector(selectAccessToken);
@@ -49,6 +54,8 @@ const App: React.FC = () => {
           <Route path="/talkpick/:talkPickId" element={<TalkPickPage />} />
           <Route path="/talkpickplace" element={<TalkPickPlacePage />} />
           <Route path="/post/create" element={<CreatePostPage />} />
+          {/* <Route path="/search" element={<SearchResultsPage />} /> */}
+          <Route path="/balancegame/:setId" element={<BalanceGamePage />} />
           {/* <Route path="posts" element={<PostList />} />
           <Route path="posts/:id" element={<PostPage />} />
           <Route path="searchResult" element={<SearchResultPage />} />
@@ -56,8 +63,14 @@ const App: React.FC = () => {
             <Route path="post/create" element={<CreatePostPage />} />
           </Route> */}
         </Route>
-        <Route path="/mypage" element={<LayoutMypage />}>
+        <Route path="/mypage" element={<LayoutNoFooter />}>
           <Route index element={<MyPage />} />
+        </Route>
+        <Route path="/result" element={<LayoutNoFooter />}>
+          <Route index element={<SearchResultsPage />} />
+          <Route path={PATH.SEARCH.ALL} element={<SearchResultsPage />} />
+          <Route path={PATH.SEARCH.TALKPICK} element={<SearchTalkPickPage />} />
+          <Route path={PATH.SEARCH.GAME} element={<SearchGamePage />} />
         </Route>
         {/* <Route element={<NotAuthRoutes member={member} />}>
           <Route element={<LayoutNoSearch />}>

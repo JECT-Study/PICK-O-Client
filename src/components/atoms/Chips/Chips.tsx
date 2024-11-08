@@ -1,15 +1,13 @@
 import React, { ReactNode } from 'react';
-// import type { Size } from '@/types/theme';
-import { chipsStyling } from './Chips.style';
+import { chipsStyling, getChipStyling } from './Chips.style';
 
 export interface ChipsProps {
-  // size?: Extract<Size, 'large'>;
-  // variant?: 'outline';
+  variant?: 'outline' | 'roundOutline';
   children?: ReactNode;
 }
 
-const Chips = ({ children }: ChipsProps) => (
-  <div css={chipsStyling}>{children}</div>
+const Chips = ({ variant = 'outline', children }: ChipsProps) => (
+  <div css={[chipsStyling, getChipStyling(variant)]}>{children}</div>
 );
 
 export default Chips;

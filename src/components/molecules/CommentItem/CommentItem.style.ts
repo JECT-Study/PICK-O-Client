@@ -6,50 +6,40 @@ export const MainContainer = css`
   display: flex;
   flex-direction: column;
   width: 1175px;
-  min-width: 1175px;
 `;
 
 export const myCommentColor = css`
   background-color: ${color.WT_VIOLET};
 `;
 
-export const compactContainer = css`
-  ${MainContainer};
-  height: 131px;
-`;
-
-export const expandedContainer = css`
-  ${MainContainer};
-  height: 368px;
-`;
-
 export const commentContainer = css`
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  width: 1175px;
-  min-width: 1175px;
-  height: 131px;
-  min-height: 131px;
-  border-top: 1px solid ${color.GY[2]};
-  padding-left: 16px;
-  margin-right: 0;
+  align-items: flex-start;
+  width: 100%;
+  padding: 30px 10px 30px 27px;
+  gap: 20px;
+  border-top: 1px solid #f4f4f4;
 `;
 
-export const commentWrapper = css`
+export const profileWrapper = css`
+  display: flex;
+`;
+
+export const commentInfoWrapper = css`
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  flex-grow: 1;
-  padding-left: 19px;
+  width: 100%;
+  gap: 10px;
 `;
 
-export const commentBox = css`
+export const commentTopWrapper = css`
   display: flex;
-  flex-direction: row;
-  align-items: flex-start;
+  justify-content: space-between;
+`;
+
+export const writerInfoWrapper = css`
+  display: flex;
   gap: 10px;
-  padding-left: 3px;
 `;
 
 export const nickname = css`
@@ -58,64 +48,70 @@ export const nickname = css`
 `;
 
 export const createdTime = css`
-  ${typo.Comment.Regular}
+  ${typo.Comment.SemiBold}
   color: #67727E;
+  margin-left: 10px;
 `;
 
-export const commentText = css`
+export const editedText = css`
+  ${typo.Comment.Regular}
+  color: ${color.MAIN};
+`;
+
+export const commentTextWrapper = css`
+  display: flex;
   width: 100%;
-  flex-shrink: 0;
+  padding-right: 20px;
   ${typo.Comment.Regular}
   color: #505050;
 `;
 
-export const sideWrapper = css`
-  width: auto;
+export const commentBottomWrapper = css`
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  margin-right: 18px;
-  flex-grow: 0;
-`;
-
-export const sideBox = css`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-between;
+  padding-right: 15px;
 `;
 
 export const replyButton = css`
+  display: flex;
+  gap: 10px;
   ${typo.Comment.SemiBold}
   background: none;
-  border: none;
+  padding-top: 10px;
   color: ${color.GY[1]};
   cursor: pointer;
-  margin-right: 16px;
-
-  &:hover {
-    text-decoration: underline;
-  }
 `;
 
-export const replyForm = css`
+export const repliesWrapper = css`
   display: flex;
-  width: 1175px;
-  min-width: 1175px;
-  height: 237px;
-  min-height: 237px;
+  flex-direction: column;
+`;
+
+export const replyContainer = css`
+  display: flex;
+  width: 100%;
+  height: 210px;
   justify-content: center;
   align-items: flex-start;
   flex-direction: column;
-  border-top: 1px solid ${color.GY[2]};
-  padding-left: 80px;
+  border-top: 1px solid #f4f4f4;
+  padding-left: 105px;
 `;
 
 export const nicknameInput = css`
   margin-bottom: 12px;
   ${typo.Comment.SemiBold}
 `;
+
+export const moreButtonStyling = css({
+  display: 'flex',
+  width: '100%',
+  height: '80px',
+  justifyContent: 'center',
+  alignItems: 'center',
+  borderTop: '1px solid #f4f4f4',
+  cursor: 'pointer',
+});
 
 export const toastModalStyling = css({
   position: 'fixed',

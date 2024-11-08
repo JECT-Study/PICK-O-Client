@@ -7,10 +7,13 @@ import { Search } from '@/assets';
 import Button from '@/components/atoms/Button/Button';
 import * as S from './SearchBar.style';
 
-export interface SearchBarProps extends ComponentPropsWithoutRef<'input'> {}
+export interface SearchBarProps extends ComponentPropsWithoutRef<'input'> {
+  onSearchClick: () => void;
+  onInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
 
 const SearchBar = (
-  { ...props }: SearchBarProps,
+  { onSearchClick, onInputChange, ...props }: SearchBarProps,
   ref: ForwardedRef<HTMLInputElement>,
 ) => (
   <div css={S.searchBarStyling}>
@@ -18,9 +21,10 @@ const SearchBar = (
       ref={ref}
       css={S.inputStyling}
       placeholder="궁금한 키워드를 입력해주세요!"
+      onChange={onInputChange}
       {...props}
     />
-    <Button size="large" variant="circle">
+    <Button size="large" variant="circle" onClick={onSearchClick}>
       <Search />
     </Button>
   </div>

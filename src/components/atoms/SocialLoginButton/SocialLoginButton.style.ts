@@ -18,6 +18,10 @@ export const loginButtonStyling = css({
   backgroundColor: color.WT,
   outline: `1px solid ${color.GY[2]}`,
   cursor: 'pointer',
+
+  ':hover': {
+    boxShadow: '0px 0px 15px rgba(119, 130, 225, 1)',
+  },
 });
 
 export const recentLoginStyling = css({

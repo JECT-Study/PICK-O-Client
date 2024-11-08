@@ -10,7 +10,6 @@ const meta = {
   parameters: {
     layout: 'centered',
   },
-  tags: ['autodocs'],
   argTypes: {
     nickname: { control: { type: 'text' }, defaultValue: 'Aycho' },
     profileImageUrl: {
@@ -19,6 +18,7 @@ const meta = {
     },
     postsCount: { control: { type: 'number' }, defaultValue: 23 },
     bookmarkedPostsCount: { control: { type: 'number' }, defaultValue: 21 },
+    isLoading: { control: { type: 'boolean' } },
   },
 } satisfies Meta<typeof SideBar>;
 
@@ -31,6 +31,7 @@ export const Default: Story = {
     profileImageUrl: ProfileInfoSample,
     postsCount: 23,
     bookmarkedPostsCount: 21,
+    isLoading: false,
   },
 };
 
@@ -61,6 +62,17 @@ export const All: Story = {
           bookmarkedPostsCount={15}
         />
       </li>
+      <li css={storyInnerContainer}>
+        <h3>로딩중인 경우</h3>
+        <SideBar
+          {...args}
+          nickname="Aycho"
+          profileImageUrl={ProfileInfoSample}
+          postsCount={45}
+          bookmarkedPostsCount={15}
+          isLoading
+        />
+      </li>
     </ul>
   ),
   args: {
@@ -68,5 +80,6 @@ export const All: Story = {
     profileImageUrl: ProfileInfoSample,
     postsCount: 23,
     bookmarkedPostsCount: 21,
+    isLoading: false,
   },
 };

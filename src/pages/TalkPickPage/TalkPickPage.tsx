@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNewSelector } from '@/store';
 import { selectAccessToken } from '@/store/auth';
 import { useLocation } from 'react-router-dom';
 import { useParseJwt } from '@/hooks/common/useParseJwt';
 import { useMemberQuery } from '@/hooks/api/member/useMemberQuery';
 import { useCommentsQuery } from '@/hooks/api/comment/useCommentsQuery';
+import { useBestCommentsQuery } from '@/hooks/api/comment/useBestCommentsQuery';
+import { ToggleGroupItem } from '@/components/atoms/ToggleGroup/ToggleGroup';
 import TalkPickSection from '@/components/organisms/TalkPickSection/TalkPickSection';
 import CommentsSection from '@/components/organisms/CommentsSection/CommentsSection';
-import { useTalkPickSummaryMutation } from '@/hooks/api/talk-pick/useTalkPickSummaryMutation';
 import { useTalkPickDetailQuery } from '@/hooks/api/talk-pick/useTalkPickDetailQuery';
 import * as S from './TalkPickPage.style';
 
@@ -18,6 +19,7 @@ interface State {
 
 const TalkPickPage = () => {
   const [selectedPage, setSelectedPage] = useState<number>(1);
+  const [selectedValue, setSelectedValue] = useState<string>('trend');
 
   const accessToken = useNewSelector(selectAccessToken);
   const { member } = useMemberQuery(useParseJwt(accessToken).memberId);
@@ -27,13 +29,18 @@ const TalkPickPage = () => {
   const talkPickId = state?.talkPickId;
   const isTodayTalkPick = state?.isTodayTalkPick;
 
-  const { mutate: getTalkPickSummary } = useTalkPickSummaryMutation(talkPickId);
-
-  useEffect(() => {
-    getTalkPickSummary();
-  }, [getTalkPickSummary]);
-
   const { talkPick } = useTalkPickDetailQuery(talkPickId);
+
+  const toggleItem: ToggleGroupItem[] = [
+    {
+      label: '인기순',
+      value: 'trend',
+    },
+    {
+      label: '최신순',
+      value: 'recent',
+    },
+  ];
 
   const { comments } = useCommentsQuery(
     talkPickId,
@@ -42,6 +49,15 @@ const TalkPickPage = () => {
       size: 7,
     },
     'comments',
+  );
+
+  const { bestComments } = useBestCommentsQuery(
+    talkPickId,
+    {
+      page: selectedPage - 1,
+      size: 7,
+    },
+    'bestComments',
   );
 
   return (
@@ -54,8 +70,11 @@ const TalkPickPage = () => {
       <div css={S.commentsWrapStyle}>
         <CommentsSection
           talkPickId={talkPickId}
-          myOption={talkPick?.votedOption ?? null}
-          commentList={comments}
+          talkPickWriter={talkPick?.writer ?? ''}
+          commentList={selectedValue === 'trend' ? bestComments : comments}
+          toggleItem={toggleItem}
+          selectedValue={selectedValue}
+          setToggleValue={setSelectedValue}
           selectedPage={selectedPage}
           handlePageChange={setSelectedPage}
           voted={talkPick?.votedOption !== null}

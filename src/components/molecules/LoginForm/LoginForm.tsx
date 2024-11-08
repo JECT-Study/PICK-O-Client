@@ -18,6 +18,10 @@ const LoginForm = ({ withSignInText }: LoginFormProps) => {
   const { form, onChange, isError, errorMessage, handleSubmit, loginSuccess } =
     useLoginForm();
 
+  const handleSocialLogin = (social: string) => {
+    window.location.href = `${process.env.API_URL}/oauth2/authorization/${social}`;
+  };
+
   return (
     <form onSubmit={handleSubmit} css={S.loginFormStyling}>
       {loginSuccess && (
@@ -66,9 +70,24 @@ const LoginForm = ({ withSignInText }: LoginFormProps) => {
         <div css={S.signInTextStyling}>3초만에 회원가입하고 PICK-O 즐기기!</div>
       )}
       <div css={[S.btnWrapperStyling, withSignInText && S.btnWrapperMargin]}>
-        <SocialLoginButton variant="kakao" />
-        <SocialLoginButton variant="google" />
-        <SocialLoginButton variant="naver" />
+        <SocialLoginButton
+          variant="kakao"
+          onClick={() => {
+            handleSocialLogin('kakao');
+          }}
+        />
+        <SocialLoginButton
+          variant="google"
+          onClick={() => {
+            handleSocialLogin('google');
+          }}
+        />
+        <SocialLoginButton
+          variant="naver"
+          onClick={() => {
+            handleSocialLogin('naver');
+          }}
+        />
       </div>
     </form>
   );
