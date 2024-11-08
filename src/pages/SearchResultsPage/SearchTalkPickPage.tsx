@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import * as S from '@/pages/SearchResultsPage/SearchResultsPage.style';
+import { useSearchParams } from 'react-router-dom';
+import { useTalkPickResultQuery } from '@/hooks/api/search/useTalkPickResultQuery';
+import useSort from '@/hooks/game/useSort';
 import SearchResultBarContainer from '@/components/organisms/SearchResultBarContainer/SearchResultBarContainer';
 import Divider from '@/components/atoms/Divider/Divider';
 import SearchTalkPickListSection from '@/components/organisms/SearchTalkPickListSection/SearchTalkPickListSection';
-import { useSearchParams } from 'react-router-dom';
-import { useTalkPickResultQuery } from '@/hooks/api/search/useTalkPickResultQuery';
+import * as S from '@/pages/SearchResultsPage/SearchResultsPage.style';
 
 const SearchTalkPickPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -13,7 +14,7 @@ const SearchTalkPickPage = () => {
     'talkpick',
   );
   const [page, setPage] = useState(0);
-  const [sort, setSort] = useState('views');
+  const { sort, handleSortChange } = useSort();
   const size = 10;
 
   const {
@@ -33,11 +34,6 @@ const SearchTalkPickPage = () => {
   const handlePageChange = (newPage: number) => {
     setPage(newPage - 1);
     setSearchParams({ query, page: (newPage - 1).toString() });
-  };
-
-  const handleSortChange = (newSort: string) => {
-    setSort(newSort);
-    setPage(0);
   };
 
   return (

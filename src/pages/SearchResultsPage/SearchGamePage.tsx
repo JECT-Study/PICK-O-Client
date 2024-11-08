@@ -1,10 +1,11 @@
-import * as S from '@/pages/SearchResultsPage/SearchResultsPage.style';
-import SearchResultBarContainer from '@/components/organisms/SearchResultBarContainer/SearchResultBarContainer';
-import Divider from '@/components/atoms/Divider/Divider';
 import React, { useState } from 'react';
-import SearchGameListSection from '@/components/organisms/SearchGameListSection/SearchGameListSection';
 import { useSearchParams } from 'react-router-dom';
 import { useGameResultQuery } from '@/hooks/api/search/useGameResultQuery';
+import useSort from '@/hooks/game/useSort';
+import SearchResultBarContainer from '@/components/organisms/SearchResultBarContainer/SearchResultBarContainer';
+import Divider from '@/components/atoms/Divider/Divider';
+import SearchGameListSection from '@/components/organisms/SearchGameListSection/SearchGameListSection';
+import * as S from '@/pages/SearchResultsPage/SearchResultsPage.style';
 
 const SearchGamePage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -13,7 +14,7 @@ const SearchGamePage = () => {
     'game',
   );
   const [page, setPage] = useState(0);
-  const [sort, setSort] = useState('views');
+  const { sort, handleSortChange } = useSort();
   const size = 9;
 
   const {
@@ -33,11 +34,6 @@ const SearchGamePage = () => {
   const handlePageChange = (newPage: number) => {
     setPage(newPage - 1);
     setSearchParams({ query, page: (newPage - 1).toString() });
-  };
-
-  const handleSortChange = (newSort: string) => {
-    setSort(newSort);
-    setPage(0);
   };
 
   return (
