@@ -31,11 +31,6 @@ const SearchGameListSection = ({
   onSortChange,
   isLoading,
 }: SearchGameListSectionProps) => {
-  const toggleItem: ToggleGroupItem[] = [
-    { label: '인기순', value: 'views' },
-    { label: '최신순', value: 'createdAt' },
-  ];
-
   const pages = generatePageNumbers(totalPages);
 
   if (isLoading) {
@@ -56,11 +51,7 @@ const SearchGameListSection = ({
     <div css={S.container}>
       <div css={S.titleWrapper}>
         <div>밸런스게임</div>
-        <ToggleGroup
-          items={toggleItem}
-          selectedValue={sort}
-          onClick={onSortChange}
-        />
+        <ToggleGroup selectedValue={sort} onClick={onSortChange} />
       </div>
       <div css={S.contentWrapper}>
         <SearchGameList gameList={gameList} keyword={keyword} />
