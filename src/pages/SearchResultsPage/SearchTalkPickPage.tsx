@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import React from 'react';
 import { useTalkPickResultQuery } from '@/hooks/api/search/useTalkPickResultQuery';
 import useSort from '@/hooks/search/useSort';
 import useTagFilter from '@/hooks/search/useTagFilter';
 import useSearchQuery from '@/hooks/search/useSearchQuery';
+import usePagination from '@/hooks/search/usePagination';
 import SearchResultBarContainer from '@/components/organisms/SearchResultBarContainer/SearchResultBarContainer';
 import Divider from '@/components/atoms/Divider/Divider';
 import SearchTalkPickListSection from '@/components/organisms/SearchTalkPickListSection/SearchTalkPickListSection';
@@ -12,7 +12,7 @@ import * as S from '@/pages/SearchResultsPage/SearchResultsPage.style';
 const SearchTalkPickPage = () => {
   const { query, handleSearch } = useSearchQuery();
   const { selectedTag, handleTagClick } = useTagFilter('talkpick');
-  const [page, setPage] = useState(0);
+  const { page, handlePageChange } = usePagination();
   const { sort, handleSortChange } = useSort();
   const size = 10;
 
@@ -21,11 +21,6 @@ const SearchTalkPickPage = () => {
     totalPages: talkPickTotalPages,
     isLoading,
   } = useTalkPickResultQuery(query, page, size, sort);
-
-  const handlePageChange = (newPage: number) => {
-    setPage(newPage - 1);
-    setSearchParams({ query, page: (newPage - 1).toString() });
-  };
 
   return (
     <div css={S.container}>
