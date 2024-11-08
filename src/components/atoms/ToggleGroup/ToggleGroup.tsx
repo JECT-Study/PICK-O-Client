@@ -18,7 +18,16 @@ export interface ToggleGroupProps {
   onClick?: (value: string) => void;
 }
 
-const ToggleGroup = ({ items, selectedValue, onClick }: ToggleGroupProps) => (
+const defaultItems: ToggleGroupItem[] = [
+  { label: '인기순', value: 'views' },
+  { label: '최신순', value: 'createdAt' },
+];
+
+const ToggleGroup = ({
+  items = defaultItems,
+  selectedValue,
+  onClick,
+}: ToggleGroupProps) => (
   <div css={toggleButtonStyling}>
     {Array.isArray(items) &&
       items.length === 2 &&

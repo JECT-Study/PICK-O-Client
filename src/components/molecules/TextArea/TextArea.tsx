@@ -7,10 +7,11 @@ export interface TextAreaProps extends ComponentPropsWithRef<'textarea'> {
   value: string;
   label: string;
   onSubmit: () => void;
+  isEdited?: boolean;
 }
 
 const TextArea = (
-  { size, value, label, onSubmit, ...props }: TextAreaProps,
+  { size, value, label, onSubmit, isEdited = true, ...props }: TextAreaProps,
   ref: ForwardedRef<HTMLTextAreaElement>,
 ) => (
   <div css={[S.textAreaContainer, S.getContainerSizeStyling(size)]}>
@@ -23,7 +24,12 @@ const TextArea = (
     />
     <div css={S.replyFooter}>
       <span css={S.replyCount}>{value.length}/500</span>
-      <Button size="large" variant="primary" onClick={onSubmit}>
+      <Button
+        size="large"
+        variant="primary"
+        onClick={onSubmit}
+        css={S.getButtonStyle(isEdited)}
+      >
         {label}
       </Button>
     </div>

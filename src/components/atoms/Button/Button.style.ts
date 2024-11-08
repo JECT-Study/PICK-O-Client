@@ -197,7 +197,6 @@ export const buttonStyling = css({
   alignItems: 'center',
   border: 'none',
   whiteSpace: 'nowrap',
-  transition: 'all .3s ease-in',
   cursor: 'pointer',
 
   '& svg': {

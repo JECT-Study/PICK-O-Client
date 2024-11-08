@@ -1,19 +1,15 @@
 import React from 'react';
-import {
-  containerStyle,
-  profileWrapper,
-  profileImage,
-} from './CommentProfile.style';
+import * as S from './CommentProfile.style';
 
 export interface CommentProfileProps {
-  option: 'A' | 'B';
+  option: 'A' | 'B' | null;
   imgUrl?: string;
 }
 
-const CommentProfile = ({ option, imgUrl }: CommentProfileProps) => (
-  <div css={[containerStyle(option)]}>
-    <div css={profileWrapper}>
-      <img css={profileImage} src={imgUrl} alt="profile" />
+const CommentProfile = ({ option = null, imgUrl }: CommentProfileProps) => (
+  <div css={[S.containerStyle, S.getProfileColor(option)]}>
+    <div css={S.profileWrapper}>
+      <img css={S.profileImage} src={imgUrl} alt="profile" />
     </div>
   </div>
 );

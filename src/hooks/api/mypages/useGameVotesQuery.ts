@@ -9,6 +9,7 @@ export const useGameVotesQuery = () => {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
+    isLoading,
   } = useInfiniteScroll<GameVote>(
     ['gameVote'],
     ({ pageParam = 0 }) => getGameVote(pageParam, 20),
@@ -40,5 +41,6 @@ export const useGameVotesQuery = () => {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
+    isLoading,
   };
 };

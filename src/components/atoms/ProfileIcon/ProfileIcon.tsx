@@ -2,8 +2,8 @@ import React, { ComponentPropsWithRef, ForwardedRef, forwardRef } from 'react';
 import { NormalProfile } from '@/assets';
 import { profileWrapper, profileImage } from './ProfileIcon.style';
 
-interface ProfileProps extends ComponentPropsWithRef<'button'> {
-  interaction: 'normal';
+export interface ProfileProps extends ComponentPropsWithRef<'button'> {
+  interaction: 'default' | 'custom';
   imgUrl?: string;
   size?: 'small' | 'large';
 }
@@ -16,7 +16,7 @@ interface ProfilePropsWithImage extends ComponentPropsWithRef<'button'> {
 
 const ProfileIcon = (
   {
-    interaction = 'normal',
+    interaction = 'default',
     imgUrl,
     size = 'small',
     ...props

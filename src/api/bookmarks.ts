@@ -16,12 +16,30 @@ export const deleteTalkPickBookmark = async (talkPickId: Id) => {
   return response;
 };
 
-export const postGameBookmark = async (gameId: Id) => {
-  const response = await axiosInstance.post(END_POINT.BOOKMARK_GAME(gameId));
+export const postDoneGameBookmark = async (gameSetId: Id) => {
+  const response = await axiosInstance.post(
+    END_POINT.BOOKMARK_GAME_DONE(gameSetId),
+  );
   return response;
 };
 
-export const deleteGameBookmark = async (gameId: Id) => {
-  const response = await axiosInstance.delete(END_POINT.BOOKMARK_GAME(gameId));
+export const deleteDoneGameBookmark = async (gameSetId: Id) => {
+  const response = await axiosInstance.delete(
+    END_POINT.BOOKMARK_GAME_DONE(gameSetId),
+  );
+  return response;
+};
+
+export const postGameBookmark = async (gameSetId: Id, gameId: Id) => {
+  const response = await axiosInstance.post(
+    END_POINT.BOOKMARK_GAME(gameSetId, gameId),
+  );
+  return response;
+};
+
+export const deleteGameBookmark = async (gameSetId: Id) => {
+  const response = await axiosInstance.delete(
+    END_POINT.DELETE_BOOKMARK_GAME(gameSetId),
+  );
   return response;
 };

@@ -9,6 +9,7 @@ export const useMyCommentsQuery = () => {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
+    isLoading,
   } = useInfiniteScroll<MyComment>(
     ['myComments'],
     ({ pageParam = 0 }) => getMyComment(pageParam, 20),
@@ -40,5 +41,6 @@ export const useMyCommentsQuery = () => {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
+    isLoading,
   };
 };

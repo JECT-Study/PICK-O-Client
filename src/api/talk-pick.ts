@@ -35,11 +35,11 @@ export const deleteTalkPick = async (talkPickId: Id) => {
 };
 
 export const postTalkPick = async (talkPickData: NewTalkPick) => {
-  const response = await axiosInstance.post(
+  const { data } = await axiosInstance.post<Id>(
     END_POINT.CREATE_TALKPICK,
     talkPickData,
   );
-  return response;
+  return data;
 };
 
 export const postTempTalkPick = async (talkPickData: NewTalkPick) => {

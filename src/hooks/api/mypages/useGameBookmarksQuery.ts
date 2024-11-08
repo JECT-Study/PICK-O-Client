@@ -9,6 +9,7 @@ export const useGameBookmarksQuery = () => {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
+    isLoading,
   } = useInfiniteScroll<GameBookmark>(
     ['gameBookmark'],
     ({ pageParam = 0 }) => getGameBookmark(pageParam, 20),
@@ -40,5 +41,6 @@ export const useGameBookmarksQuery = () => {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
+    isLoading,
   };
 };

@@ -3,12 +3,12 @@ import typo from '@/styles/typo';
 import color from '@/styles/color';
 
 export const textAreaContainer = css`
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: ${color.WT};
   border: 1px solid #f4f4f4;
   border-radius: 10px;
   padding: 15px 30px 20px 35px;
-  display: flex;
-  flex-direction: column;
 `;
 
 export const getContainerSizeStyling = (size: 'large' | 'medium') => {
@@ -18,7 +18,7 @@ export const getContainerSizeStyling = (size: 'large' | 'medium') => {
       height: 160px;
     `,
     medium: css`
-      width: 1015px;
+      width: 1056px;
       height: 130px;
     `,
   };
@@ -29,7 +29,7 @@ export const replyTextArea = css`
   width: 100%;
   border: none;
   ${typo.Main.Medium}
-  color: ${color.BK};
+  color: #505050;
   resize: none;
   flex: 1;
 `;
@@ -65,3 +65,17 @@ export const replyCount = css`
   ${typo.Comment.SemiBold}
   color: #929292;
 `;
+
+export const getButtonStyle = (isEdited: boolean) => {
+  if (isEdited) {
+    return css({
+      minWidth: '80px',
+    });
+  }
+
+  return css({
+    backgroundColor: color.GY[2],
+    minWidth: '80px',
+    cursor: 'not-allowed',
+  });
+};

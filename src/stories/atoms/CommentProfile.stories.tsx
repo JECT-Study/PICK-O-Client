@@ -15,13 +15,13 @@ const meta: Meta<CommentProfileProps> = {
   tags: ['autodocs'],
   argTypes: {
     option: {
-      options: ['A', 'B'],
+      options: ['A', 'B', null],
       control: { type: 'radio' },
     },
     imgUrl: { control: 'text' },
   },
   args: {
-    option: 'A',
+    option: null,
     imgUrl: ProfileSample,
   },
 };
@@ -29,23 +29,22 @@ const meta: Meta<CommentProfileProps> = {
 export default meta;
 type Story = StoryObj<CommentProfileProps>;
 
-export const Default: Story = {
-  args: {
-    option: 'A',
-    imgUrl: ProfileSample,
-  },
-};
+export const Default: Story = {};
 
 export const All: Story = {
   render: (args) => (
     <ul css={storyContainer}>
       <li css={storyInnerContainer}>
-        <h3>찬성</h3>
+        <h3>A 투표</h3>
         <CommentProfile {...args} option="A" />
       </li>
       <li css={storyInnerContainer}>
-        <h3>반대</h3>
+        <h3>B 투표</h3>
         <CommentProfile {...args} option="B" />
+      </li>
+      <li css={storyInnerContainer}>
+        <h3>투표 값 없음</h3>
+        <CommentProfile {...args} />
       </li>
     </ul>
   ),

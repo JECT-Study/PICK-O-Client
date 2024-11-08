@@ -1,22 +1,19 @@
 import { END_POINT } from '@/constants/api';
 import { Id, ServerResponse } from '@/types/api';
-import {
-  CommentsPagination,
-  CreateCommentProps,
-  CreateReplyProps,
-  EditCommentProps,
-} from '@/types/comment';
+import { Comment, CommentsPagination, CommentProps } from '@/types/comment';
 import { Pageable } from '@/types/pagination';
 import { axiosInstance } from './interceptor';
 
 export const putComment = async (
   talkPickId: Id,
   commentId: Id,
-  comment: EditCommentProps,
+  comment: CommentProps,
 ) => {
   const { data } = await axiosInstance.put<ServerResponse>(
     END_POINT.EDIT_COMMENT(talkPickId, commentId),
-    { content: comment },
+    {
+      ...comment,
+    },
   );
   return data;
 };
@@ -38,10 +35,7 @@ export const getComments = async (talkPickId: Id, pageable: Pageable) => {
   return data;
 };
 
-export const postComment = async (
-  talkPickId: Id,
-  comment: CreateCommentProps,
-) => {
+export const postComment = async (talkPickId: Id, comment: CommentProps) => {
   const { data } = await axiosInstance.post<ServerResponse>(
     END_POINT.CREATE_COMMENT(talkPickId),
     {
@@ -51,12 +45,23 @@ export const postComment = async (
   return data;
 };
 
-export const postReply = async (commentId: Id, reply: CreateReplyProps) => {
+export const postReply = async (
+  talkPickId: Id,
+  commentId: Id,
+  reply: CommentProps,
+) => {
   const { data } = await axiosInstance.post<ServerResponse>(
-    END_POINT.CREATE_REPLY(commentId),
+    END_POINT.CREATE_REPLY(talkPickId, commentId),
     {
       ...reply,
     },
+  );
+  return data;
+};
+
+export const getReplies = async (talkPickId: Id, commentId: Id) => {
+  const { data } = await axiosInstance.get<Comment[]>(
+    END_POINT.REPLIES(talkPickId, commentId),
   );
   return data;
 };

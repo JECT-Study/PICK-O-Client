@@ -1,5 +1,6 @@
 import React from 'react';
 import { ProfileSample } from '@/assets';
+import { ToggleGroupItem } from '@/components/atoms/ToggleGroup/ToggleGroup';
 import type { Meta, StoryObj } from '@storybook/react';
 import store from '@/store';
 import { Provider } from 'react-redux';
@@ -13,8 +14,9 @@ const exampleCommentList: Comment[] = Array.from({ length: 7 }, (_, index) => ({
   talkPickId: 1,
   talkPickTitle: '톡픽 제목',
   nickname: '닉네임 4',
+  profileImage: ProfileSample,
   content: '피곤하게 산다... 그깟 새우 까주는게 뭐 대수라고!',
-  option: 'A',
+  voteOption: 'A',
   likesCount: 35,
   myLike: false,
   parentId: 4,
@@ -22,9 +24,8 @@ const exampleCommentList: Comment[] = Array.from({ length: 7 }, (_, index) => ({
   reportedCount: 0,
   createdAt: '2024-09-08T12:23:04.105815',
   lastModifiedAt: '2024-09-08T12:23:04.105815',
-  blind: false,
+  edited: false,
   best: false,
-  imgUrl: ProfileSample,
 }));
 
 const exampleCommentPagination: CommentsPagination = {
@@ -57,6 +58,17 @@ const exampleCommentPagination: CommentsPagination = {
   empty: exampleCommentList.length === 0,
 };
 
+const toggleItem: ToggleGroupItem[] = [
+  {
+    label: '인기순',
+    value: 'trend',
+  },
+  {
+    label: '최신순',
+    value: 'recent',
+  },
+];
+
 const meta: Meta<typeof CommentsSection> = {
   title: 'organisms/CommentsSection',
   component: CommentsSection,
@@ -67,6 +79,9 @@ const meta: Meta<typeof CommentsSection> = {
   args: {
     commentList: exampleCommentPagination,
     voted: true,
+    toggleItem,
+    selectedValue: 'trend',
+    setToggleValue: () => {},
   },
   argTypes: {
     voted: {

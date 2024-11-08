@@ -12,24 +12,21 @@ const meta: Meta<typeof ContentsButton> = {
   },
   tags: ['autodocs'],
   argTypes: {
-    optionAImg: { control: { type: 'text' } },
-    optionBImg: { control: { type: 'text' } },
     title: { control: 'text' },
     mainTag: { control: 'text' },
     subTag: { control: 'text' },
     bookmarked: { control: 'boolean' },
     showBookmark: { control: 'boolean' },
-    size: { control: { type: 'radio' }, options: ['large', 'small'] },
+    size: { control: { type: 'radio' }, options: ['large', 'medium', 'small'] },
   },
   args: {
-    optionAImg: SampleFirst,
-    optionBImg: SampleSecond,
     title: '유진 VS 민지 사복 고르기',
     mainTag: '취향',
     subTag: '얼마나 맞나 보자',
     bookmarked: false,
     showBookmark: true,
     size: 'large',
+    images: [SampleFirst, SampleSecond],
   },
 };
 
@@ -55,14 +52,13 @@ const headerStyle = css`
 
 export const Default: Story = {
   args: {
-    optionAImg: SampleFirst,
-    optionBImg: SampleSecond,
     title: '유진 VS 민지 사복 고르기',
     mainTag: '취향',
     subTag: '얼마나 맞나 보자',
     bookmarked: false,
     showBookmark: true,
     size: 'large',
+    images: [SampleFirst, SampleSecond],
   },
 };
 
@@ -85,6 +81,23 @@ export const All: Story = {
       <div css={itemStyle}>
         <h3 css={headerStyle}>북마크 없음 (Large)</h3>
         <ContentsButton {...args} size="large" showBookmark={false} />
+      </div>
+      <div css={itemStyle}>
+        <h3 css={headerStyle}>기본 (Medium)</h3>
+        <ContentsButton
+          {...args}
+          size="medium"
+          bookmarked={false}
+          showBookmark
+        />
+      </div>
+      <div css={itemStyle}>
+        <h3 css={headerStyle}>북마크 pressed (Medium)</h3>
+        <ContentsButton {...args} size="medium" bookmarked showBookmark />
+      </div>
+      <div css={itemStyle}>
+        <h3 css={headerStyle}>북마크 없음 (Medium)</h3>
+        <ContentsButton {...args} size="medium" showBookmark={false} />
       </div>
       <div css={itemStyle}>
         <h3 css={headerStyle}>기본 (Small)</h3>
