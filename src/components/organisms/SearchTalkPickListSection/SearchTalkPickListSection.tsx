@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
-import ToggleGroup, {
-  ToggleGroupItem,
-} from '@/components/atoms/ToggleGroup/ToggleGroup';
+import ToggleGroup from '@/components/atoms/ToggleGroup/ToggleGroup';
 import { SearchTalkPickItemProps } from '@/components/atoms/SearchTalkPickItem/SearchTalkPickItem';
 import SearchTalkPickList from '@/components/molecules/SearchTalkPickList/SearchTalkPickList';
 import Pagination from '@/components/atoms/Pagination/Pagination';

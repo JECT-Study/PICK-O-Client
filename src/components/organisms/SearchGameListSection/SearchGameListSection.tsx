@@ -1,7 +1,5 @@
 import React from 'react';
-import ToggleGroup, {
-  ToggleGroupItem,
-} from '@/components/atoms/ToggleGroup/ToggleGroup';
+import ToggleGroup from '@/components/atoms/ToggleGroup/ToggleGroup';
 import Pagination from '@/components/atoms/Pagination/Pagination';
 import SearchGameList, {
   GameItem,
