@@ -9,7 +9,6 @@ export const likeButton = css`
   background-color: transparent;
   border: none;
   cursor: pointer;
-  padding: 10px 16px;
   transition:
     background-color 0.3s,
     color 0.3s;

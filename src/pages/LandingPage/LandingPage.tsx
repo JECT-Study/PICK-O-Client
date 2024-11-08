@@ -1,177 +1,54 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import TopBanner from '@/components/molecules/TopBanner/TopBanner';
 import SearchTagBar from '@/components/molecules/SearchTagBar/SearchTagBar';
 import CategoryBox from '@/components/molecules/CategoryBox/CategoryBox';
 import BalanceGameList from '@/components/organisms/BalanceGameList/BalanceGameList';
-import { SampleFirst, SampleSecond } from '@/assets';
 import { useTodayTalkPickQuery } from '@/hooks/api/talk-pick/useTodayTalkPickQuery';
 import { useNavigate } from 'react-router-dom';
+import ToastModal from '@/components/atoms/ToastModal/ToastModal';
+import { GameContent } from '@/types/game';
+import { useBestGameList } from '@/hooks/api/game/useBestGameListQuery';
+import { useLatestGameList } from '@/hooks/api/game/useLatestGameListQuery';
 import * as S from './LandingPage.style';
 
 const LandingPage = () => {
-  const contents = [
-    {
-      id: 1,
-      title: '만원 지하철 1시간 등교 VS 좌석 널널한 버스 2시간 등교',
-      optionAImg: SampleFirst,
-      optionBImg: SampleSecond,
-      tagLabels: ['화제의 중심', '#인기'],
-      bookmarkState: false,
-      optionA: '만원 지하철 1시간 등교',
-      optionB: '좌석 널널한 버스 2시간 등교',
-    },
-    {
-      id: 2,
-      title: '만원 지하철 1시간 등교 VS 좌석 널널한 버스 2시간 등교',
-      optionAImg: SampleFirst,
-      optionBImg: SampleSecond,
-      tagLabels: ['화제의 중심', '#인기'],
-      bookmarkState: false,
-      optionA: '만원 지하철 1시간 등교',
-      optionB: '좌석 널널한 버스 2시간 등교',
-    },
-    {
-      id: 3,
-      title: '만원 지하철 1시간 등교 VS 좌석 널널한 버스 2시간 등교',
-      optionAImg: SampleFirst,
-      optionBImg: SampleSecond,
-      tagLabels: ['화제의 중심', '#인기'],
-      bookmarkState: false,
-      optionA: '만원 지하철 1시간 등교',
-      optionB: '좌석 널널한 버스 2시간 등교',
-    },
-    {
-      id: 4,
-      title: '만원 지하철 1시간 등교 VS 좌석 널널한 버스 2시간 등교',
-      optionAImg: SampleFirst,
-      optionBImg: SampleSecond,
-      tagLabels: ['화제의 중심', '#인기'],
-      bookmarkState: false,
-      optionA: '만원 지하철 1시간 등교',
-      optionB: '좌석 널널한 버스 2시간 등교',
-    },
-    {
-      id: 5,
-      title: '만원 지하철 1시간 등교 VS 좌석 널널한 버스 2시간 등교',
-      optionAImg: SampleFirst,
-      optionBImg: SampleSecond,
-      tagLabels: ['화제의 중심', '#인기'],
-      bookmarkState: false,
-      optionA: '만원 지하철 1시간 등교',
-      optionB: '좌석 널널한 버스 2시간 등교',
-    },
-    {
-      id: 6,
-      title: '만원 지하철 1시간 등교 VS 좌석 널널한 버스 2시간 등교',
-      optionAImg: SampleFirst,
-      optionBImg: SampleSecond,
-      tagLabels: ['화제의 중심', '#인기'],
-      bookmarkState: false,
-      optionA: '만원 지하철 1시간 등교',
-      optionB: '좌석 널널한 버스 2시간 등교',
-    },
-    {
-      id: 7,
-      title: '만원 지하철 1시간 등교 VS 좌석 널널한 버스 2시간 등교',
-      optionAImg: SampleFirst,
-      optionBImg: SampleSecond,
-      tagLabels: ['화제의 중심', '#인기'],
-      bookmarkState: false,
-      optionA: '만원 지하철 1시간 등교',
-      optionB: '좌석 널널한 버스 2시간 등교',
-    },
-    {
-      id: 8,
-      title: '만원 지하철 1시간 등교 VS 좌석 널널한 버스 2시간 등교',
-      optionAImg: SampleFirst,
-      optionBImg: SampleSecond,
-      tagLabels: ['화제의 중심', '#인기'],
-      bookmarkState: false,
-      optionA: '만원 지하철 1시간 등교',
-      optionB: '좌석 널널한 버스 2시간 등교',
-    },
-    {
-      id: 9,
-      title: '만원 지하철 1시간 등교 VS 좌석 널널한 버스 2시간 등교',
-      optionAImg: SampleFirst,
-      optionBImg: SampleSecond,
-      tagLabels: ['화제의 중심', '#인기'],
-      bookmarkState: false,
-      optionA: '만원 지하철 1시간 등교',
-      optionB: '좌석 널널한 버스 2시간 등교',
-    },
-    {
-      id: 10,
-      title: '만원 지하철 1시간 등교 VS 좌석 널널한 버스 2시간 등교',
-      optionAImg: SampleFirst,
-      optionBImg: SampleSecond,
-      tagLabels: ['화제의 중심', '#인기'],
-      bookmarkState: false,
-      optionA: '만원 지하철 1시간 등교',
-      optionB: '좌석 널널한 버스 2시간 등교',
-    },
-    {
-      id: 11,
-      title: '만원 지하철 1시간 등교 VS 좌석 널널한 버스 2시간 등교',
-      optionAImg: SampleFirst,
-      optionBImg: SampleSecond,
-      tagLabels: ['화제의 중심', '#인기'],
-      bookmarkState: false,
-      optionA: '만원 지하철 1시간 등교',
-      optionB: '좌석 널널한 버스 2시간 등교',
-    },
-    {
-      id: 12,
-      title: '만원 지하철 1시간 등교 VS 좌석 널널한 버스 2시간 등교',
-      optionAImg: SampleFirst,
-      optionBImg: SampleSecond,
-      tagLabels: ['화제의 중심', '#인기'],
-      bookmarkState: false,
-      optionA: '만원 지하철 1시간 등교',
-      optionB: '좌석 널널한 버스 2시간 등교',
-    },
-    {
-      id: 13,
-      title: '만원 지하철 1시간 등교 VS 좌석 널널한 버스 2시간 등교',
-      optionAImg: SampleFirst,
-      optionBImg: SampleSecond,
-      tagLabels: ['화제의 중심', '#인기'],
-      bookmarkState: false,
-      optionA: '만원 지하철 1시간 등교',
-      optionB: '좌석 널널한 버스 2시간 등교',
-    },
-    {
-      id: 14,
-      title: '만원 지하철 1시간 등교 VS 좌석 널널한 버스 2시간 등교',
-      optionAImg: SampleFirst,
-      optionBImg: SampleSecond,
-      tagLabels: ['화제의 중심', '#인기'],
-      bookmarkState: false,
-      optionA: '만원 지하철 1시간 등교',
-      optionB: '좌석 널널한 버스 2시간 등교',
-    },
-    {
-      id: 15,
-      title: '만원 지하철 1시간 등교 VS 좌석 널널한 버스 2시간 등교',
-      optionAImg: SampleFirst,
-      optionBImg: SampleSecond,
-      tagLabels: ['화제의 중심', '#인기'],
-      bookmarkState: false,
-      optionA: '만원 지하철 1시간 등교',
-      optionB: '좌석 널널한 버스 2시간 등교',
-    },
-    {
-      id: 16,
-      title: '만원 지하철 1시간 등교 VS 좌석 널널한 버스 2시간 등교',
-      optionAImg: SampleFirst,
-      optionBImg: SampleSecond,
-      tagLabels: ['화제의 중심', '#인기'],
-      bookmarkState: false,
-      optionA: '만원 지하철 1시간 등교',
-      optionB: '좌석 널널한 버스 2시간 등교',
-    },
-  ];
   const { todayTalkPick } = useTodayTalkPickQuery();
+  const [isServicePreparing, setIsServicePreparing] = useState<boolean>(false);
+  const [selectedValue, setSelectedValue] = useState<'views' | 'createdAt'>(
+    'views',
+  );
+  const [activeTab, setActiveTab] = useState<
+    '인기' | '커플' | '취향' | '월드컵'
+  >('인기');
+
+  const { bestGames, isLoading: isBestLoading } = useBestGameList(activeTab);
+  const { latestGames, isLoading: isLatestLoading } =
+    useLatestGameList(activeTab);
+
+  const [contents, setContents] = useState<GameContent[]>([]);
+
+  useEffect(() => {
+    if (selectedValue === 'views') {
+      setContents(bestGames || []);
+    } else if (selectedValue === 'createdAt') {
+      setContents(latestGames || []);
+    }
+  }, [
+    selectedValue,
+    activeTab,
+    bestGames,
+    latestGames,
+    isBestLoading,
+    isLatestLoading,
+  ]);
+
+  const handleService = () => {
+    setIsServicePreparing(true);
+
+    setTimeout(() => {
+      setIsServicePreparing(false);
+    }, 2000);
+  };
 
   const navigate = useNavigate();
 
@@ -181,13 +58,25 @@ const LandingPage = () => {
 
   return (
     <div>
+      {isServicePreparing && (
+        <div css={S.toastModalStyling}>
+          <ToastModal bgColor="white">아직 준비 중인 서비스입니다!</ToastModal>
+        </div>
+      )}
       <TopBanner todayTalkPick={todayTalkPick} />
       <div css={S.contentWrapStyle}>
         <SearchTagBar onSearch={handleSearch} />
         <div css={S.categoryBoxStyle}>
-          <CategoryBox />
+          <CategoryBox handleService={handleService} />
         </div>
-        <BalanceGameList contents={contents} />
+
+        <BalanceGameList
+          contents={contents}
+          selectedValue={selectedValue}
+          setSelectedValue={setSelectedValue}
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+        />
       </div>
     </div>
   );

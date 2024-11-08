@@ -1,12 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
-import { Pageable } from '@/types/pagination';
-import { GamesPagination } from '@/types/game';
+import { GameContent } from '@/types/game';
 import { getBestGames } from '@/api/game';
 
-export const useBestGameList = (pageable: Pageable) => {
-  const { data: bestGames, isLoading } = useQuery<GamesPagination>({
-    queryKey: ['bestGames', pageable],
-    queryFn: () => getBestGames(pageable),
+export const useBestGameList = (tagName: string) => {
+  const { data: bestGames, isLoading } = useQuery<GameContent[]>({
+    queryKey: ['bestGames', tagName],
+    queryFn: () => getBestGames(tagName),
   });
   return { bestGames, isLoading };
 };

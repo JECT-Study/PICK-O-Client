@@ -9,6 +9,7 @@ export const useMyVotesQuery = () => {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
+    isLoading,
   } = useInfiniteScroll<MyVote>(
     ['myVote'],
     ({ pageParam = 0 }) => getMyVote(pageParam, 20),
@@ -39,5 +40,6 @@ export const useMyVotesQuery = () => {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
+    isLoading,
   };
 };

@@ -8,6 +8,7 @@ export const pageContainer = css`
   padding: 60px 362px 0 361px;
   background-color: ${color.WT}
   overflow: hidden;
+  margin-top: 100px;
 `;
 
 export const contentWrapper = css`

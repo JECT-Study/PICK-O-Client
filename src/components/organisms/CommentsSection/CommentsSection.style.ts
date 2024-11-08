@@ -4,11 +4,18 @@ import color from '@/styles/color';
 export const commentsSectionContainer = css`
   display: flex;
   flex-direction: column;
+  padding-top: 5px;
   padding-bottom: 100px;
   margin: 0 auto;
   background-color: ${color.WT};
   overflow-y: auto;
   gap: 23px;
+`;
+
+export const commentTopWrapper = css`
+  display: flex;
+  justify-content: space-between;
+  padding: 0 5px;
 `;
 
 export const loggedInBackground = css`

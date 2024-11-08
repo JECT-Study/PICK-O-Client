@@ -5,36 +5,34 @@ import { highlightText } from '@/utils/highlightText';
 import * as S from './ContentsButton.style';
 
 export interface ContentsButtonProps extends ComponentPropsWithRef<'div'> {
-  optionAImg: string;
-  optionBImg: string;
   title: string;
   mainTag: string;
   subTag: string;
+  images: string[];
   bookmarked?: BookmarkProps['bookmarked'];
   showBookmark?: boolean;
   size?: 'large' | 'medium' | 'small';
   keyword?: string;
-}
+
 const ContentsButton = ({
-  optionAImg,
-  optionBImg,
   title,
   mainTag,
   subTag,
-  bookmarked = false,
-  showBookmark = false,
+  images,
   size = 'large',
   keyword,
+  bookmarked = false,
+  showBookmark = true,
   ...attributes
 }: ContentsButtonProps) => {
   return (
     <div css={S.cardWrapper(size)} {...attributes}>
       <div css={S.imageContainer(size)}>
         <div css={S.imageWrapper}>
-          <img src={optionAImg} alt="option A" css={S.image} />
+          <img src={images[0]} alt="option A" css={S.image} />
         </div>
         <div css={S.imageWrapper}>
-          <img src={optionBImg} alt="option B" css={S.image} />
+          <img src={images[1]} alt="option B" css={S.image} />
         </div>
         <div css={S.chipsContainer}>
           <Chips>{subTag}</Chips>

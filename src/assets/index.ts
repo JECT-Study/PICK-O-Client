@@ -69,7 +69,19 @@ export { default as ChoicePlus } from './svg/choice-plus.svg';
 export { default as ChoiceMinus } from './svg/choice-minus.svg';
 export { default as RecommendFirst } from './images/recommend-first.png';
 export { default as RecommendSecond } from './images/recommend-second.png';
+export { default as ArrowDown } from './svg/arrow-down.svg';
+export { default as ArrowUp } from './svg/arrow-up.svg';
+export { default as PrevArrow } from './svg/prev-arrow.svg';
+export { default as NextArrow } from './svg/next-arrow.svg';
+export { default as PurpleGameBg } from './images/purple-game-bg.png';
+export { default as BlueGameBg } from './images/blue-game-bg.png';
+export { default as GrayGameBg } from './images/gray-game-bg.png';
+export { default as ForestGameBg } from './images/forest-game-bg.png';
+export { default as GreenGameBg } from './images/green-game-bg.png';
+export { default as PinkGameBg } from './images/pink-game-bg.png';
+export { default as GameEnding } from './gif/game-ending.gif';
 export { default as OptionError } from './svg/option-error.svg';
+export { default as MoreReply } from './svg/more-reply.svg';
 
 // TODO: 이전 SVG
 export { default as Email } from './svg/email.svg';

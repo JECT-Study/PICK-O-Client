@@ -9,6 +9,7 @@ export const useMyWrittensQuery = () => {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
+    isLoading,
   } = useInfiniteScroll<MyWritten>(
     ['myWritten'],
     ({ pageParam = 0 }) => getMyWritten(pageParam, 20),
@@ -40,5 +41,6 @@ export const useMyWrittensQuery = () => {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
+    isLoading,
   };
 };
