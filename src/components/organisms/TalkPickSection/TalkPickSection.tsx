@@ -176,7 +176,7 @@ const TalkPickSection = ({
               <span css={S.talkPickDate}>
                 {formatDate(talkPick?.createdAt ?? '')}
               </span>
-              {talkPick?.isUpdated && (
+              {talkPick?.isEdited && (
                 <span css={S.talkPickDetail}>(수정됨)</span>
               )}
             </div>

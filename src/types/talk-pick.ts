@@ -22,7 +22,7 @@ export type TalkPickDetail = {
   votedOption: 'A' | 'B' | null;
   writer: string;
   createdAt: string;
-  isUpdated: boolean;
+  isEdited: boolean;
 };
 
 export type TalkPickSummary = {
