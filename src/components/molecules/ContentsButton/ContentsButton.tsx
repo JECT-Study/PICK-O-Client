@@ -13,6 +13,7 @@ export interface ContentsButtonProps extends ComponentPropsWithRef<'div'> {
   showBookmark?: boolean;
   size?: 'large' | 'medium' | 'small';
   keyword?: string;
+}
 
 const ContentsButton = ({
   title,
