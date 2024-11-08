@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useSearchParams } from 'react-router-dom';
 import SearchGameResult from '@/components/organisms/SearchGameResult/SearchGameResult';
 import SearchTalkPickResult from '@/components/organisms/SearchTalkPickResult/SearchTalkPickResult';
 import { NoResultsMessage } from '@/components/atoms/NoResultsMessage/NoResultsMessage';
 import { useTalkPickResultQuery } from '@/hooks/api/search/useTalkPickResultQuery';
 import { useGameResultQuery } from '@/hooks/api/search/useGameResultQuery';
+import useTagFilter from '@/hooks/game/useTagFilter';
 import Divider from '@/components/atoms/Divider/Divider';
 import SearchResultBarContainer from '@/components/organisms/SearchResultBarContainer/SearchResultBarContainer';
-import { useSearchParams } from 'react-router-dom';
+
 import * as S from './SearchResultsPage.style';
 
 const SearchResultsPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get('query') || '';
-  const [selectedTag, setSelectedTag] = useState<'all' | 'talkpick' | 'game'>(
-    'all',
-  );
+  const { selectedTag, handleTagClick } = useTagFilter('all');
   const page = 0;
   const size = 4;
   const sort = 'all';
@@ -27,10 +27,6 @@ const SearchResultsPage = () => {
     size,
     sort,
   );
-
-  const handleTagClick = (value: 'all' | 'talkpick' | 'game') => {
-    setSelectedTag(value);
-  };
 
   const handleSearch = (newQuery: string) => {
     setSearchParams({ query: newQuery });

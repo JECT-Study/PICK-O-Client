@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useGameResultQuery } from '@/hooks/api/search/useGameResultQuery';
 import useSort from '@/hooks/game/useSort';
+import useTagFilter from '@/hooks/game/useTagFilter';
 import SearchResultBarContainer from '@/components/organisms/SearchResultBarContainer/SearchResultBarContainer';
 import Divider from '@/components/atoms/Divider/Divider';
 import SearchGameListSection from '@/components/organisms/SearchGameListSection/SearchGameListSection';
@@ -10,9 +11,7 @@ import * as S from '@/pages/SearchResultsPage/SearchResultsPage.style';
 const SearchGamePage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get('query') || '';
-  const [selectedTag, setSelectedTag] = useState<'all' | 'talkpick' | 'game'>(
-    'game',
-  );
+  const { selectedTag, handleTagClick } = useTagFilter('game');
   const [page, setPage] = useState(0);
   const { sort, handleSortChange } = useSort();
   const size = 9;
@@ -22,10 +21,6 @@ const SearchGamePage = () => {
     totalPages: gameTotalPages,
     isLoading,
   } = useGameResultQuery(query, page, size, sort);
-
-  const handleTagClick = (value: 'all' | 'talkpick' | 'game') => {
-    setSelectedTag(value);
-  };
 
   const handleSearch = (newQuery: string) => {
     setSearchParams({ query: newQuery });
