@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useGameResultQuery } from '@/hooks/api/search/useGameResultQuery';
-import useSort from '@/hooks/game/useSort';
-import useTagFilter from '@/hooks/game/useTagFilter';
+import useSort from '@/hooks/search/useSort';
+import useTagFilter from '@/hooks/search/useTagFilter';
 import SearchResultBarContainer from '@/components/organisms/SearchResultBarContainer/SearchResultBarContainer';
 import Divider from '@/components/atoms/Divider/Divider';
 import SearchGameListSection from '@/components/organisms/SearchGameListSection/SearchGameListSection';

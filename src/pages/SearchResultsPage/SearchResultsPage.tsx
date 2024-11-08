@@ -5,7 +5,7 @@ import SearchTalkPickResult from '@/components/organisms/SearchTalkPickResult/Se
 import { NoResultsMessage } from '@/components/atoms/NoResultsMessage/NoResultsMessage';
 import { useTalkPickResultQuery } from '@/hooks/api/search/useTalkPickResultQuery';
 import { useGameResultQuery } from '@/hooks/api/search/useGameResultQuery';
-import useTagFilter from '@/hooks/game/useTagFilter';
+import useTagFilter from '@/hooks/search/useTagFilter';
 import Divider from '@/components/atoms/Divider/Divider';
 import SearchResultBarContainer from '@/components/organisms/SearchResultBarContainer/SearchResultBarContainer';
 
