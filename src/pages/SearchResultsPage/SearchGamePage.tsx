@@ -3,14 +3,14 @@ import { useSearchParams } from 'react-router-dom';
 import { useGameResultQuery } from '@/hooks/api/search/useGameResultQuery';
 import useSort from '@/hooks/search/useSort';
 import useTagFilter from '@/hooks/search/useTagFilter';
+import useSearchQuery from '@/hooks/search/useSearchQuery';
 import SearchResultBarContainer from '@/components/organisms/SearchResultBarContainer/SearchResultBarContainer';
 import Divider from '@/components/atoms/Divider/Divider';
 import SearchGameListSection from '@/components/organisms/SearchGameListSection/SearchGameListSection';
 import * as S from '@/pages/SearchResultsPage/SearchResultsPage.style';
 
 const SearchGamePage = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const query = searchParams.get('query') || '';
+  const { query, handleSearch } = useSearchQuery();
   const { selectedTag, handleTagClick } = useTagFilter('game');
   const [page, setPage] = useState(0);
   const { sort, handleSortChange } = useSort();
@@ -21,10 +21,6 @@ const SearchGamePage = () => {
     totalPages: gameTotalPages,
     isLoading,
   } = useGameResultQuery(query, page, size, sort);
-
-  const handleSearch = (newQuery: string) => {
-    setSearchParams({ query: newQuery });
-  };
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage - 1);

@@ -1,19 +1,17 @@
 import React from 'react';
-import { useSearchParams } from 'react-router-dom';
 import SearchGameResult from '@/components/organisms/SearchGameResult/SearchGameResult';
 import SearchTalkPickResult from '@/components/organisms/SearchTalkPickResult/SearchTalkPickResult';
 import { NoResultsMessage } from '@/components/atoms/NoResultsMessage/NoResultsMessage';
 import { useTalkPickResultQuery } from '@/hooks/api/search/useTalkPickResultQuery';
 import { useGameResultQuery } from '@/hooks/api/search/useGameResultQuery';
 import useTagFilter from '@/hooks/search/useTagFilter';
+import useSearchQuery from '@/hooks/search/useSearchQuery';
 import Divider from '@/components/atoms/Divider/Divider';
 import SearchResultBarContainer from '@/components/organisms/SearchResultBarContainer/SearchResultBarContainer';
-
 import * as S from './SearchResultsPage.style';
 
 const SearchResultsPage = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const query = searchParams.get('query') || '';
+  const { query, handleSearch } = useSearchQuery();
   const { selectedTag, handleTagClick } = useTagFilter('all');
   const page = 0;
   const size = 4;
@@ -27,10 +25,6 @@ const SearchResultsPage = () => {
     size,
     sort,
   );
-
-  const handleSearch = (newQuery: string) => {
-    setSearchParams({ query: newQuery });
-  };
 
   const renderResults = () => {
     if (isTalkPickLoading || isGameLoading) {
