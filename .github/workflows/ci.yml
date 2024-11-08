@@ -48,7 +48,9 @@ jobs:
         run: npm run build
 
       - name: Run SonarCloud analysis
-        uses: SonarSource/sonarqube-scan-action@v2
+        uses: SonarSource/sonarcloud-github-action@master
         with:
-          host-url: https://sonarcloud.io
-          token: ${{ secrets.SONAR_TOKEN }}
+          organization: "PICK-O"
+          projectKey: ${{ secrets.SONAR_PROJECT_KEY }}
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
