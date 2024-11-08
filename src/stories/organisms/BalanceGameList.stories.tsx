@@ -8,9 +8,8 @@ const meta: Meta<typeof BalanceGameList> = {
   title: 'organisms/BalanceGameList',
   component: BalanceGameList,
   parameters: {
-    // layout: 'centered',
+    layout: 'centered',
   },
-  tags: ['autodocs'],
   argTypes: {
     contents: {
       control: { type: 'object' },

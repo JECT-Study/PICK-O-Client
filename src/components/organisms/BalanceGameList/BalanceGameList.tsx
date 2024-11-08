@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import { AngleSmallDown } from '@/assets';
-import ToggleGroup, {
-  ToggleGroupItem,
-  ToggleGroupProps,
-} from '@/components/atoms/ToggleGroup/ToggleGroup';
+import ToggleGroup from '@/components/atoms/ToggleGroup/ToggleGroup';
 import Button from '@/components/atoms/Button/Button';
 import CategoryBar from '@/components/molecules/CategoryBar/CategoryBar';
 import ContentsButton from '@/components/molecules/ContentsButton/ContentsButton';
@@ -26,18 +23,7 @@ export interface ContentListProps {
 }
 
 const BalanceGameList = ({ contents }: ContentListProps) => {
-  const toggleItem: ToggleGroupItem[] = [
-    {
-      label: '인기순',
-      value: 'trend',
-    },
-    {
-      label: '최신순',
-      value: 'recent',
-    },
-  ];
-  const [selectedValue, setSelectedValue] =
-    useState<ToggleGroupProps['selectedValue']>('trend');
+  const [selectedValue, setSelectedValue] = useState('views');
   const [visibleItems, setVisibleItems] = useState<number>(4);
 
   const handleLoadMore = () => {
@@ -47,11 +33,7 @@ const BalanceGameList = ({ contents }: ContentListProps) => {
     <div css={S.containerStyle}>
       <div css={S.titleWrapStyle}>
         <div>주제별 밸런스 게임</div>
-        <ToggleGroup
-          items={toggleItem}
-          selectedValue={selectedValue}
-          onClick={setSelectedValue}
-        />
+        <ToggleGroup selectedValue={selectedValue} onClick={setSelectedValue} />
       </div>
       <div css={S.barStyle}>
         <CategoryBar activeTab="Popular" />
