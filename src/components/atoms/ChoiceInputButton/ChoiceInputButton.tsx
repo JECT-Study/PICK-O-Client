@@ -21,7 +21,10 @@ const ChoiceInputButton = ({
   const [choiceInputValue, setChoiceInputValue] = useState<string>('');
   const [infoInputValue, setInfoInputValue] = useState<string>('');
 
-  const isFilled = Boolean(choiceInputValue.trim() || infoInputValue.trim());
+  const isFilled = Boolean(
+    (choiceInputProps?.value && String(choiceInputProps.value).trim()) ||
+      (infoInputProps?.value && String(infoInputProps.value).trim()),
+  );
 
   useEffect(() => {
     if (clearInput) {
