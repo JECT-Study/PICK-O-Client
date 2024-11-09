@@ -52,6 +52,7 @@ const App: React.FC = () => {
           <Route path="/talkpickplace" element={<TalkPickPlacePage />} />
           <Route path="/post/create" element={<CreatePostPage />} />
           <Route path="/balancegame/:setId" element={<BalanceGamePage />} />
+          <Route path={PATH.CREATE} element={<BalanceGameCreationPage />} />
           {/* <Route path="posts" element={<PostList />} />
           <Route path="posts/:id" element={<PostPage />} />
           <Route path="searchResult" element={<SearchResultPage />} />
@@ -61,7 +62,6 @@ const App: React.FC = () => {
         </Route>
         <Route path="/mypage" element={<LayoutNoFooter />}>
           <Route index element={<MyPage />} />
-          <Route path={PATH.CREATE} element={<BalanceGameCreationPage />} />
         </Route>
         {/* <Route element={<NotAuthRoutes member={member} />}>
           <Route element={<LayoutNoSearch />}>
