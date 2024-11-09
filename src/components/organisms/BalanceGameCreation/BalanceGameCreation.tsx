@@ -72,7 +72,6 @@ const BalanceGameCreation = ({
           }}
           infoInputProps={{
             value: currentOptions[0].description,
-            placeholder: '해당 선택지에 대해 추가로 설명을 입력할 수 있어요!',
             onChange: (e) => handleDescriptionChange('A', e),
           }}
           clearInput={clearInput}
@@ -88,7 +87,6 @@ const BalanceGameCreation = ({
           }}
           infoInputProps={{
             value: currentOptions[1].description,
-            placeholder: '해당 선택지에 대해 추가로 설명을 입력할 수 있어요!',
             onChange: (e) => handleDescriptionChange('B', e),
           }}
           clearInput={clearInput}
