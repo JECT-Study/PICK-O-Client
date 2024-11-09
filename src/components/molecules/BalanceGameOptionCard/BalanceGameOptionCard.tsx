@@ -10,7 +10,7 @@ interface BalanceGameOptionCardProps {
   onImageChange: (event: ChangeEvent<HTMLInputElement>) => void;
   choiceInputProps?: ComponentPropsWithoutRef<'input'>;
   infoInputProps?: ComponentPropsWithoutRef<'input'>;
-  resetInfoInput?: boolean;
+  clearInput?: boolean;
 }
 
 const BalanceGameOptionCard = ({
@@ -20,7 +20,7 @@ const BalanceGameOptionCard = ({
   onImageChange,
   choiceInputProps,
   infoInputProps,
-  resetInfoInput = false,
+  clearInput = false,
 }: BalanceGameOptionCardProps) => {
   return (
     <div css={S.imageChoiceContainer}>
@@ -33,7 +33,7 @@ const BalanceGameOptionCard = ({
         option={option}
         choiceInputProps={choiceInputProps}
         infoInputProps={infoInputProps}
-        resetInfoInput={resetInfoInput}
+        clearInput={clearInput}
       />
     </div>
   );
