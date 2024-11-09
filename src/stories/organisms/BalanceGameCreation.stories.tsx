@@ -1,9 +1,12 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import BalanceGameCreation from '@/components/organisms/BalanceGameCreation/BalanceGameCreation';
 
 const meta: Meta<typeof BalanceGameCreation> = {
   title: 'organisms/BalanceGameCreation',
   component: BalanceGameCreation,
+  parameters: {
+    layout: 'centered',
+  },
   argTypes: {
     onTitleChange: { action: '제목이 수정됨' },
     onDescriptionChange: { action: '설명이 수정됨' },
