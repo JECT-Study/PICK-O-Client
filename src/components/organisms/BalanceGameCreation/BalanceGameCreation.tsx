@@ -5,6 +5,7 @@ import DraftPostButton from '@/components/atoms/DraftPostButton/DraftPostButton'
 import { BalanceGameSet } from '@/types/game';
 import { useBalanceGameCreation } from '@/hooks/game/useBalanceGameCreation';
 import GameNavigationSection from '@/components/molecules/GameNavigationSection/GameNavigationSection';
+import { useStageNavigation } from '@/hooks/game/useStageNavigation';
 import * as S from './BalanceGameCreation.style';
 
 export interface BalanceGameCreationProps {
@@ -30,19 +31,16 @@ const BalanceGameCreation = ({
 }: BalanceGameCreationProps) => {
   const totalStage = 10;
 
+  const { currentStage, clearInput, handleNextStage, handlePrevStage } =
+    useStageNavigation(totalStage);
+
   const {
-    currentStage,
     games,
     currentOptions,
-    resetInfoInput,
-    handleImageAChange,
-    handleImageBChange,
-    handleOptionAChange,
-    handleOptionBChange,
-    handleNextStage,
-    handlePrevStage,
+    handleImageChange,
+    handleOptionChange,
     handleDescriptionChange,
-  } = useBalanceGameCreation(totalStage);
+  } = useBalanceGameCreation(totalStage, currentStage);
 
   useEffect(() => {
     onStageChange(currentStage);
@@ -67,33 +65,33 @@ const BalanceGameCreation = ({
           option="A"
           imgUrl={currentOptions[0].imgUrl}
           imageFile={currentOptions[0].imageFile ?? null}
-          onImageChange={handleImageAChange}
+          onImageChange={handleImageChange('A')}
           choiceInputProps={{
             value: currentOptions[0].name,
-            onChange: handleOptionAChange,
+            onChange: handleOptionChange('A'),
           }}
           infoInputProps={{
             value: currentOptions[0].description,
             placeholder: '해당 선택지에 대해 추가로 설명을 입력할 수 있어요!',
             onChange: (e) => handleDescriptionChange('A', e),
           }}
-          resetInfoInput={resetInfoInput}
+          clearInput={clearInput}
         />
         <BalanceGameOptionCard
           option="B"
           imgUrl={currentOptions[1].imgUrl}
           imageFile={currentOptions[1].imageFile ?? null}
-          onImageChange={handleImageBChange}
+          onImageChange={handleImageChange('B')}
           choiceInputProps={{
             value: currentOptions[1].name,
-            onChange: handleOptionBChange,
+            onChange: handleOptionChange('B'),
           }}
           infoInputProps={{
             value: currentOptions[1].description,
             placeholder: '해당 선택지에 대해 추가로 설명을 입력할 수 있어요!',
             onChange: (e) => handleDescriptionChange('B', e),
           }}
-          resetInfoInput={resetInfoInput}
+          clearInput={clearInput}
         />
       </div>
       <div css={S.draftPostButtonContainer}>

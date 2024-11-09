@@ -6,24 +6,19 @@ import {
   updateOptionInGameSets,
 } from '@/utils/balanceGameUtils';
 
-export const useBalanceGameCreation = (totalStage: number) => {
+export const useBalanceGameCreation = (
+  totalStage: number,
+  currentStage: number,
+) => {
   const [games, setGames] = useState<BalanceGameSet[]>(
     createInitialGameStages(totalStage),
   );
-  const [currentStage, setCurrentStage] = useState(0);
   const [currentOptions, setCurrentOptions] = useState<BalanceGameOption[]>(
     games[0].gameOptions,
   );
-  const [resetInfoInput, setResetInfoInput] = useState(false);
 
   useEffect(() => {
-    if (resetInfoInput) {
-      setResetInfoInput(false);
-    }
-  }, [resetInfoInput]);
-
-  useEffect(() => {
-    setCurrentOptions(games[currentStage].gameOptions);
+    setCurrentOptions(games[currentStage]?.gameOptions || []);
   }, [currentStage, games]);
 
   const updateOption = (
@@ -48,37 +43,23 @@ export const useBalanceGameCreation = (totalStage: number) => {
     );
   };
 
-  const handleImageAChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const imgUrl = createImageUrlFromFile(file);
-      updateOption(currentStage, 'A', {
-        imgUrl,
-        storedName: file.name,
-        imageFile: file,
-      });
-    }
-  };
+  const handleImageChange =
+    (optionType: 'A' | 'B') => (event: React.ChangeEvent<HTMLInputElement>) => {
+      const file = event.target.files?.[0];
+      if (file) {
+        const imgUrl = createImageUrlFromFile(file);
+        updateOption(currentStage, optionType, {
+          imgUrl,
+          storedName: file.name,
+          imageFile: file,
+        });
+      }
+    };
 
-  const handleImageBChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const imgUrl = createImageUrlFromFile(file);
-      updateOption(currentStage, 'B', {
-        imgUrl,
-        storedName: file.name,
-        imageFile: file,
-      });
-    }
-  };
-
-  const handleOptionAChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    updateOption(currentStage, 'A', { name: event.target.value });
-  };
-
-  const handleOptionBChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    updateOption(currentStage, 'B', { name: event.target.value });
-  };
+  const handleOptionChange =
+    (optionType: 'A' | 'B') => (event: React.ChangeEvent<HTMLInputElement>) => {
+      updateOption(currentStage, optionType, { name: event.target.value });
+    };
 
   const handleDescriptionChange = (
     optionType: 'A' | 'B',
@@ -88,31 +69,11 @@ export const useBalanceGameCreation = (totalStage: number) => {
     updateOption(currentStage, optionType, { description: value });
   };
 
-  const handleNextStage = () => {
-    if (currentStage < totalStage - 1) {
-      setResetInfoInput(true);
-      setCurrentStage((prev) => prev + 1);
-    }
-  };
-
-  const handlePrevStage = () => {
-    if (currentStage > 0) {
-      setResetInfoInput(true);
-      setCurrentStage((prev) => prev - 1);
-    }
-  };
-
   return {
-    currentStage,
     games,
     currentOptions,
-    resetInfoInput,
-    handleImageAChange,
-    handleImageBChange,
-    handleOptionAChange,
-    handleOptionBChange,
-    handleNextStage,
-    handlePrevStage,
+    handleImageChange,
+    handleOptionChange,
     handleDescriptionChange,
   };
 };
