@@ -14,11 +14,11 @@ export const useBalanceGameCreation = (
     createInitialGameStages(totalStage),
   );
   const [currentOptions, setCurrentOptions] = useState<BalanceGameOption[]>(
-    games[0].gameOptions,
+    games[currentStage].gameOptions,
   );
 
   useEffect(() => {
-    setCurrentOptions(games[currentStage]?.gameOptions || []);
+    setCurrentOptions(games[currentStage].gameOptions || []);
   }, [currentStage, games]);
 
   const updateOption = (
