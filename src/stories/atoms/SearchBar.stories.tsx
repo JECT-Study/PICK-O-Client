@@ -13,4 +13,9 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  args: {
+    onSearchClick: () => alert('검색 버튼이 눌러졌어요!!'),
+    onInputChange: (e) => console.log('입력 값이 바뀜:', e.target.value),
+  },
+};
