@@ -3,6 +3,7 @@ import { css } from '@emotion/react';
 export const pageContainer = css({
   display: 'flex',
   flexDirection: 'column',
+  width: '1174px',
   alignItems: 'center',
   gap: '20px',
 });
