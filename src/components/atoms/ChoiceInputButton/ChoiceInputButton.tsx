@@ -18,18 +18,20 @@ const ChoiceInputButton = ({
   clearInput,
 }: ChoiceInputBoxProps) => {
   const [infoInputClicked, setInfoButtonClicked] = useState<boolean>(false);
-  const [choiceInputValue, setChoiceInputValue] = useState<string>('');
-  const [infoInputValue, setInfoInputValue] = useState<string>('');
+  const [internalChoiceValue, setInternalChoiceValue] = useState<string>('');
+  const [internalInfoValue, setInternalInfoValue] = useState<string>('');
+
+  const choiceValue = choiceInputProps?.value ?? internalChoiceValue;
+  const infoValue = infoInputProps?.value ?? internalInfoValue;
 
   const isFilled = Boolean(
-    (choiceInputProps?.value && String(choiceInputProps.value).trim()) ||
-      (infoInputProps?.value && String(infoInputProps.value).trim()),
+    String(choiceValue).trim() || String(infoValue).trim(),
   );
 
   useEffect(() => {
     if (clearInput) {
-      setChoiceInputValue('');
-      setInfoInputValue('');
+      setInternalChoiceValue('');
+      setInternalInfoValue('');
       setInfoButtonClicked(false);
     }
   }, [clearInput]);
@@ -41,8 +43,8 @@ const ChoiceInputButton = ({
           type="text"
           placeholder={`${option} 선택지를 입력하세요.`}
           maxLength={30}
-          value={choiceInputValue}
-          onChange={(e) => setChoiceInputValue(e.target.value)}
+          value={choiceValue}
+          onChange={(e) => setInternalChoiceValue(e.target.value)}
           css={S.choiceInputStyling}
           {...choiceInputProps}
         />
@@ -60,8 +62,8 @@ const ChoiceInputButton = ({
               type="text"
               placeholder="해당 선택지에 대해 추가로 설명을 입력할 수 있어요!"
               maxLength={50}
-              value={infoInputValue}
-              onChange={(e) => setInfoInputValue(e.target.value)}
+              value={infoValue}
+              onChange={(e) => setInternalInfoValue(e.target.value)}
               css={S.choiceInputStyling}
               {...infoInputProps}
             />
