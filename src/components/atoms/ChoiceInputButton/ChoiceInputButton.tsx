@@ -8,41 +8,38 @@ export interface ChoiceInputBoxProps {
   option: 'A' | 'B';
   choiceInputProps?: ComponentPropsWithoutRef<'input'>;
   infoInputProps?: ComponentPropsWithoutRef<'input'>;
-  resetInfoInput: boolean;
+  clearInput?: boolean;
 }
 
 const ChoiceInputButton = ({
   option = 'A',
   choiceInputProps,
   infoInputProps,
-  resetInfoInput,
+  clearInput,
 }: ChoiceInputBoxProps) => {
   const [infoInputClicked, setInfoButtonClicked] = useState<boolean>(false);
-  const [withText, setWithText] = useState<boolean>(false);
+  const [choiceInputValue, setChoiceInputValue] = useState<string>('');
+  const [infoInputValue, setInfoInputValue] = useState<string>('');
+
+  const isFilled = Boolean(choiceInputValue.trim() || infoInputValue.trim());
 
   useEffect(() => {
-    if (resetInfoInput) {
+    if (clearInput) {
+      setChoiceInputValue('');
+      setInfoInputValue('');
       setInfoButtonClicked(false);
-      setWithText(false);
     }
-  }, [resetInfoInput]);
-
-  useEffect(() => {
-    setWithText(
-      Boolean(
-        String(choiceInputProps?.value).trim() ||
-          String(infoInputProps?.value).trim(),
-      ),
-    );
-  }, [choiceInputProps?.value, infoInputProps?.value]);
+  }, [clearInput]);
 
   return (
-    <div css={S.choiceInputContainer(withText, option)}>
+    <div css={S.choiceInputContainer(isFilled, option)}>
       <div css={S.choiceInputWrapper}>
         <input
           type="text"
           placeholder={`${option} 선택지를 입력하세요.`}
           maxLength={30}
+          value={choiceInputValue}
+          onChange={(e) => setChoiceInputValue(e.target.value)}
           css={S.choiceInputStyling}
           {...choiceInputProps}
         />
@@ -60,6 +57,8 @@ const ChoiceInputButton = ({
               type="text"
               placeholder="해당 선택지에 대해 추가로 설명을 입력할 수 있어요!"
               maxLength={50}
+              value={infoInputValue}
+              onChange={(e) => setInfoInputValue(e.target.value)}
               css={S.choiceInputStyling}
               {...infoInputProps}
             />

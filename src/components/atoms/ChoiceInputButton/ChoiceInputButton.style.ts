@@ -2,9 +2,9 @@ import { css } from '@emotion/react';
 import color from '@/styles/color';
 import typo from '@/styles/typo';
 
-export const choiceInputContainer = (withText: boolean, option: 'A' | 'B') => {
+export const choiceInputContainer = (isFilled: boolean, option: 'A' | 'B') => {
   const borderColor = (() => {
-    if (!withText) return color.GY[2];
+    if (!isFilled) return color.GY[2];
     return option === 'A' ? color.RED : color.BLUE;
   })();
 
@@ -13,7 +13,7 @@ export const choiceInputContainer = (withText: boolean, option: 'A' | 'B') => {
     flexDirection: 'column',
     alignItems: 'center',
     width: '578px',
-    backgroundColor: withText ? color.WT : color.GY[3],
+    backgroundColor: isFilled ? color.WT : color.GY[3],
     borderRadius: '20px',
     border: `1px solid ${borderColor}`,
   });
