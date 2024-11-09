@@ -1,33 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { BalanceGameOption, BalanceGameSet } from '@/types/game';
 import { createImageUrlFromFile } from '@/utils/file';
-
-const initializeGames = (totalStage: number): BalanceGameSet[] =>
-  Array.from({ length: totalStage }, (_, idx) => ({
-    description: '',
-    gameOptions: [
-      {
-        id: idx * 2,
-        name: '',
-        imgUrl: '',
-        storedName: '',
-        description: '',
-        optionType: 'A',
-      },
-      {
-        id: idx * 2 + 1,
-        name: '',
-        imgUrl: '',
-        storedName: '',
-        description: '',
-        optionType: 'B',
-      },
-    ],
-  }));
+import {
+  createInitialGameStages,
+  updateOptionInGameSets,
+} from '@/utils/balanceGameUtils';
 
 export const useBalanceGameCreation = (totalStage: number) => {
   const [games, setGames] = useState<BalanceGameSet[]>(
-    initializeGames(totalStage),
+    createInitialGameStages(totalStage),
   );
   const [currentStage, setCurrentStage] = useState(0);
   const [currentOptions, setCurrentOptions] = useState<BalanceGameOption[]>(
@@ -45,16 +26,6 @@ export const useBalanceGameCreation = (totalStage: number) => {
     setCurrentOptions(games[currentStage].gameOptions);
   }, [currentStage, games]);
 
-  const updateGameOptions = (
-    options: BalanceGameOption[],
-    optionType: 'A' | 'B',
-    newOption: Partial<BalanceGameOption>,
-  ) => {
-    return options.map((opt) =>
-      opt.optionType === optionType ? { ...opt, ...newOption } : opt,
-    );
-  };
-
   const updateOption = (
     stageIndex: number,
     optionType: 'A' | 'B',
@@ -64,7 +35,7 @@ export const useBalanceGameCreation = (totalStage: number) => {
       prevGames.map((game, idx) => {
         if (idx !== stageIndex) return game;
 
-        const updatedOptions = updateGameOptions(
+        const updatedOptions = updateOptionInGameSets(
           game.gameOptions,
           optionType,
           newOption,
