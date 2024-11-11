@@ -10,6 +10,7 @@ interface ImageUploaderProps {
   setImgUrls: React.Dispatch<React.SetStateAction<string[]>>;
   fileIds: number[];
   setFileIds: (name: string, fileIds: number[]) => void;
+  setIsUploadingImage: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const ImageUploader = ({
@@ -17,6 +18,7 @@ const ImageUploader = ({
   setImgUrls,
   fileIds,
   setFileIds,
+  setIsUploadingImage,
 }: ImageUploaderProps) => {
   const imageContainerRef = useRef<HTMLDivElement | null>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -84,6 +86,7 @@ const ImageUploader = ({
           setImgUrls={setImgUrls}
           fileIds={fileIds}
           setFileIds={setFileIds}
+          setIsUploadingImage={setIsUploadingImage}
         />
 
         {imgUrls.map((url, index) => (

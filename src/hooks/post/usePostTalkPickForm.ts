@@ -22,6 +22,7 @@ export const usePostTalkPickForm = (existingTalkPick?: TalkPickDetail) => {
 
   const { form, onChange, setEach } = useTalkPickInputs(initialState);
   const { isVisible, modalText, showToastModal } = useToastModal();
+  const [isUploadingImage, setIsUploadingImage] = useState<boolean>(false);
 
   const { mutate: createTalkPick } = useCreateTalkPickMutation(showToastModal);
   const { mutate: editTalkPick } = useEditTalkPickMutation(
@@ -60,6 +61,11 @@ export const usePostTalkPickForm = (existingTalkPick?: TalkPickDetail) => {
       return;
     }
 
+    if (isUploadingImage) {
+      showToastModal('이미지를 업로드하고 있어요!');
+      return;
+    }
+
     if (existingTalkPick) {
       editTalkPick(form);
     } else {
@@ -75,6 +81,7 @@ export const usePostTalkPickForm = (existingTalkPick?: TalkPickDetail) => {
     modalText,
     imgUrls,
     setImgUrls,
+    setIsUploadingImage,
     handleDraftButton,
     handleTempTalkPick,
     handleTalkPick,

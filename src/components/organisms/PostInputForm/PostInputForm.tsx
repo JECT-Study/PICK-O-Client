@@ -25,6 +25,7 @@ const PostInputForm = ({ existingTalkPick }: PostInputFormProps) => {
     modalText,
     imgUrls,
     setImgUrls,
+    setIsUploadingImage,
     handleDraftButton,
     handleTempTalkPick,
     handleTalkPick,
@@ -74,6 +75,7 @@ const PostInputForm = ({ existingTalkPick }: PostInputFormProps) => {
           setImgUrls={setImgUrls}
           fileIds={form.fileIds}
           setFileIds={setEach}
+          setIsUploadingImage={setIsUploadingImage}
         />
       </div>
       <div css={S.otherStyle}>

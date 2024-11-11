@@ -67,13 +67,3 @@ export type TodayTalkPick = {
   optionA: string;
   optionB: string;
 };
-
-// export type TalkPick = Pick<
-//   TalkPickDetail,
-//   'title' | 'content' | 'summary' | 'optionA' | 'optionB'
-// >;
-
-// export type TodayTalkPick = Pick<
-//   TalkPickDetail,
-//   'id' | 'title' | 'optionA' | 'optionB'
-// >;
