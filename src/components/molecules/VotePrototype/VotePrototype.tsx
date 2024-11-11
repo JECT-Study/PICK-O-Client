@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { NOTICE } from '@/constants/message';
 import Button from '@/components/atoms/Button/Button';
 import VoteBar from '@/components/atoms/VoteBar/VoteBar';
 import ToastModal from '@/components/atoms/ToastModal/ToastModal';
@@ -65,7 +66,7 @@ const VotePrototype: React.FC<VotePrototypeProps> = ({
       setLoggedOutVoteOption(voteOption);
       localStorage.setItem(`talkpick_${talkPickId}`, voteOption);
 
-      showToastModal('투표 결과와 댓글은 로그인 후 확인할 수 있습니다.', () => {
+      showToastModal(NOTICE.REQUIRED.LOGIN, () => {
         navigate('/login', { state: { talkPickId } });
       });
     }
