@@ -16,7 +16,6 @@ export const inputEmailBtnStyling = (isEmpty: boolean) => {
   return css({
     backgroundColor: color.GY[2],
     padding: '10px 25px',
-    cursor: 'not-allowed',
   });
 };
 

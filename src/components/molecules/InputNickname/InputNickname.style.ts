@@ -16,7 +16,6 @@ export const inputNicknameBtnStyling = (isEmpty: boolean) => {
   return css({
     backgroundColor: color.GY[2],
     padding: '10px 25px',
-    cursor: 'not-allowed',
   });
 };
 

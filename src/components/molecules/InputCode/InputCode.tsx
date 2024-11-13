@@ -49,6 +49,7 @@ const InputCode = ({
         value={value.verificationCode}
         ref={inputRef}
         onChange={onChange}
+        disabled={!sendSuccess}
         btn={
           <Button
             onClick={handleSubmit}
