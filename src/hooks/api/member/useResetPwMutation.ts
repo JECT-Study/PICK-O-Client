@@ -1,6 +1,5 @@
-// import { AxiosErrorResponse } from '@/api/interceptor';
-import { postPasswordReset } from '@/api/email';
 import { useMutation } from '@tanstack/react-query';
+import { postPasswordReset } from '@/api/email';
 import { MemberResetForm } from '@/types/member';
 
 export const useResetPwMutation = () => {
@@ -8,8 +7,6 @@ export const useResetPwMutation = () => {
     mutationFn: (
       data: Pick<MemberResetForm, 'email' | 'password' | 'passwordConfirm'>,
     ) => postPasswordReset(data),
-    onSuccess: () => {},
-    onError: () => {},
   });
 
   return { ...mutation };
