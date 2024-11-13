@@ -8,6 +8,10 @@ import { storyContainer, storyInnerContainer } from '@/stories/story.styles';
 const meta: Meta<typeof BalanceGameList> = {
   title: 'organisms/BalanceGameList',
   component: BalanceGameList,
+  parameters: {
+    layout: 'centered',
+  },
+
   argTypes: {
     contents: {
       control: 'object',
