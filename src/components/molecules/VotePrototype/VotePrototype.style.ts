@@ -24,7 +24,7 @@ export const voteTextStyle = css(typo.Component.Bold, {
 
 export const getButtonStyle = (
   side: 'A' | 'B',
-  selectedButton: string | null,
+  selectedButton: 'A' | 'B' | null,
 ) =>
   css({
     ...(selectedButton === side && {

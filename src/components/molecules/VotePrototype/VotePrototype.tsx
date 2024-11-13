@@ -31,13 +31,16 @@ const VotePrototype: React.FC<VotePrototypeProps> = ({
 }) => {
   const navigate = useNavigate();
   const accessToken = useNewSelector(selectAccessToken);
-  const [loggedOutVoteOption, setLoggedOutVoteOption] = useState<string | null>(
-    null,
-  );
+  const [loggedOutVoteOption, setLoggedOutVoteOption] = useState<
+    'A' | 'B' | null
+  >(null);
 
   const totalVotes: number = leftVotes + rightVotes;
   const leftPercentage: string = ((leftVotes / totalVotes) * 100).toFixed(1);
   const rightPercentage: string = ((rightVotes / totalVotes) * 100).toFixed(1);
+  const currnetOption: 'A' | 'B' | null = accessToken
+    ? selectedVote
+    : loggedOutVoteOption;
 
   const { isVisible, modalText, showToastModal } = useToastModal();
 
@@ -52,7 +55,8 @@ const VotePrototype: React.FC<VotePrototypeProps> = ({
   useEffect(() => {
     if (!accessToken) {
       const savedVote = localStorage.getItem(`talkpick_${talkPickId}`);
-      if (savedVote) {
+
+      if (savedVote === 'A' || savedVote === 'B') {
         setLoggedOutVoteOption(savedVote);
       }
     }
@@ -107,10 +111,7 @@ const VotePrototype: React.FC<VotePrototypeProps> = ({
           onClick={() => {
             handleVoteButtonClick('A');
           }}
-          css={S.getButtonStyle(
-            'A',
-            accessToken ? selectedVote : loggedOutVoteOption,
-          )}
+          css={S.getButtonStyle('A', currnetOption)}
         >
           {leftButtonText}
         </Button>
@@ -121,10 +122,7 @@ const VotePrototype: React.FC<VotePrototypeProps> = ({
           onClick={() => {
             handleVoteButtonClick('B');
           }}
-          css={S.getButtonStyle(
-            'B',
-            accessToken ? selectedVote : loggedOutVoteOption,
-          )}
+          css={S.getButtonStyle('B', currnetOption)}
         >
           {rightButtonText}
         </Button>
