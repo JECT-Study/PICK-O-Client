@@ -85,7 +85,7 @@ const VotePrototype: React.FC<VotePrototypeProps> = ({
     }
   };
 
-  const handleVoteButtonClick = (voteOption: 'A' | 'B') => () => {
+  const handleVoteButtonClick = (voteOption: 'A' | 'B') => {
     if (accessToken) {
       handleTalkPickVote(selectedVote, voteOption);
     } else {
@@ -104,7 +104,9 @@ const VotePrototype: React.FC<VotePrototypeProps> = ({
         <Button
           variant="outlineHighlightR"
           size="large"
-          onClick={handleVoteButtonClick('A')}
+          onClick={() => {
+            handleVoteButtonClick('A');
+          }}
           css={S.getButtonStyle(
             'A',
             accessToken ? selectedVote : loggedOutVoteOption,
@@ -116,7 +118,9 @@ const VotePrototype: React.FC<VotePrototypeProps> = ({
         <Button
           variant="outlineHighlightB"
           size="large"
-          onClick={handleVoteButtonClick('B')}
+          onClick={() => {
+            handleVoteButtonClick('B');
+          }}
           css={S.getButtonStyle(
             'B',
             accessToken ? selectedVote : loggedOutVoteOption,
