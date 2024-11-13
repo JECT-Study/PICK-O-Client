@@ -19,9 +19,9 @@ const initialState: MemberForm = {
 };
 
 const successState: MemberSuccesForm = {
-  email: true,
-  verificationCode: true,
-  nickname: true,
+  email: false,
+  verificationCode: false,
+  nickname: false,
   password: false,
   passwordConfirm: false,
 };
