@@ -1,3 +1,5 @@
+/* eslint-disable consistent-return */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
 import { GameOption } from '@/types/game';
 import { getRandomNumbers } from '@/utils/calculator';
@@ -5,6 +7,11 @@ import BalanceGameButton from '@/components/atoms/BalanceGameButton/BalanceGameB
 import { useCreateGameVoteMutation } from '@/hooks/api/vote/useCreateGameVoteMutation';
 import { useEditGameVoteMutation } from '@/hooks/api/vote/useEditGameVoteMutation';
 import { useDeleteGameVoteMutation } from '@/hooks/api/vote/useDeleteGameVoteMutation';
+import { useNewSelector } from '@/store';
+import { selectAccessToken } from '@/store/auth';
+import { useGuestCreateGameVote } from '@/hooks/vote/useGuestCreateGameVote';
+import { useGuestEditGameVote } from '@/hooks/vote/useGuestEditGameVote';
+import { useGuestDeleteGameVote } from '@/hooks/vote/useGuestDeleteGameVote';
 import * as S from './BalanceGameBox.style';
 
 export interface BalanceGameBoxProps {
@@ -22,6 +29,7 @@ const BalanceGameBox = ({
   selectedVote,
   handleNextStage,
 }: BalanceGameBoxProps) => {
+  const accessToken = useNewSelector(selectAccessToken);
   const optionA = options[0];
   const optionB = options[1];
 
@@ -34,6 +42,10 @@ const BalanceGameBox = ({
 
   const [backgroundImages] = useState<string[]>(getRandomImages);
   const [backgroundImageA, backgroundImageB] = backgroundImages;
+
+  const { createGuestVote } = useGuestCreateGameVote();
+  const { editGuestVote } = useGuestEditGameVote();
+  const { deleteGuestVote } = useGuestDeleteGameVote();
 
   const { mutate: createGameVote } = useCreateGameVoteMutation(
     gameSetId,
@@ -49,20 +61,33 @@ const BalanceGameBox = ({
     selectedOption: 'A' | 'B' | null,
     voteOption: 'A' | 'B',
   ) => {
-    if (!selectedOption) {
-      createGameVote(voteOption, {
-        onSuccess: () => {
-          const nextStageTimer = setTimeout(() => {
-            handleNextStage();
-          }, 500);
+    if (accessToken) {
+      if (!selectedOption) {
+        createGameVote(voteOption, {
+          onSuccess: () => {
+            const nextStageTimer = setTimeout(() => {
+              handleNextStage();
+            }, 500);
 
-          return () => clearTimeout(nextStageTimer);
-        },
-      });
+            return () => clearTimeout(nextStageTimer);
+          },
+        });
+      } else if (selectedOption === voteOption) {
+        deleteGameVote();
+      } else {
+        editGameVote(voteOption);
+      }
+    } else if (!selectedOption) {
+      createGuestVote(gameSetId, gameId, voteOption);
+      const nextStageTimer = setTimeout(() => {
+        handleNextStage();
+      }, 500);
+
+      return () => clearTimeout(nextStageTimer);
     } else if (selectedOption === voteOption) {
-      deleteGameVote();
+      deleteGuestVote(gameSetId, gameId);
     } else {
-      editGameVote(voteOption);
+      editGuestVote(gameSetId, gameId, voteOption);
     }
   };
 
