@@ -22,6 +22,7 @@ const PostInputForm = ({ existingTalkPick }: PostInputFormProps) => {
     onChange,
     setEach,
     isEditing,
+    isTalkPickEdited,
     isVisible,
     modalText,
     imgUrls,
@@ -94,15 +95,22 @@ const PostInputForm = ({ existingTalkPick }: PostInputFormProps) => {
         {!existingTalkPick && <DraftPostButton onClick={handleDraftButton} />}
       </div>
       <div css={S.buttonStyle}>
+        {!isEditing && (
+          <Button
+            size="large"
+            variant="outlinePrimarySquare"
+            onClick={handleTempTalkPick}
+          >
+            임시저장하기
+          </Button>
+        )}
         <Button
           size="large"
-          variant="outlinePrimarySquare"
-          onClick={handleTempTalkPick}
+          variant="primarySquare"
+          onClick={handleTalkPick}
+          css={S.getButtonStyle(isEditing && !isTalkPickEdited)}
         >
-          임시저장하기
-        </Button>
-        <Button size="large" variant="primarySquare" onClick={handleTalkPick}>
-          등록하기
+          {isEditing ? '수정완료' : '등록하기'}
         </Button>
       </div>
     </form>

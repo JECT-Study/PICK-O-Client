@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { isEqual } from 'lodash';
 import { NewTalkPick, EditTalkPick, TalkPickDetail } from '@/types/talk-pick';
 import { validatePostForm } from '@/hooks/post/validatePostForm';
 import useToastModal from '../modal/useToastModal';
@@ -23,7 +24,11 @@ export const usePostTalkPickForm = (existingTalkPick?: TalkPickDetail) => {
   const { form, onChange, setEach } = useTalkPickInputs(initialState);
   const { isVisible, modalText, showToastModal } = useToastModal();
   const [isUploadingImage, setIsUploadingImage] = useState<boolean>(false);
+
   const isEditing: boolean = !!existingTalkPick;
+  const isTalkPickEdited: boolean =
+    !isEqual(existingTalkPick?.baseFields, form.baseFields) ||
+    !isEqual(existingTalkPick?.fileIds, form.fileIds);
 
   const { mutate: createTalkPick } = useCreateTalkPickMutation(showToastModal);
   const { mutate: editTalkPick } = useEditTalkPickMutation(
@@ -70,6 +75,8 @@ export const usePostTalkPickForm = (existingTalkPick?: TalkPickDetail) => {
     }
 
     if (isEditing) {
+      if (!isTalkPickEdited) return;
+
       const editForm: EditTalkPick = {
         baseFields: form.baseFields,
         newFileIds: newFileIds ?? [],
@@ -81,11 +88,16 @@ export const usePostTalkPickForm = (existingTalkPick?: TalkPickDetail) => {
     }
   };
 
+  console.log(existingTalkPick?.baseFields === form.baseFields);
+  console.log(existingTalkPick?.baseFields);
+  console.log(existingTalkPick?.baseFields);
+
   return {
     form,
     onChange,
     setEach,
     isEditing,
+    isTalkPickEdited,
     isVisible,
     modalText,
     imgUrls,
