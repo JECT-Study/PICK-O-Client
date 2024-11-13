@@ -16,6 +16,7 @@ import BalanceGameBox from '@/components/molecules/BalanceGameBox/BalanceGameBox
 import useToastModal from '@/hooks/modal/useToastModal';
 import { useCreateGameBookmarkMutation } from '@/hooks/api/bookmark/useCreateGameBookmarkMutation';
 import { useDeleteGameBookmarkMutation } from '@/hooks/api/bookmark/useDeleteGameBookmarkMutation';
+import { VoteRecord } from '@/types/vote';
 import * as S from './BalanceGameSection.style';
 
 export interface BalanceGameSectionProps {
@@ -53,6 +54,14 @@ const BalanceGameSection = ({
 
   const gameStages: GameDetail[] =
     game?.gameDetailResponses ?? gameDefaultDetail;
+  const isGuest = !localStorage.getItem('accessToken');
+
+  const guestVotedList = isGuest
+    ? (JSON.parse(
+        localStorage.getItem(`game_${gameSetId}`) || '[]',
+      ) as VoteRecord[])
+    : [];
+
   const currentGame: GameDetail = gameStages[currentStage];
 
   const [shareModalOpen, setShareModalOpen] = useState<boolean>(false);
@@ -89,7 +98,11 @@ const BalanceGameSection = ({
   }, [game, gameStages, setCurrentStage]);
 
   const handleNextButton = () => {
-    if (!currentGame.votedOption) return;
+    if (
+      (isGuest && !guestVotedList[currentStage]?.votedOption) ||
+      (!isGuest && !currentGame.votedOption)
+    )
+      return;
     handleNextGame();
   };
 
@@ -171,7 +184,11 @@ const BalanceGameSection = ({
           gameSetId={gameSetId}
           gameId={currentGame.id}
           options={currentGame.gameOptions}
-          selectedVote={currentGame.votedOption}
+          selectedVote={
+            isGuest
+              ? guestVotedList[currentStage]?.votedOption
+              : currentGame.votedOption
+          }
           handleNextStage={handleNextStage}
         />
         <div css={S.stageBarBtnWrapper}>
@@ -192,7 +209,11 @@ const BalanceGameSection = ({
             type="button"
             css={[
               S.buttonStyling,
-              S.activeButtonStyling(currentGame.votedOption !== null),
+              S.activeButtonStyling(
+                isGuest
+                  ? guestVotedList[currentStage]?.votedOption !== null
+                  : currentGame.votedOption !== null,
+              ),
             ]}
             onClick={handleNextButton}
           >
