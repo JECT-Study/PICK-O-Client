@@ -53,14 +53,6 @@ export interface TempTalkPick extends NewTalkPick {
   imgUrls: string[];
 }
 
-export type TalkPick = {
-  title: string;
-  content: string;
-  summary: TalkPickSummary;
-  optionA: string;
-  optionB: string;
-};
-
 export type TodayTalkPick = {
   id: number;
   title: string;
