@@ -21,10 +21,13 @@ const PostInputForm = ({ existingTalkPick }: PostInputFormProps) => {
     form,
     onChange,
     setEach,
+    isEditing,
     isVisible,
     modalText,
     imgUrls,
     setImgUrls,
+    setNewFileIds,
+    setDeleteFileIds,
     setIsUploadingImage,
     handleDraftButton,
     handleTempTalkPick,
@@ -76,6 +79,9 @@ const PostInputForm = ({ existingTalkPick }: PostInputFormProps) => {
           fileIds={form.fileIds}
           setFileIds={setEach}
           setIsUploadingImage={setIsUploadingImage}
+          isEditing={isEditing}
+          setNewFileIds={setNewFileIds}
+          setDeleteFileIds={setDeleteFileIds}
         />
       </div>
       <div css={S.otherStyle}>

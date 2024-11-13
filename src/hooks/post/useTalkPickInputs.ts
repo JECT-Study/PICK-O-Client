@@ -1,8 +1,8 @@
 import { useState, ChangeEvent, useCallback } from 'react';
 import { NewTalkPick } from '@/types/talk-pick';
 
-function useTalkPickInputs(initialState: NewTalkPick) {
-  const [form, setForm] = useState<NewTalkPick>(initialState);
+function useTalkPickInputs<T extends NewTalkPick>(initialState: T) {
+  const [form, setForm] = useState<T>(initialState);
 
   const onChange = useCallback(
     (

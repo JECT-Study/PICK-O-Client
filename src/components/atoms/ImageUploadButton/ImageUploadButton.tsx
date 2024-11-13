@@ -10,6 +10,8 @@ interface ImageUploadButtonProps {
   fileIds: number[];
   setFileIds: (name: string, fileIds: number[]) => void;
   setIsUploadingImage: React.Dispatch<React.SetStateAction<boolean>>;
+  isEditing: boolean;
+  setNewFileIds: React.Dispatch<React.SetStateAction<number[]>>;
 }
 
 const ImageUploadButton = ({
@@ -18,6 +20,8 @@ const ImageUploadButton = ({
   fileIds,
   setFileIds,
   setIsUploadingImage,
+  isEditing,
+  setNewFileIds,
 }: ImageUploadButtonProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { mutate: uploadFiles } = useFileUploadMutation(setIsUploadingImage);
@@ -36,9 +40,12 @@ const ImageUploadButton = ({
         {
           onSuccess: (res) => {
             const updatedFileIds = [...fileIds, ...res.fileIds];
-
             setImgUrls((prev) => [...prev, ...res.imgUrls]);
             setFileIds('fileIds', updatedFileIds);
+
+            if (isEditing) {
+              setNewFileIds((prev) => [...prev, ...res.fileIds]);
+            }
 
             setIsUploadingImage(false);
           },

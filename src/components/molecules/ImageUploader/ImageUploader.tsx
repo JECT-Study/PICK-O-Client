@@ -11,6 +11,9 @@ interface ImageUploaderProps {
   fileIds: number[];
   setFileIds: (name: string, fileIds: number[]) => void;
   setIsUploadingImage: React.Dispatch<React.SetStateAction<boolean>>;
+  isEditing: boolean;
+  setNewFileIds: React.Dispatch<React.SetStateAction<number[]>>;
+  setDeleteFileIds: React.Dispatch<React.SetStateAction<number[]>>;
 }
 
 const ImageUploader = ({
@@ -19,6 +22,9 @@ const ImageUploader = ({
   fileIds,
   setFileIds,
   setIsUploadingImage,
+  isEditing,
+  setNewFileIds,
+  setDeleteFileIds,
 }: ImageUploaderProps) => {
   const imageContainerRef = useRef<HTMLDivElement | null>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -28,15 +34,19 @@ const ImageUploader = ({
 
   const handleDelete = (index: number) => {
     const fileId: number = fileIds[index];
+    const updatedFileIds = fileIds.filter((_, i) => i !== index);
+    setImgUrls((prev) => prev.filter((_, i) => i !== index));
 
-    deleteFileMutation.mutate(fileId, {
-      onSuccess: () => {
-        const updatedFileIds = fileIds.filter((_, i) => i !== index);
-
-        setImgUrls((prev) => prev.filter((_, i) => i !== index));
-        setFileIds('fileIds', updatedFileIds);
-      },
-    });
+    if (isEditing) {
+      setFileIds('fileIds', updatedFileIds);
+      setDeleteFileIds((prev) => [...prev, fileId]);
+    } else {
+      deleteFileMutation.mutate(fileId, {
+        onSuccess: () => {
+          setFileIds('fileIds', updatedFileIds);
+        },
+      });
+    }
   };
 
   const scrollToRight = (): void => {
@@ -87,6 +97,8 @@ const ImageUploader = ({
           fileIds={fileIds}
           setFileIds={setFileIds}
           setIsUploadingImage={setIsUploadingImage}
+          isEditing={isEditing}
+          setNewFileIds={setNewFileIds}
         />
 
         {imgUrls.map((url, index) => (

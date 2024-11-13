@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { NewTalkPick, TalkPickDetail } from '@/types/talk-pick';
+import { NewTalkPick, EditTalkPick, TalkPickDetail } from '@/types/talk-pick';
 import { validatePostForm } from '@/hooks/post/validatePostForm';
 import useToastModal from '../modal/useToastModal';
 import useTalkPickInputs from './useTalkPickInputs';
@@ -23,6 +23,7 @@ export const usePostTalkPickForm = (existingTalkPick?: TalkPickDetail) => {
   const { form, onChange, setEach } = useTalkPickInputs(initialState);
   const { isVisible, modalText, showToastModal } = useToastModal();
   const [isUploadingImage, setIsUploadingImage] = useState<boolean>(false);
+  const isEditing: boolean = !!existingTalkPick;
 
   const { mutate: createTalkPick } = useCreateTalkPickMutation(showToastModal);
   const { mutate: editTalkPick } = useEditTalkPickMutation(
@@ -33,6 +34,8 @@ export const usePostTalkPickForm = (existingTalkPick?: TalkPickDetail) => {
     useSaveTempTalkPickMutation(showToastModal);
   const { data: tempTalkPick, isSuccess } = useTempTalkPickQuery();
 
+  const [newFileIds, setNewFileIds] = useState<number[]>([]);
+  const [deleteFileIds, setDeleteFileIds] = useState<number[]>([]);
   const [imgUrls, setImgUrls] = useState<string[]>(
     existingTalkPick?.imgUrls ?? [],
   );
@@ -66,8 +69,13 @@ export const usePostTalkPickForm = (existingTalkPick?: TalkPickDetail) => {
       return;
     }
 
-    if (existingTalkPick) {
-      editTalkPick(form);
+    if (isEditing) {
+      const editForm: EditTalkPick = {
+        baseFields: form.baseFields,
+        newFileIds: newFileIds ?? [],
+        deleteFileIds: deleteFileIds ?? [],
+      };
+      editTalkPick(editForm);
     } else {
       createTalkPick(form);
     }
@@ -77,10 +85,13 @@ export const usePostTalkPickForm = (existingTalkPick?: TalkPickDetail) => {
     form,
     onChange,
     setEach,
+    isEditing,
     isVisible,
     modalText,
     imgUrls,
     setImgUrls,
+    setNewFileIds,
+    setDeleteFileIds,
     setIsUploadingImage,
     handleDraftButton,
     handleTempTalkPick,

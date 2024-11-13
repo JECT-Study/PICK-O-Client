@@ -2,7 +2,7 @@ import { Id } from '@/types/api';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { putTalkPick, postTalkPickSummary } from '@/api/talk-pick';
-import { NewTalkPick } from '@/types/talk-pick';
+import { EditTalkPick } from '@/types/talk-pick';
 import { SUCCESS } from '@/constants/message';
 
 export const useEditTalkPickMutation = (
@@ -14,7 +14,7 @@ export const useEditTalkPickMutation = (
   const navigate = useNavigate();
 
   const mutation = useMutation({
-    mutationFn: (data: NewTalkPick) => putTalkPick(talkPickId, data),
+    mutationFn: (data: EditTalkPick) => putTalkPick(talkPickId, data),
     onSuccess: async () => {
       await queryClient.invalidateQueries({
         queryKey: ['talkPick', talkPickId],
