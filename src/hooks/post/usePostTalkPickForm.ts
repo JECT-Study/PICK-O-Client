@@ -88,10 +88,6 @@ export const usePostTalkPickForm = (existingTalkPick?: TalkPickDetail) => {
     }
   };
 
-  console.log(existingTalkPick?.baseFields === form.baseFields);
-  console.log(existingTalkPick?.baseFields);
-  console.log(existingTalkPick?.baseFields);
-
   return {
     form,
     onChange,
