@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { NOTICE } from '@/constants/message';
+import { VoteOption, MyVoteOption } from '@/types/vote';
 import Button from '@/components/atoms/Button/Button';
 import VoteBar from '@/components/atoms/VoteBar/VoteBar';
 import ToastModal from '@/components/atoms/ToastModal/ToastModal';
@@ -18,7 +19,7 @@ interface VotePrototypeProps {
   rightButtonText: string;
   leftVotes: number;
   rightVotes: number;
-  selectedVote: 'A' | 'B' | null;
+  selectedVote: MyVoteOption;
 }
 
 const VotePrototype: React.FC<VotePrototypeProps> = ({
@@ -31,14 +32,13 @@ const VotePrototype: React.FC<VotePrototypeProps> = ({
 }) => {
   const navigate = useNavigate();
   const accessToken = useNewSelector(selectAccessToken);
-  const [loggedOutVoteOption, setLoggedOutVoteOption] = useState<
-    'A' | 'B' | null
-  >(null);
+  const [loggedOutVoteOption, setLoggedOutVoteOption] =
+    useState<MyVoteOption>(null);
 
   const totalVotes: number = leftVotes + rightVotes;
   const leftPercentage: string = ((leftVotes / totalVotes) * 100).toFixed(1);
   const rightPercentage: string = ((rightVotes / totalVotes) * 100).toFixed(1);
-  const currnetOption: 'A' | 'B' | null = accessToken
+  const currnetOption: MyVoteOption = accessToken
     ? selectedVote
     : loggedOutVoteOption;
 
@@ -62,7 +62,7 @@ const VotePrototype: React.FC<VotePrototypeProps> = ({
     }
   }, [accessToken, talkPickId]);
 
-  const handleLoggedOutTalkPickVote = (voteOption: 'A' | 'B') => {
+  const handleLoggedOutTalkPickVote = (voteOption: VoteOption) => {
     if (loggedOutVoteOption === voteOption) {
       setLoggedOutVoteOption(null);
       localStorage.removeItem(`talkpick_${talkPickId}`);
@@ -77,8 +77,8 @@ const VotePrototype: React.FC<VotePrototypeProps> = ({
   };
 
   const handleTalkPickVote = (
-    selectedOption: 'A' | 'B' | null,
-    voteOption: 'A' | 'B',
+    selectedOption: MyVoteOption,
+    voteOption: VoteOption,
   ) => {
     if (selectedOption === null) {
       createTalkPickVote(voteOption);
@@ -89,7 +89,7 @@ const VotePrototype: React.FC<VotePrototypeProps> = ({
     }
   };
 
-  const handleVoteButtonClick = (voteOption: 'A' | 'B') => {
+  const handleVoteButtonClick = (voteOption: VoteOption) => {
     if (accessToken) {
       handleTalkPickVote(selectedVote, voteOption);
     } else {

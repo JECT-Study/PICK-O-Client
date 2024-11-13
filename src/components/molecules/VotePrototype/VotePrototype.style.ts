@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import { VoteOption, MyVoteOption } from '@/types/vote';
 import typo from '@/styles/typo';
 import color from '@/styles/color';
 
@@ -23,8 +24,8 @@ export const voteTextStyle = css(typo.Component.Bold, {
 });
 
 export const getButtonStyle = (
-  side: 'A' | 'B',
-  selectedButton: 'A' | 'B' | null,
+  side: VoteOption,
+  selectedButton: MyVoteOption,
 ) =>
   css({
     ...(selectedButton === side && {
