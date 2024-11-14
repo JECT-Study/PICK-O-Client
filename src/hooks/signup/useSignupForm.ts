@@ -1,4 +1,3 @@
-import { PATH } from '@/constants/path';
 import { MemberForm, MemberSuccesForm } from '@/types/member';
 import { isAllTrue } from '@/utils/validator';
 import { ChangeEvent } from 'react';
@@ -40,7 +39,7 @@ export const useSignupForm = () => {
     return newForm;
   };
 
-  const { mutate: signup } = useSignUpMutation();
+  const { mutate: signup } = useSignUpMutation(showToastModal);
 
   const navigate = useNavigate();
 
@@ -48,13 +47,7 @@ export const useSignupForm = () => {
     e.preventDefault();
     if (isAllTrue(successForm)) {
       const newForm = createNewForm(form);
-      signup(newForm, {
-        onSuccess: () => {
-          showToastModal('회원가입 완료!', () => {
-            navigate(`/${PATH.LOGIN}`);
-          });
-        },
-      });
+      signup(newForm);
     } else {
       focus(e);
     }

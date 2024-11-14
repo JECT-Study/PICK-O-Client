@@ -1,4 +1,3 @@
-import { PATH } from '@/constants/path';
 import { MemberResetForm, MemberSuccesForm } from '@/types/member';
 import { isAllTrue } from '@/utils/validator';
 import { ChangeEvent } from 'react';
@@ -36,7 +35,7 @@ export const useChangePwForm = () => {
     return newForm;
   };
 
-  const { mutate: resetPassword } = useResetPwMutation();
+  const { mutate: resetPassword } = useResetPwMutation(showToastModal);
 
   const navigate = useNavigate();
 
@@ -44,13 +43,7 @@ export const useChangePwForm = () => {
     e.preventDefault();
     if (isAllTrue(successForm)) {
       const newForm = createNewForm(form);
-      resetPassword(newForm, {
-        onSuccess: () => {
-          showToastModal('변경 완료!', () => {
-            navigate(`/${PATH.LOGIN}`);
-          });
-        },
-      });
+      resetPassword(newForm);
     } else {
       focus(e);
     }
