@@ -1,6 +1,6 @@
 import { END_POINT } from '@/constants/api';
 import { ServerResponse } from '@/types/api';
-import { MemberResetForm, MemberVerifyForm } from '@/types/member';
+import { MemberResetPwForm, MemberVerifyForm } from '@/types/member';
 import { axiosInstance } from './interceptor';
 
 export const postSignUpCode = async (email: string) => {
@@ -30,9 +30,7 @@ export const postEmailVerify = async (value: MemberVerifyForm) => {
   return data;
 };
 
-export const postPasswordReset = async (
-  value: Pick<MemberResetForm, 'email' | 'password' | 'passwordConfirm'>,
-) => {
+export const postPasswordReset = async (value: MemberResetPwForm) => {
   const { data } = await axiosInstance.post<ServerResponse>(
     `${END_POINT.EMAIL_RESET}`,
     value,

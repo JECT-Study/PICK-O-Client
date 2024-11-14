@@ -22,11 +22,18 @@ export interface MemberSuccesForm {
   [key: string]: boolean;
 }
 
-export type MemberVerifyForm = Pick<MemberForm, 'email' | 'verificationCode'>;
-
 export interface MemberResetForm {
   email: string;
   verificationCode: string;
   password: string;
   passwordConfirm: string;
 }
+
+export type MemberVerifyForm = Pick<
+  MemberResetForm,
+  'email' | 'verificationCode'
+>;
+export type MemberResetPwForm = Pick<
+  MemberResetForm,
+  'email' | 'password' | 'passwordConfirm'
+>;
