@@ -60,7 +60,7 @@ export const useSignupForm = () => {
     }
   };
 
-  const handleCancle = () => {
+  const handleCancel = () => {
     navigate(-1);
   };
 
@@ -72,6 +72,6 @@ export const useSignupForm = () => {
     isVisible,
     modalText,
     handleSubmit,
-    handleCancle,
+    handleCancel,
   };
 };

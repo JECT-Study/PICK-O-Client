@@ -19,7 +19,7 @@ const SignUpPage = () => {
     isVisible,
     modalText,
     handleSubmit,
-    handleCancle,
+    handleCancel,
   } = useSignupForm();
 
   const [sendSuccess, setSendSuccess] = useState<boolean>(false);
@@ -66,7 +66,7 @@ const SignUpPage = () => {
       </div>
       <div css={S.btnContainer}>
         <Button
-          onClick={handleCancle}
+          onClick={handleCancel}
           variant="outlineSecondary"
           css={S.btnSignup}
         >

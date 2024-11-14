@@ -56,7 +56,7 @@ export const useChangePwForm = () => {
     }
   };
 
-  const handleCancle = () => {
+  const handleCancel = () => {
     navigate(-1);
   };
 
@@ -67,6 +67,6 @@ export const useChangePwForm = () => {
     isVisible,
     modalText,
     handleSubmit,
-    handleCancle,
+    handleCancel,
   };
 };

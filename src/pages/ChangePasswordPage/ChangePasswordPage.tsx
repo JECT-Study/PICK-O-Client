@@ -17,7 +17,7 @@ const ChangePasswordPage = () => {
     isVisible,
     modalText,
     handleSubmit,
-    handleCancle,
+    handleCancel,
   } = useChangePwForm();
 
   const [sendSuccess, setSendSuccess] = useState<boolean>(false);
@@ -63,7 +63,7 @@ const ChangePasswordPage = () => {
               <Button
                 variant="outlineSecondary"
                 css={S.btnStyling}
-                onClick={handleCancle}
+                onClick={handleCancel}
               >
                 취소
               </Button>
