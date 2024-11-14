@@ -12,11 +12,12 @@ import * as S from './SignUpPage.style';
 
 const SignUpPage = () => {
   const {
-    signupSuccess,
     form,
     onChange,
     onSuccessChange,
     setEach,
+    isVisible,
+    modalText,
     handleSubmit,
     handleCancle,
   } = useSignupForm();
@@ -25,9 +26,9 @@ const SignUpPage = () => {
 
   return (
     <form onSubmit={handleSubmit} css={S.signupContainer}>
-      {signupSuccess && (
+      {isVisible && (
         <div css={S.signupToastModalStyling}>
-          <ToastModal bgColor="black">회원가입 완료!</ToastModal>
+          <ToastModal bgColor="black">{modalText}</ToastModal>
         </div>
       )}
       <span css={S.signUpHeadingStyling}>SIGN UP</span>

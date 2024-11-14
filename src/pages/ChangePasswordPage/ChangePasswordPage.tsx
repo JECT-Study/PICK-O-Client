@@ -11,10 +11,11 @@ import * as S from './ChangePasswordPage.style';
 
 const ChangePasswordPage = () => {
   const {
-    resetSuccess,
     form,
     onChange,
     onSuccessChange,
+    isVisible,
+    modalText,
     handleSubmit,
     handleCancle,
   } = useChangePwForm();
@@ -24,9 +25,9 @@ const ChangePasswordPage = () => {
 
   return (
     <form onSubmit={handleSubmit} css={S.changePasswordPageContainer}>
-      {resetSuccess && (
+      {isVisible && (
         <div css={S.toastModalStyling}>
-          <ToastModal bgColor="black">변경 완료!</ToastModal>
+          <ToastModal bgColor="black">{modalText}</ToastModal>
         </div>
       )}
       <LogoLarge />

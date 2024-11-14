@@ -1,12 +1,13 @@
 import { PATH } from '@/constants/path';
 import { MemberForm, MemberSuccesForm } from '@/types/member';
 import { isAllTrue } from '@/utils/validator';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSignUpMutation } from '../api/member/useSignUpMutation';
 import { useActiveSubmit } from '../common/useActiveSubmit';
 import { useFocusFalse } from '../common/useFocusFalse';
 import useInputs from '../common/useInputs';
+import useToastModal from '../modal/useToastModal';
 
 const initialState: MemberForm = {
   email: '',
@@ -27,12 +28,12 @@ const successState: MemberSuccesForm = {
 };
 
 export const useSignupForm = () => {
-  const [signupSuccess, setSignupSuccess] = useState<boolean>(false);
   const { form, onChange, setEach } = useInputs<MemberForm>(initialState);
   const { successForm, onSuccessChange } =
     useActiveSubmit<MemberSuccesForm>(successState);
 
   const { focus } = useFocusFalse<MemberSuccesForm>(successForm);
+  const { isVisible, modalText, showToastModal } = useToastModal();
 
   const createNewForm = (prevForm: MemberForm) => {
     const { verificationCode, ...newForm } = prevForm;
@@ -49,10 +50,9 @@ export const useSignupForm = () => {
       const newForm = createNewForm(form);
       signup(newForm, {
         onSuccess: () => {
-          setSignupSuccess(true);
-          setTimeout(() => {
+          showToastModal('회원가입 완료!', () => {
             navigate(`/${PATH.LOGIN}`);
-          }, 2000);
+          });
         },
       });
     } else {
@@ -65,11 +65,12 @@ export const useSignupForm = () => {
   };
 
   return {
-    signupSuccess,
     form,
     onChange,
     setEach,
     onSuccessChange,
+    isVisible,
+    modalText,
     handleSubmit,
     handleCancle,
   };

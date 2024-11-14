@@ -1,12 +1,13 @@
 import { PATH } from '@/constants/path';
 import { MemberResetForm, MemberSuccesForm } from '@/types/member';
 import { isAllTrue } from '@/utils/validator';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useResetPwMutation } from '../api/member/useResetPwMutation';
 import { useActiveSubmit } from '../common/useActiveSubmit';
 import { useFocusFalse } from '../common/useFocusFalse';
 import useInputs from '../common/useInputs';
+import useToastModal from '../modal/useToastModal';
 
 const initialState: MemberResetForm = {
   email: '',
@@ -23,12 +24,12 @@ const successState: MemberSuccesForm = {
 };
 
 export const useChangePwForm = () => {
-  const [resetSuccess, setResetSuccess] = useState<boolean>(false);
   const { form, onChange } = useInputs<MemberResetForm>(initialState);
   const { successForm, onSuccessChange } =
     useActiveSubmit<MemberSuccesForm>(successState);
 
   const { focus } = useFocusFalse<MemberSuccesForm>(successForm);
+  const { isVisible, modalText, showToastModal } = useToastModal();
 
   const createNewForm = (prevForm: MemberResetForm) => {
     const { verificationCode, ...newForm } = prevForm;
@@ -45,10 +46,9 @@ export const useChangePwForm = () => {
       const newForm = createNewForm(form);
       resetPassword(newForm, {
         onSuccess: () => {
-          setResetSuccess(true);
-          setTimeout(() => {
+          showToastModal('변경 완료!', () => {
             navigate(`/${PATH.LOGIN}`);
-          }, 2000);
+          });
         },
       });
     } else {
@@ -61,10 +61,11 @@ export const useChangePwForm = () => {
   };
 
   return {
-    resetSuccess,
     form,
     onChange,
     onSuccessChange,
+    isVisible,
+    modalText,
     handleSubmit,
     handleCancle,
   };
