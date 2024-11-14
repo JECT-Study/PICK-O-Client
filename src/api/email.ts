@@ -6,7 +6,7 @@ import { axiosInstance } from './interceptor';
 export const postSignUpCode = async (email: string) => {
   const { data } = await axiosInstance.post<ServerResponse>(
     `${END_POINT.EMAIL_SIGNUP_CODE}`,
-    email,
+    { email },
   );
 
   return data;
@@ -15,7 +15,7 @@ export const postSignUpCode = async (email: string) => {
 export const postResetCode = async (email: string) => {
   const { data } = await axiosInstance.post<ServerResponse>(
     `${END_POINT.EMAIL_RESET_CODE}`,
-    email,
+    { email },
   );
 
   return data;
