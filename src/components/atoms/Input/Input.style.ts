@@ -62,6 +62,10 @@ export const getInputStyling = css({
   outline: 0,
   color: color.BK,
 
+  ':-webkit-autofill': {
+    boxShadow: '0 0 0px 1000px white inset',
+  },
+
   '&::placeholder': {
     color: color.GY[1],
   },
