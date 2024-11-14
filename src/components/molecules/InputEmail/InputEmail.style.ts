@@ -8,14 +8,9 @@ export const inputEmailContainer = css({
 });
 
 export const inputEmailBtnStyling = (isEmpty: boolean) => {
-  if (!isEmpty) {
-    return css({
-      padding: '10px 25px',
-    });
-  }
   return css({
-    backgroundColor: color.GY[2],
     padding: '10px 25px',
+    backgroundColor: isEmpty ? color.GY[2] : 'null',
   });
 };
 

@@ -8,14 +8,9 @@ export const inputCodeContainer = css({
 });
 
 export const inputCodeBtnStyling = (sendSuccess: boolean) => {
-  if (sendSuccess) {
-    return css({
-      padding: '10px 25px',
-    });
-  }
   return css({
-    backgroundColor: color.GY[2],
     padding: '10px 25px',
+    backgroundColor: sendSuccess ? 'null' : color.GY[2],
   });
 };
 
