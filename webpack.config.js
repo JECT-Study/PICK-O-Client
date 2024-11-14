@@ -16,7 +16,7 @@ module.exports = (env) => {
   }
 
   return {
-    name: 'balance-talk',
+    name: 'PICK-O',
     mode: DEV ? 'development' : 'production',
     entry: './src/index.tsx',
     module: {
