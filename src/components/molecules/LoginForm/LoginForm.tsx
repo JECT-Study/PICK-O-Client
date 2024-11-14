@@ -41,6 +41,7 @@ const LoginForm = ({ withSignInText }: LoginFormProps) => {
         />
         <Input
           name="password"
+          type="password"
           value={form.password}
           icon={<Lock />}
           placeholder="비밀번호"

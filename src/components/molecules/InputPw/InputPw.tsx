@@ -36,6 +36,7 @@ const InputPw = ({ value, onChange, onSuccessChange }: InputPwProps) => {
       <Input
         id="password"
         name="password"
+        type="password"
         placeholder="비밀번호를 입력해주세요."
         size="small"
         minLength={INPUT_LIMIT.PW_MIN}

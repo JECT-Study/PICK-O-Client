@@ -41,6 +41,7 @@ const InputPwConfirm = ({
       <Input
         id="passwordConfirm"
         name="passwordConfirm"
+        type="password"
         placeholder="비밀번호를 재입력해주세요."
         size="small"
         isError={isError}
