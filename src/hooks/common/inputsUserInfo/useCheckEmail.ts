@@ -22,7 +22,7 @@ export const useCheckEmail = (
   const navigate = useNavigate();
 
   const isValidEmailFormat = (email: string): boolean => {
-    const emailRegex = /^[a-zA-Z0-9]+@[^\s@]+\.[^\s@]+$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
 
