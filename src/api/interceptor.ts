@@ -9,10 +9,13 @@ export interface AxiosErrorResponse {
   message?: string;
 }
 
+const baseURL =
+  process.env.NODE_ENV === 'production' ? process.env.API_URL : '/api';
+
 export const axiosInstance = axios.create({
   // baseURL: process.env.API_URL,
   // baseURL: '/api',
-  baseURL: process.env.MSW ? process.env.API_URL : '/api',
+  baseURL,
   headers: {
     'Content-Type': 'application/json',
   },
