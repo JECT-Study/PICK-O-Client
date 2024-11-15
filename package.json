@@ -11,7 +11,8 @@
     "build": "webpack",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "chromatic": "npx chromatic --project-token=$CHROMATIC_PROJECT_TOKEN"
+    "chromatic": "npx chromatic --project-token=$CHROMATIC_PROJECT_TOKEN",
+    "deploy": "npm run build && aws s3 sync ./build/ s3://${AWS_S3_BUCKET} --delete --acl public-read && aws cloudfront create-invalidation --distribution-id ${AWS_CLOUDFRONT_ID} --paths '/*'"
   },
   "author": "",
   "license": "ISC",
