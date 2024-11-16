@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNewSelector } from '@/store';
 import { selectAccessToken } from '@/store/auth';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { useParseJwt } from '@/hooks/common/useParseJwt';
 import { useMemberQuery } from '@/hooks/api/member/useMemberQuery';
 import { useCommentsQuery } from '@/hooks/api/comment/useCommentsQuery';
@@ -24,12 +24,14 @@ const TalkPickPage = () => {
   const accessToken = useNewSelector(selectAccessToken);
   const { member } = useMemberQuery(useParseJwt(accessToken).memberId);
 
+  const { talkPickId } = useParams();
   const location = useLocation();
   const state = location.state as State;
-  const talkPickId = state?.talkPickId;
+
+  const id = state?.talkPickId ?? Number(talkPickId);
   const isTodayTalkPick = state?.isTodayTalkPick;
 
-  const { talkPick } = useTalkPickDetailQuery(talkPickId);
+  const { talkPick } = useTalkPickDetailQuery(id);
 
   const toggleItem: ToggleGroupItem[] = [
     {
@@ -43,7 +45,7 @@ const TalkPickPage = () => {
   ];
 
   const { comments } = useCommentsQuery(
-    talkPickId,
+    id,
     {
       page: selectedPage - 1,
       size: 7,
@@ -52,7 +54,7 @@ const TalkPickPage = () => {
   );
 
   const { bestComments } = useBestCommentsQuery(
-    talkPickId,
+    id,
     {
       page: selectedPage - 1,
       size: 7,
@@ -69,7 +71,7 @@ const TalkPickPage = () => {
       />
       <div css={S.commentsWrapStyle}>
         <CommentsSection
-          talkPickId={talkPickId}
+          talkPickId={id}
           talkPickWriter={talkPick?.writer ?? ''}
           commentList={selectedValue === 'trend' ? bestComments : comments}
           toggleItem={toggleItem}

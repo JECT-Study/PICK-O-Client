@@ -1,6 +1,2 @@
-export type VoteResult = {
-  optionACount: number;
-  optionBCount: number;
-};
-
 export type VoteOption = 'A' | 'B';
+export type MyVoteOption = VoteOption | null;

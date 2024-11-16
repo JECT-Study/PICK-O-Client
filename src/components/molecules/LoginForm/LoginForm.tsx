@@ -12,11 +12,12 @@ import * as S from './LoginFrom.style';
 
 export interface LoginFormProps {
   withSignInText?: boolean;
+  pathTalkPickId?: number;
 }
 
-const LoginForm = ({ withSignInText }: LoginFormProps) => {
+const LoginForm = ({ withSignInText, pathTalkPickId }: LoginFormProps) => {
   const { form, onChange, isError, errorMessage, handleSubmit, loginSuccess } =
-    useLoginForm();
+    useLoginForm(pathTalkPickId);
 
   const handleSocialLogin = (social: string) => {
     window.location.href = `${process.env.API_URL}/oauth2/authorization/${social}`;
