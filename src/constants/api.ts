@@ -29,7 +29,10 @@ export const END_POINT = {
   NICKNAME_VERIFY: '/members/duplicate',
 
   // email API
+  EMAIL_SIGNUP_CODE: '/email/signup/code',
+  EMAIL_RESET_CODE: '/email/reset/code',
   EMAIL_VERIFY: '/email/verify',
+  EMAIL_RESET: '/email/reset',
   EMAIL_REQUEST: '/email/request',
   FIND_PW: '/email/password',
 

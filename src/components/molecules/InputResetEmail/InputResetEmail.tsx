@@ -3,27 +3,24 @@ import React, { ChangeEvent, useEffect } from 'react';
 import Button from '@/components/atoms/Button/Button';
 import Input from '@/components/atoms/Input/Input';
 import Label from '@/components/atoms/Label/Label';
-import { useCheckEmail } from '@/hooks/common/inputsUserInfo/useCheckEmail';
 import { isEmptyString } from '@/utils/validator';
-import * as S from './InputEmail.style';
+import { useCheckExistEmail } from '@/hooks/common/inputsUserInfo/useCheckExistEmail';
+import * as S from './InputResetEmail.style';
 
-interface InputEmailProps {
-  type: string;
+interface InputResetEmailProps {
   value: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   onSuccessChange?: (name: string, value: boolean) => void;
   handleSendSuccess?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const InputEmail = ({
-  type,
+const InputResetEmail = ({
   value,
   onChange,
   onSuccessChange,
   handleSendSuccess,
-}: InputEmailProps) => {
-  const { inputRef, isError, errorMessage, handleSubmit } = useCheckEmail(
-    type,
+}: InputResetEmailProps) => {
+  const { inputRef, isError, errorMessage, handleSubmit } = useCheckExistEmail(
     value,
     handleSendSuccess,
   );
@@ -35,8 +32,8 @@ const InputEmail = ({
   }, [errorMessage]);
 
   return (
-    <div css={S.inputEmailContainer}>
-      <Label id="email" css={S.labelStyling}>
+    <div css={S.inputResetEmailContainer}>
+      <Label id="emailForReset" css={S.labelStyling}>
         이메일
       </Label>
       <Input
@@ -52,9 +49,9 @@ const InputEmail = ({
         btn={
           <Button
             onClick={handleSubmit}
-            css={S.inputEmailBtnStyling(isEmptyString(value))}
+            css={S.inputResetEmailBtnStyling(isEmptyString(value))}
           >
-            {type === 'signup' ? '인증' : '발송'}
+            인증
           </Button>
         }
       />
@@ -62,4 +59,4 @@ const InputEmail = ({
   );
 };
 
-export default InputEmail;
+export default InputResetEmail;

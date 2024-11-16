@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '@/components/atoms/Button/Button';
 import ToastModal from '@/components/atoms/ToastModal/ToastModal';
 import InputCode from '@/components/molecules/InputCode/InputCode';
@@ -6,25 +6,29 @@ import InputEmail from '@/components/molecules/InputEmail/InputEmail';
 import InputNickname from '@/components/molecules/InputNickname/InputNickname';
 import InputProfileImage from '@/components/molecules/InputProfileImage/InputProfileImage';
 import InputPw from '@/components/molecules/InputPw/InputPw';
-import InputPwCheck from '@/components/molecules/InputPwCheck/InputPwCheck';
+import InputPwConfirm from '@/components/molecules/InputPwConfirm/InputPwConfirm';
 import { useSignupForm } from '@/hooks/signup/useSignupForm';
 import * as S from './SignUpPage.style';
 
 const SignUpPage = () => {
   const {
-    signupSuccess,
     form,
     onChange,
     onSuccessChange,
     setEach,
+    isVisible,
+    modalText,
     handleSubmit,
-    handleCancle,
+    handleCancel,
   } = useSignupForm();
+
+  const [sendSuccess, setSendSuccess] = useState<boolean>(false);
+
   return (
     <form onSubmit={handleSubmit} css={S.signupContainer}>
-      {signupSuccess && (
+      {isVisible && (
         <div css={S.signupToastModalStyling}>
-          <ToastModal bgColor="black">회원가입 완료!</ToastModal>
+          <ToastModal bgColor="black">{modalText}</ToastModal>
         </div>
       )}
       <span css={S.signUpHeadingStyling}>SIGN UP</span>
@@ -35,11 +39,13 @@ const SignUpPage = () => {
           value={form.email}
           onChange={onChange}
           onSuccessChange={onSuccessChange}
+          handleSendSuccess={setSendSuccess}
         />
         <InputCode
           value={{ verificationCode: form.verificationCode, email: form.email }}
           onChange={onChange}
           onSuccessChange={onSuccessChange}
+          sendSuccess={sendSuccess}
         />
         <InputNickname
           value={form.nickname}
@@ -51,23 +57,23 @@ const SignUpPage = () => {
           onChange={onChange}
           onSuccessChange={onSuccessChange}
         />
-        <InputPwCheck
-          value={form.passwordCheck}
+        <InputPwConfirm
+          value={form.passwordConfirm}
           onChange={onChange}
           onSuccessChange={onSuccessChange}
           pw={form.password}
         />
       </div>
       <div css={S.btnContainer}>
-        <Button type="submit" variant="roundPrimary2" css={S.btnSignup}>
-          회원가입
-        </Button>
         <Button
-          onClick={handleCancle}
+          onClick={handleCancel}
           variant="outlineSecondary"
           css={S.btnSignup}
         >
           취소
+        </Button>
+        <Button type="submit" variant="roundPrimary2" css={S.btnSignup}>
+          회원가입
         </Button>
       </div>
     </form>

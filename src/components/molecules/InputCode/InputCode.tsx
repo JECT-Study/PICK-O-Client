@@ -5,16 +5,28 @@ import React, { ChangeEvent, useEffect } from 'react';
 import Button from '@/components/atoms/Button/Button';
 import Input from '@/components/atoms/Input/Input';
 import Label from '@/components/atoms/Label/Label';
-import { inputCodeBtnStyling, inputCodeContainer } from './InputCode.style';
+import * as S from './InputCode.style';
 
 interface InputCodeProps {
   value: Pick<MemberForm, 'email' | 'verificationCode'>;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   onSuccessChange: (name: string, value: boolean) => void;
+  sendSuccess: boolean;
+  handleVerifySuccess?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const InputCode = ({ value, onChange, onSuccessChange }: InputCodeProps) => {
-  const { inputRef, isError, errorMessage, handleSubmit } = useCheckCode(value);
+const InputCode = ({
+  value,
+  onChange,
+  onSuccessChange,
+  sendSuccess,
+  handleVerifySuccess,
+}: InputCodeProps) => {
+  const { inputRef, isError, errorMessage, handleSubmit } = useCheckCode(
+    value,
+    sendSuccess,
+    handleVerifySuccess,
+  );
 
   useEffect(() => {
     if (value.verificationCode) {
@@ -23,8 +35,10 @@ const InputCode = ({ value, onChange, onSuccessChange }: InputCodeProps) => {
   }, [errorMessage]);
 
   return (
-    <div css={inputCodeContainer}>
-      <Label id="verificationCode">인증번호</Label>
+    <div css={S.inputCodeContainer}>
+      <Label id="verificationCode" css={S.labelStyling}>
+        인증번호
+      </Label>
       <Input
         id="verificationCode"
         name="verificationCode"
@@ -35,8 +49,12 @@ const InputCode = ({ value, onChange, onSuccessChange }: InputCodeProps) => {
         value={value.verificationCode}
         ref={inputRef}
         onChange={onChange}
+        disabled={!sendSuccess}
         btn={
-          <Button onClick={handleSubmit} css={inputCodeBtnStyling}>
+          <Button
+            onClick={handleSubmit}
+            css={S.inputCodeBtnStyling(sendSuccess)}
+          >
             확인
           </Button>
         }

@@ -1,17 +1,18 @@
-import { postMember } from '@/api/member';
-import { PATH } from '@/constants/path';
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
+import { postPasswordReset } from '@/api/email';
+import { MemberResetPwForm } from '@/types/member';
+import { PATH } from '@/constants/path';
 
-export const useSignUpMutation = (
+export const useResetPwMutation = (
   showToastModal: (message: string, callback?: () => void) => void,
 ) => {
   const navigate = useNavigate();
 
   const mutation = useMutation({
-    mutationFn: postMember,
+    mutationFn: (data: MemberResetPwForm) => postPasswordReset(data),
     onSuccess: () => {
-      showToastModal('회원가입 완료!', () => {
+      showToastModal('변경 완료!', () => {
         navigate(`/${PATH.LOGIN}`);
       });
     },

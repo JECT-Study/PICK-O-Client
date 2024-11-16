@@ -149,12 +149,12 @@ const Header = () => {
           <div css={S.notificationStyle}>
             {accessToken ? (
               <ProfileIcon
-                interaction="settings"
+                interaction="custom"
                 imgUrl={member?.profileImageUrl ?? DefaultProfile}
                 onClick={handleProfileIcon}
               />
             ) : (
-              <ProfileIcon interaction="normal" onClick={handleProfileIcon} />
+              <ProfileIcon interaction="default" onClick={handleProfileIcon} />
             )}
           </div>
         </div>

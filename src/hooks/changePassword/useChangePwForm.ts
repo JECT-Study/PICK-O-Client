@@ -1,45 +1,41 @@
-import { MemberForm, MemberSuccesForm } from '@/types/member';
+import { MemberResetForm, MemberSuccesForm } from '@/types/member';
 import { isAllTrue } from '@/utils/validator';
 import { ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSignUpMutation } from '../api/member/useSignUpMutation';
+import { useResetPwMutation } from '../api/member/useResetPwMutation';
 import { useActiveSubmit } from '../common/useActiveSubmit';
 import { useFocusFalse } from '../common/useFocusFalse';
 import useInputs from '../common/useInputs';
 import useToastModal from '../modal/useToastModal';
 
-const initialState: MemberForm = {
+const initialState: MemberResetForm = {
   email: '',
   verificationCode: '',
-  nickname: '',
   password: '',
   passwordConfirm: '',
-  profileImgUrl: '',
-  role: 'USER',
 };
 
 const successState: MemberSuccesForm = {
   email: false,
   verificationCode: false,
-  nickname: false,
   password: false,
   passwordConfirm: false,
 };
 
-export const useSignupForm = () => {
-  const { form, onChange, setEach } = useInputs<MemberForm>(initialState);
+export const useChangePwForm = () => {
+  const { form, onChange } = useInputs<MemberResetForm>(initialState);
   const { successForm, onSuccessChange } =
     useActiveSubmit<MemberSuccesForm>(successState);
 
   const { focus } = useFocusFalse<MemberSuccesForm>(successForm);
   const { isVisible, modalText, showToastModal } = useToastModal();
 
-  const createNewForm = (prevForm: MemberForm) => {
+  const createNewForm = (prevForm: MemberResetForm) => {
     const { verificationCode, ...newForm } = prevForm;
     return newForm;
   };
 
-  const { mutate: signup } = useSignUpMutation(showToastModal);
+  const { mutate: resetPassword } = useResetPwMutation(showToastModal);
 
   const navigate = useNavigate();
 
@@ -47,7 +43,7 @@ export const useSignupForm = () => {
     e.preventDefault();
     if (isAllTrue(successForm)) {
       const newForm = createNewForm(form);
-      signup(newForm);
+      resetPassword(newForm);
     } else {
       focus(e);
     }
@@ -60,7 +56,6 @@ export const useSignupForm = () => {
   return {
     form,
     onChange,
-    setEach,
     onSuccessChange,
     isVisible,
     modalText,

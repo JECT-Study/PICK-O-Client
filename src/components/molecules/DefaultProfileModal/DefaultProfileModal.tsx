@@ -43,6 +43,7 @@ const DefaultProfileModal = ({
         <div css={S.imageWrapperStyling}>
           {defaultImgArray.map((src) => (
             <button
+              key={src}
               type="button"
               onClick={() => handleDefaultImage(src)}
               css={[

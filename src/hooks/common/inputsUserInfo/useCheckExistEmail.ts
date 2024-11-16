@@ -1,32 +1,41 @@
+import { postResetCode } from '@/api/email';
 import { AxiosErrorResponse } from '@/api/interceptor';
-import { getNicknameVerify } from '@/api/member';
 import { HTTP_STATUS_CODE } from '@/constants/api';
 import { ERROR, SUCCESS } from '@/constants/message';
 import { isEmptyString } from '@/utils/validator';
 import { useMutation } from '@tanstack/react-query';
 import { useRef, useState } from 'react';
 
-export const useCheckNickname = (value: string) => {
+export const useCheckExistEmail = (
+  value: string,
+  handleSendSuccess?: React.Dispatch<React.SetStateAction<boolean>>,
+) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
     undefined,
   );
   const [isError, setIsError] = useState<boolean>(false);
 
-  function isValidNickname(nickname: string): boolean {
-    return nickname.length >= 2 && nickname.length <= 10;
-  }
+  const isValidEmailFormat = (email: string): boolean => {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
+  };
 
-  const nicknameVerify = useMutation({
-    mutationFn: () => getNicknameVerify(value),
+  const verifyEmail = useMutation({
+    mutationFn: () => {
+      setIsError(false);
+      setErrorMessage(undefined);
+      return postResetCode(value);
+    },
     onSuccess: () => {
       setIsError(false);
-      setErrorMessage(SUCCESS.NICKNAME.AVAILABLE);
+      setErrorMessage(SUCCESS.EMAIL.AVAILABLE);
+      handleSendSuccess?.(true);
     },
     onError: (err: AxiosErrorResponse) => {
-      if (err.status === HTTP_STATUS_CODE.CONFLICT) {
+      if (err.status === HTTP_STATUS_CODE.NOT_FOUND) {
         setIsError(true);
-        setErrorMessage(ERROR.NICKNAME.EXIST);
+        setErrorMessage(ERROR.EMAIL.NOT_EXIST);
       }
     },
   });
@@ -36,11 +45,11 @@ export const useCheckNickname = (value: string) => {
       return;
     }
 
-    if (!isValidNickname(value)) {
+    if (!isValidEmailFormat(value)) {
       setIsError(true);
-      setErrorMessage(ERROR.NICKNAME.FORM);
+      setErrorMessage(ERROR.EMAIL.FORM);
     } else {
-      nicknameVerify.mutate();
+      verifyEmail.mutate();
     }
   };
 

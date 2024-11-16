@@ -33,5 +33,4 @@ const useToastModal = () => {
     showToastModal,
   };
 };
-
 export default useToastModal;
