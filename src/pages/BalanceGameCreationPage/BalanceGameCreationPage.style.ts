@@ -2,7 +2,13 @@ import { css } from '@emotion/react';
 import typo from '@/styles/typo';
 import color from '@/styles/color';
 
-export const pageContainer = css({
+export const PageContainer = css({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+});
+
+export const pageWrapper = css({
   display: 'flex',
   flexDirection: 'column',
   gap: '20px',

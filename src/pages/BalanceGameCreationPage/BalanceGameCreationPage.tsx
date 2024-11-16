@@ -12,6 +12,7 @@ import { useSaveTempGameMutation } from '@/hooks/api/game/useTempGameSaveMutatio
 import { useTempGameQuery } from '@/hooks/api/game/useTempGameQuery';
 import useToastModal from '@/hooks/modal/useToastModal';
 import * as S from './BalanceGameCreationPage.style';
+import { PageContainer, pageWrapper } from './BalanceGameCreationPage.style';
 
 const BalanceGameCreationPage = () => {
   const [title, setTitle] = useState('');
@@ -138,46 +139,48 @@ const BalanceGameCreationPage = () => {
   };
 
   return (
-    <div css={S.pageContainer}>
-      <span css={S.subLabel}>
-        센스 가득한 질문들로 고민 500번 하게 만들어 볼까?
-      </span>
-      <span css={S.titleLabel}>나만의 밸런스게임 만들기</span>
-      <Divider orientation="width" length={1175} />
-      <BalanceGameCreation
-        title={title}
-        description={description}
-        onTitleChange={handleTitleChange}
-        onDescriptionChange={handleDescriptionChange}
-        handleCompleteClick={handleCompleteClick}
-        onDraftLoad={handleDraftLoad}
-        onStageChange={(stage) => setActiveStage(stage)}
-        onGamesUpdate={(updatedGames) => setGames(updatedGames)}
-      />
-      <div css={S.buttonContainer}>
-        <Button
-          size="medium"
-          variant="outlinePrimarySquare"
-          onClick={handleSaveDraft}
-          css={S.customButtonStyle}
-        >
-          임시저장하기
-        </Button>
-      </div>
-      {isTagModalOpen && (
-        <>
-          <div css={S.modalBackdrop} />
-          <div css={S.centerStyling}>
-            <TagModal
-              isOpen={isTagModalOpen}
-              onClose={() => setIsTagModalOpen(false)}
-              onTagSubmit={handleTagSubmit}
-            />
-          </div>
-        </>
-      )}
-      <div css={S.toastModalStyling}>
-        {isVisible && <ToastModal bgColor="black">임시저장완료</ToastModal>}
+    <div css={S.PageContainer}>
+      <div css={S.pageWrapper}>
+        <span css={S.subLabel}>
+          센스 가득한 질문들로 고민 500번 하게 만들어 볼까?
+        </span>
+        <span css={S.titleLabel}>나만의 밸런스게임 만들기</span>
+        <Divider orientation="width" length={1175} />
+        <BalanceGameCreation
+          title={title}
+          description={description}
+          onTitleChange={handleTitleChange}
+          onDescriptionChange={handleDescriptionChange}
+          handleCompleteClick={handleCompleteClick}
+          onDraftLoad={handleDraftLoad}
+          onStageChange={(stage) => setActiveStage(stage)}
+          onGamesUpdate={(updatedGames) => setGames(updatedGames)}
+        />
+        <div css={S.buttonContainer}>
+          <Button
+            size="medium"
+            variant="outlinePrimarySquare"
+            onClick={handleSaveDraft}
+            css={S.customButtonStyle}
+          >
+            임시저장하기
+          </Button>
+        </div>
+        {isTagModalOpen && (
+          <>
+            <div css={S.modalBackdrop} />
+            <div css={S.centerStyling}>
+              <TagModal
+                isOpen={isTagModalOpen}
+                onClose={() => setIsTagModalOpen(false)}
+                onTagSubmit={handleTagSubmit}
+              />
+            </div>
+          </>
+        )}
+        <div css={S.toastModalStyling}>
+          {isVisible && <ToastModal bgColor="black">임시저장완료</ToastModal>}
+        </div>
       </div>
     </div>
   );
