@@ -18,5 +18,8 @@ export const PATH = {
   },
   UPDATE: 'update',
   DELETE: 'delete',
-  CREATE: 'create',
+  CREATE: {
+    TALK_PICK: 'talkpick/create',
+    GAME: 'balancegame/create',
+  },
 } as const;

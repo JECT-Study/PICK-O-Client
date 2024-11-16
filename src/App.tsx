@@ -57,7 +57,10 @@ const App: React.FC = () => {
           <Route path="/post/create" element={<CreatePostPage />} />
           {/* <Route path="/search" element={<SearchResultsPage />} /> */}
           <Route path="/balancegame/:setId" element={<BalanceGamePage />} />
-          <Route path={PATH.CREATE} element={<BalanceGameCreationPage />} />
+          <Route
+            path={PATH.CREATE.GAME}
+            element={<BalanceGameCreationPage />}
+          />
           {/* <Route path="posts" element={<PostList />} />
           <Route path="posts/:id" element={<PostPage />} />
           <Route path="searchResult" element={<SearchResultPage />} />
