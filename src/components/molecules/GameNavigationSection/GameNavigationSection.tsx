@@ -47,7 +47,7 @@ const GameNavigationSection = ({
         ]}
         iconRight={isLastStage ? undefined : <NextArrow />}
       >
-        {isLastStage ? '제작완료' : '다음 질문'}
+        {isLastStage ? '제작 완료' : '다음 질문'}
       </Button>
     </div>
   );
