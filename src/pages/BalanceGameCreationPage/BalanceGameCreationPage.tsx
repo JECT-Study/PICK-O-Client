@@ -24,7 +24,7 @@ const BalanceGameCreationPage = () => {
   const { handleSaveTempGame } = useSaveTempGameMutation();
   const { mutateAsync: uploadImage } = useFileUploadMutation();
   const { refetch: fetchTempGame } = useTempGameQuery();
-  const { isVisible, modalText, showToastModal } = useToastModal();
+  const { isVisible, showToastModal } = useToastModal();
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
