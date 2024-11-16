@@ -117,8 +117,8 @@ const BalanceGameCreationPage = () => {
   const handleSaveDraft = async () => {
     const activeGame = games[activeStage];
     const tempGameData: TempGame = {
-      mainTag: 'ExampleMainTag',
-      subTag: 'ExampleSubTag',
+      mainTag: '임시메인태그',
+      subTag: '임시서브태그',
       tempGames: [
         {
           title,
