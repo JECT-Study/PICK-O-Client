@@ -10,6 +10,7 @@ import TagModal from '@/components/molecules/TagModal/TagModal';
 import { useCreateBalanceGameMutation } from '@/hooks/api/game/useCreateBalanceGameMutation';
 import { useSaveTempGameMutation } from '@/hooks/api/game/useTempGameSaveMutation';
 import { useTempGameQuery } from '@/hooks/api/game/useTempGameQuery';
+import useToastModal from '@/hooks/modal/useToastModal';
 import * as S from './BalanceGameCreationPage.style';
 
 const BalanceGameCreationPage = () => {
@@ -18,12 +19,12 @@ const BalanceGameCreationPage = () => {
   const [games, setGames] = useState<BalanceGameSet[]>([]);
   const [isTagModalOpen, setIsTagModalOpen] = useState(false);
   const [activeStage, setActiveStage] = useState(0);
-  const [showToast, setShowToast] = useState(false);
 
   const { handleCreateBalanceGame } = useCreateBalanceGameMutation();
   const { handleSaveTempGame } = useSaveTempGameMutation();
   const { mutateAsync: uploadImage } = useFileUploadMutation();
   const { refetch: fetchTempGame } = useTempGameQuery();
+  const { isVisible, modalText, showToastModal } = useToastModal();
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
@@ -133,8 +134,7 @@ const BalanceGameCreationPage = () => {
       ],
     };
     await handleSaveTempGame(tempGameData);
-    setShowToast(true);
-    setTimeout(() => setShowToast(false), 2000);
+    showToastModal('임시저장완료');
   };
 
   return (
@@ -177,7 +177,7 @@ const BalanceGameCreationPage = () => {
         </>
       )}
       <div css={S.toastModalStyling}>
-        {showToast && <ToastModal bgColor="black">임시저장완료</ToastModal>}
+        {isVisible && <ToastModal bgColor="black">임시저장완료</ToastModal>}
       </div>
     </div>
   );
