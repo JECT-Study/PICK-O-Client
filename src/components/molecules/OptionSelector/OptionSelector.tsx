@@ -3,7 +3,7 @@ import Button from '@/components/atoms/Button/Button';
 import * as S from './OptionSelector.style';
 
 interface OptionSelectorProps {
-  options: string[];
+  options: { label: string; value: string }[];
   selectedOption?: string;
   onSelect: (option: string) => void;
 }
@@ -12,23 +12,23 @@ const OptionSelector = ({
   selectedOption,
   onSelect,
 }: OptionSelectorProps) => {
-  const [selected, setSelected] = useState(selectedOption || options[0]);
+  const [selected, setSelected] = useState(selectedOption || options[0].value);
 
-  const handleSelect = (option: string) => {
-    setSelected(option);
-    onSelect(option);
+  const handleSelect = (optionValue: string) => {
+    setSelected(optionValue);
+    onSelect(optionValue);
   };
 
   return (
     <div css={S.optionSelectorContainer}>
-      {options.map((option) => (
+      {options.map(({ label, value }) => (
         <Button
-          key={option}
-          variant={selected === option ? 'roundPrimary2' : 'outlinePrimary'}
+          key={value}
+          variant={selected === value ? 'roundPrimary2' : 'outlinePrimary'}
           size="large"
-          onClick={() => handleSelect(option)}
+          onClick={() => handleSelect(value)}
         >
-          {option}
+          {label}
         </Button>
       ))}
     </div>
