@@ -84,24 +84,24 @@ const MyPage = () => {
   const queryResult = useMemo(() => {
     if (selectedGroup === OptionKeys.TALK_PICK) {
       switch (selectedOption) {
-        case '내가 저장한':
+        case 'bookmarks':
           return queries.myBookmarks.myBookmarks;
-        case '내가 투표한':
+        case 'votes':
           return queries.myVotes.myVote;
-        case '내가 댓글단':
+        case 'comments':
           return queries.myComments.myComments;
-        case '내가 작성한':
+        case 'written':
           return queries.myWrittens.myWritten;
         default:
           return null;
       }
     } else if (selectedGroup === OptionKeys.BALANCE_GAME) {
       switch (selectedOption) {
-        case '내가 저장한':
+        case 'bookmarks':
           return queries.gameBookmarks.gameBookmark;
-        case '내가 투표한':
+        case 'votes':
           return queries.gameVotes.gameVote;
-        case '내가 만든':
+        case 'written':
           return queries.gameWrittens.gameWritten;
         default:
           return null;
@@ -136,17 +136,11 @@ const MyPage = () => {
     }
 
     if (selectedGroup === OptionKeys.TALK_PICK) {
-      if (
-        selectedOption === '내가 저장한' ||
-        selectedOption === '내가 작성한'
-      ) {
+      if (selectedOption === 'bookmarks' || selectedOption === 'written') {
         const content = queryResult.content as MyContentItem[];
         return <MyContentList items={content} />;
       }
-      if (
-        selectedOption === '내가 투표한' ||
-        selectedOption === '내가 댓글단'
-      ) {
+      if (selectedOption === 'votes' || selectedOption === 'comments') {
         const content = queryResult.content as InfoItem[];
         return <InfoList items={content} />;
       }
