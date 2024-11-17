@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from 'react';
 import SelectGroup, {
   SelectGroupItem,
 } from '@/components/atoms/SelectGroup/SelectGroup';
@@ -8,47 +7,31 @@ import * as S from './OptionBar.style';
 
 export interface OptionBarProps {
   selectGroupItems: SelectGroupItem[];
-  initialSelectedGroupValue?: OptionKeys;
+  selectedGroup: OptionKeys;
   selectedOption: string;
   onGroupSelect: (value: OptionKeys) => void;
   onOptionSelect: (option: string) => void;
 }
 const OptionBar = ({
   selectGroupItems,
-  initialSelectedGroupValue = OptionKeys.TALK_PICK,
+  selectedGroup,
   selectedOption,
   onGroupSelect,
   onOptionSelect,
 }: OptionBarProps) => {
-  const [selectedGroup, setSelectedGroup] = useState<OptionKeys>(
-    initialSelectedGroupValue,
-  );
-  const [options, setOptions] = useState<string[]>(optionSets[selectedGroup]);
-
-  useEffect(() => {
-    setOptions(optionSets[selectedGroup]);
-  }, [selectedGroup]);
-
-  const handleGroupSelect = (value: string) => {
-    setSelectedGroup(value as OptionKeys);
-    onGroupSelect(value as OptionKeys);
-  };
-
-  const handleOptionSelect = (option: string) => {
-    onOptionSelect(option);
-  };
+  const options = optionSets[selectedGroup];
 
   return (
     <div css={S.container}>
       <SelectGroup
         items={selectGroupItems}
         selectedValue={selectedGroup}
-        onSelect={handleGroupSelect}
+        onSelect={(value) => onGroupSelect(value as OptionKeys)}
       />
       <OptionSelector
         options={options}
         selectedOption={selectedOption}
-        onSelect={handleOptionSelect}
+        onSelect={onOptionSelect}
       />
     </div>
   );
