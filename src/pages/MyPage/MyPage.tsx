@@ -92,6 +92,8 @@ const MyPage = () => {
           return queries.myComments.myComments;
         case '내가 작성한':
           return queries.myWrittens.myWritten;
+        default:
+          return null;
       }
     } else if (selectedGroup === OptionKeys.BALANCE_GAME) {
       switch (selectedOption) {
