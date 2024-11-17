@@ -14,6 +14,8 @@ const meta: Meta<typeof OptionBar> = {
     selectedOption: {
       control: { type: 'text' },
     },
+    onGroupSelect: { action: '그룹 변경' },
+    onOptionSelect: { action: '옵션 변경' },
   },
   args: {
     selectedGroup: OptionKeys.TALK_PICK,
@@ -44,8 +46,12 @@ export const Default: Story = {
         onGroupSelect={(group) => {
           setSelectedGroup(group);
           setSelectedOption(optionSets[group][0]);
+          args.onGroupSelect(group);
         }}
-        onOptionSelect={(option) => setSelectedOption(option)}
+        onOptionSelect={(option) => {
+          setSelectedOption(option);
+          args.onOptionSelect(option);
+        }}
       />
     );
   },
@@ -63,12 +69,6 @@ export const All: Story = {
         ]}
         selectedGroup={OptionKeys.TALK_PICK}
         selectedOption={optionSets[OptionKeys.TALK_PICK][0]}
-        onGroupSelect={(group) => {
-          console.log('그룹 변경:', group);
-        }}
-        onOptionSelect={(option) => {
-          console.log('옵션 변경:', option);
-        }}
       />
       <h3>밸런스 게임 선택 시</h3>
       <OptionBar
@@ -79,12 +79,6 @@ export const All: Story = {
         ]}
         selectedGroup={OptionKeys.BALANCE_GAME}
         selectedOption={optionSets[OptionKeys.BALANCE_GAME][0]}
-        onGroupSelect={(group) => {
-          console.log('그룹 변경:', group);
-        }}
-        onOptionSelect={(option) => {
-          console.log('옵션 변경:', option);
-        }}
       />
     </div>
   ),
