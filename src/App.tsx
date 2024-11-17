@@ -39,6 +39,7 @@ import { selectAccessToken } from './store/auth';
 import TalkPickPlacePage from './pages/TalkPickPlacePage/TalkPickPlacePage';
 import SignUpPage from './pages/SignUpPage/SignUpPage';
 import BalanceGamePage from './pages/BalanceGamePage/BalanceGamePage';
+import BalanceGameCreationPage from './pages/BalanceGameCreationPage/BalanceGameCreationPage';
 
 const App: React.FC = () => {
   const accessToken = useNewSelector(selectAccessToken);
@@ -58,6 +59,10 @@ const App: React.FC = () => {
           <Route path="/post/create" element={<CreatePostPage />} />
           {/* <Route path="/search" element={<SearchResultsPage />} /> */}
           <Route path="/balancegame/:setId" element={<BalanceGamePage />} />
+          <Route
+            path={PATH.CREATE.GAME}
+            element={<BalanceGameCreationPage />}
+          />
           {/* <Route path="posts" element={<PostList />} />
           <Route path="posts/:id" element={<PostPage />} />
           <Route path="searchResult" element={<SearchResultPage />} />

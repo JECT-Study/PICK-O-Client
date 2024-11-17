@@ -8,41 +8,44 @@ export interface ChoiceInputBoxProps {
   option: 'A' | 'B';
   choiceInputProps?: ComponentPropsWithoutRef<'input'>;
   infoInputProps?: ComponentPropsWithoutRef<'input'>;
+  clearInput?: boolean;
 }
 
 const ChoiceInputButton = ({
   option = 'A',
   choiceInputProps,
   infoInputProps,
+  clearInput,
 }: ChoiceInputBoxProps) => {
   const [infoInputClicked, setInfoButtonClicked] = useState<boolean>(false);
-  const [withText, setWithText] = useState<boolean>(false);
+  const [internalChoiceValue, setInternalChoiceValue] = useState<string>('');
+  const [internalInfoValue, setInternalInfoValue] = useState<string>('');
 
-  const [choiceInputValue, setChoiceInputValue] = useState<string>('');
-  const [infoInputValue, setInfoInputValue] = useState<string>('');
+  const choiceValue = choiceInputProps?.value ?? internalChoiceValue;
+  const infoValue = infoInputProps?.value ?? internalInfoValue;
+
+  const isFilled = Boolean(
+    String(choiceValue).trim() || String(infoValue).trim(),
+  );
 
   useEffect(() => {
-    if (choiceInputValue.trim() || infoInputValue.trim()) {
-      setWithText(true);
-    } else {
-      setWithText(false);
+    if (clearInput) {
+      setInternalChoiceValue('');
+      setInternalInfoValue('');
+      setInfoButtonClicked(false);
     }
-  }, [choiceInputValue, infoInputValue]);
+  }, [clearInput]);
 
   return (
-    <div
-      css={[
-        S.choiceInputContainer,
-        withText && S.choiceInputWithText(withText, option),
-      ]}
-    >
+    <div css={S.choiceInputContainer(isFilled, option)}>
       <div css={S.choiceInputWrapper}>
         <input
           type="text"
           placeholder={`${option} 선택지를 입력하세요.`}
           maxLength={30}
+          value={choiceValue}
+          onChange={(e) => setInternalChoiceValue(e.target.value)}
           css={S.choiceInputStyling}
-          onChange={(e) => setChoiceInputValue(e.target.value)}
           {...choiceInputProps}
         />
         {!infoInputClicked && (
@@ -59,15 +62,15 @@ const ChoiceInputButton = ({
               type="text"
               placeholder="해당 선택지에 대해 추가로 설명을 입력할 수 있어요!"
               maxLength={50}
+              value={infoValue}
+              onChange={(e) => setInternalInfoValue(e.target.value)}
               css={S.choiceInputStyling}
-              onChange={(e) => setInfoInputValue(e.target.value)}
               {...infoInputProps}
             />
             <button
               type="button"
               onClick={() => {
                 setInfoButtonClicked(false);
-                setInfoInputValue('');
               }}
             >
               <ChoiceMinus />

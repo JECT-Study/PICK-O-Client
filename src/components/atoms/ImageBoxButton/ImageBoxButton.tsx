@@ -4,10 +4,15 @@ import * as S from './ImageBoxButton.style';
 
 interface ImageBoxButtonProps {
   imageFile: File | null;
+  imgUrl?: string;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
-const ImageBoxButton = ({ imageFile, onChange }: ImageBoxButtonProps) => {
+const ImageBoxButton = ({
+  imageFile,
+  imgUrl = '',
+  onChange,
+}: ImageBoxButtonProps) => {
   const fileInputRef = React.useRef<HTMLInputElement | null>(null);
 
   const handleClick = () => {
@@ -23,6 +28,30 @@ const ImageBoxButton = ({ imageFile, onChange }: ImageBoxButtonProps) => {
     }
   };
 
+  const renderImage = () => {
+    if (imageFile instanceof File) {
+      return (
+        <img
+          src={URL.createObjectURL(imageFile)}
+          alt="Uploaded"
+          css={S.uploadedImage}
+        />
+      );
+    }
+
+    if (imgUrl && imgUrl.length > 0) {
+      return (
+        <img src={imgUrl} alt="Uploaded from server" css={S.uploadedImage} />
+      );
+    }
+
+    return (
+      <div css={S.defaultImageBox}>
+        <Camera css={S.iconStyle} />
+      </div>
+    );
+  };
+
   return (
     <div
       css={S.imageContainer}
@@ -31,17 +60,7 @@ const ImageBoxButton = ({ imageFile, onChange }: ImageBoxButtonProps) => {
       role="button"
       tabIndex={0}
     >
-      {imageFile ? (
-        <img
-          src={URL.createObjectURL(imageFile)}
-          alt="Uploaded"
-          css={S.uploadedImage}
-        />
-      ) : (
-        <div css={S.defaultImageBox}>
-          <Camera css={S.iconStyle} />
-        </div>
-      )}
+      {renderImage()}
       <input
         id="file-upload"
         type="file"

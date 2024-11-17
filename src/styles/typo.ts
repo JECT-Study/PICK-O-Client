@@ -13,6 +13,13 @@ const typo = {
     lineHeight: '1.4',
     letterSpacing: `${24 * -0.05}px`,
   },
+  SubTitle_700: {
+    fontFamily: 'Pretendard',
+    fontSize: '24px',
+    fontWeight: 700,
+    lineHeight: '1.4',
+    letterSpacing: `${24 * -0.05}px`,
+  },
   Component: {
     Bold: {
       fontFamily: 'Pretendard',

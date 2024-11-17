@@ -19,6 +19,7 @@ import ProfileIcon from '@/components/atoms/ProfileIcon/ProfileIcon';
 // import { END_POINT } from '@/constants/api';
 import { MenuItem } from '@/components/atoms/MenuTap/MenuTap';
 import CreateDropdown from '@/components/atoms/CreateDropdown/CreateDropdown';
+import { PATH } from '@/constants/path';
 import * as S from './Header.style';
 
 const Header = () => {
@@ -102,6 +103,14 @@ const Header = () => {
     }
   };
 
+  const handleCreateGameButton = () => {
+    if (accessToken) {
+      navigate(PATH.CREATE.GAME);
+    } else {
+      navigate(PATH.LOGIN);
+    }
+  };
+
   const optionData: MenuItem[] = [
     {
       label: '톡픽 만들기',
@@ -109,10 +118,7 @@ const Header = () => {
     },
     {
       label: '밸런스게임 만들기',
-      onClick: () => {
-        // TODO: 밸런스 게임 만들기 이동 로직
-        console.log('클릭됨!!');
-      },
+      onClick: handleCreateGameButton,
     },
   ];
   // FIXME:Notification 관련 코드
