@@ -24,9 +24,38 @@ import { useMemberQuery } from '@/hooks/api/member/useMemberQuery';
 import { useParseJwt } from '@/hooks/common/useParseJwt';
 import MypageListSkeleton from '@/components/atoms/MypageListSkeleton/MypageListSkeleton';
 import MypageCardSkeleton from '@/components/atoms/MypageCardSkeleton/MypageCardSkeleton';
+import { useSearchParams } from 'react-router-dom';
 import * as S from './MyPage.style';
 
 const MyPage = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // URL에서 초기 상태 가져오기
+  const initialGroup =
+    (searchParams.get('group') as OptionKeys) || OptionKeys.TALK_PICK;
+  const initialOption =
+    searchParams.get('option') || optionSets[initialGroup][0];
+
+  // 변경 가능한 상태로 관리
+  const [selectedGroup, setSelectedGroup] = useState<OptionKeys>(initialGroup);
+  const [selectedOption, setSelectedOption] = useState<string>(initialOption);
+
+  // URL 동기화
+  useEffect(() => {
+    setSearchParams({ group: selectedGroup, option: selectedOption });
+  }, [selectedGroup, selectedOption, setSearchParams]);
+
+  // 그룹 변경 핸들러
+  const handleGroupSelect = (group: OptionKeys) => {
+    setSelectedGroup(group);
+    setSelectedOption(optionSets[group][0]); // 그룹 변경 시, 옵션을 기본값으로 초기화
+  };
+
+  // 옵션 변경 핸들러
+  const handleOptionSelect = (option: string) => {
+    setSelectedOption(option);
+  };
+
   const accessToken = useNewSelector(selectAccessToken);
   const { member } = useMemberQuery(useParseJwt(accessToken).memberId);
   const memberId: number = member!.id;
@@ -55,17 +84,6 @@ const MyPage = () => {
   );
 
   const { ref, isFetchingAnyNextPage } = useObserver(queries);
-
-  const [selectedGroup, setSelectedGroup] = useState<OptionKeys>(
-    OptionKeys.TALK_PICK,
-  );
-  const [selectedOption, setSelectedOption] = useState<string>(
-    optionSets[selectedGroup][0],
-  );
-
-  useEffect(() => {
-    setSelectedOption(optionSets[selectedGroup][0]);
-  }, [selectedGroup]);
 
   const queryResult = useMemo(() => {
     if (selectedGroup === OptionKeys.TALK_PICK) {
@@ -162,10 +180,10 @@ const MyPage = () => {
             { label: '톡픽', value: OptionKeys.TALK_PICK },
             { label: '밸런스 게임', value: OptionKeys.BALANCE_GAME },
           ]}
-          initialSelectedGroupValue={selectedGroup}
+          selectedGroup={selectedGroup}
           selectedOption={selectedOption}
-          onGroupSelect={setSelectedGroup}
-          onOptionSelect={setSelectedOption}
+          onGroupSelect={handleGroupSelect}
+          onOptionSelect={handleOptionSelect}
         />
         <div css={S.contentList}>{renderContent()}</div>
         <div ref={ref} css={S.loader}>
