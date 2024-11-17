@@ -29,32 +29,28 @@ import * as S from './MyPage.style';
 
 const MyPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-
-  // URL에서 초기 상태 가져오기
   const initialGroup =
     (searchParams.get('group') as OptionKeys) || OptionKeys.TALK_PICK;
   const initialOption =
-    searchParams.get('option') || optionSets[initialGroup][0];
-
-  // 변경 가능한 상태로 관리
+    searchParams.get('option') || optionSets[initialGroup][0].value;
   const [selectedGroup, setSelectedGroup] = useState<OptionKeys>(initialGroup);
   const [selectedOption, setSelectedOption] = useState<string>(initialOption);
 
-  // URL 동기화
   useEffect(() => {
     setSearchParams({ group: selectedGroup, option: selectedOption });
   }, [selectedGroup, selectedOption, setSearchParams]);
 
-  // 그룹 변경 핸들러
   const handleGroupSelect = (group: OptionKeys) => {
     setSelectedGroup(group);
-    setSelectedOption(optionSets[group][0]); // 그룹 변경 시, 옵션을 기본값으로 초기화
+    setSelectedOption(optionSets[group][0].value);
   };
 
   // 옵션 변경 핸들러
   const handleOptionSelect = (option: string) => {
     setSelectedOption(option);
   };
+
+  const options = optionSets[selectedGroup];
 
   const accessToken = useNewSelector(selectAccessToken);
   const { member } = useMemberQuery(useParseJwt(accessToken).memberId);
@@ -176,12 +172,9 @@ const MyPage = () => {
       )}
       <div css={S.contentWrapper}>
         <OptionBar
-          selectGroupItems={[
-            { label: '톡픽', value: OptionKeys.TALK_PICK },
-            { label: '밸런스 게임', value: OptionKeys.BALANCE_GAME },
-          ]}
           selectedGroup={selectedGroup}
           selectedOption={selectedOption}
+          options={options}
           onGroupSelect={handleGroupSelect}
           onOptionSelect={handleOptionSelect}
         />
