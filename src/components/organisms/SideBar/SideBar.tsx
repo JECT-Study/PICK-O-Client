@@ -36,7 +36,7 @@ const SideBar = ({
           <div css={S.profileLabelBox}>
             <ProfileLabel nickname={nickname} />
           </div>
-          <div css={S.sideWrapper}>
+          <div css={S.sideBoxWrapper}>
             <SideBox
               postsCount={postsCount}
               bookmarkedPostsCount={bookmarkedPostsCount}

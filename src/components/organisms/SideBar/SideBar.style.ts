@@ -40,7 +40,7 @@ export const profileLabelBox = css({
   marginBottom: '26px',
 });
 
-export const sideWrapper = css({
+export const sideBoxWrapper = css({
   width: '100%',
   marginBottom: '40px',
 });
