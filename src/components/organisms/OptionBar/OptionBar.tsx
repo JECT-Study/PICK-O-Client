@@ -3,24 +3,27 @@ import SelectGroup, {
   SelectGroupItem,
 } from '@/components/atoms/SelectGroup/SelectGroup';
 import OptionSelector from '@/components/molecules/OptionSelector/OptionSelector';
-import { optionSets, OptionKeys } from '@/constants/optionSets';
+import { OptionKeys } from '@/constants/optionSets';
 import * as S from './OptionBar.style';
 
 export interface OptionBarProps {
-  selectGroupItems: SelectGroupItem[];
   selectedGroup: OptionKeys;
   selectedOption: string;
   onGroupSelect: (value: OptionKeys) => void;
   onOptionSelect: (option: string) => void;
+  options: { label: string; value: string }[];
 }
 const OptionBar = ({
-  selectGroupItems,
   selectedGroup,
   selectedOption,
   onGroupSelect,
   onOptionSelect,
+  options,
 }: OptionBarProps) => {
-  const options = optionSets[selectedGroup];
+  const selectGroupItems: [SelectGroupItem, SelectGroupItem] = [
+    { label: '톡픽', value: OptionKeys.TALK_PICK },
+    { label: '밸런스 게임', value: OptionKeys.BALANCE_GAME },
+  ];
 
   return (
     <div css={S.container}>

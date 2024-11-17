@@ -19,7 +19,7 @@ const meta: Meta<typeof OptionBar> = {
   },
   args: {
     selectedGroup: OptionKeys.TALK_PICK,
-    selectedOption: optionSets[OptionKeys.TALK_PICK][0],
+    selectedOption: optionSets[OptionKeys.TALK_PICK][0].value,
   },
 };
 
@@ -37,15 +37,12 @@ export const Default: Story = {
 
     return (
       <OptionBar
-        selectGroupItems={[
-          { label: '톡픽', value: OptionKeys.TALK_PICK },
-          { label: '밸런스 게임', value: OptionKeys.BALANCE_GAME },
-        ]}
         selectedGroup={selectedGroup}
         selectedOption={selectedOption}
+        options={optionSets[selectedGroup]}
         onGroupSelect={(group) => {
           setSelectedGroup(group);
-          setSelectedOption(optionSets[group][0]);
+          setSelectedOption(optionSets[group][0].value);
           args.onGroupSelect(group);
         }}
         onOptionSelect={(option) => {
@@ -63,22 +60,16 @@ export const All: Story = {
       <h3>톡픽 선택 시</h3>
       <OptionBar
         {...args}
-        selectGroupItems={[
-          { label: '톡픽', value: OptionKeys.TALK_PICK },
-          { label: '밸런스 게임', value: OptionKeys.BALANCE_GAME },
-        ]}
         selectedGroup={OptionKeys.TALK_PICK}
-        selectedOption={optionSets[OptionKeys.TALK_PICK][0]}
+        selectedOption={optionSets[OptionKeys.TALK_PICK][0].value}
+        options={optionSets[OptionKeys.TALK_PICK]}
       />
       <h3>밸런스 게임 선택 시</h3>
       <OptionBar
         {...args}
-        selectGroupItems={[
-          { label: '톡픽', value: OptionKeys.TALK_PICK },
-          { label: '밸런스 게임', value: OptionKeys.BALANCE_GAME },
-        ]}
         selectedGroup={OptionKeys.BALANCE_GAME}
-        selectedOption={optionSets[OptionKeys.BALANCE_GAME][0]}
+        selectedOption={optionSets[OptionKeys.BALANCE_GAME][0].value}
+        options={optionSets[OptionKeys.BALANCE_GAME]}
       />
     </div>
   ),
