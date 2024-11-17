@@ -1,9 +1,17 @@
 /**
  * File 객체를 URL로 변환하여 반환하는 함수
+ * 사용 후 revoke() 를 명시적으로 호출 필요
  */
 
-export const createImageUrlFromFile = (file: File): string => {
-  return URL.createObjectURL(file);
+export const createImageUrlFromFile = (
+  file: File,
+): { url: string; revoke: () => void } => {
+  const objectUrl = URL.createObjectURL(file);
+
+  return {
+    url: objectUrl,
+    revoke: () => URL.revokeObjectURL(objectUrl),
+  };
 };
 
 /**
