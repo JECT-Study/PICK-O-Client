@@ -1,5 +1,6 @@
 import React from 'react';
 import InfoBox, { InfoBoxProps } from '@/components/molecules/InfoBox/InfoBox';
+import { useNavigate } from 'react-router-dom';
 import * as S from './InfoList.style';
 
 export interface InfoItem {
@@ -17,6 +18,8 @@ export interface InfoListProps {
 }
 
 const InfoList = ({ items = [] }: InfoListProps) => {
+  const navigate = useNavigate();
+
   const groupedItems = items.reduce(
     (acc, item) => {
       if (!acc[item.editedAt]) {
@@ -27,6 +30,10 @@ const InfoList = ({ items = [] }: InfoListProps) => {
     },
     {} as Record<string, InfoItem[]>,
   );
+
+  const handleItemClick = (id: number) => {
+    navigate(`/talkpick/${id}`);
+  };
 
   return (
     <div css={S.container}>
@@ -42,6 +49,7 @@ const InfoList = ({ items = [] }: InfoListProps) => {
                   commentContent={infoItem.commentContent}
                   commentCount={infoItem.commentCount}
                   bookmarks={infoItem.bookmarks}
+                  onClick={() => handleItemClick(infoItem.id)}
                 />
               </li>
             ))}
