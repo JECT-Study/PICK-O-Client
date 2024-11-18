@@ -57,34 +57,40 @@ const BalanceGameBox = ({
     gameId,
   );
 
-  const handleGameVote = (
+  const handleUserGameVote = (
     selectedOption: 'A' | 'B' | null,
     voteOption: 'A' | 'B',
   ) => {
-    if (accessToken) {
-      if (!selectedOption) {
-        createGameVote(voteOption, {
-          onSuccess: () => {
-            const nextStageTimer = setTimeout(() => {
-              handleNextStage();
-            }, 500);
+    if (!selectedOption) {
+      createGameVote(voteOption, {
+        onSuccess: () => {
+          const nextStageTimer = setTimeout(() => {
+            handleNextStage();
+          }, 500);
 
-            return () => clearTimeout(nextStageTimer);
-          },
-        });
-      } else if (selectedOption === voteOption) {
-        deleteGameVote();
-      } else {
-        editGameVote(voteOption);
-      }
-    } else if (!selectedOption) {
+          return () => clearTimeout(nextStageTimer);
+        },
+      });
+    } else if (selectedOption === voteOption) {
+      deleteGameVote();
+    } else {
+      editGameVote(voteOption);
+    }
+  };
+
+  const handleGuestGameVote = (
+    selectedOption: 'A' | 'B' | null,
+    voteOption: 'A' | 'B',
+  ) => {
+    if (!selectedOption) {
       createGuestVote(gameSetId, gameId, voteOption);
       const nextStageTimer = setTimeout(() => {
         handleNextStage();
       }, 500);
 
       return () => clearTimeout(nextStageTimer);
-    } else if (selectedOption === voteOption) {
+    }
+    if (selectedOption === voteOption) {
       deleteGuestVote(gameSetId, gameId);
     } else {
       editGuestVote(gameSetId, gameId, voteOption);
@@ -92,7 +98,11 @@ const BalanceGameBox = ({
   };
 
   const handleButtonClick = (voteOption: 'A' | 'B') => {
-    handleGameVote(selectedVote, voteOption);
+    if (accessToken) {
+      handleUserGameVote(selectedVote, voteOption);
+    } else {
+      handleGuestGameVote(selectedVote, voteOption);
+    }
   };
 
   return (
