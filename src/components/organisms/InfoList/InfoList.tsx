@@ -6,11 +6,11 @@ import * as S from './InfoList.style';
 export interface InfoItem {
   id: number;
   editedAt: string;
-  title: InfoBoxProps['title'];
-  prefix: InfoBoxProps['prefix'];
-  commentContent: InfoBoxProps['commentContent'];
-  commentCount: InfoBoxProps['commentCount'];
-  bookmarks: InfoBoxProps['bookmarks'];
+  title: string;
+  prefix: string;
+  commentContent: string;
+  commentCount: number;
+  bookmarks: number;
 }
 
 export interface InfoListProps {
