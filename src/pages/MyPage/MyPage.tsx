@@ -45,7 +45,6 @@ const MyPage = () => {
     setSelectedOption(optionSets[group][0].value);
   };
 
-  // 옵션 변경 핸들러
   const handleOptionSelect = (option: string) => {
     setSelectedOption(option);
   };
