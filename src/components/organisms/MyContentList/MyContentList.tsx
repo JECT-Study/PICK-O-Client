@@ -20,16 +20,18 @@ export interface MyContentListProps {
 const MyContentList = ({ items = [] }: MyContentListProps) => {
   const navigate = useNavigate();
 
-  const groupedItems = items.reduce(
-    (acc, item) => {
-      if (!acc[item.editedAt]) {
-        acc[item.editedAt] = [];
-      }
-      acc[item.editedAt].push(item);
-      return acc;
-    },
-    {} as Record<string, MyContentItem[]>,
-  );
+  const groupedItems = React.useMemo(() => {
+    return items.reduce(
+      (acc, item) => {
+        if (!acc[item.editedAt]) {
+          acc[item.editedAt] = [];
+        }
+        acc[item.editedAt].push(item);
+        return acc;
+      },
+      {} as Record<string, MyContentItem[]>,
+    );
+  }, [items]);
 
   const handleItemClick = (id: number) => {
     navigate(`/talkpick/${id}`);
@@ -37,11 +39,11 @@ const MyContentList = ({ items = [] }: MyContentListProps) => {
 
   return (
     <div css={S.container}>
-      {Object.keys(groupedItems).map((date) => (
+      {Object.entries(groupedItems).map(([date, contentItems]) => (
         <div key={date} css={S.dateWrapper}>
           <span css={S.dateLabel}>{date}</span>
           <ul css={S.contentList}>
-            {groupedItems[date].map((contentItem) => (
+            {contentItems.map((contentItem) => (
               <li key={contentItem.id} css={S.contentItem}>
                 <MyContentBox
                   title={contentItem.title}
