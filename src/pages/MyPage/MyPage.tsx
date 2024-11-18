@@ -111,13 +111,13 @@ const MyPage = () => {
   }, [
     selectedGroup,
     selectedOption,
-    myBookmarksQuery,
-    myVotesQuery,
-    myCommentsQuery,
-    myWrittensQuery,
-    gameBookmarksQuery,
-    gameVotesQuery,
-    gameWrittensQuery,
+    queries.myBookmarks.myBookmarks,
+    queries.myVotes.myVote,
+    queries.myComments.myComments,
+    queries.myWrittens.myWritten,
+    queries.gameBookmarks.gameBookmark,
+    queries.gameVotes.gameVote,
+    queries.gameWrittens.gameWritten,
   ]);
 
   const renderContent = () => {
