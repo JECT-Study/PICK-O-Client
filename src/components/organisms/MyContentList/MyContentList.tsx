@@ -1,17 +1,16 @@
 import React from 'react';
-import MyContentBox, {
-  MyContentBoxProps,
-} from '@/components/molecules/MyContentBox/MyContentBox';
+import MyContentBox from '@/components/molecules/MyContentBox/MyContentBox';
+import { useNavigate } from 'react-router-dom';
 import * as S from './MyContentList.style';
 
 export interface MyContentItem {
   id: number;
   editedAt: string;
-  title: MyContentBoxProps['title'];
-  commentCount: MyContentBoxProps['commentCount'];
-  bookmarks: MyContentBoxProps['bookmarks'];
-  showBookmark?: MyContentBoxProps['showBookmark'];
-  bookmarked?: MyContentBoxProps['bookmarked'];
+  title: string;
+  commentCount: number;
+  bookmarks: number;
+  showBookmark?: boolean;
+  bookmarked?: boolean;
 }
 
 export interface MyContentListProps {
@@ -19,6 +18,8 @@ export interface MyContentListProps {
 }
 
 const MyContentList = ({ items = [] }: MyContentListProps) => {
+  const navigate = useNavigate();
+
   const groupedItems = items.reduce(
     (acc, item) => {
       if (!acc[item.editedAt]) {
@@ -29,6 +30,10 @@ const MyContentList = ({ items = [] }: MyContentListProps) => {
     },
     {} as Record<string, MyContentItem[]>,
   );
+
+  const handleItemClick = (id: number) => {
+    navigate(`/talkpick/${id}`);
+  };
 
   return (
     <div css={S.container}>
@@ -44,6 +49,7 @@ const MyContentList = ({ items = [] }: MyContentListProps) => {
                   bookmarks={contentItem.bookmarks}
                   showBookmark={contentItem.showBookmark}
                   bookmarked={contentItem.bookmarked}
+                  onClick={() => handleItemClick(contentItem.id)}
                 />
               </li>
             ))}
