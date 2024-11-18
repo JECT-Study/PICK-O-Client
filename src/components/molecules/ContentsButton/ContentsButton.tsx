@@ -13,6 +13,7 @@ export interface ContentsButtonProps extends ComponentPropsWithRef<'div'> {
   showBookmark?: boolean;
   size?: 'large' | 'medium' | 'small';
   keyword?: string;
+  onClick: () => void;
 }
 
 const ContentsButton = ({
@@ -24,10 +25,11 @@ const ContentsButton = ({
   keyword,
   bookmarked = false,
   showBookmark = true,
+  onClick,
   ...attributes
 }: ContentsButtonProps) => {
   return (
-    <div css={S.cardWrapper(size)} {...attributes}>
+    <div css={S.cardWrapper(size)} {...attributes} onClick={onClick}>
       <div css={S.imageContainer(size)}>
         <div css={S.imageWrapper}>
           <img src={images[0]} alt="option A" css={S.image} />

@@ -10,7 +10,6 @@ const meta: Meta<typeof ContentsButton> = {
   parameters: {
     layout: 'centered',
   },
-  tags: ['autodocs'],
   argTypes: {
     title: { control: 'text' },
     mainTag: { control: 'text' },
@@ -18,6 +17,7 @@ const meta: Meta<typeof ContentsButton> = {
     bookmarked: { control: 'boolean' },
     showBookmark: { control: 'boolean' },
     size: { control: { type: 'radio' }, options: ['large', 'medium', 'small'] },
+    onClick: { action: '클릭 이벤트 발생' },
   },
   args: {
     title: '유진 VS 민지 사복 고르기',
