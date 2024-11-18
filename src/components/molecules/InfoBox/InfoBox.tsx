@@ -8,6 +8,7 @@ export interface InfoBoxProps {
   commentContent: string;
   commentCount: number;
   bookmarks: number;
+  onClick: () => void;
 }
 const InfoBox = ({
   title,
@@ -15,9 +16,10 @@ const InfoBox = ({
   commentContent,
   commentCount,
   bookmarks,
+  onClick,
 }: InfoBoxProps) => {
   return (
-    <div css={S.infoContainer}>
+    <div css={S.infoContainer} onClick={onClick}>
       <div css={S.textContainer}>
         <p css={S.titleLabel}>{title}</p>
         <p css={S.subtitleWrapper}>
