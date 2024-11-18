@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import ContentsButton from '@/components/molecules/ContentsButton/ContentsButton';
 import { useNavigate } from 'react-router-dom';
 import * as S from './MyBalanceGameList.style';
@@ -23,16 +23,18 @@ export interface MyBalanceGameListProps {
 const MyBalanceGameList = ({ items = [] }: MyBalanceGameListProps) => {
   const navigate = useNavigate();
 
-  const groupedItems = items.reduce(
-    (acc, item) => {
-      if (!acc[item.editedAt]) {
-        acc[item.editedAt] = [];
-      }
-      acc[item.editedAt].push(item);
-      return acc;
-    },
-    {} as Record<string, MyBalanceGameItem[]>,
-  );
+  const groupedItems = useMemo(() => {
+    return items.reduce(
+      (acc, item) => {
+        if (!acc[item.editedAt]) {
+          acc[item.editedAt] = [];
+        }
+        acc[item.editedAt].push(item);
+        return acc;
+      },
+      {} as Record<string, MyBalanceGameItem[]>,
+    );
+  }, [items]);
 
   const handleItemClick = (gameId: number) => {
     navigate(`/balancegame/${gameId}`);
