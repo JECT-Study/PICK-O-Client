@@ -1,16 +1,15 @@
 import React from 'react';
-import ContentsButton, {
-  ContentsButtonProps,
-} from '@/components/molecules/ContentsButton/ContentsButton';
+import ContentsButton from '@/components/molecules/ContentsButton/ContentsButton';
+import { useNavigate } from 'react-router-dom';
 import * as S from './MyBalanceGameList.style';
 
 export interface MyBalanceGameItem {
-  id: number;
+  gameId: number;
   editedAt: string;
   optionAImg: string;
   optionBImg: string;
   title: string;
-  mainTag: string;
+  mainTagName: string;
   subTag: string;
   bookmarked?: boolean;
   showBookmark?: boolean;
@@ -22,6 +21,8 @@ export interface MyBalanceGameListProps {
 }
 
 const MyBalanceGameList = ({ items = [] }: MyBalanceGameListProps) => {
+  const navigate = useNavigate();
+
   const groupedItems = items.reduce(
     (acc, item) => {
       if (!acc[item.editedAt]) {
@@ -33,6 +34,10 @@ const MyBalanceGameList = ({ items = [] }: MyBalanceGameListProps) => {
     {} as Record<string, MyBalanceGameItem[]>,
   );
 
+  const handleItemClick = (gameId: number) => {
+    navigate(`/balancegame/${gameId}`);
+  };
+
   return (
     <div css={S.container}>
       {Object.keys(groupedItems).map((date) => (
@@ -40,18 +45,19 @@ const MyBalanceGameList = ({ items = [] }: MyBalanceGameListProps) => {
           <span css={S.dateLabel}>{date}</span>
           <ul css={S.contentList}>
             {groupedItems[date].map((balanceGameItem) => (
-              <li key={balanceGameItem.id} css={S.contentItem}>
+              <li key={balanceGameItem.gameId} css={S.contentItem}>
                 <ContentsButton
                   images={[
                     balanceGameItem.optionAImg,
                     balanceGameItem.optionBImg,
                   ]}
                   title={balanceGameItem.title}
-                  mainTag={balanceGameItem.mainTag}
+                  mainTag={balanceGameItem.mainTagName}
                   subTag={balanceGameItem.subTag}
                   bookmarked={balanceGameItem.bookmarked}
                   showBookmark={balanceGameItem.showBookmark}
                   size="medium"
+                  onClick={() => handleItemClick(balanceGameItem.gameId)}
                 />
               </li>
             ))}
