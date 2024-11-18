@@ -154,11 +154,12 @@ const MyPage = () => {
 
   return (
     <div css={S.pageContainer}>
-      {isLoading ? (
+      {isLoading || !memberInfo ? (
         <SideBar isLoading />
       ) : (
         memberInfo && (
           <SideBar
+            isLoading={false}
             nickname={memberInfo.nickname}
             profileImageUrl={memberInfo.profileImageUrl}
             postsCount={memberInfo.postsCount}
