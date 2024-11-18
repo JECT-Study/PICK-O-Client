@@ -9,6 +9,7 @@ export interface MyContentBoxProps {
   bookmarks: number;
   showBookmark?: boolean;
   bookmarked?: BookmarkProps['bookmarked'];
+  onClick: () => void;
 }
 const MyContentBox = ({
   title,
@@ -16,9 +17,10 @@ const MyContentBox = ({
   bookmarks,
   showBookmark = false,
   bookmarked = false,
+  onClick,
 }: MyContentBoxProps) => {
   return (
-    <div css={S.infoContainer}>
+    <div css={S.infoContainer} onClick={onClick}>
       <div css={S.textContainer}>
         <p css={S.titleLabel}>{title}</p>
       </div>
