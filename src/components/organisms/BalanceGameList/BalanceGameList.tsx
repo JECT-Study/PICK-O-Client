@@ -5,6 +5,7 @@ import Button from '@/components/atoms/Button/Button';
 import CategoryBar from '@/components/molecules/CategoryBar/CategoryBar';
 import ContentsButton from '@/components/molecules/ContentsButton/ContentsButton';
 import { GameContent } from '@/types/game';
+import { useNavigate } from 'react-router-dom';
 import * as S from './BalanceGameList.style';
 
 export interface ContentListProps {
@@ -25,6 +26,11 @@ const BalanceGameList = ({
   setActiveTab,
 }: ContentListProps) => {
   const [visibleItems, setVisibleItems] = useState<number>(4);
+  const navigate = useNavigate();
+
+  const handleItemClick = (gameId: number) => {
+    navigate(`/balancegame/${gameId}`);
+  };
 
   const handleLoadMore = () => {
     setVisibleItems((prev) => Math.min(prev + 6, contents.length));
@@ -48,6 +54,7 @@ const BalanceGameList = ({
             mainTag={content.mainTag}
             subTag={content.subTag}
             bookmarked={content.bookmarkState || false}
+            onClick={() => handleItemClick(content.id)}
           />
         ))}
         {visibleItems < contents.length && (
