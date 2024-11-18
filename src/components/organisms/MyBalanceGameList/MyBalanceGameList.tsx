@@ -7,14 +7,14 @@ import * as S from './MyBalanceGameList.style';
 export interface MyBalanceGameItem {
   id: number;
   editedAt: string;
-  optionAImg: ContentsButtonProps['images'][0];
-  optionBImg: ContentsButtonProps['images'][1];
-  title: ContentsButtonProps['title'];
-  mainTag: ContentsButtonProps['mainTag'];
-  subTag: ContentsButtonProps['subTag'];
-  bookmarked?: ContentsButtonProps['bookmarked'];
-  showBookmark?: ContentsButtonProps['showBookmark'];
-  size?: ContentsButtonProps['size'];
+  optionAImg: string;
+  optionBImg: string;
+  title: string;
+  mainTag: string;
+  subTag: string;
+  bookmarked?: boolean;
+  showBookmark?: boolean;
+  size?: 'large' | 'medium' | 'small';
 }
 
 export interface MyBalanceGameListProps {
