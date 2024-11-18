@@ -2,12 +2,11 @@ import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { MemoryRouter } from 'react-router-dom';
 import MyContentList from '@/components/organisms/MyContentList/MyContentList';
-import { storyContainer, storyInnerContainer } from '@/stories/story.styles';
+import { storyContainer } from '@/stories/story.styles';
 
 const meta = {
   title: 'organisms/MyContentList',
   component: MyContentList,
-  tags: ['autodocs'],
   argTypes: {
     items: {
       control: { type: 'object' },
