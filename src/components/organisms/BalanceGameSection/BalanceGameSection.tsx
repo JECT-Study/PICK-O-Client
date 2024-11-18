@@ -56,11 +56,53 @@ const BalanceGameSection = ({
     game?.gameDetailResponses ?? gameDefaultDetail;
   const isGuest = !localStorage.getItem('accessToken');
 
-  const guestVotedList = isGuest
-    ? (JSON.parse(
-        localStorage.getItem(`game_${gameSetId}`) || '[]',
-      ) as VoteRecord[])
-    : [];
+  const [guestVotedList, setGuestVotedList] = useState<VoteRecord[]>([]);
+
+  useEffect(() => {
+    const updateGuestVotedList = () => {
+      const storedVotes = localStorage.getItem(`game_${gameSetId}`);
+      setGuestVotedList(
+        storedVotes ? (JSON.parse(storedVotes) as VoteRecord[]) : [],
+      );
+    };
+
+    updateGuestVotedList();
+
+    const handleStorageChange = (event: StorageEvent) => {
+      if (event.key === `game_${gameSetId}`) {
+        updateGuestVotedList();
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, [gameSetId]);
+
+  const handleGuestGameVote = (
+    selectedOption: 'A' | 'B' | null,
+    voteOption: 'A' | 'B',
+  ) => {
+    const updatedVotes = [...guestVotedList];
+    const currentVoteIndex = updatedVotes.findIndex(
+      (vote) => vote.gameId === game?.gameDetailResponses[currentStage]?.id,
+    );
+
+    if (!selectedOption) {
+      updatedVotes.push({
+        gameId: game?.gameDetailResponses[currentStage]?.id as number,
+        votedOption: voteOption,
+      });
+    } else if (selectedOption === voteOption) {
+      updatedVotes.splice(currentVoteIndex, 1);
+    } else {
+      updatedVotes[currentVoteIndex].votedOption = voteOption;
+    }
+
+    setGuestVotedList(updatedVotes);
+    localStorage.setItem(`game_${gameSetId}`, JSON.stringify(updatedVotes));
+  };
 
   const currentGame: GameDetail = gameStages[currentStage];
 
@@ -190,6 +232,7 @@ const BalanceGameSection = ({
               : currentGame.votedOption
           }
           handleNextStage={handleNextStage}
+          handleGuestGameVote={handleGuestGameVote}
         />
         <div css={S.stageBarBtnWrapper}>
           <button

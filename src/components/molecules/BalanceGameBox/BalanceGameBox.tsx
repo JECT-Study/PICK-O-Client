@@ -1,5 +1,4 @@
 /* eslint-disable consistent-return */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
 import { GameOption } from '@/types/game';
 import { getRandomNumbers } from '@/utils/calculator';
@@ -9,9 +8,6 @@ import { useEditGameVoteMutation } from '@/hooks/api/vote/useEditGameVoteMutatio
 import { useDeleteGameVoteMutation } from '@/hooks/api/vote/useDeleteGameVoteMutation';
 import { useNewSelector } from '@/store';
 import { selectAccessToken } from '@/store/auth';
-import { useGuestCreateGameVote } from '@/hooks/vote/useGuestCreateGameVote';
-import { useGuestEditGameVote } from '@/hooks/vote/useGuestEditGameVote';
-import { useGuestDeleteGameVote } from '@/hooks/vote/useGuestDeleteGameVote';
 import * as S from './BalanceGameBox.style';
 
 export interface BalanceGameBoxProps {
@@ -20,6 +16,10 @@ export interface BalanceGameBoxProps {
   options: GameOption[];
   selectedVote: 'A' | 'B' | null;
   handleNextStage: () => void;
+  handleGuestGameVote: (
+    selectedOption: 'A' | 'B' | null,
+    voteOption: 'A' | 'B',
+  ) => void;
 }
 
 const BalanceGameBox = ({
@@ -28,6 +28,7 @@ const BalanceGameBox = ({
   options,
   selectedVote,
   handleNextStage,
+  handleGuestGameVote,
 }: BalanceGameBoxProps) => {
   const accessToken = useNewSelector(selectAccessToken);
   const optionA = options[0];
@@ -42,10 +43,6 @@ const BalanceGameBox = ({
 
   const [backgroundImages] = useState<string[]>(getRandomImages);
   const [backgroundImageA, backgroundImageB] = backgroundImages;
-
-  const { createGuestVote } = useGuestCreateGameVote();
-  const { editGuestVote } = useGuestEditGameVote();
-  const { deleteGuestVote } = useGuestDeleteGameVote();
 
   const { mutate: createGameVote } = useCreateGameVoteMutation(
     gameSetId,
@@ -78,30 +75,16 @@ const BalanceGameBox = ({
     }
   };
 
-  const handleGuestGameVote = (
-    selectedOption: 'A' | 'B' | null,
-    voteOption: 'A' | 'B',
-  ) => {
-    if (!selectedOption) {
-      createGuestVote(gameSetId, gameId, voteOption);
-      const nextStageTimer = setTimeout(() => {
-        handleNextStage();
-      }, 500);
-
-      return () => clearTimeout(nextStageTimer);
-    }
-    if (selectedOption === voteOption) {
-      deleteGuestVote(gameSetId, gameId);
-    } else {
-      editGuestVote(gameSetId, gameId, voteOption);
-    }
-  };
-
   const handleButtonClick = (voteOption: 'A' | 'B') => {
     if (accessToken) {
       handleUserGameVote(selectedVote, voteOption);
     } else {
       handleGuestGameVote(selectedVote, voteOption);
+      const nextStageTimer = setTimeout(() => {
+        handleNextStage();
+      }, 500);
+
+      return () => clearTimeout(nextStageTimer);
     }
   };
 
