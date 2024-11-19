@@ -1,13 +1,15 @@
 import React from 'react';
-import ContentsButton, {
-  ContentsButtonProps,
-} from '@/components/molecules/ContentsButton/ContentsButton';
+import ContentsButton from '@/components/molecules/ContentsButton/ContentsButton';
 import * as S from './SearchGameList.style';
 
-export type GameItem = Pick<
-  ContentsButtonProps,
-  'optionAImg' | 'optionBImg' | 'title' | 'mainTag' | 'subTag'
->;
+export type GameItem = {
+  id: number;
+  optionAImg: string;
+  optionBImg: string;
+  title: string;
+  mainTag: string;
+  subTag: string;
+};
 
 export interface SearchGameListProps {
   gameList: GameItem[];
