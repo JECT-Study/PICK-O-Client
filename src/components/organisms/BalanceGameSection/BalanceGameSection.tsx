@@ -75,6 +75,7 @@ const BalanceGameSection = ({
     };
 
     window.addEventListener('storage', handleStorageChange);
+    updateGuestVotedList();
     return () => {
       window.removeEventListener('storage', handleStorageChange);
     };
