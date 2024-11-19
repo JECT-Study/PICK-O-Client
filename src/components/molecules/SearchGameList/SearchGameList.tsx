@@ -29,8 +29,7 @@ const SearchGameList = ({ gameList, keyword }: SearchGameListProps) => {
       {gameList.map((game) => (
         <ContentsButton
           key={game.title}
-          optionAImg={game.optionAImg}
-          optionBImg={game.optionBImg}
+          images={[game.optionAImg, game.optionBImg]}
           title={game.title}
           mainTag={game.mainTag}
           subTag={game.subTag}
