@@ -6,8 +6,11 @@ import * as S from './SearchGameList.style';
 
 export type GameItem = Pick<
   ContentsButtonProps,
-  'optionAImg' | 'optionBImg' | 'title' | 'mainTag' | 'subTag'
->;
+  'title' | 'mainTag' | 'subTag' | 'images'
+> & {
+  optionAImg?: string;
+  optionBImg?: string;
+};
 
 export interface SearchGameListProps {
   gameList: GameItem[];
@@ -20,8 +23,7 @@ const SearchGameList = ({ gameList, keyword }: SearchGameListProps) => {
       {gameList.map((game) => (
         <ContentsButton
           key={game.title}
-          optionAImg={game.optionAImg}
-          optionBImg={game.optionBImg}
+          images={[game.optionAImg, game.optionBImg] as string[]}
           title={game.title}
           mainTag={game.mainTag}
           subTag={game.subTag}

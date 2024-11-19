@@ -16,6 +16,7 @@ import BalanceGameBox from '@/components/molecules/BalanceGameBox/BalanceGameBox
 import useToastModal from '@/hooks/modal/useToastModal';
 import { useCreateGameBookmarkMutation } from '@/hooks/api/bookmark/useCreateGameBookmarkMutation';
 import { useDeleteGameBookmarkMutation } from '@/hooks/api/bookmark/useDeleteGameBookmarkMutation';
+import { MyVoteOption, VoteOption, VoteRecord } from '@/types/vote';
 import * as S from './BalanceGameSection.style';
 
 export interface BalanceGameSectionProps {
@@ -53,6 +54,57 @@ const BalanceGameSection = ({
 
   const gameStages: GameDetail[] =
     game?.gameDetailResponses ?? gameDefaultDetail;
+  const isGuest = !localStorage.getItem('accessToken');
+
+  const [guestVotedList, setGuestVotedList] = useState<VoteRecord[]>([]);
+
+  useEffect(() => {
+    const updateGuestVotedList = () => {
+      const storedVotes = localStorage.getItem(`game_${gameSetId}`);
+      setGuestVotedList(
+        storedVotes ? (JSON.parse(storedVotes) as VoteRecord[]) : [],
+      );
+    };
+
+    updateGuestVotedList();
+
+    const handleStorageChange = (event: StorageEvent) => {
+      if (event.key === `game_${gameSetId}`) {
+        updateGuestVotedList();
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    updateGuestVotedList();
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, [gameSetId]);
+
+  const handleGuestGameVote = (
+    selectedOption: MyVoteOption,
+    voteOption: VoteOption,
+  ) => {
+    const updatedVotes = [...guestVotedList];
+    const currentVoteIndex = updatedVotes.findIndex(
+      (vote) => vote.gameId === game?.gameDetailResponses[currentStage]?.id,
+    );
+
+    if (!selectedOption) {
+      updatedVotes.push({
+        gameId: game?.gameDetailResponses[currentStage]?.id as number,
+        votedOption: voteOption,
+      });
+    } else if (selectedOption === voteOption) {
+      updatedVotes.splice(currentVoteIndex, 1);
+    } else {
+      updatedVotes[currentVoteIndex].votedOption = voteOption;
+    }
+
+    setGuestVotedList(updatedVotes);
+    localStorage.setItem(`game_${gameSetId}`, JSON.stringify(updatedVotes));
+  };
+
   const currentGame: GameDetail = gameStages[currentStage];
 
   const [shareModalOpen, setShareModalOpen] = useState<boolean>(false);
@@ -89,7 +141,11 @@ const BalanceGameSection = ({
   }, [game, gameStages, setCurrentStage]);
 
   const handleNextButton = () => {
-    if (!currentGame.votedOption) return;
+    if (
+      (isGuest && !guestVotedList[currentStage]?.votedOption) ||
+      (!isGuest && !currentGame.votedOption)
+    )
+      return;
     handleNextGame();
   };
 
@@ -171,8 +227,13 @@ const BalanceGameSection = ({
           gameSetId={gameSetId}
           gameId={currentGame.id}
           options={currentGame.gameOptions}
-          selectedVote={currentGame.votedOption}
+          selectedVote={
+            isGuest
+              ? guestVotedList[currentStage]?.votedOption
+              : currentGame.votedOption
+          }
           handleNextStage={handleNextStage}
+          handleGuestGameVote={handleGuestGameVote}
         />
         <div css={S.stageBarBtnWrapper}>
           <button
@@ -192,7 +253,11 @@ const BalanceGameSection = ({
             type="button"
             css={[
               S.buttonStyling,
-              S.activeButtonStyling(currentGame.votedOption !== null),
+              S.activeButtonStyling(
+                isGuest
+                  ? guestVotedList[currentStage]?.votedOption !== null
+                  : currentGame.votedOption !== null,
+              ),
             ]}
             onClick={handleNextButton}
           >
