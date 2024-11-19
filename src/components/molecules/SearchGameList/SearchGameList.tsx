@@ -1,5 +1,6 @@
 import React from 'react';
 import ContentsButton from '@/components/molecules/ContentsButton/ContentsButton';
+import { useNavigate } from 'react-router-dom';
 import * as S from './SearchGameList.style';
 
 export type GameItem = {
@@ -17,6 +18,12 @@ export interface SearchGameListProps {
 }
 
 const SearchGameList = ({ gameList, keyword }: SearchGameListProps) => {
+  const navigate = useNavigate();
+
+  const handleItemClick = (gameId: number) => {
+    navigate(`/balancegame/${gameId}`);
+  };
+
   return (
     <div css={S.container}>
       {gameList.map((game) => (
@@ -30,6 +37,7 @@ const SearchGameList = ({ gameList, keyword }: SearchGameListProps) => {
           showBookmark={false}
           size="small"
           keyword={keyword}
+          onClick={() => handleItemClick(game.id)}
         />
       ))}
     </div>
