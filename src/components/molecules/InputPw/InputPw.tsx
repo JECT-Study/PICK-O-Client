@@ -4,7 +4,7 @@ import { useCheckPassword } from '@/hooks/common/inputsUserInfo/useCheckPassword
 import React, { ChangeEvent, useEffect } from 'react';
 import Input from '@/components/atoms/Input/Input';
 import Label from '@/components/atoms/Label/Label';
-import { inputPwContainer } from './InputPw.style';
+import * as S from './InputPw.style';
 
 interface InputPwProps {
   value: string;
@@ -29,11 +29,14 @@ const InputPw = ({ value, onChange, onSuccessChange }: InputPwProps) => {
   }, [errorMessage]);
 
   return (
-    <div css={inputPwContainer}>
-      <Label id="password">비밀번호</Label>
+    <div css={S.inputPwContainer}>
+      <Label id="password" css={S.labelStyling}>
+        비밀번호
+      </Label>
       <Input
         id="password"
         name="password"
+        type="password"
         placeholder="비밀번호를 입력해주세요."
         size="small"
         minLength={INPUT_LIMIT.PW_MIN}

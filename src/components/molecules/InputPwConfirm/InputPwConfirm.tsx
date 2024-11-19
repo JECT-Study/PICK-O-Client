@@ -3,21 +3,21 @@ import Input from '@/components/atoms/Input/Input';
 import Label from '@/components/atoms/Label/Label';
 import { useCheckPasswordCheck } from '@/hooks/common/inputsUserInfo/useCheckPasswordCheck';
 import React, { ChangeEvent, useEffect } from 'react';
-import { inputPwCheckContainer } from './InputPwCheck.style';
+import * as S from './InputPwConfirm.style';
 
-interface InputPwCheckProps {
+interface InputPwConfirmProps {
   value: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   onSuccessChange?: (name: string, value: boolean) => void;
   pw: string;
 }
 
-const InputPwCheck = ({
+const InputPwConfirm = ({
   value,
   onChange,
   onSuccessChange,
   pw,
-}: InputPwCheckProps) => {
+}: InputPwConfirmProps) => {
   const { inputRef, isError, errorMessage, handleVerify } =
     useCheckPasswordCheck({ value, pw });
 
@@ -29,16 +29,19 @@ const InputPwCheck = ({
 
   useEffect(() => {
     if (value && onSuccessChange) {
-      onSuccessChange('passwordCheck', !isError);
+      onSuccessChange('passwordConfirm', !isError);
     }
   }, [errorMessage]);
 
   return (
-    <div css={inputPwCheckContainer}>
-      <Label id="passwordCheck">비밀번호 확인</Label>
+    <div css={S.inputPwConfirmContainer}>
+      <Label id="passwordConfirm" css={S.labelStyling}>
+        비밀번호 확인
+      </Label>
       <Input
-        id="passwordCheck"
-        name="passwordCheck"
+        id="passwordConfirm"
+        name="passwordConfirm"
+        type="password"
         placeholder="비밀번호를 재입력해주세요."
         size="small"
         isError={isError}
@@ -53,4 +56,4 @@ const InputPwCheck = ({
   );
 };
 
-export default InputPwCheck;
+export default InputPwConfirm;

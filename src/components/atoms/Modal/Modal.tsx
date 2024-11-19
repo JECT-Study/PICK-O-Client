@@ -5,7 +5,7 @@ import useOutsideClick from '@/hooks/common/useOutsideClick';
 import { getModalSize, modalCloseStyling, modalStyling } from './Modal.style';
 
 export interface ModalProps {
-  action?: 'default' | 'share' | 'report' | 'profile';
+  action?: 'default' | 'share' | 'report' | 'profile' | 'tag';
   isOpen?: boolean;
   onClose?: () => void;
   hasCloseButton?: boolean;

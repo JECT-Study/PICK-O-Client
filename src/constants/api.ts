@@ -29,7 +29,10 @@ export const END_POINT = {
   NICKNAME_VERIFY: '/members/duplicate',
 
   // email API
+  EMAIL_SIGNUP_CODE: '/email/signup/code',
+  EMAIL_RESET_CODE: '/email/reset/code',
   EMAIL_VERIFY: '/email/verify',
+  EMAIL_RESET: '/email/reset',
   EMAIL_REQUEST: '/email/request',
   FIND_PW: '/email/password',
 
@@ -54,6 +57,12 @@ export const END_POINT = {
     `/my/games/votes?page=${page}&size=${size}`,
   MYPAGES_GAMES_BOOKMARKS: (page: number, size: number) =>
     `/my/games/bookmarks?page=${page}&size=${size}`,
+
+  // search API
+  SEARCH_GAME: (query: string, page: number, size: number, sort: string) =>
+    `/search/game?query=${query}&page=${page}&size=${size}&sort=${sort}`,
+  SEARCH_TALKPICK: (query: string, page: number, size: number, sort: string) =>
+    `/talks/search?query=${query}&page=${page}&size=${size}&sort=${sort}`,
 
   // file API
   FILE_UPLOAD: '/images',
@@ -98,6 +107,7 @@ export const END_POINT = {
 
   // game API
   CREATE_GAME: '/games',
+  TEMP_GAME: '/games/temp',
   NEW_GAME: '/games/new',
   BEST_GAME: '/games/best',
   LATEST_GAME: '/games/latest',

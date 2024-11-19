@@ -1,19 +1,19 @@
-import { PATH } from '@/constants/path';
 import { MemberForm, MemberSuccesForm } from '@/types/member';
 import { isAllTrue } from '@/utils/validator';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSignUpMutation } from '../api/member/useSignUpMutation';
 import { useActiveSubmit } from '../common/useActiveSubmit';
 import { useFocusFalse } from '../common/useFocusFalse';
 import useInputs from '../common/useInputs';
+import useToastModal from '../modal/useToastModal';
 
 const initialState: MemberForm = {
   email: '',
   verificationCode: '',
   nickname: '',
   password: '',
-  passwordCheck: '',
+  passwordConfirm: '',
   profileImgUrl: '',
   role: 'USER',
 };
@@ -23,23 +23,23 @@ const successState: MemberSuccesForm = {
   verificationCode: false,
   nickname: false,
   password: false,
-  passwordCheck: false,
+  passwordConfirm: false,
 };
 
 export const useSignupForm = () => {
-  const [signupSuccess, setSignupSuccess] = useState<boolean>(false);
   const { form, onChange, setEach } = useInputs<MemberForm>(initialState);
   const { successForm, onSuccessChange } =
     useActiveSubmit<MemberSuccesForm>(successState);
 
   const { focus } = useFocusFalse<MemberSuccesForm>(successForm);
+  const { isVisible, modalText, showToastModal } = useToastModal();
 
   const createNewForm = (prevForm: MemberForm) => {
-    const { verificationCode, passwordCheck, ...newForm } = prevForm;
+    const { verificationCode, ...newForm } = prevForm;
     return newForm;
   };
 
-  const { mutate: signup } = useSignUpMutation();
+  const { mutate: signup } = useSignUpMutation(showToastModal);
 
   const navigate = useNavigate();
 
@@ -47,30 +47,24 @@ export const useSignupForm = () => {
     e.preventDefault();
     if (isAllTrue(successForm)) {
       const newForm = createNewForm(form);
-      signup(newForm, {
-        onSuccess: () => {
-          setSignupSuccess(true);
-          setTimeout(() => {
-            navigate(`/${PATH.LOGIN}`);
-          }, 2000);
-        },
-      });
+      signup(newForm);
     } else {
       focus(e);
     }
   };
 
-  const handleCancle = () => {
+  const handleCancel = () => {
     navigate(-1);
   };
 
   return {
-    signupSuccess,
     form,
     onChange,
     setEach,
     onSuccessChange,
+    isVisible,
+    modalText,
     handleSubmit,
-    handleCancle,
+    handleCancel,
   };
 };

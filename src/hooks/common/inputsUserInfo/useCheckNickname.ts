@@ -33,9 +33,10 @@ export const useCheckNickname = (value: string) => {
 
   const handleSubmit = () => {
     if (isEmptyString(value)) {
-      setIsError(true);
-      setErrorMessage(ERROR.NICKNAME.EMPTY);
-    } else if (!isValidNickname(value)) {
+      return;
+    }
+
+    if (!isValidNickname(value)) {
       setIsError(true);
       setErrorMessage(ERROR.NICKNAME.FORM);
     } else {

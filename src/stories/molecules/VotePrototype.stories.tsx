@@ -1,7 +1,11 @@
 import React from 'react';
 import VotePrototype from '@/components/molecules/VotePrototype/VotePrototype';
+import store from '@/store';
+import { Provider } from 'react-redux';
 import ReactQueryProvider from '@/providers/ReactQueryProvider';
+import { BrowserRouter as Router } from 'react-router-dom';
 import type { Meta, StoryObj } from '@storybook/react';
+import { setToken } from '@/store/auth';
 import { storyContainer, storyInnerContainer } from '@/stories/story.styles';
 
 const meta = {
@@ -37,9 +41,13 @@ const meta = {
   },
   decorators: [
     (Story) => (
-      <ReactQueryProvider>
-        <Story />
-      </ReactQueryProvider>
+      <Provider store={store}>
+        <ReactQueryProvider>
+          <Router>
+            <Story />
+          </Router>
+        </ReactQueryProvider>
+      </Provider>
     ),
   ],
 } satisfies Meta<typeof VotePrototype>;
@@ -47,9 +55,16 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  play: () => {
+    store.dispatch(setToken('accessToken'));
+  },
+};
 
 export const All: Story = {
+  play: () => {
+    store.dispatch(setToken('accessToken'));
+  },
   render: (args) => (
     <ul css={storyContainer}>
       <li css={storyInnerContainer}>

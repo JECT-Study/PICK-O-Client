@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import { VoteOption, MyVoteOption } from '@/types/vote';
 import typo from '@/styles/typo';
 import color from '@/styles/color';
 
@@ -7,6 +8,8 @@ export const votePrototypeStyle = css({
   flexDirection: 'column',
   alignItems: 'center',
   gap: '20px',
+  position: 'relative',
+  overflow: 'visible',
 });
 
 export const buttonContainerStyle = css({
@@ -21,8 +24,8 @@ export const voteTextStyle = css(typo.Component.Bold, {
 });
 
 export const getButtonStyle = (
-  side: 'A' | 'B',
-  selectedButton: 'A' | 'B' | null,
+  side: VoteOption,
+  selectedButton: MyVoteOption,
 ) =>
   css({
     ...(selectedButton === side && {
@@ -31,3 +34,23 @@ export const getButtonStyle = (
       outline: 'none',
     }),
   });
+
+export const loggedOutContainerStyling = css({
+  display: 'flex',
+  position: 'absolute',
+  top: '90px',
+  left: '-100px',
+  width: '1215px',
+  height: '260px',
+  backdropFilter: 'blur(11px)',
+  backgroundColor: 'rgba(255, 255, 255, 0.01)',
+  zIndex: 1,
+});
+
+export const toastModalStyling = css({
+  position: 'fixed',
+  top: '110px',
+  left: '50%',
+  transform: 'translate(-50%)',
+  zIndex: '1000',
+});

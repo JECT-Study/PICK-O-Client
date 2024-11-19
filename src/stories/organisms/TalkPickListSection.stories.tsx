@@ -1,6 +1,5 @@
 import React from 'react';
 import { TalkPickListItem, TalkPickListPagination } from '@/types/talk-pick';
-import { ToggleGroupItem } from '@/components/atoms/ToggleGroup/ToggleGroup';
 import type { Meta, StoryObj } from '@storybook/react';
 import store from '@/store';
 import { Provider } from 'react-redux';
@@ -51,28 +50,15 @@ const exampleTalkPickPagination: TalkPickListPagination = {
   empty: exampleTalkPickList.length === 0,
 };
 
-const toggleItem: ToggleGroupItem[] = [
-  {
-    label: '최신순',
-    value: 'recent',
-  },
-  {
-    label: '인기순',
-    value: 'trend',
-  },
-];
-
 const meta = {
   title: 'organisms/TalkPickListSection',
   component: TalkPickListSection,
   parameters: {
     layout: 'centered',
   },
-  tags: ['autodocs'],
   args: {
     talkPickList: exampleTalkPickPagination,
-    toggleItem,
-    selectedValue: 'recent',
+    selectedValue: 'views',
     setToggleValue: () => {},
     selectedPage: 1,
     handlePageChange: () => {},

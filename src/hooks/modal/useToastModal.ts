@@ -1,19 +1,31 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 const useToastModal = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [modalText, setModalText] = useState<string | null>(null);
+  const modalTimerRef = useRef<NodeJS.Timeout | null>(null);
 
-  const showToastModal = (message: string) => {
+  const showToastModal = (message: string, callback?: () => void) => {
     setModalText(message);
     setIsVisible(true);
 
-    const modalTimer = setTimeout(() => {
-      setIsVisible(false);
-    }, 2000);
+    if (modalTimerRef.current) {
+      clearTimeout(modalTimerRef.current);
+    }
 
-    return () => clearTimeout(modalTimer);
+    modalTimerRef.current = setTimeout(() => {
+      setIsVisible(false);
+      callback?.();
+    }, 2000);
   };
+
+  useEffect(() => {
+    return () => {
+      if (modalTimerRef.current) {
+        clearTimeout(modalTimerRef.current);
+      }
+    };
+  }, []);
 
   return {
     isVisible,
@@ -21,5 +33,4 @@ const useToastModal = () => {
     showToastModal,
   };
 };
-
 export default useToastModal;

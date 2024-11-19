@@ -9,10 +9,9 @@ const meta = {
   parameters: {
     layout: 'centered',
   },
-  tags: ['autodocs'],
   argTypes: {
     action: {
-      options: ['default', 'share', 'report', 'profile'],
+      options: ['default', 'share', 'report', 'profile', 'tag'],
       control: { type: 'radio' },
     },
     isOpen: { control: { type: 'boolean' } },
@@ -64,6 +63,10 @@ export const All: Story = {
           <h3>Profile</h3>
           <Modal {...args} action="profile">
             Profile Modal
+          </Modal>
+          <h3>Tag</h3>
+          <Modal {...args} action="tag">
+            Tag Modal
           </Modal>
         </li>
       </ul>

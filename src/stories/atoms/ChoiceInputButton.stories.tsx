@@ -9,15 +9,14 @@ const meta: Meta<typeof ChoiceInputButton> = {
   parameters: {
     layout: 'centered',
   },
-  tags: ['autodocs'],
   argTypes: {
     option: {
       options: ['A', 'B'],
       control: { type: 'radio' },
     },
-  },
-  args: {
-    option: 'A',
+    clearInput: {
+      control: 'boolean',
+    },
   },
 };
 

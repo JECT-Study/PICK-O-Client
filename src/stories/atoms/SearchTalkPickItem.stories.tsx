@@ -12,10 +12,10 @@ const meta = {
   tags: ['autodocs'],
   args: {
     title: '월클 정국 VS 존잘 차은우',
-    date: '2024.08.26',
+    createdAt: '2024.08.26',
     content:
       '우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하',
-    imgUrl: SampleWhole,
+    firstImgUrl: SampleWhole,
   },
 } satisfies Meta<typeof SearchTalkPickItem>;
 

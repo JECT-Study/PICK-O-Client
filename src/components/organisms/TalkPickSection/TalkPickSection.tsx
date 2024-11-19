@@ -43,12 +43,13 @@ const TalkPickSection = ({
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const { isVisible, modalText, showToastModal } = useToastModal();
 
-  const [shareModalOpen, setShareModalOpen] = useState<boolean>(false);
-  const [reportModalOpen, setReportModalOpen] = useState<boolean>(false);
-  const [reportTextModalOpen, setReportTextModalOpen] =
-    useState<boolean>(false);
-  const [deleteTextModalOpen, setDeleteTextModalOpen] =
-    useState<boolean>(false);
+  const [activeModal, setActiveModal] = useState<
+    'reportTalkPick' | 'reportText' | 'deleteText' | 'share' | 'none'
+  >('none');
+
+  const onCloseModal = () => {
+    setActiveModal('none');
+  };
 
   const copyTalkPickLink = (link: string) => {
     navigator.clipboard
@@ -95,19 +96,34 @@ const TalkPickSection = ({
         navigate('/post/create', { state: { talkPick } });
       },
     },
-    { label: '삭제', onClick: () => setDeleteTextModalOpen(true) },
+    {
+      label: '삭제',
+      onClick: () => {
+        setActiveModal('deleteText');
+      },
+    },
   ];
   const otherTalkPickItem: MenuItem[] = [
-    { label: '신고', onClick: () => setReportTextModalOpen(true) },
+    {
+      label: '신고',
+      onClick: () => {
+        setActiveModal('reportText');
+      },
+    },
   ];
 
   const { mutate: deleteTalkPick } = useDeleteTalkPickMutation(
     talkPick?.id ?? 0,
   );
 
+  const handleDeleteButton = () => {
+    deleteTalkPick();
+    onCloseModal();
+  };
+
   const handleCopyButton = (link: string) => {
     copyTalkPickLink(link);
-    setShareModalOpen(false);
+    onCloseModal();
     showToastModal(SUCCESS.COPY.LINK);
   };
 
@@ -121,36 +137,35 @@ const TalkPickSection = ({
       <div css={S.centerStyling}>
         <ShareModal
           link={currentURL}
-          isOpen={shareModalOpen}
+          isOpen={activeModal === 'share'}
           onConfirm={() => handleCopyButton(currentURL)}
-          onClose={() => setShareModalOpen(false)}
+          onClose={onCloseModal}
         />
         <TextModal
           text="해당 게시글을 삭제하시겠습니까?"
-          isOpen={deleteTextModalOpen}
-          onConfirm={() => deleteTalkPick()}
-          onClose={() => setDeleteTextModalOpen(false)}
+          isOpen={activeModal === 'deleteText'}
+          onConfirm={handleDeleteButton}
+          onClose={onCloseModal}
         />
         <TextModal
           text="해당 게시글을 신고하시겠습니까?"
-          isOpen={reportTextModalOpen}
+          isOpen={activeModal === 'reportText'}
           onConfirm={() => {
-            setReportTextModalOpen(false);
-            setReportModalOpen(true);
+            setActiveModal('reportTalkPick');
           }}
-          onClose={() => setReportTextModalOpen(false)}
+          onClose={onCloseModal}
         />
         <ReportModal
-          isOpen={reportModalOpen}
+          isOpen={activeModal === 'reportTalkPick'}
           onConfirm={() => {}}
-          onClose={() => setReportModalOpen(false)}
+          onClose={onCloseModal}
         />
       </div>
       <div css={S.talkPickTitle}> {isTodayTalkPick && '오늘의 톡픽'}</div>
       <div css={S.talkPickWrapper}>
         <div css={S.talkPickTopStyling}>
           <div css={S.talkPickDetailWrapper}>
-            <div css={S.talkPickTitle}>{talkPick?.title}</div>
+            <div css={S.talkPickTitle}>{talkPick?.baseFields.title}</div>
             <MenuTap
               menuData={myTalkPick ? myTalkPickItem : otherTalkPickItem}
             />
@@ -161,7 +176,7 @@ const TalkPickSection = ({
               <span css={S.talkPickDate}>
                 {formatDate(talkPick?.createdAt ?? '')}
               </span>
-              {talkPick?.isUpdated && (
+              {talkPick?.isEdited && (
                 <span css={S.talkPickDetail}>(수정됨)</span>
               )}
             </div>
@@ -177,7 +192,7 @@ const TalkPickSection = ({
           <SummaryBox summary={talkPick?.summary} />
           {isExpanded && (
             <div css={S.talkPickContent}>
-              <p>{talkPick?.content}</p>
+              <p>{talkPick?.baseFields.content}</p>
               {talkPick?.imgUrls.length !== 0 && (
                 <div css={S.talkPickImageWrapper}>
                   {talkPick?.imgUrls.map((url, idx) => (
@@ -200,8 +215,8 @@ const TalkPickSection = ({
         <div css={S.voteBarWrapper}>
           <VotePrototype
             talkPickId={talkPick?.id ?? 3}
-            leftButtonText={talkPick?.optionA ?? ''}
-            rightButtonText={talkPick?.optionB ?? ''}
+            leftButtonText={talkPick?.baseFields.optionA ?? ''}
+            rightButtonText={talkPick?.baseFields.optionB ?? ''}
             leftVotes={talkPick?.votesCountOfOptionA ?? 0}
             rightVotes={talkPick?.votesCountOfOptionB ?? 0}
             selectedVote={talkPick?.votedOption ?? null}
@@ -222,7 +237,9 @@ const TalkPickSection = ({
           size="medium"
           iconLeft={<Share />}
           css={S.shareBtnStyling}
-          onClick={() => setShareModalOpen(true)}
+          onClick={() => {
+            setActiveModal('share');
+          }}
         >
           공유하기
         </Button>

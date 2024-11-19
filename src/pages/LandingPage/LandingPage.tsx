@@ -4,6 +4,7 @@ import SearchTagBar from '@/components/molecules/SearchTagBar/SearchTagBar';
 import CategoryBox from '@/components/molecules/CategoryBox/CategoryBox';
 import BalanceGameList from '@/components/organisms/BalanceGameList/BalanceGameList';
 import { useTodayTalkPickQuery } from '@/hooks/api/talk-pick/useTodayTalkPickQuery';
+import { useNavigate } from 'react-router-dom';
 import ToastModal from '@/components/atoms/ToastModal/ToastModal';
 import { GameContent } from '@/types/game';
 import { useBestGameList } from '@/hooks/api/game/useBestGameListQuery';
@@ -13,8 +14,8 @@ import * as S from './LandingPage.style';
 const LandingPage = () => {
   const { todayTalkPick } = useTodayTalkPickQuery();
   const [isServicePreparing, setIsServicePreparing] = useState<boolean>(false);
-  const [selectedValue, setSelectedValue] = useState<'trend' | 'recent'>(
-    'trend',
+  const [selectedValue, setSelectedValue] = useState<'views' | 'createdAt'>(
+    'views',
   );
   const [activeTab, setActiveTab] = useState<
     '인기' | '커플' | '취향' | '월드컵'
@@ -27,9 +28,9 @@ const LandingPage = () => {
   const [contents, setContents] = useState<GameContent[]>([]);
 
   useEffect(() => {
-    if (selectedValue === 'trend') {
+    if (selectedValue === 'views') {
       setContents(bestGames || []);
-    } else if (selectedValue === 'recent') {
+    } else if (selectedValue === 'createdAt') {
       setContents(latestGames || []);
     }
   }, [
@@ -49,6 +50,12 @@ const LandingPage = () => {
     }, 2000);
   };
 
+  const navigate = useNavigate();
+
+  const handleSearch = (query: string) => {
+    navigate(`/result/search/all?query=${query}`);
+  };
+
   return (
     <div>
       {isServicePreparing && (
@@ -58,7 +65,7 @@ const LandingPage = () => {
       )}
       <TopBanner todayTalkPick={todayTalkPick} />
       <div css={S.contentWrapStyle}>
-        <SearchTagBar />
+        <SearchTagBar onSearch={handleSearch} />
         <div css={S.categoryBoxStyle}>
           <CategoryBox handleService={handleService} />
         </div>

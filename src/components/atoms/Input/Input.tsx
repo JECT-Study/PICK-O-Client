@@ -14,7 +14,7 @@ import {
 export interface InputProps
   extends Omit<ComponentPropsWithRef<'input'>, 'size'> {
   label?: string;
-  size?: Extract<Size, 'medium' | 'small'>;
+  size?: Extract<Size, 'medium' | 'small' | 'large'>;
   variant?: 'default';
   isError?: boolean;
   icon?: ReactElement;
