@@ -10,8 +10,10 @@ import * as S from './BalanceGameList.style';
 
 export interface ContentListProps {
   contents: GameContent[];
-  selectedValue: 'views' | 'createdAt';
-  setSelectedValue: React.Dispatch<React.SetStateAction<'views' | 'createdAt'>>;
+  selectedValue: 'views,desc' | 'createdAt,desc';
+  setSelectedValue: React.Dispatch<
+    React.SetStateAction<'views,desc' | 'createdAt,desc'>
+  >;
   activeTab: '인기' | '커플' | '취향' | '월드컵';
   setActiveTab: React.Dispatch<
     React.SetStateAction<'인기' | '커플' | '취향' | '월드컵'>
@@ -36,11 +38,20 @@ const BalanceGameList = ({
     setVisibleItems((prev) => Math.min(prev + 6, contents.length));
   };
 
+  const handleToggleChange = (value: string) => {
+    if (value === 'views,desc' || value === 'createdAt,desc') {
+      setSelectedValue(value);
+    }
+  };
+
   return (
     <div css={S.containerStyle}>
       <div css={S.titleWrapStyle}>
         <div>주제별 밸런스 게임</div>
-        <ToggleGroup selectedValue={selectedValue} onClick={setSelectedValue} />
+        <ToggleGroup
+          selectedValue={selectedValue}
+          onClick={handleToggleChange}
+        />
       </div>
       <div css={S.barStyle}>
         <CategoryBar activeTab={activeTab} setActiveTab={setActiveTab} />
