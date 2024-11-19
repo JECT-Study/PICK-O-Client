@@ -15,6 +15,8 @@ module.exports = (env) => {
     dotenv.config({ path: './.env.production' });
   }
 
+  const publicPath = process.env.CDN_URL || '/';
+
   return {
     name: 'PICK-O',
     mode: DEV ? 'development' : 'production',
@@ -81,7 +83,7 @@ module.exports = (env) => {
     output: {
       filename: 'bundle.js',
       path: path.resolve(__dirname, 'dist'),
-      publicPath: '/',
+      publicPath,
       clean: true,
     },
     optimization: {
