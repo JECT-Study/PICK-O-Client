@@ -16,7 +16,7 @@ import BalanceGameBox from '@/components/molecules/BalanceGameBox/BalanceGameBox
 import useToastModal from '@/hooks/modal/useToastModal';
 import { useCreateGameBookmarkMutation } from '@/hooks/api/bookmark/useCreateGameBookmarkMutation';
 import { useDeleteGameBookmarkMutation } from '@/hooks/api/bookmark/useDeleteGameBookmarkMutation';
-import { VotedOption, VoteOption, VoteRecord } from '@/types/vote';
+import { MyVoteOption, VoteOption, VoteRecord } from '@/types/vote';
 import * as S from './BalanceGameSection.style';
 
 export interface BalanceGameSectionProps {
@@ -82,7 +82,7 @@ const BalanceGameSection = ({
   }, [gameSetId]);
 
   const handleGuestGameVote = (
-    selectedOption: VotedOption,
+    selectedOption: MyVoteOption,
     voteOption: VoteOption,
   ) => {
     const updatedVotes = [...guestVotedList];
