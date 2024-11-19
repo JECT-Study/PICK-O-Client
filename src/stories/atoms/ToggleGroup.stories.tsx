@@ -20,11 +20,11 @@ const toggleOneTwo: ToggleGroupItem[] = [
 const toggleItem: ToggleGroupItem[] = [
   {
     label: '인기순',
-    value: 'views',
+    value: 'views,desc',
   },
   {
     label: '최신순',
-    value: 'createdAt',
+    value: 'createdAt,desc',
   },
 ];
 
@@ -58,7 +58,7 @@ export const Default: Story = {
 export const All: Story = {
   render: () => {
     const [selectedValue, setSelectedValue] =
-      useState<ToggleGroupProps['selectedValue']>('views');
+      useState<ToggleGroupProps['selectedValue']>('views,desc');
 
     return (
       <ul css={storyContainer}>
@@ -72,9 +72,9 @@ export const All: Story = {
         </li>
         <li css={storyInnerContainer}>
           <h3>Trend</h3>
-          <ToggleGroup selectedValue="views" />
+          <ToggleGroup selectedValue="views,desc" />
           <h3>Recent</h3>
-          <ToggleGroup selectedValue="createdAt" />
+          <ToggleGroup selectedValue="createdAt,desc" />
         </li>
       </ul>
     );

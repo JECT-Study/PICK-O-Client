@@ -19,8 +19,8 @@ export interface ToggleGroupProps {
 }
 
 const defaultItems: ToggleGroupItem[] = [
-  { label: '인기순', value: 'views' },
-  { label: '최신순', value: 'createdAt' },
+  { label: '인기순', value: 'views,desc' },
+  { label: '최신순', value: 'createdAt,desc' },
 ];
 
 const ToggleGroup = ({
