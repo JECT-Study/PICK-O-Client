@@ -82,6 +82,7 @@ module.exports = (env) => {
       filename: 'bundle.js',
       path: path.resolve(__dirname, 'dist'),
       publicPath: '/',
+      clean: true,
     },
     optimization: {
       minimize: true,
