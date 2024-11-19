@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React, { ComponentPropsWithRef } from 'react';
 import Chips from '@/components/atoms/Chips/Chips';
 import Bookmark, { BookmarkProps } from '@/components/atoms/Bookmark/Bookmark';
