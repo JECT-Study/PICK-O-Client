@@ -8,17 +8,18 @@ import { useEditGameVoteMutation } from '@/hooks/api/vote/useEditGameVoteMutatio
 import { useDeleteGameVoteMutation } from '@/hooks/api/vote/useDeleteGameVoteMutation';
 import { useNewSelector } from '@/store';
 import { selectAccessToken } from '@/store/auth';
+import { VotedOption, VoteOption } from '@/types/vote';
 import * as S from './BalanceGameBox.style';
 
 export interface BalanceGameBoxProps {
   gameSetId: number;
   gameId: number;
   options: GameOption[];
-  selectedVote: 'A' | 'B' | null;
+  selectedVote: VotedOption;
   handleNextStage: () => void;
   handleGuestGameVote: (
-    selectedOption: 'A' | 'B' | null,
-    voteOption: 'A' | 'B',
+    selectedOption: VotedOption,
+    voteOption: VoteOption,
   ) => void;
 }
 
@@ -55,8 +56,8 @@ const BalanceGameBox = ({
   );
 
   const handleUserGameVote = (
-    selectedOption: 'A' | 'B' | null,
-    voteOption: 'A' | 'B',
+    selectedOption: VotedOption,
+    voteOption: VoteOption,
   ) => {
     if (!selectedOption) {
       createGameVote(voteOption, {
@@ -75,7 +76,7 @@ const BalanceGameBox = ({
     }
   };
 
-  const handleButtonClick = (voteOption: 'A' | 'B') => {
+  const handleButtonClick = (voteOption: VoteOption) => {
     if (accessToken) {
       handleUserGameVote(selectedVote, voteOption);
     } else {
