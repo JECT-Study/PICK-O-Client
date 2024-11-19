@@ -1,4 +1,3 @@
-/* eslint-disable consistent-return */
 import React, { useState } from 'react';
 import { GameOption } from '@/types/game';
 import { getRandomNumbers } from '@/utils/calculator';
@@ -81,11 +80,9 @@ const BalanceGameBox = ({
       handleUserGameVote(selectedVote, voteOption);
     } else {
       handleGuestGameVote(selectedVote, voteOption);
-      const nextStageTimer = setTimeout(() => {
+      setTimeout(() => {
         handleNextStage();
       }, 500);
-
-      return () => clearTimeout(nextStageTimer);
     }
   };
 
