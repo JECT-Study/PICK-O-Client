@@ -37,6 +37,7 @@ jobs:
         env:
           NODE_ENV: production
           API_URL: ${{ secrets.API_URL }}
+          CDN_URL: ${{ secrets.CDN_URL }}
         run: |
           npm ci
           npm run build
