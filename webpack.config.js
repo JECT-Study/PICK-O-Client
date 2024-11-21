@@ -35,9 +35,7 @@ module.exports = (env) => {
               ],
               '@babel/preset-typescript',
             ],
-            plugins: [
-              '@emotion/babel-plugin', // 추가
-            ],
+            plugins: ['@emotion/babel-plugin'],
           },
         },
         {
@@ -53,6 +51,19 @@ module.exports = (env) => {
               loader: 'file-loader',
               options: {
                 name: '[name].[ext]',
+              },
+            },
+          ],
+        },
+        {
+          test: /\.(png|jpe?g|gif|woff2?|eot|ttf|otf)$/i,
+          use: [
+            {
+              loader: 'file-loader',
+              options: {
+                name: '[name].[hash].[ext]',
+                outputPath: 'assets/',
+                publicPath: `${publicPath}assets/`,
               },
             },
           ],
