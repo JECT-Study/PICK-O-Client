@@ -15,7 +15,9 @@ module.exports = (env) => {
     dotenv.config({ path: './.env.production' });
   }
 
-  const publicPath = process.env.CDN_URL || '/';
+  const addTrailingSlash = (url) => (url.endsWith('/') ? url : `${url}/`);
+
+  const publicPath = addTrailingSlash(process.env.CDN_URL || '/');
 
   return {
     name: 'PICK-O',
