@@ -1,6 +1,11 @@
 import { useState } from 'react';
 import { isEqual } from 'lodash';
-import { NewTalkPick, EditTalkPick, TalkPickDetail } from '@/types/talk-pick';
+import {
+  NewTalkPick,
+  EditTalkPick,
+  NewTempTalkPick,
+  TalkPickDetail,
+} from '@/types/talk-pick';
 import { validatePostForm } from '@/hooks/post/validatePostForm';
 import useToastModal from '../modal/useToastModal';
 import useTalkPickInputs from './useTalkPickInputs';
@@ -41,6 +46,7 @@ export const usePostTalkPickForm = (existingTalkPick?: TalkPickDetail) => {
 
   const [newFileIds, setNewFileIds] = useState<number[]>([]);
   const [deleteFileIds, setDeleteFileIds] = useState<number[]>([]);
+  const [isTempLoaded, setIsTempLoaded] = useState<boolean>(false);
   const [imgUrls, setImgUrls] = useState<string[]>(
     existingTalkPick?.imgUrls ?? [],
   );
@@ -54,11 +60,19 @@ export const usePostTalkPickForm = (existingTalkPick?: TalkPickDetail) => {
       setEach('sourceUrl', tempTalkPick.baseFields.sourceUrl);
       setEach('fileIds', tempTalkPick.fileIds);
       setImgUrls(tempTalkPick.imgUrls);
+      setIsTempLoaded(true);
     }
   };
 
   const handleTempTalkPick = () => {
-    saveTempTalkPick(form);
+    const tempForm: NewTempTalkPick = {
+      baseFields: form.baseFields,
+      newFileIds: newFileIds ?? [],
+      deleteFileIds: deleteFileIds ?? [],
+      isLoaded: isTempLoaded,
+    };
+    saveTempTalkPick(tempForm);
+    setIsTempLoaded(true);
   };
 
   const handleTalkPick = () => {

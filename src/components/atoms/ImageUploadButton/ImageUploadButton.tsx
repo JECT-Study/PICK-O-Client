@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useRef } from 'react';
 import { Camera } from '@/assets';
@@ -43,10 +44,11 @@ const ImageUploadButton = ({
             setImgUrls((prev) => [...prev, ...res.imgUrls]);
             setFileIds('fileIds', updatedFileIds);
 
-            if (isEditing) {
-              setNewFileIds((prev) => [...prev, ...res.fileIds]);
-            }
+            // if (isEditing) {
+            //   setNewFileIds((prev) => [...prev, ...res.fileIds]);
+            // }
 
+            setNewFileIds((prev) => [...prev, ...res.fileIds]);
             setIsUploadingImage(false);
           },
         },

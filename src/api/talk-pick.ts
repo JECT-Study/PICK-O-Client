@@ -5,6 +5,7 @@ import {
   NewTalkPick,
   EditTalkPick,
   TempTalkPick,
+  NewTempTalkPick,
   TalkPickListItem,
   TalkPickListPagination,
   TodayTalkPick,
@@ -43,7 +44,7 @@ export const postTalkPick = async (talkPickData: NewTalkPick) => {
   return data;
 };
 
-export const postTempTalkPick = async (talkPickData: NewTalkPick) => {
+export const postTempTalkPick = async (talkPickData: NewTempTalkPick) => {
   const response = await axiosInstance.post(
     END_POINT.TEMP_TALKPICK,
     talkPickData,

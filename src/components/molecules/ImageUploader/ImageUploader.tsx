@@ -36,10 +36,11 @@ const ImageUploader = ({
     const fileId: number = fileIds[index];
     const updatedFileIds = fileIds.filter((_, i) => i !== index);
     setImgUrls((prev) => prev.filter((_, i) => i !== index));
+    setDeleteFileIds((prev) => [...prev, fileId]);
 
     if (isEditing) {
       setFileIds('fileIds', updatedFileIds);
-      setDeleteFileIds((prev) => [...prev, fileId]);
+      // setDeleteFileIds((prev) => [...prev, fileId]);
     } else {
       deleteFileMutation.mutate(fileId, {
         onSuccess: () => {
