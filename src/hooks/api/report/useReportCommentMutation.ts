@@ -9,7 +9,7 @@ export const useReportCommentMutation = (
   talkPickId: Id,
   commentId: Id,
   selectedPage: number,
-  showToastModal: (message: string) => () => void,
+  showToastModal: (message: string, callback?: () => void) => void,
   parentId?: number,
 ) => {
   const queryClient = useQueryClient();
