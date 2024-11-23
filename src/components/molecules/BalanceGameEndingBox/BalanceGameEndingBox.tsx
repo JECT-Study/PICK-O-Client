@@ -6,6 +6,7 @@ import Divider from '@/components/atoms/Divider/Divider';
 import InteractionButton from '@/components/atoms/InteractionButton/InteractionButton';
 import ToastModal from '@/components/atoms/ToastModal/ToastModal';
 import ShareModal from '@/components/molecules/ShareModal/ShareModal';
+import LoginModal from '@/components/molecules/LoginModal/LoginModal';
 import { useCreateDoneGameBookmarkMutation } from '@/hooks/api/bookmark/useCreateDoneGameBookmark';
 import { useDeleteDoneGameBookmarkMutation } from '@/hooks/api/bookmark/useDeleteDoneGameBookmark';
 import useToastModal from '@/hooks/modal/useToastModal';
@@ -25,9 +26,16 @@ const BalanceGameEndingBox = ({
   isMyEndBookmark,
 }: BalanceGameEndingBoxProps) => {
   const currentURL: string = window.location.href;
+  const isGuest = !localStorage.getItem('accessToken');
 
+  const [loginModalOpen, setLoginModalOpen] = useState<boolean>(false);
   const [shareModalOpen, setShareModalOpen] = useState<boolean>(false);
   const { isVisible, modalText, showToastModal } = useToastModal();
+
+  const onHandleLogin = () => {
+    showToastModal(SUCCESS.LOGIN);
+    setLoginModalOpen(false);
+  };
 
   const copyGameLink = (link: string) => {
     navigator.clipboard
@@ -53,6 +61,11 @@ const BalanceGameEndingBox = ({
     useDeleteDoneGameBookmarkMutation(gameSetId);
 
   const handleEndBookmarkClick = () => {
+    if (isGuest) {
+      setLoginModalOpen(true);
+      return;
+    }
+
     if (isMyGame) {
       showToastModal(ERROR.BOOKMARK.MY_GAME);
       return;
@@ -78,6 +91,13 @@ const BalanceGameEndingBox = ({
           isOpen={shareModalOpen}
           onConfirm={() => handleCopyButton(currentURL)}
           onClose={() => setShareModalOpen(false)}
+        />
+        <LoginModal
+          isOpen={loginModalOpen}
+          onModalLoginSuccess={onHandleLogin}
+          onClose={() => {
+            setLoginModalOpen(false);
+          }}
         />
       </div>
       <div css={S.titleStyling}>{title}</div>
