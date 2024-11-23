@@ -12,7 +12,7 @@ const TalkPickPlacePage = () => {
   const [selectedValue, setSelectedValue] = useState<string>('views');
 
   const initialPage = parseInt(searchParams.get('page') ?? '1', 10) || 1;
-  const [currentPage, setCurrentPage] = useState(initialPage);
+  const [currentPage, setCurrentPage] = useState<number>(initialPage);
 
   useEffect(() => {
     setSearchParams((prevParams) => ({
