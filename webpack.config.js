@@ -15,6 +15,10 @@ module.exports = (env) => {
     dotenv.config({ path: './.env.production' });
   }
 
+  const addTrailingSlash = (url) => (url.endsWith('/') ? url : `${url}/`);
+
+  const publicPath = addTrailingSlash(process.env.CDN_URL || '/');
+
   return {
     name: 'PICK-O',
     mode: DEV ? 'development' : 'production',
@@ -33,9 +37,7 @@ module.exports = (env) => {
               ],
               '@babel/preset-typescript',
             ],
-            plugins: [
-              '@emotion/babel-plugin', // 추가
-            ],
+            plugins: ['@emotion/babel-plugin'],
           },
         },
         {
@@ -46,14 +48,21 @@ module.exports = (env) => {
         },
         {
           test: /\.(png|jpe?g|gif)$/i,
-          use: [
-            {
-              loader: 'file-loader',
-              options: {
-                name: '[name].[ext]',
-              },
-            },
-          ],
+          type: 'asset/resource',
+          generator: {
+            filename: '[name].[hash][ext]',
+            outputPath: 'assets/images',
+            publicPath: `${publicPath}assets/images/`,
+          },
+        },
+        {
+          test: /\.(woff2?|eot|ttf|otf)$/i,
+          type: 'asset/resource',
+          generator: {
+            filename: '[name].[hash][ext]',
+            outputPath: 'assets/fonts',
+            publicPath: `${publicPath}assets/fonts/`,
+          },
         },
         {
           test: /\.svg$/,
@@ -81,7 +90,8 @@ module.exports = (env) => {
     output: {
       filename: 'bundle.js',
       path: path.resolve(__dirname, 'dist'),
-      publicPath: '/',
+      publicPath,
+      clean: true,
     },
     optimization: {
       minimize: true,
