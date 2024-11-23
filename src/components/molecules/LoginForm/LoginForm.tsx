@@ -13,11 +13,23 @@ import * as S from './LoginFrom.style';
 export interface LoginFormProps {
   withSignInText?: boolean;
   pathTalkPickId?: number;
+  onModalLoginSuccess?: () => void;
 }
 
-const LoginForm = ({ withSignInText, pathTalkPickId }: LoginFormProps) => {
-  const { form, onChange, isError, errorMessage, handleSubmit, loginSuccess } =
-    useLoginForm(pathTalkPickId);
+const LoginForm = ({
+  withSignInText,
+  pathTalkPickId,
+  onModalLoginSuccess,
+}: LoginFormProps) => {
+  const {
+    form,
+    onChange,
+    isError,
+    errorMessage,
+    handleSubmit,
+    isVisible,
+    modalText,
+  } = useLoginForm(pathTalkPickId, onModalLoginSuccess);
 
   const handleSocialLogin = (social: string) => {
     window.location.href = `${process.env.API_URL}/oauth2/authorization/${social}`;
@@ -25,9 +37,9 @@ const LoginForm = ({ withSignInText, pathTalkPickId }: LoginFormProps) => {
 
   return (
     <form onSubmit={handleSubmit} css={S.loginFormStyling}>
-      {loginSuccess && (
+      {isVisible && (
         <div css={S.toastModalStyling}>
-          <ToastModal bgColor="black">로그인 완료!</ToastModal>
+          <ToastModal>{modalText}</ToastModal>
         </div>
       )}
       <div css={S.loginTextStyling}>LOGIN</div>

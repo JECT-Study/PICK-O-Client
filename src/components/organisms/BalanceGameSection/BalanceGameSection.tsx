@@ -12,6 +12,7 @@ import GameStageBar from '@/components/atoms/GameStageBar/GameStageBar';
 import InteractionButton from '@/components/atoms/InteractionButton/InteractionButton';
 import ToastModal from '@/components/atoms/ToastModal/ToastModal';
 import ShareModal from '@/components/molecules/ShareModal/ShareModal';
+import LoginModal from '@/components/molecules/LoginModal/LoginModal';
 import BalanceGameBox from '@/components/molecules/BalanceGameBox/BalanceGameBox';
 import useToastModal from '@/hooks/modal/useToastModal';
 import { useCreateGameBookmarkMutation } from '@/hooks/api/bookmark/useCreateGameBookmarkMutation';
@@ -107,8 +108,14 @@ const BalanceGameSection = ({
 
   const currentGame: GameDetail = gameStages[currentStage];
 
+  const [loginModalOpen, setLoginModalOpen] = useState<boolean>(false);
   const [shareModalOpen, setShareModalOpen] = useState<boolean>(false);
   const { isVisible, modalText, showToastModal } = useToastModal();
+
+  const onHandleLogin = () => {
+    showToastModal('로그인 완료!');
+    setLoginModalOpen(false);
+  };
 
   const copyGameLink = (link: string) => {
     navigator.clipboard
@@ -166,6 +173,11 @@ const BalanceGameSection = ({
   const handleBookmarkClick = () => {
     if (!game) return;
 
+    if (isGuest) {
+      setLoginModalOpen(true);
+      return;
+    }
+
     if (isMyGame) {
       showToastModal(ERROR.BOOKMARK.MY_GAME);
       return;
@@ -194,6 +206,13 @@ const BalanceGameSection = ({
           isOpen={shareModalOpen}
           onConfirm={() => handleCopyButton(currentURL)}
           onClose={() => setShareModalOpen(false)}
+        />
+        <LoginModal
+          isOpen={loginModalOpen}
+          onModalLoginSuccess={onHandleLogin}
+          onClose={() => {
+            setLoginModalOpen(false);
+          }}
         />
       </div>
       <div css={S.balanceGameContainer}>
