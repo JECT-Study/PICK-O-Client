@@ -113,7 +113,7 @@ const BalanceGameSection = ({
   const { isVisible, modalText, showToastModal } = useToastModal();
 
   const onHandleLogin = () => {
-    showToastModal('로그인 완료!');
+    showToastModal(SUCCESS.LOGIN);
     setLoginModalOpen(false);
   };
 

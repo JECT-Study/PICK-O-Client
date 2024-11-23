@@ -7,7 +7,7 @@ import { MemberForm } from '@/types/member';
 import { useMutation } from '@tanstack/react-query';
 import { ChangeEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ERROR } from '../../constants/message';
+import { ERROR, SUCCESS } from '../../constants/message';
 import useInputs from '../common/useInputs';
 import useToastModal from '../modal/useToastModal';
 import { validateLoginForm } from './validateLoginForm';
@@ -53,7 +53,7 @@ export const useLoginForm = (
       localStorage.setItem('rtk', 'rtk');
       localStorage.setItem('savedEmail', form.email);
 
-      showToastModal('로그인 완료!', () => {
+      showToastModal(SUCCESS.LOGIN, () => {
         if (pathTalkPickId) {
           navigate(`/talkpick/${pathTalkPickId}`);
         } else {
