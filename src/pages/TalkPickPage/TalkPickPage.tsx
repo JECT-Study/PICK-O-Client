@@ -18,7 +18,7 @@ interface State {
 }
 
 const TalkPickPage = () => {
-  const [selectedPage, setSelectedPage] = useState<number>(1);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const [selectedValue, setSelectedValue] = useState<string>('trend');
 
   const accessToken = useNewSelector(selectAccessToken);
@@ -44,10 +44,14 @@ const TalkPickPage = () => {
     },
   ];
 
+  const handleCommentPageChange = (newPage: number) => {
+    setCurrentPage(newPage);
+  };
+
   const { comments } = useCommentsQuery(
     id,
     {
-      page: selectedPage - 1,
+      page: currentPage - 1,
       size: 7,
     },
     'comments',
@@ -56,7 +60,7 @@ const TalkPickPage = () => {
   const { bestComments } = useBestCommentsQuery(
     id,
     {
-      page: selectedPage - 1,
+      page: currentPage - 1,
       size: 7,
     },
     'bestComments',
@@ -77,8 +81,8 @@ const TalkPickPage = () => {
           toggleItem={toggleItem}
           selectedValue={selectedValue}
           setToggleValue={setSelectedValue}
-          selectedPage={selectedPage}
-          handlePageChange={setSelectedPage}
+          selectedPage={currentPage}
+          handlePageChange={handleCommentPageChange}
           voted={talkPick?.votedOption !== null}
         />
       </div>
