@@ -47,17 +47,22 @@ module.exports = (env) => {
           exclude: /node_modules/,
         },
         {
-          test: /\.(png|jpe?g|gif|woff2?|eot|ttf|otf)$/i,
-          use: [
-            {
-              loader: 'file-loader',
-              options: {
-                name: '[name].[hash].[ext]',
-                outputPath: 'assets/',
-                publicPath: `${publicPath}assets/`,
-              },
-            },
-          ],
+          test: /\.(png|jpe?g|gif)$/i,
+          type: 'asset/resource',
+          generator: {
+            filename: '[name].[hash][ext]',
+            outputPath: 'assets/images',
+            publicPath: `${publicPath}assets/images/`,
+          },
+        },
+        {
+          test: /\.(woff2?|eot|ttf|otf)$/i,
+          type: 'asset/resource',
+          generator: {
+            filename: '[name].[hash][ext]',
+            outputPath: 'assets/fonts',
+            publicPath: `${publicPath}assets/fonts/`,
+          },
         },
         {
           test: /\.svg$/,
