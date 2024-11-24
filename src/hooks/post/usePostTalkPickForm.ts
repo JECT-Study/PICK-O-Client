@@ -107,6 +107,7 @@ export const usePostTalkPickForm = (existingTalkPick?: TalkPickDetail) => {
     onChange,
     setEach,
     isEditing,
+    isTempLoaded,
     isTalkPickEdited,
     isVisible,
     modalText,

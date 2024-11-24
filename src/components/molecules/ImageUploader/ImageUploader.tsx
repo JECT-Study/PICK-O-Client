@@ -12,6 +12,7 @@ interface ImageUploaderProps {
   setFileIds: (name: string, fileIds: number[]) => void;
   setIsUploadingImage: React.Dispatch<React.SetStateAction<boolean>>;
   isEditing: boolean;
+  isTempLoaded: boolean;
   setNewFileIds: React.Dispatch<React.SetStateAction<number[]>>;
   setDeleteFileIds: React.Dispatch<React.SetStateAction<number[]>>;
 }
@@ -23,6 +24,7 @@ const ImageUploader = ({
   setFileIds,
   setIsUploadingImage,
   isEditing,
+  isTempLoaded,
   setNewFileIds,
   setDeleteFileIds,
 }: ImageUploaderProps) => {
@@ -35,10 +37,11 @@ const ImageUploader = ({
   const handleDelete = (index: number) => {
     const fileId: number = fileIds[index];
     const updatedFileIds = fileIds.filter((_, i) => i !== index);
+
     setImgUrls((prev) => prev.filter((_, i) => i !== index));
     setDeleteFileIds((prev) => [...prev, fileId]);
 
-    if (isEditing) {
+    if (isEditing || isTempLoaded) {
       setFileIds('fileIds', updatedFileIds);
       // setDeleteFileIds((prev) => [...prev, fileId]);
     } else {
