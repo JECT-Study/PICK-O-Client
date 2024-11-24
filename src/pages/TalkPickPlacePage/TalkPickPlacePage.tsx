@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { ToggleGroupItem } from '@/components/atoms/ToggleGroup/ToggleGroup';
 import BestTalkPick from '@/components/molecules/BestTalkPick/BestTalkPick';
 import TalkPickListSection from '@/components/organisms/TalkPickListSection/TalkPickListSection';
 import { useBestTalkPickListQuery } from '@/hooks/api/talk-pick/useBestTalkPickListQuery';
@@ -8,23 +7,13 @@ import * as S from './TalkPickPlacePage.style';
 
 const TalkPickPlacePage = () => {
   const [selectedPage, setSelectedPage] = useState<number>(1);
-  const [selectedValue, setSelectedValue] = useState<string>('trend');
-  const toggleItem: ToggleGroupItem[] = [
-    {
-      label: '최신순',
-      value: 'recent',
-    },
-    {
-      label: '인기순',
-      value: 'trend',
-    },
-  ];
+  const [selectedValue, setSelectedValue] = useState<string>('views');
 
   const { bestTalkPick } = useBestTalkPickListQuery();
   const { talkPickList } = useTalkPickListQuery({
     page: selectedPage - 1,
     size: 20,
-    sort: selectedValue === 'recent' ? 'createdAt,desc' : 'views,desc',
+    sort: selectedValue,
   });
 
   useEffect(() => {
@@ -48,7 +37,6 @@ const TalkPickPlacePage = () => {
       </div>
       <TalkPickListSection
         talkPickList={talkPickList}
-        toggleItem={toggleItem}
         selectedValue={selectedValue}
         setToggleValue={setSelectedValue}
         selectedPage={selectedPage}

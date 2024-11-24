@@ -15,7 +15,6 @@ export const useFileUploadMutation = (
       setIsUploadingImage(true);
     },
     onSuccess: async (response: UploadedImage) => {
-      console.log(response);
       await queryClient.invalidateQueries({
         queryKey: ['uploadedFiles'],
       });

@@ -13,7 +13,7 @@ export interface MemberForm {
   verificationCode: string;
   nickname: string;
   password: string;
-  passwordCheck: string;
+  passwordConfirm: string;
   profileImgUrl: string;
   role: 'USER';
 }
@@ -21,3 +21,19 @@ export interface MemberForm {
 export interface MemberSuccesForm {
   [key: string]: boolean;
 }
+
+export interface MemberResetForm {
+  email: string;
+  verificationCode: string;
+  password: string;
+  passwordConfirm: string;
+}
+
+export type MemberVerifyForm = Pick<
+  MemberResetForm,
+  'email' | 'verificationCode'
+>;
+export type MemberResetPwForm = Pick<
+  MemberResetForm,
+  'email' | 'password' | 'passwordConfirm'
+>;

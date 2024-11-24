@@ -49,3 +49,60 @@ export interface GameItem extends GameContent {
 export interface GamesPagination extends PaginationType {
   content: GameContent[];
 }
+
+export interface BalanceGameOption {
+  id: number;
+  name: string;
+  imgUrl: string;
+  storedName: string;
+  description: string;
+  optionType: 'A' | 'B';
+  imageFile?: File | null;
+}
+
+export interface BalanceGameSet {
+  description: string;
+  gameOptions: BalanceGameOption[];
+}
+
+export interface BalanceGame {
+  title: string;
+  mainTag: string;
+  subTag: string;
+  games: BalanceGameSet[];
+}
+
+export interface TempGame {
+  mainTag: string;
+  subTag: string;
+  tempGames: TempGameSet[];
+}
+
+export interface TempGameSet {
+  title: string;
+  description: string;
+  tempGameOptions: {
+    name: string;
+    imgUrl: string;
+    storedName: string;
+    description: string;
+    optionType: 'A' | 'B';
+  }[];
+}
+
+export interface TempGameOptionResponse {
+  name: string;
+  description: string;
+  imgUrl: string;
+  optionType: 'A' | 'B';
+}
+
+export interface TempGameDetailResponse {
+  title: string;
+  description: string;
+  tempGameOptions: TempGameOptionResponse[];
+}
+
+export interface TempGameResponse {
+  tempGameDetailResponses: TempGameDetailResponse[];
+}

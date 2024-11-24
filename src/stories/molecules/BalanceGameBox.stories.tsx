@@ -61,6 +61,7 @@ const meta = {
     options: exampleOptions,
     selectedVote: null,
     handleNextStage: () => {},
+    handleGuestGameVote: () => {},
   },
   decorators: [
     (Story) => (

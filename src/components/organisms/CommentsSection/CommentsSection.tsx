@@ -11,6 +11,7 @@ import ToastModal from '@/components/atoms/ToastModal/ToastModal';
 import ToggleGroup, {
   ToggleGroupItem,
 } from '@/components/atoms/ToggleGroup/ToggleGroup';
+import { NOTICE } from '@/constants/message';
 import { createRangeArray } from '@/utils/array';
 import CommentItem from '@/components/molecules/CommentItem/CommentItem';
 import { useCreateCommentMutation } from '@/hooks/api/comment/useCreateCommentMutation';
@@ -78,9 +79,7 @@ const CommentsSection = ({
         {!isMyTalkPick && !voted && (
           <div css={S.loggedOutBackground}>
             <div css={S.toastModalWrapper}>
-              <ToastModal bgColor="black">
-                투표 후에 확인할 수 있습니다.
-              </ToastModal>
+              <ToastModal bgColor="black">{NOTICE.REQUIRED.VOTE}</ToastModal>
             </div>
           </div>
         )}

@@ -67,6 +67,13 @@ export const SUCCESS = {
   },
 } as const;
 
+export const NOTICE = {
+  REQUIRED: {
+    LOGIN: '투표 결과와 댓글은 로그인 후 확인할 수 있습니다.',
+    VOTE: '투표 후에 확인할 수 있습니다.',
+  },
+} as const;
+
 export const NULL = {
   POSTS: '작성한 게시글이 없습니다.',
   COMMENTS: '작성한 댓글이 없습니다.',

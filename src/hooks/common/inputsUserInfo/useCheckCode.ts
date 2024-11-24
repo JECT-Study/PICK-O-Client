@@ -2,13 +2,15 @@ import { postEmailVerify } from '@/api/email';
 import { AxiosErrorResponse } from '@/api/interceptor';
 import { HTTP_STATUS_CODE } from '@/constants/api';
 import { ERROR, SUCCESS } from '@/constants/message';
-import { MemberForm } from '@/types/member';
+import { MemberVerifyForm } from '@/types/member';
 import { isEmptyString } from '@/utils/validator';
 import { useMutation } from '@tanstack/react-query';
 import { useRef, useState } from 'react';
 
 export const useCheckCode = (
-  value: Pick<MemberForm, 'email' | 'verificationCode'>,
+  value: MemberVerifyForm,
+  sendSuccess: boolean,
+  handleVerifySuccess?: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
@@ -20,6 +22,7 @@ export const useCheckCode = (
     onSuccess: () => {
       setIsError(false);
       setErrorMessage(SUCCESS.CODE.MATCH);
+      handleVerifySuccess?.(true);
     },
     onError: (err: AxiosErrorResponse) => {
       if (err.status === HTTP_STATUS_CODE.BAD_REQUEST) {
@@ -30,6 +33,8 @@ export const useCheckCode = (
   });
 
   const handleSubmit = () => {
+    if (!sendSuccess) return;
+
     if (isEmptyString(value.verificationCode)) {
       setIsError(true);
       setErrorMessage(ERROR.CODE.EMPTY);

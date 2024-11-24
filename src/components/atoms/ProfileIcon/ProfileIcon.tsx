@@ -9,7 +9,7 @@ export interface ProfileProps extends ComponentPropsWithRef<'button'> {
 }
 
 interface ProfilePropsWithImage extends ComponentPropsWithRef<'button'> {
-  interaction: 'settings';
+  interaction: 'custom';
   imgUrl: string;
   size?: 'small' | 'large';
 }
@@ -36,7 +36,7 @@ const ProfileIcon = (
     ),
   };
 
-  return interaction === 'settings'
+  return interaction === 'custom'
     ? profileComponents.settings
     : profileComponents.normal;
 };

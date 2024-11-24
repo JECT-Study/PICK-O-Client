@@ -5,14 +5,21 @@ import BalanceGameButton from '@/components/atoms/BalanceGameButton/BalanceGameB
 import { useCreateGameVoteMutation } from '@/hooks/api/vote/useCreateGameVoteMutation';
 import { useEditGameVoteMutation } from '@/hooks/api/vote/useEditGameVoteMutation';
 import { useDeleteGameVoteMutation } from '@/hooks/api/vote/useDeleteGameVoteMutation';
+import { useNewSelector } from '@/store';
+import { selectAccessToken } from '@/store/auth';
+import { MyVoteOption, VoteOption } from '@/types/vote';
 import * as S from './BalanceGameBox.style';
 
 export interface BalanceGameBoxProps {
   gameSetId: number;
   gameId: number;
   options: GameOption[];
-  selectedVote: 'A' | 'B' | null;
+  selectedVote: MyVoteOption;
   handleNextStage: () => void;
+  handleGuestGameVote: (
+    selectedOption: MyVoteOption,
+    voteOption: VoteOption,
+  ) => void;
 }
 
 const BalanceGameBox = ({
@@ -21,7 +28,9 @@ const BalanceGameBox = ({
   options,
   selectedVote,
   handleNextStage,
+  handleGuestGameVote,
 }: BalanceGameBoxProps) => {
+  const accessToken = useNewSelector(selectAccessToken);
   const optionA = options[0];
   const optionB = options[1];
 
@@ -45,9 +54,9 @@ const BalanceGameBox = ({
     gameId,
   );
 
-  const handleGameVote = (
-    selectedOption: 'A' | 'B' | null,
-    voteOption: 'A' | 'B',
+  const handleUserGameVote = (
+    selectedOption: MyVoteOption,
+    voteOption: VoteOption,
   ) => {
     if (!selectedOption) {
       createGameVote(voteOption, {
@@ -66,8 +75,15 @@ const BalanceGameBox = ({
     }
   };
 
-  const handleButtonClick = (voteOption: 'A' | 'B') => {
-    handleGameVote(selectedVote, voteOption);
+  const handleButtonClick = (voteOption: VoteOption) => {
+    if (accessToken) {
+      handleUserGameVote(selectedVote, voteOption);
+    } else {
+      handleGuestGameVote(selectedVote, voteOption);
+      setTimeout(() => {
+        handleNextStage();
+      }, 500);
+    }
   };
 
   return (

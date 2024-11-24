@@ -11,7 +11,7 @@ import { ERROR } from '../../constants/message';
 import useInputs from '../common/useInputs';
 import { validateLoginForm } from './validateLoginForm';
 
-export const useLoginForm = () => {
+export const useLoginForm = (pathTalkPickId: number | undefined) => {
   const initialState: Pick<MemberForm, 'email' | 'password'> = {
     email: localStorage.getItem('savedEmail') ?? '',
     password: '',
@@ -51,7 +51,11 @@ export const useLoginForm = () => {
       localStorage.setItem('savedEmail', form.email);
 
       setTimeout(() => {
-        navigate('/');
+        if (pathTalkPickId) {
+          navigate(`/talkpick/${pathTalkPickId}`);
+        } else {
+          navigate('/');
+        }
       }, 2000);
     },
 

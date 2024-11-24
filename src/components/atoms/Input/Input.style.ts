@@ -49,6 +49,11 @@ export const getSizeStyling = (size: Required<InputProps>['size']) => {
     medium: css(typo.SubTitle, {
       padding: '21px 23px',
     }),
+    large: css(typo.Main.SemiBold, {
+      width: '536px',
+      height: '66px',
+      padding: '18px 55px 19px 23px',
+    }),
   };
 
   return style[size];
@@ -61,6 +66,10 @@ export const getInputStyling = css({
   border: 'none',
   outline: 0,
   color: color.BK,
+
+  ':-webkit-autofill': {
+    boxShadow: '0 0 0px 1000px white inset',
+  },
 
   '&::placeholder': {
     color: color.GY[1],
