@@ -41,14 +41,11 @@ const ImageUploadButton = ({
         {
           onSuccess: (res) => {
             const updatedFileIds = [...fileIds, ...res.fileIds];
+
             setImgUrls((prev) => [...prev, ...res.imgUrls]);
-            setFileIds('fileIds', updatedFileIds);
-
-            // if (isEditing) {
-            //   setNewFileIds((prev) => [...prev, ...res.fileIds]);
-            // }
-
             setNewFileIds((prev) => [...prev, ...res.fileIds]);
+
+            setFileIds('fileIds', updatedFileIds);
             setIsUploadingImage(false);
           },
         },

@@ -43,7 +43,6 @@ const ImageUploader = ({
 
     if (isEditing || isTempLoaded) {
       setFileIds('fileIds', updatedFileIds);
-      // setDeleteFileIds((prev) => [...prev, fileId]);
     } else {
       deleteFileMutation.mutate(fileId, {
         onSuccess: () => {
