@@ -196,7 +196,7 @@ const TalkPickSection = ({
               {talkPick?.imgUrls.length !== 0 && (
                 <div css={S.talkPickImageWrapper}>
                   {talkPick?.imgUrls.map((url, idx) => (
-                    <img src={url} alt={`image ${idx + 1}`} />
+                    <img src={url} key={url} alt={`image ${idx + 1}`} />
                   ))}
                 </div>
               )}
