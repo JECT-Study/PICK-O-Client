@@ -8,7 +8,7 @@ import { AxiosErrorResponse } from '@/api/interceptor';
 import { ERROR, SUCCESS } from '@/constants/message';
 
 export const useCreateTalkPickMutation = (
-  showToastModal: (message: string) => () => void,
+  showToastModal: (message: string, callback?: () => void) => void,
 ) => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();

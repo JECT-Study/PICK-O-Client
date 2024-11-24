@@ -7,7 +7,7 @@ import { SUCCESS } from '@/constants/message';
 
 export const useEditTalkPickMutation = (
   talkPickId: Id,
-  showToastModal: (message: string) => () => void,
+  showToastModal: (message: string, callback?: () => void) => void,
 ) => {
   const queryClient = useQueryClient();
 
