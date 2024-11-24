@@ -6,13 +6,14 @@ import {
   NewTempTalkPick,
   TalkPickDetail,
 } from '@/types/talk-pick';
+import { ERROR } from '@/constants/message';
 import { validatePostForm } from '@/hooks/post/validatePostForm';
-import useToastModal from '../modal/useToastModal';
+import useToastModal from '@/hooks/modal/useToastModal';
+import { useCreateTalkPickMutation } from '@/hooks/api/talk-pick/useCreateTalkPickMutation';
+import { useEditTalkPickMutation } from '@/hooks/api/talk-pick/useEditTalkPickMutation';
+import { useSaveTempTalkPickMutation } from '@/hooks/api/talk-pick/useSaveTempTalkPickMutation';
+import { useTempTalkPickQuery } from '@/hooks/api/talk-pick/useTempTalkPickQuery';
 import useTalkPickInputs from './useTalkPickInputs';
-import { useCreateTalkPickMutation } from '../api/talk-pick/useCreateTalkPickMutation';
-import { useEditTalkPickMutation } from '../api/talk-pick/useEditTalkPickMutation';
-import { useSaveTempTalkPickMutation } from '../api/talk-pick/useSaveTempTalkPickMutation';
-import { useTempTalkPickQuery } from '../api/talk-pick/useTempTalkPickQuery';
 
 export const usePostTalkPickForm = (existingTalkPick?: TalkPickDetail) => {
   const initialState: NewTalkPick = {
@@ -84,7 +85,7 @@ export const usePostTalkPickForm = (existingTalkPick?: TalkPickDetail) => {
     }
 
     if (isUploadingImage) {
-      showToastModal('이미지를 업로드하고 있어요!');
+      showToastModal(ERROR.CREATE.IMAGE_UPLOAD);
       return;
     }
 

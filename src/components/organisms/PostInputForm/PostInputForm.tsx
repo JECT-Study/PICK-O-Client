@@ -1,5 +1,6 @@
 import React from 'react';
 import { isEmptyString } from '@/utils/validator';
+import { PLACE_HOLDER } from '@/constants/message';
 import PostTitleBox from '@/components/atoms/PostTitleBox/PostTitleBox';
 import OptionInputBox from '@/components/atoms/OptionInputBox/OptionInputBox';
 import Divider from '@/components/atoms/Divider/Divider';
@@ -70,7 +71,7 @@ const PostInputForm = ({ existingTalkPick }: PostInputFormProps) => {
         <textarea
           name="content"
           css={S.inputStyle}
-          placeholder="다른 토커들에게 내 이야기를 공유하고 의견을 들어보세요!"
+          placeholder={PLACE_HOLDER.POST.CONTENT}
           value={form.baseFields.content}
           maxLength={2000}
           onChange={onChange}
