@@ -7,13 +7,13 @@ import {
   TalkPickDetail,
 } from '@/types/talk-pick';
 import { ERROR } from '@/constants/message';
-import { validatePostForm } from '@/hooks/post/validatePostForm';
 import useToastModal from '@/hooks/modal/useToastModal';
+import useTalkPickInputs from '@/hooks/post/useTalkPickInputs';
+import { validatePostForm } from '@/hooks/post/validatePostForm';
 import { useCreateTalkPickMutation } from '@/hooks/api/talk-pick/useCreateTalkPickMutation';
 import { useEditTalkPickMutation } from '@/hooks/api/talk-pick/useEditTalkPickMutation';
 import { useSaveTempTalkPickMutation } from '@/hooks/api/talk-pick/useSaveTempTalkPickMutation';
 import { useTempTalkPickQuery } from '@/hooks/api/talk-pick/useTempTalkPickQuery';
-import useTalkPickInputs from './useTalkPickInputs';
 
 export const usePostTalkPickForm = (existingTalkPick?: TalkPickDetail) => {
   const initialState: NewTalkPick = {
