@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useRef } from 'react';
 import { Camera } from '@/assets';
 import { useFileUploadMutation } from '@/hooks/api/file/useFileUploadMutation';
@@ -11,7 +9,6 @@ interface ImageUploadButtonProps {
   fileIds: number[];
   setFileIds: (name: string, fileIds: number[]) => void;
   setIsUploadingImage: React.Dispatch<React.SetStateAction<boolean>>;
-  isEditing: boolean;
   setNewFileIds: React.Dispatch<React.SetStateAction<number[]>>;
 }
 
@@ -21,7 +18,6 @@ const ImageUploadButton = ({
   fileIds,
   setFileIds,
   setIsUploadingImage,
-  isEditing,
   setNewFileIds,
 }: ImageUploadButtonProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);

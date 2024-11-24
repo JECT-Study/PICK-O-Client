@@ -100,7 +100,6 @@ const ImageUploader = ({
           fileIds={fileIds}
           setFileIds={setFileIds}
           setIsUploadingImage={setIsUploadingImage}
-          isEditing={isEditing}
           setNewFileIds={setNewFileIds}
         />
 
