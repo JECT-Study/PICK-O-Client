@@ -136,32 +136,37 @@ const Header = () => {
 
   return (
     <div css={S.containerStyle}>
-      <div css={S.logoStyle}>
-        <Link to="/">
-          <Logo />
-        </Link>
-      </div>
-      <div css={S.rightContainerStyle}>
-        <CreateDropdown optionData={optionData} />
+      <div css={S.headerWrapper}>
+        <div css={S.logoStyle}>
+          <Link to="/">
+            <Logo />
+          </Link>
+        </div>
         <div css={S.rightContainerStyle}>
-          <button
-            type="button"
-            onClick={handleLoginButton}
-            css={S.LoginButtonStyle}
-          >
-            {accessToken ? '로그아웃' : '로그인'}
-          </button>
-          {/* <Notification isNew={isNew} notifications={notifications} /> */}
-          <div css={S.notificationStyle}>
-            {accessToken ? (
-              <ProfileIcon
-                interaction="custom"
-                imgUrl={member?.profileImageUrl ?? DefaultProfile}
-                onClick={handleProfileIcon}
-              />
-            ) : (
-              <ProfileIcon interaction="default" onClick={handleProfileIcon} />
-            )}
+          <CreateDropdown optionData={optionData} />
+          <div css={S.rightContainerStyle}>
+            <button
+              type="button"
+              onClick={handleLoginButton}
+              css={S.LoginButtonStyle}
+            >
+              {accessToken ? '로그아웃' : '로그인'}
+            </button>
+            {/* <Notification isNew={isNew} notifications={notifications} /> */}
+            <div css={S.notificationStyle}>
+              {accessToken ? (
+                <ProfileIcon
+                  interaction="custom"
+                  imgUrl={member?.profileImageUrl ?? DefaultProfile}
+                  onClick={handleProfileIcon}
+                />
+              ) : (
+                <ProfileIcon
+                  interaction="default"
+                  onClick={handleProfileIcon}
+                />
+              )}
+            </div>
           </div>
         </div>
       </div>

@@ -4,10 +4,9 @@ import typo from '@/styles/typo';
 
 export const containerStyle = css({
   width: '100%',
-  padding: '0 200px',
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'space-between',
+  justifyContent: 'center',
   backgroundColor: color.WT,
   boxShadow: '0px 4px 11px rgba(0, 0, 0, 0.1)',
   position: 'fixed',
@@ -15,6 +14,13 @@ export const containerStyle = css({
   left: 0,
   zIndex: 1000,
   height: '100px',
+});
+
+export const headerWrapper = css({
+  width: '80%',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
 });
 
 export const logoStyle = css({
