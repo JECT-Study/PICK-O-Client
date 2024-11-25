@@ -35,7 +35,21 @@ const SearchGameListSection = ({
   if (isLoading) {
     return (
       <div css={S.container}>
-        <SearchResultCardSkeleton count={9} />
+        <div css={S.titleWrapper}>
+          <div>밸런스게임</div>
+          <ToggleGroup selectedValue={sort} onClick={onSortChange} />
+        </div>
+        <div css={S.contentWrapper}>
+          <SearchResultCardSkeleton count={9} />
+        </div>
+        <div css={S.paginationWrapper}>
+          <Pagination
+            pages={pages}
+            selected={selectedPage}
+            maxPage={totalPages}
+            onChangeNavigate={onPageChange}
+          />
+        </div>
       </div>
     );
   }
