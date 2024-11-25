@@ -4,7 +4,6 @@ import Button from '@/components/atoms/Button/Button';
 import Divider from '@/components/atoms/Divider/Divider';
 import { BalanceGame, BalanceGameSet, TempGame } from '@/types/game';
 import { useFileUploadMutation } from '@/hooks/api/file/useFileUploadMutation';
-import { UploadedImage } from '@/types/file';
 import ToastModal from '@/components/atoms/ToastModal/ToastModal';
 import TagModal from '@/components/molecules/TagModal/TagModal';
 import { useCreateBalanceGameMutation } from '@/hooks/api/game/useCreateBalanceGameMutation';
@@ -46,7 +45,7 @@ const BalanceGameCreationPage = () => {
             id: 100,
             name: option.name,
             imgUrl: option.imgUrl,
-            storedName: '',
+            fileId: 0,
             description: option.description,
             optionType: option.optionType,
           })),
@@ -56,26 +55,41 @@ const BalanceGameCreationPage = () => {
   };
 
   const handleImageUpload = async (
-    imageFiles: File[],
-  ): Promise<UploadedImage> => {
+    imageFile: File,
+    type: 'GAME_OPTION',
+  ): Promise<{ imgUrl: string; fileId: number }> => {
     const formData = new FormData();
-    imageFiles.forEach((file) => {
-      formData.append('file', file);
+    formData.append('file', imageFile);
+
+    const { imgUrls, fileIds } = await uploadImage({
+      formData,
+      params: { type },
     });
-    return uploadImage({ formData, params: { type: 'GAME' } });
+    return { imgUrl: imgUrls[0], fileId: fileIds[0] };
   };
 
-  const uploadAllImages = async (
-    BalanceGameSets: BalanceGameSet[],
-  ): Promise<UploadedImage[]> => {
-    const uploadPromises = BalanceGameSets.flatMap((game) =>
-      game.gameOptions.map(async (option) => {
-        const imageFile = option.imageFile as File;
-        return handleImageUpload([imageFile]);
-      }),
-    );
-
-    return Promise.all(uploadPromises);
+  const onImageChange = async (
+    stageIndex: number,
+    optionIndex: number,
+    imageFile: File,
+  ) => {
+    try {
+      const { imgUrl, fileId } = await handleImageUpload(
+        imageFile,
+        'GAME_OPTION',
+      );
+      setGames((prevGames) => {
+        const updatedGames = [...prevGames];
+        updatedGames[stageIndex].gameOptions[optionIndex] = {
+          ...updatedGames[stageIndex].gameOptions[optionIndex],
+          imgUrl,
+          fileId,
+        };
+        return updatedGames;
+      });
+    } catch (error) {
+      console.error('Image upload failed:', error);
+    }
   };
 
   const handleCompleteClick = () => {
@@ -86,29 +100,11 @@ const BalanceGameCreationPage = () => {
     selectedMainTag: string,
     selectedSubTag: string,
   ) => {
-    setIsTagModalOpen(false);
-
-    const allUploadedImages = await uploadAllImages(games);
-
-    let imageIndex = 0;
-    const updatedGames = games.map((game) => ({
-      description,
-      gameOptions: game.gameOptions.map((option) => {
-        const { imgUrls, storedNames } = allUploadedImages[imageIndex];
-        imageIndex += 1;
-        return {
-          ...option,
-          imgUrl: imgUrls[0],
-          storedName: storedNames[0],
-        };
-      }),
-    }));
-
     const gameData: BalanceGame = {
       title,
       mainTag: selectedMainTag,
       subTag: selectedSubTag,
-      games: updatedGames,
+      games,
     };
 
     await handleCreateBalanceGame(gameData);
@@ -126,7 +122,7 @@ const BalanceGameCreationPage = () => {
           tempGameOptions: activeGame.gameOptions.map((option) => ({
             name: option.name,
             imgUrl: option.imgUrl,
-            storedName: option.storedName,
+            fileId: option.fileId,
             description: option.description,
             optionType: option.optionType,
           })),
@@ -154,6 +150,7 @@ const BalanceGameCreationPage = () => {
           onDraftLoad={handleDraftLoad}
           onStageChange={(stage) => setActiveStage(stage)}
           onGamesUpdate={(updatedGames) => setGames(updatedGames)}
+          onImageChange={onImageChange}
         />
         <div css={S.buttonContainer}>
           <Button
