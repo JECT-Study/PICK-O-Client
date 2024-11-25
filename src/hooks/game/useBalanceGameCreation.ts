@@ -43,19 +43,6 @@ export const useBalanceGameCreation = (
     );
   };
 
-  const handleImageChange =
-    (optionType: 'A' | 'B') => (event: React.ChangeEvent<HTMLInputElement>) => {
-      const file = event.target.files?.[0];
-      if (file) {
-        const imgUrl = createImageUrlFromFile(file);
-        updateOption(currentStage, optionType, {
-          imgUrl,
-          storedName: file.name,
-          imageFile: file,
-        });
-      }
-    };
-
   const handleOptionChange =
     (optionType: 'A' | 'B') => (event: React.ChangeEvent<HTMLInputElement>) => {
       updateOption(currentStage, optionType, { name: event.target.value });
