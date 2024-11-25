@@ -54,7 +54,7 @@ export interface BalanceGameOption {
   id: number;
   name: string;
   imgUrl: string;
-  storedName: string;
+  fileId: number;
   description: string;
   optionType: 'A' | 'B';
   imageFile?: File | null;
