@@ -5,16 +5,19 @@ import SearchTalkPickList from '@/components/molecules/SearchTalkPickList/Search
 import { NoResultsMessage } from '@/components/atoms/NoResultsMessage/NoResultsMessage';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { PATH } from '@/constants/path';
+import SearchResultListSkeleton from '@/components/atoms/SearchResultListSkeleton/SearchResultListSkeleton';
 import * as S from './SearchTalkPickResult.style';
 
 interface SearchTalkPickResultProps {
   searchTalkPickList: SearchTalkPickItemProps[];
   keyword: string;
+  isLoading: boolean;
 }
 
 const SearchTalkPickResult = ({
   searchTalkPickList,
   keyword,
+  isLoading,
 }: SearchTalkPickResultProps) => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -25,6 +28,18 @@ const SearchTalkPickResult = ({
       `/result/${PATH.SEARCH.TALKPICK}?query=${searchParams.get('query')}`,
     );
   };
+
+  if (isLoading) {
+    return (
+      <div css={S.container}>
+        <div css={S.titleWrapper}>
+          <div>톡픽</div>
+          <MoreButton onClick={handleButtonClick} />
+        </div>
+        <SearchResultListSkeleton length={4} />
+      </div>
+    );
+  }
 
   return (
     <div css={S.container}>
