@@ -6,18 +6,19 @@ import {
 } from '@/utils/balanceGameUtils';
 
 export const useBalanceGameCreation = (
-  totalStage: number,
+  totalStage: number = 10,
   currentStage: number,
 ) => {
   const [games, setGames] = useState<BalanceGameSet[]>(
     createInitialGameStages(totalStage),
   );
-  const [currentOptions, setCurrentOptions] = useState<BalanceGameOption[]>(
-    games[currentStage].gameOptions,
-  );
+  const [currentOptions, setCurrentOptions] = useState<BalanceGameOption[]>([]);
+  const [currentDescription, setCurrentDescription] = useState<string>('');
 
   useEffect(() => {
-    setCurrentOptions(games[currentStage].gameOptions || []);
+    const stage = games[currentStage] || { gameOptions: [], description: '' };
+    setCurrentOptions(stage.gameOptions);
+    setCurrentDescription(stage.description);
   }, [currentStage, games]);
 
   const updateOption = (
@@ -55,10 +56,22 @@ export const useBalanceGameCreation = (
     updateOption(currentStage, optionType, { description: value });
   };
 
+  const handleStageDescriptionChange = (newDescription: string) => {
+    setCurrentDescription(newDescription);
+
+    setGames((prevGames) =>
+      prevGames.map((game, idx) =>
+        idx === currentStage ? { ...game, description: newDescription } : game,
+      ),
+    );
+  };
+
   return {
     games,
     currentOptions,
+    currentDescription,
     handleOptionChange,
     handleDescriptionChange,
+    handleStageDescriptionChange,
   };
 };
