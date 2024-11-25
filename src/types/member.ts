@@ -1,11 +1,11 @@
 export type Member = {
   id: number;
   nickname: string;
-  profileImageUrl: string;
+  email: string;
+  profileImgUrl: string;
   createdAt: string;
   postsCount: number;
-  totalPostLike: number;
-  level: 0 | 1 | 2;
+  bookmarkedPostsCount: number;
 };
 
 export interface MemberForm {
