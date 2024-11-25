@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import BalanceGameCreation from '@/components/organisms/BalanceGameCreation/BalanceGameCreation';
 import Button from '@/components/atoms/Button/Button';
 import Divider from '@/components/atoms/Divider/Divider';
@@ -29,8 +29,16 @@ const BalanceGameCreationPage = () => {
     setTitle(e.target.value);
   };
 
-  const handleDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDescription(e.target.value);
+  const handleDescriptionChange = (newDescription: string) => {
+    setDescription(newDescription);
+    setGames((prevGames) => {
+      const updatedGames = [...prevGames];
+      updatedGames[activeStage] = {
+        ...updatedGames[activeStage],
+        description,
+      };
+      return updatedGames;
+    });
   };
 
   const handleDraftLoad = async () => {
@@ -89,6 +97,7 @@ const BalanceGameCreationPage = () => {
       });
     } catch (error) {
       console.error('Image upload failed:', error);
+      alert('이미지 업로드에 실패했습니다. 다시 시도해주세요.');
     }
   };
 
@@ -100,6 +109,11 @@ const BalanceGameCreationPage = () => {
     selectedMainTag: string,
     selectedSubTag: string,
   ) => {
+    if (!games.length) {
+      alert('게임 데이터가 없습니다. 입력 후 완료 버튼을 눌러주세요.');
+      return;
+    }
+
     const gameData: BalanceGame = {
       title,
       mainTag: selectedMainTag,
@@ -107,7 +121,13 @@ const BalanceGameCreationPage = () => {
       games,
     };
 
-    await handleCreateBalanceGame(gameData);
+    try {
+      await handleCreateBalanceGame(gameData);
+      alert('게임 생성이 완료되었습니다.');
+    } catch (error) {
+      console.error('게임 생성 실패:', error);
+      alert('게임 생성에 실패했습니다. 다시 시도해주세요.');
+    }
   };
 
   const handleSaveDraft = async () => {
@@ -132,6 +152,12 @@ const BalanceGameCreationPage = () => {
     await handleSaveTempGame(tempGameData);
     showToastModal('임시저장완료');
   };
+
+  useEffect(() => {
+    if (games[activeStage]) {
+      setDescription(games[activeStage].description || '');
+    }
+  }, [activeStage, games]);
 
   return (
     <div css={S.PageContainer}>
