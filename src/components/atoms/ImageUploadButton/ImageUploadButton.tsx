@@ -44,6 +44,9 @@ const ImageUploadButton = ({
             setFileIds('fileIds', updatedFileIds);
             setIsUploadingImage(false);
           },
+          onError: () => {
+            setIsUploadingImage(false);
+          },
         },
       );
     }
