@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import BestTalkPick from '@/components/molecules/BestTalkPick/BestTalkPick';
