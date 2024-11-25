@@ -12,7 +12,7 @@ export interface BalanceGameCreationProps {
   title: string;
   description?: string;
   onTitleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onDescriptionChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onDescriptionChange: (description: string) => void;
   handleCompleteClick: () => void;
   onDraftLoad: () => void;
   onStageChange: (stage: number) => void;
@@ -36,12 +36,19 @@ const BalanceGameCreation = ({
   const { currentStage, clearInput, handleNextStage, handlePrevStage } =
     useStageNavigation(totalStage);
 
-  const { games, currentOptions, handleOptionChange, handleDescriptionChange } =
-    useBalanceGameCreation(totalStage, currentStage);
+  const {
+    games,
+    currentOptions,
+    currentDescription,
+    handleOptionChange,
+    handleDescriptionChange,
+    handleStageDescriptionChange,
+  } = useBalanceGameCreation(totalStage, currentStage);
 
   useEffect(() => {
     onStageChange(currentStage);
-  }, [currentStage, onStageChange]);
+    onDescriptionChange(currentDescription);
+  }, [currentStage, onStageChange, currentDescription, onDescriptionChange]);
 
   useEffect(() => {
     if (currentOptions.length > 0) {
@@ -49,45 +56,41 @@ const BalanceGameCreation = ({
     }
   }, [currentOptions, games, onGamesUpdate]);
 
-  const handleFileChange = (optionIndex: number) => (file: File) => {
-    onImageChange(currentStage, optionIndex, file);
-  };
-
   return (
     <div css={S.pageContainer}>
       <TitleDescriptionField
         title={title}
         description={description}
         onTitleChange={onTitleChange}
-        onDescriptionChange={onDescriptionChange}
+        onDescriptionChange={(e) =>
+          handleStageDescriptionChange(e.target.value)
+        }
       />
       <div css={S.optionsContainer}>
         <BalanceGameOptionCard
           option="A"
-          imgUrl={currentOptions[0].imgUrl}
-          imageFile={currentOptions[0].imageFile ?? null}
-          onImageChange={handleFileChange(0)}
+          imgUrl={currentOptions[0]?.imgUrl || ''}
+          onImageChange={(file) => onImageChange(currentStage, 0, file)}
           choiceInputProps={{
-            value: currentOptions[0].name,
+            value: currentOptions[0]?.name || '',
             onChange: handleOptionChange('A'),
           }}
           infoInputProps={{
-            value: currentOptions[0].description,
+            value: currentOptions[0]?.description || '',
             onChange: (e) => handleDescriptionChange('A', e),
           }}
           clearInput={clearInput}
         />
         <BalanceGameOptionCard
           option="B"
-          imgUrl={currentOptions[1].imgUrl}
-          imageFile={currentOptions[1].imageFile ?? null}
-          onImageChange={handleFileChange(1)}
+          imgUrl={currentOptions[1]?.imgUrl || ''}
+          onImageChange={(file) => onImageChange(currentStage, 1, file)}
           choiceInputProps={{
-            value: currentOptions[1].name,
+            value: currentOptions[1]?.name || '',
             onChange: handleOptionChange('B'),
           }}
           infoInputProps={{
-            value: currentOptions[1].description,
+            value: currentOptions[1]?.description || '',
             onChange: (e) => handleDescriptionChange('B', e),
           }}
           clearInput={clearInput}

@@ -8,27 +8,31 @@ const meta: Meta<typeof BalanceGameCreation> = {
     layout: 'centered',
   },
   argTypes: {
-    onTitleChange: { action: '제목이 수정됨' },
-    onDescriptionChange: { action: '설명이 수정됨' },
-    handleCompleteClick: { action: '완료 버튼이 클릭됨' },
-    onDraftLoad: { action: '임시 저장 불러오기' },
-    onStageChange: { action: '스테이지 이동' },
-    onGamesUpdate: { action: '게임세트가 업데이트됨' },
+    onTitleChange: { action: '제목 수정' },
+    onDescriptionChange: { action: '설명 수정' },
+    handleCompleteClick: { action: '완료 클릭' },
+    onDraftLoad: { action: '임시 저장 로드' },
+    onStageChange: { action: '스테이지 변경' },
+    onGamesUpdate: { action: '게임 세트 업데이트' },
+    onImageChange: { action: '이미지 변경' },
   },
 };
 
 export default meta;
+
 type Story = StoryObj<typeof BalanceGameCreation>;
 
 export const Default: Story = {
   args: {
-    title: '',
-    description: '',
-    onTitleChange: (e) => console.log('제목이 바뀜:', e.target.value),
-    onDescriptionChange: (e) => console.log('설명이 바뀜:', e.target.value),
-    handleCompleteClick: () => console.log('완료 버튼 클릭'),
-    onDraftLoad: () => console.log('임시 저장 불러오기 클릭'),
-    onStageChange: (stage) => console.log('스테이지 바뀜:', stage),
-    onGamesUpdate: (games) => console.log('게임이 저장됨:', games),
+    title: '밸런스 게임 제목',
+    description: '밸런스 게임 설명',
+    onTitleChange: (e) => console.log('제목 변경:', e.target.value),
+    onDescriptionChange: (desc) => console.log('설명 변경:', desc),
+    handleCompleteClick: () => console.log('게임 완료'),
+    onDraftLoad: () => console.log('임시 저장 로드'),
+    onStageChange: (stage) => console.log('스테이지 변경:', stage),
+    onGamesUpdate: (games) => console.log('게임 세트 업데이트:', games),
+    onImageChange: (stageIndex, optionIndex, file) =>
+      console.log('이미지 변경:', { stageIndex, optionIndex, file }),
   },
 };
