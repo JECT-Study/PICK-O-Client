@@ -84,7 +84,7 @@ export interface TempGameSet {
   tempGameOptions: {
     name: string;
     imgUrl: string;
-    storedName: string;
+    fileId: number;
     description: string;
     optionType: 'A' | 'B';
   }[];
