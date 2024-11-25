@@ -4,6 +4,11 @@ import color from '@/styles/color';
 export const listContainer = css({
   display: 'flex',
   flexDirection: 'column',
+  width: '1145px',
+  border: `1px solid ${color.GY[2]}`,
+  borderRadius: '10px',
+  alignItems: 'center',
+  padding: '20px 0',
 });
 
 export const contentContainer = css({
