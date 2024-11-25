@@ -12,7 +12,6 @@ import { useSaveTempGameMutation } from '@/hooks/api/game/useTempGameSaveMutatio
 import { useTempGameQuery } from '@/hooks/api/game/useTempGameQuery';
 import useToastModal from '@/hooks/modal/useToastModal';
 import * as S from './BalanceGameCreationPage.style';
-import { PageContainer, pageWrapper } from './BalanceGameCreationPage.style';
 
 const BalanceGameCreationPage = () => {
   const [title, setTitle] = useState('');
