@@ -21,6 +21,7 @@ import LoginPage from './pages/LoginPage/LoginPage';
 // import TodayTalkPickPage from './pages/TodayTalkPickPage/TodayTalkPickPage';
 import SearchResultsPage from './pages/SearchResultsPage/SearchResultsPage';
 import ChangePasswordPage from './pages/ChangePasswordPage/ChangePasswordPage';
+import ChangeUserInfoPage from './pages/ChangeUserInfoPage/ChangeUserInfoPage';
 import TalkPickPage from './pages/TalkPickPage/TalkPickPage';
 // import DeletePage from './pages/MyPage/DeletePage/DeletePage';
 // import HistoryPage from './pages/MyPage/HistoryPage/HistoryPage';
@@ -53,6 +54,7 @@ const App: React.FC = () => {
           <Route path={PATH.SIGN_UP} element={<SignUpPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/changePassword" element={<ChangePasswordPage />} />
+          <Route path="/changeUserInfo" element={<ChangeUserInfoPage />} />
           <Route path="/todaytalkpick" element={<TalkPickPage />} />
           <Route path="/talkpick/:talkPickId" element={<TalkPickPage />} />
           <Route path="/talkpickplace" element={<TalkPickPlacePage />} />
