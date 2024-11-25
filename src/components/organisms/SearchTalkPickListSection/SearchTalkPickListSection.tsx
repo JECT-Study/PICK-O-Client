@@ -35,7 +35,21 @@ const SearchTalkPickListSection = ({
   if (isLoading) {
     return (
       <div css={S.container}>
-        <SearchResultListSkeleton length={10} />
+        <div css={S.titleWrapper}>
+          <div>톡픽</div>
+          <ToggleGroup selectedValue={sort} onClick={onSortChange} />
+        </div>
+        <div css={S.contentWrapper}>
+          <SearchResultListSkeleton length={10} />
+        </div>
+        <div css={S.paginationWrapper}>
+          <Pagination
+            pages={pages}
+            selected={selectedPage}
+            maxPage={totalPages}
+            onChangeNavigate={onPageChange}
+          />
+        </div>
       </div>
     );
   }
