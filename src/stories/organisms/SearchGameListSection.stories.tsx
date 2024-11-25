@@ -70,6 +70,18 @@ export const All: Story = {
             onSortChange={handleSortChange}
           />
         </div>
+        <div>
+          <h3>로딩중</h3>
+          <SearchGameListSection
+            {...args}
+            gameList={gameListSample.slice(9, 18)}
+            totalPages={2}
+            selectedPage={2}
+            sort={sort}
+            isLoading
+            onSortChange={handleSortChange}
+          />
+        </div>
       </>
     );
   },
