@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { BalanceGameOption, BalanceGameSet } from '@/types/game';
-import { createImageUrlFromFile } from '@/utils/file';
 import {
   createInitialGameStages,
   updateOptionInGameSets,

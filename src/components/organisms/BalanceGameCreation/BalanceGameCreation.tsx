@@ -17,6 +17,7 @@ export interface BalanceGameCreationProps {
   onDraftLoad: () => void;
   onStageChange: (stage: number) => void;
   onGamesUpdate: (games: BalanceGameSet[]) => void;
+  onImageChange: (stageIndex: number, optionIndex: number, file: File) => void;
 }
 
 const BalanceGameCreation = ({
@@ -28,19 +29,15 @@ const BalanceGameCreation = ({
   onDraftLoad,
   onStageChange,
   onGamesUpdate,
+  onImageChange,
 }: BalanceGameCreationProps) => {
   const totalStage = 10;
 
   const { currentStage, clearInput, handleNextStage, handlePrevStage } =
     useStageNavigation(totalStage);
 
-  const {
-    games,
-    currentOptions,
-    handleImageChange,
-    handleOptionChange,
-    handleDescriptionChange,
-  } = useBalanceGameCreation(totalStage, currentStage);
+  const { games, currentOptions, handleOptionChange, handleDescriptionChange } =
+    useBalanceGameCreation(totalStage, currentStage);
 
   useEffect(() => {
     onStageChange(currentStage);
@@ -51,6 +48,10 @@ const BalanceGameCreation = ({
       onGamesUpdate(games);
     }
   }, [currentOptions, games, onGamesUpdate]);
+
+  const handleFileChange = (optionIndex: number) => (file: File) => {
+    onImageChange(currentStage, optionIndex, file);
+  };
 
   return (
     <div css={S.pageContainer}>
@@ -65,7 +66,7 @@ const BalanceGameCreation = ({
           option="A"
           imgUrl={currentOptions[0].imgUrl}
           imageFile={currentOptions[0].imageFile ?? null}
-          onImageChange={handleImageChange('A')}
+          onImageChange={handleFileChange(0)}
           choiceInputProps={{
             value: currentOptions[0].name,
             onChange: handleOptionChange('A'),
@@ -80,7 +81,7 @@ const BalanceGameCreation = ({
           option="B"
           imgUrl={currentOptions[1].imgUrl}
           imageFile={currentOptions[1].imageFile ?? null}
-          onImageChange={handleImageChange('B')}
+          onImageChange={handleFileChange(1)}
           choiceInputProps={{
             value: currentOptions[1].name,
             onChange: handleOptionChange('B'),
