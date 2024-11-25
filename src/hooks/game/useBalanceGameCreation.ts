@@ -58,7 +58,6 @@ export const useBalanceGameCreation = (
   return {
     games,
     currentOptions,
-    handleImageChange,
     handleOptionChange,
     handleDescriptionChange,
   };
