@@ -21,16 +21,6 @@ export const checkPasswordTextStyling = css(typo.Main.Medium, {
   marginTop: '26px',
 });
 
-export const checkPasswordFormStyling = css({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  width: '573px',
-  gap: '15px',
-  marginTop: '70px',
-  marginBottom: '60px',
-});
-
 export const changeUserInfoFormStyling = css({
   display: 'flex',
   flexDirection: 'column',
@@ -39,6 +29,23 @@ export const changeUserInfoFormStyling = css({
   marginTop: '25px',
   marginBottom: '60px',
   gap: '40px',
+});
+
+export const checkPasswordFormStyling = css({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  width: '573px',
+  gap: '15px',
+});
+
+export const checkPasswordFormWrapper = css({
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  marginTop: '70px',
+  height: '270px',
 });
 
 export const btnStyling = css({

@@ -43,24 +43,26 @@ const ChangeUserInfoPage = () => {
           <span css={S.checkPasswordTextStyling}>
             회원정보 보호를 위해, 비밀번호를 다시 한번 입력해 주세요.
           </span>
-          <div css={S.checkPasswordFormStyling}>
-            <InputInfoEmail value={member?.email} />
-            <InputInfoPw
-              inputRef={inputRef}
-              isError={isError}
-              errorMessage={errorMessage}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setPasswordInput(e.target.value)
-              }
-            />
+          <div css={S.checkPasswordFormWrapper}>
+            <div css={S.checkPasswordFormStyling}>
+              <InputInfoEmail value={member?.email} />
+              <InputInfoPw
+                inputRef={inputRef}
+                isError={isError}
+                errorMessage={errorMessage}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setPasswordInput(e.target.value)
+                }
+              />
+            </div>
+            <Button
+              variant="roundPrimary2"
+              css={S.btnStyling}
+              onClick={handleSubmit}
+            >
+              확인
+            </Button>
           </div>
-          <Button
-            variant="roundPrimary2"
-            css={S.btnStyling}
-            onClick={handleSubmit}
-          >
-            확인
-          </Button>
         </>
       )}
     </form>
