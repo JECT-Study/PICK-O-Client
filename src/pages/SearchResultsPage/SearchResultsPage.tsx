@@ -8,8 +8,6 @@ import useTagFilter from '@/hooks/search/useTagFilter';
 import useSearchQuery from '@/hooks/search/useSearchQuery';
 import Divider from '@/components/atoms/Divider/Divider';
 import SearchResultBarContainer from '@/components/organisms/SearchResultBarContainer/SearchResultBarContainer';
-import SearchResultListSkeleton from '@/components/atoms/SearchResultListSkeleton/SearchResultListSkeleton';
-import SearchResultCardSkeleton from '@/components/atoms/SearchResultCardSkeleton/SearchResultCardSkeleton';
 import * as S from './SearchResultsPage.style';
 
 const SearchResultsPage = () => {
@@ -29,15 +27,6 @@ const SearchResultsPage = () => {
   );
 
   const renderResults = () => {
-    if (isTalkPickLoading || isGameLoading) {
-      return (
-        <div css={S.resultsWrapper}>
-          <SearchResultListSkeleton length={4} />
-          <SearchResultCardSkeleton count={4} />
-        </div>
-      );
-    }
-
     const noTalkPickResults = talkPickResults.length === 0;
     const noGameResults = gameResults.length === 0;
 
@@ -54,8 +43,13 @@ const SearchResultsPage = () => {
         <SearchTalkPickResult
           searchTalkPickList={talkPickResults}
           keyword={query}
+          isLoading={isTalkPickLoading}
         />
-        <SearchGameResult gameList={gameResults} keyword={query} />
+        <SearchGameResult
+          gameList={gameResults}
+          keyword={query}
+          isLoading={isGameLoading}
+        />
       </div>
     );
   };
