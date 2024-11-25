@@ -29,6 +29,11 @@ export interface MemberResetForm {
   passwordConfirm: string;
 }
 
+export type MemberEditForm = {
+  nickname: string;
+  profileImgId: number;
+};
+
 export type MemberVerifyForm = Pick<
   MemberResetForm,
   'email' | 'verificationCode'

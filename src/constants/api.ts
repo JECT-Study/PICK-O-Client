@@ -21,12 +21,14 @@ export const END_POINT = {
   LOGOUT: '/members/logout',
   REFRESH: '/members/reissue',
   ALL_MEMBERS: '/members',
+  EDIT_MEMBERS: '/members',
   MEMBER: (id: number) => `/members/${id}`,
   MEMBER_PROFILE: (id: number) => `/members/${id}/profile`,
   MEMBER_IMAGE: '/members/image',
   MEMBER_NICKNAME: '/members/nickname',
   MEMBER_PASSWORD: '/members/password',
   NICKNAME_VERIFY: '/members/duplicate',
+  PASSWORD_VERIFY: '/members/verify-password',
 
   // email API
   EMAIL_SIGNUP_CODE: '/email/signup/code',
