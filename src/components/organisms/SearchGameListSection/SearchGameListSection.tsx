@@ -6,6 +6,7 @@ import SearchGameList, {
 } from '@/components/molecules/SearchGameList/SearchGameList';
 import { generatePageNumbers } from '@/utils/pagination';
 import { NoResultsMessage } from '@/components/atoms/NoResultsMessage/NoResultsMessage';
+import SearchResultCardSkeleton from '@/components/atoms/SearchResultCardSkeleton/SearchResultCardSkeleton';
 import * as S from './SearchGameListSection.style';
 
 interface SearchGameListSectionProps {
@@ -32,7 +33,11 @@ const SearchGameListSection = ({
   const pages = generatePageNumbers(totalPages);
 
   if (isLoading) {
-    return <div>스켈레톤 준비중...</div>;
+    return (
+      <div css={S.container}>
+        <SearchResultCardSkeleton count={9} />
+      </div>
+    );
   }
 
   if (gameList.length === 0) {

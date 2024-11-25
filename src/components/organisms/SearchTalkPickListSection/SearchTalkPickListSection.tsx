@@ -6,6 +6,7 @@ import SearchTalkPickList from '@/components/molecules/SearchTalkPickList/Search
 import Pagination from '@/components/atoms/Pagination/Pagination';
 import { generatePageNumbers } from '@/utils/pagination';
 import { NoResultsMessage } from '@/components/atoms/NoResultsMessage/NoResultsMessage';
+import SearchResultListSkeleton from '@/components/atoms/SearchResultListSkeleton/SearchResultListSkeleton';
 import * as S from './SearchTalkPickListSection.style';
 
 interface SearchTalkPickSectionProps {
@@ -32,7 +33,11 @@ const SearchTalkPickListSection = ({
   const pages = generatePageNumbers(totalPages);
 
   if (isLoading) {
-    return <div>스켈레톤 준비중...</div>;
+    return (
+      <div css={S.container}>
+        <SearchResultListSkeleton length={10} />
+      </div>
+    );
   }
 
   if (searchTalkPickList.length === 0) {
