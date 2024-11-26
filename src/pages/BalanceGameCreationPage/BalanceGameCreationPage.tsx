@@ -11,6 +11,7 @@ import { useSaveTempGameMutation } from '@/hooks/api/game/useTempGameSaveMutatio
 import { useTempGameQuery } from '@/hooks/api/game/useTempGameQuery';
 import useToastModal from '@/hooks/modal/useToastModal';
 import TextModal from '@/components/molecules/TextModal/TextModal';
+import { useNavigate } from 'react-router-dom';
 import * as S from './BalanceGameCreationPage.style';
 
 const BalanceGameCreationPage = () => {
@@ -24,6 +25,7 @@ const BalanceGameCreationPage = () => {
     optionIndex: number;
   } | null>(null);
   const [activeStage, setActiveStage] = useState(0);
+  const navigate = useNavigate();
 
   const { handleCreateBalanceGame } = useCreateBalanceGameMutation();
   const { handleSaveTempGame } = useSaveTempGameMutation();
@@ -167,6 +169,7 @@ const BalanceGameCreationPage = () => {
       await handleCreateBalanceGame(gameData);
 
       alert('게임 생성이 완료되었습니다.');
+      navigate('/');
     } catch (error) {
       console.error('게임 생성 실패:', error);
       alert('게임 생성에 실패했습니다. 다시 시도해주세요.');
