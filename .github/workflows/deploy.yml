@@ -57,7 +57,7 @@ jobs:
 
       - name: Deploy to S3
         run: |
-          aws s3 sync ./dist/ s3://${{ secrets.AWS_S3_BUCKET }} --delete
+          aws s3 sync ./dist/ s3://${{ secrets.S3_BUCKET_NAME }} --delete
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
