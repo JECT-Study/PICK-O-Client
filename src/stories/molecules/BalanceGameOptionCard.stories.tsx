@@ -12,6 +12,7 @@ const meta: Meta<typeof BalanceGameOptionCard> = {
   argTypes: {
     imgUrl: { control: { type: 'text' }, defaultValue: '' },
     onImageChange: { action: 'file selected' },
+    onImageDelete: { action: 'image deleted' },
     option: {
       control: { type: 'radio' },
       options: ['A', 'B'],
@@ -29,6 +30,7 @@ export const Default: Story = {
     option: 'A',
     imgUrl: '',
     onImageChange: () => {},
+    onImageDelete: () => {},
   },
 };
 
@@ -52,6 +54,14 @@ export const All: Story = {
       setImgUrlB(url);
     };
 
+    const handleImageADelete = () => {
+      setImgUrlA('');
+    };
+
+    const handleImageBDelete = () => {
+      setImgUrlB('');
+    };
+
     return (
       <ul css={storyContainer}>
         <li css={storyInnerContainer}>
@@ -70,6 +80,7 @@ export const All: Story = {
             option="A"
             imgUrl={imgUrlA}
             onImageChange={handleImageAChange}
+            onImageDelete={handleImageADelete}
           />
         </li>
         <li css={storyInnerContainer}>
@@ -79,6 +90,7 @@ export const All: Story = {
             option="A"
             imgUrl="https://picko-image.s3.ap-northeast-2.amazonaws.com/talk-pick/9b4856fe-b624-4e54-ad80-a94e083301d2_czz.png"
             onImageChange={handleImageAChange}
+            onImageDelete={handleImageADelete}
           />
         </li>
         <li css={storyInnerContainer}>
@@ -97,6 +109,7 @@ export const All: Story = {
             option="B"
             imgUrl={imgUrlB}
             onImageChange={handleImageBChange}
+            onImageDelete={handleImageBDelete}
           />
         </li>
         <li css={storyInnerContainer}>
@@ -106,6 +119,7 @@ export const All: Story = {
             option="B"
             imgUrl="https://picko-image.s3.ap-northeast-2.amazonaws.com/talk-pick/9b4856fe-b624-4e54-ad80-a94e083301d2_czz.png"
             onImageChange={handleImageBChange}
+            onImageDelete={handleImageBDelete}
           />
         </li>
       </ul>

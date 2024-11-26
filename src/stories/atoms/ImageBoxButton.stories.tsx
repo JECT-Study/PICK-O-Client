@@ -12,6 +12,7 @@ const meta = {
   argTypes: {
     imgUrl: { control: 'text', defaultValue: '' },
     onFileSelect: { action: 'file selected' },
+    onDelete: { action: 'image deleted' },
   },
 } satisfies Meta<typeof ImageBoxButton>;
 
@@ -23,6 +24,7 @@ export const Default: Story = {
   args: {
     imgUrl: '',
     onFileSelect: () => {},
+    onDelete: () => {},
   },
 };
 
@@ -35,11 +37,19 @@ export const All: Story = {
       setImgUrl(url);
     };
 
+    const handleImageDelete = () => {
+      setImgUrl('');
+    };
+
     return (
       <ul css={storyContainer}>
         <li css={storyInnerContainer}>
           <h3>기본 상태</h3>
-          <ImageBoxButton imgUrl="" onFileSelect={() => {}} />
+          <ImageBoxButton
+            imgUrl=""
+            onFileSelect={() => {}}
+            onDelete={() => {}}
+          />
         </li>
         <li css={storyInnerContainer}>
           <h3>업로드된 이미지</h3>

@@ -18,6 +18,7 @@ export interface BalanceGameCreationProps {
   onStageChange: (stage: number) => void;
   onGamesUpdate: (games: BalanceGameSet[]) => void;
   onImageChange: (stageIndex: number, optionIndex: number, file: File) => void;
+  onImageDelete: (stageIndex: number, optionIndex: number) => void;
 }
 
 const BalanceGameCreation = ({
@@ -30,6 +31,7 @@ const BalanceGameCreation = ({
   onStageChange,
   onGamesUpdate,
   onImageChange,
+  onImageDelete,
 }: BalanceGameCreationProps) => {
   const totalStage = 10;
 
@@ -71,6 +73,7 @@ const BalanceGameCreation = ({
           option="A"
           imgUrl={currentOptions[0]?.imgUrl || ''}
           onImageChange={(file) => onImageChange(currentStage, 0, file)}
+          onImageDelete={() => onImageDelete(currentStage, 0)}
           choiceInputProps={{
             value: currentOptions[0]?.name || '',
             onChange: handleOptionChange('A'),
@@ -85,6 +88,7 @@ const BalanceGameCreation = ({
           option="B"
           imgUrl={currentOptions[1]?.imgUrl || ''}
           onImageChange={(file) => onImageChange(currentStage, 1, file)}
+          onImageDelete={() => onImageDelete(currentStage, 1)}
           choiceInputProps={{
             value: currentOptions[1]?.name || '',
             onChange: handleOptionChange('B'),
