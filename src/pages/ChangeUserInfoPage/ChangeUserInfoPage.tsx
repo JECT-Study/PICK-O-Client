@@ -33,7 +33,7 @@ const ChangeUserInfoPage = () => {
     isVisible,
     modalText,
     handleUserInfoSubmit,
-  } = useChangeUserInfoForm(member?.nickname);
+  } = useChangeUserInfoForm(member?.nickname, member?.id);
 
   return (
     <form onSubmit={handleUserInfoSubmit} css={S.changeUserInfoPageContainer}>
