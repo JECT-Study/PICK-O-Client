@@ -24,7 +24,6 @@ const InputNickname = ({
 }: InputNicknameProps) => {
   const { inputRef, isError, errorMessage, handleSubmit } = useCheckNickname(
     value,
-    defaultValue,
     type,
   );
 
