@@ -59,6 +59,7 @@ export const SUCCESS = {
   COMMENT: {
     REPORT: '신고 완료되었습니다.',
   },
+  EDIT_PROFILE: '수정 완료 되었습니다!',
 } as const;
 
 export const NOTICE = {
