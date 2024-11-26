@@ -14,6 +14,23 @@ export const imageContainer = css`
   box-shadow: 1px 2px 15px 0 rgba(0, 0, 0, 0.05);
   cursor: pointer;
   overflow: hidden;
+  position: relative;
+
+  &[data-has-img='true']:hover::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+  }
+
+  &[data-has-img='true']:hover .trashIcon {
+    opacity: 1;
+    visibility: visible;
+  }
 `;
 
 export const defaultImageBox = css`
@@ -35,6 +52,30 @@ export const iconStyle = css`
   height: 36px;
   flex-shrink: 0;
   color: ${color.GY[1]};
+  box-shadow: 1px 2px 30px 0 rgba(0, 0, 0, 0.15);
+`;
+
+export const trashImageBox = css`
+  display: flex;
+  width: 120px;
+  height: 120px;
+  flex-shrink: 0;
+  background-color: ${color.GY[2]};
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease;
+  position: absolute;
+  z-index: 2;
+`;
+
+export const trashImage = css`
+  width: 63px;
+  height: 63px;
 `;
 
 export const uploadedImage = css`

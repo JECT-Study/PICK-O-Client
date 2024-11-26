@@ -3,6 +3,7 @@ import color from '@/styles/color';
 
 export const gridContainer = css({
   display: 'grid',
+  width: '1146px',
   gridTemplateColumns: 'repeat(3, 1fr)',
   gap: '20px',
 });

@@ -7,11 +7,15 @@ import { MemberForm } from '@/types/member';
 import { useMutation } from '@tanstack/react-query';
 import { ChangeEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ERROR } from '../../constants/message';
+import { ERROR, SUCCESS } from '../../constants/message';
 import useInputs from '../common/useInputs';
+import useToastModal from '../modal/useToastModal';
 import { validateLoginForm } from './validateLoginForm';
 
-export const useLoginForm = (pathTalkPickId: number | undefined) => {
+export const useLoginForm = (
+  pathTalkPickId?: number,
+  onModalLoginSuccess?: () => void,
+) => {
   const initialState: Pick<MemberForm, 'email' | 'password'> = {
     email: localStorage.getItem('savedEmail') ?? '',
     password: '',
@@ -20,7 +24,7 @@ export const useLoginForm = (pathTalkPickId: number | undefined) => {
   const { form, onChange } =
     useInputs<Pick<MemberForm, 'email' | 'password'>>(initialState);
 
-  const [loginSuccess, setLoginSuccess] = useState<boolean>(false);
+  const { isVisible, modalText, showToastModal } = useToastModal();
   const [isError, setIsError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
     undefined,
@@ -37,11 +41,10 @@ export const useLoginForm = (pathTalkPickId: number | undefined) => {
 
   const login = useMutation({
     mutationFn: postLogin,
-
     onSuccess: (res: string) => {
       setIsError(false);
       setErrorMessage(undefined);
-      setLoginSuccess(true);
+      onModalLoginSuccess?.();
 
       dispatch(tokenActions.setToken(res));
       axiosInstance.defaults.headers.Authorization = `Bearer ${res}`;
@@ -50,13 +53,13 @@ export const useLoginForm = (pathTalkPickId: number | undefined) => {
       localStorage.setItem('rtk', 'rtk');
       localStorage.setItem('savedEmail', form.email);
 
-      setTimeout(() => {
+      showToastModal(SUCCESS.LOGIN, () => {
         if (pathTalkPickId) {
           navigate(`/talkpick/${pathTalkPickId}`);
         } else {
           navigate('/');
         }
-      }, 2000);
+      });
     },
 
     onError: (err: AxiosErrorResponse) => {
@@ -78,5 +81,13 @@ export const useLoginForm = (pathTalkPickId: number | undefined) => {
     login.mutate(form);
   };
 
-  return { form, onChange, isError, errorMessage, handleSubmit, loginSuccess };
+  return {
+    form,
+    onChange,
+    isError,
+    errorMessage,
+    handleSubmit,
+    isVisible,
+    modalText,
+  };
 };
