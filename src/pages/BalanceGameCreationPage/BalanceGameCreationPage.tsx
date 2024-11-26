@@ -10,6 +10,7 @@ import { useCreateBalanceGameMutation } from '@/hooks/api/game/useCreateBalanceG
 import { useSaveTempGameMutation } from '@/hooks/api/game/useTempGameSaveMutation';
 import { useTempGameQuery } from '@/hooks/api/game/useTempGameQuery';
 import useToastModal from '@/hooks/modal/useToastModal';
+import TextModal from '@/components/molecules/TextModal/TextModal';
 import * as S from './BalanceGameCreationPage.style';
 
 const BalanceGameCreationPage = () => {
@@ -17,6 +18,11 @@ const BalanceGameCreationPage = () => {
   const [description, setDescription] = useState('');
   const [games, setGames] = useState<BalanceGameSet[]>([]);
   const [isTagModalOpen, setIsTagModalOpen] = useState(false);
+  const [isTextModalOpen, setIsTextModalOpen] = useState(false);
+  const [popupData, setPopupData] = useState<{
+    stageIndex: number;
+    optionIndex: number;
+  } | null>(null);
   const [activeStage, setActiveStage] = useState(0);
 
   const { handleCreateBalanceGame } = useCreateBalanceGameMutation();
@@ -108,6 +114,34 @@ const BalanceGameCreationPage = () => {
     }
   };
 
+  const onImageDelete = (stageIndex: number, optionIndex: number) => {
+    setPopupData({ stageIndex, optionIndex });
+    setIsTextModalOpen(true);
+  };
+
+  const confirmDeleteImage = () => {
+    if (popupData) {
+      const { stageIndex, optionIndex } = popupData;
+      setGames((prevGames) => {
+        const updatedGames = [...prevGames];
+        updatedGames[stageIndex].gameOptions[optionIndex] = {
+          ...updatedGames[stageIndex].gameOptions[optionIndex],
+          imgUrl: '',
+          fileId: 0,
+        };
+        return updatedGames;
+      });
+      showToastModal('이미지가 삭제되었습니다.');
+    }
+    setPopupData(null);
+    setIsTextModalOpen(false);
+  };
+
+  const cancelDeleteImage = () => {
+    setPopupData(null);
+    setIsTextModalOpen(false);
+  };
+
   const handleCompleteClick = () => {
     setIsTagModalOpen(true);
   };
@@ -186,6 +220,7 @@ const BalanceGameCreationPage = () => {
           onStageChange={(stage) => setActiveStage(stage)}
           onGamesUpdate={(updatedGames) => setGames(updatedGames)}
           onImageChange={onImageChange}
+          onImageDelete={onImageDelete}
         />
         <div css={S.buttonContainer}>
           <Button
@@ -209,8 +244,23 @@ const BalanceGameCreationPage = () => {
             </div>
           </>
         )}
+        {isTextModalOpen && (
+          <>
+            <div css={S.modalBackdrop} />
+            <div css={S.centerStyling}>
+              <TextModal
+                text="이미지를 삭제하시겠습니까?"
+                isOpen={isTextModalOpen}
+                onConfirm={confirmDeleteImage}
+                onClose={cancelDeleteImage}
+              />
+            </div>
+          </>
+        )}
         <div css={S.toastModalStyling}>
-          {isVisible && <ToastModal bgColor="black">임시저장완료</ToastModal>}
+          {isVisible && (
+            <ToastModal bgColor="black">삭제되었습니다.</ToastModal>
+          )}
         </div>
       </div>
     </div>
