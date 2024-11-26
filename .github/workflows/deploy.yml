@@ -5,10 +5,6 @@ on:
     branches:
       - release/v2.0.0
       - dev
-  pull_request:
-    branches:
-      - release/v2.0.0
-      - dev
 
 jobs:
   deploy:
@@ -30,16 +26,6 @@ jobs:
           key: ${{ runner.os }}-npm-${{ hashFiles('package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-npm
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Debug dependencies and Webpack config
-        run: |
-          echo "Checking installed dependencies..."
-          npm list webpack html-webpack-plugin
-          echo "Listing webpack.config.js..."
-          ls -al ./webpack.config.js
 
       - name: Build the project
         env:
