@@ -14,6 +14,19 @@ export const inputNicknameBtnStyling = (isEmpty: boolean) => {
   });
 };
 
+export const getButtonStyling = (
+  value: string,
+  defaultValue: string | undefined,
+) => {
+  if (value === defaultValue) {
+    return css({
+      backgroundColor: color.GY[2],
+    });
+  }
+
+  return css({});
+};
+
 export const labelStyling = css({
   marginTop: '20px',
 });

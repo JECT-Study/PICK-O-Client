@@ -3,29 +3,36 @@ import React, { ChangeEvent, useEffect } from 'react';
 import Button from '@/components/atoms/Button/Button';
 import Input from '@/components/atoms/Input/Input';
 import Label from '@/components/atoms/Label/Label';
-import { useCheckNickname } from '@/hooks/common/inputsUserInfo/useCheckNickname';
 import { isEmptyString } from '@/utils/validator';
-import * as S from './InputNickname.style';
+import { useCheckNicknameChanged } from '@/hooks/common/inputsUserInfo/useCheckNicknameChanged';
+import * as S from './InputInfoNickname.style';
 
-interface InputNicknameProps {
+interface InputInfoNicknameProps {
   value: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  onSuccessChange?: (name: string, value: boolean) => void;
+  defaultValue: string;
+  setIsNicknameChanged: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsNicknameSuccess: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const InputNickname = ({
+const InputInfoNickname = ({
   value,
   onChange,
-  onSuccessChange,
-}: InputNicknameProps) => {
+  defaultValue,
+  setIsNicknameChanged,
+  setIsNicknameSuccess,
+}: InputInfoNicknameProps) => {
   const { inputRef, isError, errorMessage, handleSubmit } =
-    useCheckNickname(value);
+    useCheckNicknameChanged(value, defaultValue, setIsNicknameSuccess);
 
   useEffect(() => {
-    if (value && onSuccessChange) {
-      onSuccessChange('nickname', !isError);
+    if (value !== defaultValue) {
+      setIsNicknameChanged(true);
+    } else {
+      setIsNicknameChanged(false);
     }
-  }, [errorMessage]);
+    setIsNicknameSuccess(false);
+  }, [value]);
 
   return (
     <div css={S.inputNicknameContainer}>
@@ -45,7 +52,10 @@ const InputNickname = ({
         btn={
           <Button
             onClick={handleSubmit}
-            css={S.inputNicknameBtnStyling(isEmptyString(value))}
+            css={[
+              S.inputNicknameBtnStyling(isEmptyString(value)),
+              S.getButtonStyling(value, defaultValue),
+            ]}
           >
             확인
           </Button>
@@ -55,4 +65,4 @@ const InputNickname = ({
   );
 };
 
-export default InputNickname;
+export default InputInfoNickname;

@@ -6,11 +6,13 @@ import { useDropzone } from 'react-dropzone';
 export interface InputProfileImageProps {
   setImageFileId: (name: string, profileImgId: number | null) => void;
   imgSrc?: string;
+  setIsImgChanged?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const useCheckProfileImage = ({
   setImageFileId,
   imgSrc,
+  setIsImgChanged,
 }: InputProfileImageProps) => {
   const [imageSrc, setImageSrc] = useState<string>(imgSrc || '');
   const [isError, setIsError] = useState<boolean>(false);
@@ -33,6 +35,7 @@ export const useCheckProfileImage = ({
             onSuccess: (res) => {
               setImageSrc(res.imgUrls[0]);
               setImageFileId('profileImgId', res.fileIds[0]);
+              setIsImgChanged?.(true);
             },
           },
         );
@@ -41,7 +44,7 @@ export const useCheckProfileImage = ({
         setImageFileId('profileImgUrl', null);
       }
     },
-    [fileUpload, setImageFileId],
+    [fileUpload, setImageFileId, setIsImgChanged],
   );
 
   const { getRootProps } = useDropzone({

@@ -8,7 +8,7 @@ import ToastModal from '@/components/atoms/ToastModal/ToastModal';
 import InputInfoEmail from '@/components/molecules/InputInfoEmail/InputInfoEmail';
 import InputInfoPw from '@/components/molecules/InputInfoPw/InputInfoPw';
 import InputProfileImage from '@/components/molecules/InputProfileImage/InputProfileImage';
-import InputNickname from '@/components/molecules/InputNickname/InputNickname';
+import InputInfoNickname from '@/components/molecules/InputInfoNickname/InputInfoNickname';
 import { useCheckPasswordVerify } from '@/hooks/common/inputsUserInfo/useCheckPasswordVerify';
 import { useChangeUserInfoForm } from '@/hooks/changeUserInfo/useChangeUserInfoForm';
 import * as S from './ChangeUserInfoPage.style';
@@ -27,7 +27,9 @@ const ChangeUserInfoPage = () => {
     form,
     onChange,
     setEach,
-    onSuccessChange,
+    setIsImgChanged,
+    setIsNicknameChanged,
+    setIsNicknameSuccess,
     isVisible,
     modalText,
     handleUserInfoSubmit,
@@ -47,13 +49,14 @@ const ChangeUserInfoPage = () => {
             <InputProfileImage
               setImageFileId={setEach}
               imgSrc={member?.profileImgUrl}
+              setIsImgChanged={setIsImgChanged}
             />
-            <InputNickname
-              type="changeInfo"
+            <InputInfoNickname
               value={form.nickname}
               onChange={onChange}
-              defaultValue={member?.nickname}
-              onSuccessChange={onSuccessChange}
+              defaultValue={member?.nickname ?? ''}
+              setIsNicknameChanged={setIsNicknameChanged}
+              setIsNicknameSuccess={setIsNicknameSuccess}
             />
           </div>
           <Button type="submit" variant="roundPrimary2" css={S.btnStyling}>

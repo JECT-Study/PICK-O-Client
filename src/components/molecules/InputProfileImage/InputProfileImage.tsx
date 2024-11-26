@@ -17,9 +17,10 @@ import {
 const InputProfileImage = ({
   setImageFileId,
   imgSrc,
+  setIsImgChanged,
 }: InputProfileImageProps) => {
   const { imageSrc, isError, getRootProps, handleDefaultImage } =
-    useCheckProfileImage({ setImageFileId, imgSrc });
+    useCheckProfileImage({ setImageFileId, imgSrc, setIsImgChanged });
 
   const [defaultProfileModalOpen, setDefaultProfileModalOpen] =
     useState<boolean>(false);

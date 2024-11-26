@@ -1,6 +1,12 @@
 import { END_POINT } from '@/constants/api';
 import { ServerResponse } from '@/types/api';
-import { Member, MemberEditForm, MemberForm } from '@/types/member';
+import {
+  Member,
+  MemberEditForm,
+  MemberEditNicknameForm,
+  MemberEditProfileImgForm,
+  MemberForm,
+} from '@/types/member';
 import { axiosInstance } from './interceptor';
 
 export const getMember = async (memberId: number) => {
@@ -67,7 +73,12 @@ export const putMemberNickname = async (nickname: string) => {
   return data;
 };
 
-export const putMemberInfo = async (memberInfo: MemberEditForm) => {
+export const putMemberInfo = async (
+  memberInfo:
+    | MemberEditForm
+    | MemberEditNicknameForm
+    | MemberEditProfileImgForm,
+) => {
   const { data } = await axiosInstance.put<ServerResponse>(
     `${END_POINT.EDIT_MEMBERS}`,
     memberInfo,

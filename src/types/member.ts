@@ -34,6 +34,10 @@ export type MemberEditForm = {
   profileImgId: number | null;
 };
 
+export type MemberEditNicknameForm = Pick<MemberEditForm, 'nickname'>;
+
+export type MemberEditProfileImgForm = Pick<MemberEditForm, 'profileImgId'>;
+
 export type MemberVerifyForm = Pick<
   MemberResetForm,
   'email' | 'verificationCode'
