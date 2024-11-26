@@ -8,7 +8,7 @@ import Divider from '@/components/atoms/Divider/Divider';
 import ToastModal from '@/components/atoms/ToastModal/ToastModal';
 import SocialLoginButton from '@/components/atoms/SocialLoginButton/SocialLoginButton';
 import { useLoginForm } from '@/hooks/login/useLoginForm';
-import * as S from './LoginFrom.style';
+import * as S from './LoginForm.style';
 
 export interface LoginFormProps {
   withSignInText?: boolean;
