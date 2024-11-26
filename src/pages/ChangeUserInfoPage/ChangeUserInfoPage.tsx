@@ -4,11 +4,13 @@ import { selectAccessToken } from '@/store/auth';
 import { useParseJwt } from '@/hooks/common/useParseJwt';
 import { useMemberQuery } from '@/hooks/api/member/useMemberQuery';
 import Button from '@/components/atoms/Button/Button';
+import ToastModal from '@/components/atoms/ToastModal/ToastModal';
 import InputInfoEmail from '@/components/molecules/InputInfoEmail/InputInfoEmail';
 import InputInfoPw from '@/components/molecules/InputInfoPw/InputInfoPw';
 import InputProfileImage from '@/components/molecules/InputProfileImage/InputProfileImage';
 import InputNickname from '@/components/molecules/InputNickname/InputNickname';
 import { useCheckPasswordVerify } from '@/hooks/common/inputsUserInfo/useCheckPasswordVerify';
+import { useChangeUserInfoForm } from '@/hooks/changeUserInfo/useChangeUserInfoForm';
 import * as S from './ChangeUserInfoPage.style';
 
 const ChangeUserInfoPage = () => {
@@ -18,22 +20,43 @@ const ChangeUserInfoPage = () => {
   const [passwordInput, setPasswordInput] = useState<string>('');
   const [verifySuccess, setVerifySuccess] = useState<boolean>(false);
 
-  const { inputRef, isError, errorMessage, handleSubmit } =
+  const { inputRef, isError, errorMessage, handlePasswordSubmit } =
     useCheckPasswordVerify(passwordInput, setVerifySuccess);
 
+  const {
+    form,
+    onChange,
+    setEach,
+    onSuccessChange,
+    isVisible,
+    modalText,
+    handleUserInfoSubmit,
+  } = useChangeUserInfoForm(member?.nickname);
+
   return (
-    <form css={S.changeUserInfoPageContainer}>
+    <form onSubmit={handleUserInfoSubmit} css={S.changeUserInfoPageContainer}>
+      {isVisible && (
+        <div css={S.toastModalStyling}>
+          <ToastModal>{modalText}</ToastModal>
+        </div>
+      )}
       {verifySuccess ? (
         <>
           <span css={S.subTextStyling}>회원정보 수정</span>
           <div css={S.changeUserInfoFormStyling}>
             <InputProfileImage
-              setProfilePhoto={() => {}}
+              setProfilePhoto={setEach}
               imgSrc={member?.profileImgUrl}
             />
-            <InputNickname value={member?.nickname ?? ''} onChange={() => {}} />
+            <InputNickname
+              type="changeInfo"
+              value={form.nickname}
+              onChange={onChange}
+              defaultValue={member?.nickname}
+              onSuccessChange={onSuccessChange}
+            />
           </div>
-          <Button variant="roundPrimary2" css={S.btnStyling}>
+          <Button type="submit" variant="roundPrimary2" css={S.btnStyling}>
             수정완료
           </Button>
         </>
@@ -58,7 +81,7 @@ const ChangeUserInfoPage = () => {
             <Button
               variant="roundPrimary2"
               css={S.btnStyling}
-              onClick={handleSubmit}
+              onClick={handlePasswordSubmit}
             >
               확인
             </Button>

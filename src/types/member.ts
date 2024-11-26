@@ -31,7 +31,7 @@ export interface MemberResetForm {
 
 export type MemberEditForm = {
   nickname: string;
-  profileImgId: number;
+  profileImgId: number | null;
 };
 
 export type MemberVerifyForm = Pick<

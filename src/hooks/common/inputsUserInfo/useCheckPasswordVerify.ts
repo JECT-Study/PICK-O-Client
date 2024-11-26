@@ -26,7 +26,7 @@ export const useCheckPasswordVerify = (
     },
   });
 
-  const handleSubmit = () => {
+  const handlePasswordSubmit = () => {
     if (isEmptyString(value)) {
       setIsError(true);
       setErrorMessage(ERROR.PW.EMPTY);
@@ -36,5 +36,5 @@ export const useCheckPasswordVerify = (
     passwordVerify.mutate();
   };
 
-  return { inputRef, isError, errorMessage, handleSubmit };
+  return { inputRef, isError, errorMessage, handlePasswordSubmit };
 };

@@ -13,7 +13,7 @@ const InputInfoEmail = ({ value }: InputEmailProps) => {
       <Label id="email" css={S.labelStyling}>
         이메일
       </Label>
-      <Input value={value} size="small" readOnly />
+      <Input value={value ?? ''} size="small" readOnly />
     </div>
   );
 };

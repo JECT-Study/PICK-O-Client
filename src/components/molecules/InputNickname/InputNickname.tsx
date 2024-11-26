@@ -8,18 +8,25 @@ import { isEmptyString } from '@/utils/validator';
 import * as S from './InputNickname.style';
 
 interface InputNicknameProps {
+  type?: string;
+  defaultValue?: string;
   value: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   onSuccessChange?: (name: string, value: boolean) => void;
 }
 
 const InputNickname = ({
+  type,
+  defaultValue,
   value,
   onChange,
   onSuccessChange,
 }: InputNicknameProps) => {
-  const { inputRef, isError, errorMessage, handleSubmit } =
-    useCheckNickname(value);
+  const { inputRef, isError, errorMessage, handleSubmit } = useCheckNickname(
+    value,
+    defaultValue,
+    type,
+  );
 
   useEffect(() => {
     if (value && onSuccessChange) {
@@ -45,7 +52,10 @@ const InputNickname = ({
         btn={
           <Button
             onClick={handleSubmit}
-            css={S.inputNicknameBtnStyling(isEmptyString(value))}
+            css={[
+              S.inputNicknameBtnStyling(isEmptyString(value)),
+              type === 'changeInfo' && S.getButtonStyling(value, defaultValue),
+            ]}
           >
             확인
           </Button>

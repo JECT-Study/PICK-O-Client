@@ -6,7 +6,11 @@ import { isEmptyString } from '@/utils/validator';
 import { useMutation } from '@tanstack/react-query';
 import { useRef, useState } from 'react';
 
-export const useCheckNickname = (value: string) => {
+export const useCheckNickname = (
+  value: string,
+  defaultValue?: string,
+  type?: string,
+) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
     undefined,
@@ -34,6 +38,12 @@ export const useCheckNickname = (value: string) => {
   const handleSubmit = () => {
     if (isEmptyString(value)) {
       return;
+    }
+
+    if (type === 'changeInfo') {
+      if (value === defaultValue) {
+        return;
+      }
     }
 
     if (!isValidNickname(value)) {
