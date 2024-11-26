@@ -2,13 +2,11 @@ import React, { useEffect, useState } from 'react';
 import BalanceGameCreation from '@/components/organisms/BalanceGameCreation/BalanceGameCreation';
 import Button from '@/components/atoms/Button/Button';
 import Divider from '@/components/atoms/Divider/Divider';
-import { BalanceGame, BalanceGameSet, TempGame } from '@/types/game';
+import { BalanceGame, BalanceGameSet } from '@/types/game';
 import { useFileUploadMutation } from '@/hooks/api/file/useFileUploadMutation';
 import ToastModal from '@/components/atoms/ToastModal/ToastModal';
 import TagModal from '@/components/molecules/TagModal/TagModal';
 import { useCreateBalanceGameMutation } from '@/hooks/api/game/useCreateBalanceGameMutation';
-import { useSaveTempGameMutation } from '@/hooks/api/game/useTempGameSaveMutation';
-import { useTempGameQuery } from '@/hooks/api/game/useTempGameQuery';
 import useToastModal from '@/hooks/modal/useToastModal';
 import TextModal from '@/components/molecules/TextModal/TextModal';
 import { useNavigate } from 'react-router-dom';
@@ -28,9 +26,7 @@ const BalanceGameCreationPage = () => {
   const navigate = useNavigate();
 
   const { handleCreateBalanceGame } = useCreateBalanceGameMutation();
-  const { handleSaveTempGame } = useSaveTempGameMutation();
   const { mutateAsync: uploadImage } = useFileUploadMutation();
-  const { refetch: fetchTempGame } = useTempGameQuery();
   const { isVisible, showToastModal } = useToastModal();
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,25 +45,8 @@ const BalanceGameCreationPage = () => {
     });
   };
 
-  const handleDraftLoad = async () => {
-    const { data } = await fetchTempGame();
-    if (data) {
-      setTitle(data.tempGameDetailResponses[0].title);
-      setDescription(data.tempGameDetailResponses[0].description);
-      setGames(
-        data.tempGameDetailResponses.map((gameDetail) => ({
-          description: gameDetail.description,
-          gameOptions: gameDetail.tempGameOptions.map((option) => ({
-            id: 100,
-            name: option.name,
-            imgUrl: option.imgUrl,
-            fileId: 0,
-            description: option.description,
-            optionType: option.optionType,
-          })),
-        })),
-      );
-    }
+  const handleDraftLoad = () => {
+    alert('준비 중입니다!');
   };
 
   const handleImageUpload = async (
@@ -176,27 +155,8 @@ const BalanceGameCreationPage = () => {
     }
   };
 
-  const handleSaveDraft = async () => {
-    const activeGame = games[activeStage];
-    const tempGameData: TempGame = {
-      mainTag: '임시메인태그',
-      subTag: '임시서브태그',
-      tempGames: [
-        {
-          title,
-          description,
-          tempGameOptions: activeGame.gameOptions.map((option) => ({
-            name: option.name,
-            imgUrl: option.imgUrl,
-            fileId: option.fileId,
-            description: option.description,
-            optionType: option.optionType,
-          })),
-        },
-      ],
-    };
-    await handleSaveTempGame(tempGameData);
-    showToastModal('임시저장완료');
+  const handleSaveDraft = () => {
+    alert('준비 중입니다!');
   };
 
   useEffect(() => {
