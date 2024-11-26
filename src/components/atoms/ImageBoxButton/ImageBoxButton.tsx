@@ -1,13 +1,18 @@
 import React, { ChangeEvent, KeyboardEvent } from 'react';
-import { Camera } from '@/assets';
+import { Camera, IcTrash } from '@/assets';
 import * as S from './ImageBoxButton.style';
 
 interface ImageBoxButtonProps {
   imgUrl?: string;
   onFileSelect: (file: File) => void;
+  onDelete?: () => void;
 }
 
-const ImageBoxButton = ({ imgUrl = '', onFileSelect }: ImageBoxButtonProps) => {
+const ImageBoxButton = ({
+  imgUrl = '',
+  onFileSelect,
+  onDelete,
+}: ImageBoxButtonProps) => {
   const fileInputRef = React.useRef<HTMLInputElement | null>(null);
 
   const handleClick = () => {
@@ -33,13 +38,26 @@ const ImageBoxButton = ({ imgUrl = '', onFileSelect }: ImageBoxButtonProps) => {
   return (
     <div
       css={S.imageContainer}
-      onClick={handleClick}
+      data-has-img={imgUrl ? 'true' : 'false'}
+      onClick={imgUrl ? undefined : handleClick}
       onKeyDown={handleKeyDown}
       role="button"
       tabIndex={0}
     >
       {imgUrl ? (
-        <img src={imgUrl} alt="Uploaded from server" css={S.uploadedImage} />
+        <>
+          <img src={imgUrl} alt="Uploaded from server" css={S.uploadedImage} />
+          <div
+            css={S.trashImageBox}
+            className="trashIcon"
+            onClick={(e) => {
+              e.stopPropagation();
+              onDelete?.();
+            }}
+          >
+            <IcTrash css={S.trashImage} />
+          </div>
+        </>
       ) : (
         <div css={S.defaultImageBox}>
           <Camera css={S.iconStyle} />
