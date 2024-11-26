@@ -14,7 +14,7 @@ export interface MemberForm {
   nickname: string;
   password: string;
   passwordConfirm: string;
-  profileImgUrl: string;
+  profileImgId: number | null;
   role: 'USER';
 }
 

@@ -156,7 +156,7 @@ const Header = () => {
             {accessToken ? (
               <ProfileIcon
                 interaction="custom"
-                imgUrl={member?.profileImageUrl ?? DefaultProfile}
+                imgUrl={member?.profileImgUrl ?? DefaultProfile}
                 onClick={handleProfileIcon}
               />
             ) : (

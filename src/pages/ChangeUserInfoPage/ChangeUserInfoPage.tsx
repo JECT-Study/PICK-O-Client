@@ -45,7 +45,7 @@ const ChangeUserInfoPage = () => {
           <span css={S.subTextStyling}>회원정보 수정</span>
           <div css={S.changeUserInfoFormStyling}>
             <InputProfileImage
-              setProfilePhoto={setEach}
+              setImageFileId={setEach}
               imgSrc={member?.profileImgUrl}
             />
             <InputNickname

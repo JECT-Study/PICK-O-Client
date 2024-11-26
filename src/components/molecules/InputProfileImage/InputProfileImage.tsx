@@ -15,11 +15,11 @@ import {
 } from './InputProfileImage.style';
 
 const InputProfileImage = ({
-  setProfilePhoto,
+  setImageFileId,
   imgSrc,
 }: InputProfileImageProps) => {
   const { imageSrc, isError, getRootProps, handleDefaultImage } =
-    useCheckProfileImage({ setProfilePhoto, imgSrc });
+    useCheckProfileImage({ setImageFileId, imgSrc });
 
   const [defaultProfileModalOpen, setDefaultProfileModalOpen] =
     useState<boolean>(false);

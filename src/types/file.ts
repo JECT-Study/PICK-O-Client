@@ -1,6 +1,6 @@
 export interface UploadedImage {
   imgUrls: string[];
-  storedNames: string[];
+  fileIds: number[];
 }
 
 export type FileUploadType = {
