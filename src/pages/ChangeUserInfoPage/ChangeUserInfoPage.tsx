@@ -45,23 +45,25 @@ const ChangeUserInfoPage = () => {
       {verifySuccess ? (
         <>
           <span css={S.subTextStyling}>회원정보 수정</span>
-          <div css={S.changeUserInfoFormStyling}>
-            <InputProfileImage
-              setImageFileId={setEach}
-              imgSrc={member?.profileImgUrl}
-              setIsImgChanged={setIsImgChanged}
-            />
-            <InputInfoNickname
-              value={form.nickname}
-              onChange={onChange}
-              defaultValue={member?.nickname ?? ''}
-              setIsNicknameChanged={setIsNicknameChanged}
-              setIsNicknameSuccess={setIsNicknameSuccess}
-            />
+          <div css={S.changeUserInfoFormWrapper}>
+            <div css={S.changeUserInfoFormStyling}>
+              <InputProfileImage
+                setImageFileId={setEach}
+                imgSrc={member?.profileImgUrl}
+                setIsImgChanged={setIsImgChanged}
+              />
+              <InputInfoNickname
+                value={form.nickname}
+                onChange={onChange}
+                defaultValue={member?.nickname ?? ''}
+                setIsNicknameChanged={setIsNicknameChanged}
+                setIsNicknameSuccess={setIsNicknameSuccess}
+              />
+            </div>
+            <Button type="submit" variant="roundPrimary2" css={S.btnStyling}>
+              수정완료
+            </Button>
           </div>
-          <Button type="submit" variant="roundPrimary2" css={S.btnStyling}>
-            수정완료
-          </Button>
         </>
       ) : (
         <>

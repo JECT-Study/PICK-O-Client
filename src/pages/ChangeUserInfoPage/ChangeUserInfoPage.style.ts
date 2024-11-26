@@ -7,7 +7,6 @@ export const changeUserInfoPageContainer = css({
   flexDirection: 'column',
   alignItems: 'center',
   width: '100%',
-  //   minHeight: '850px',
   padding: '100px 0',
   background: color.GY[3],
 });
@@ -21,13 +20,19 @@ export const checkPasswordTextStyling = css(typo.Main.Medium, {
   marginTop: '26px',
 });
 
+export const changeUserInfoFormWrapper = css({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  height: '480px',
+});
+
 export const changeUserInfoFormStyling = css({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
   width: '573px',
-  marginTop: '25px',
-  marginBottom: '60px',
   gap: '40px',
 });
 
