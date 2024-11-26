@@ -112,7 +112,7 @@ const BalanceGameSection = ({
   const [shareModalOpen, setShareModalOpen] = useState<boolean>(false);
   const { isVisible, modalText, showToastModal } = useToastModal();
 
-  const onHandleLogin = () => {
+  const handleLogin = () => {
     showToastModal(SUCCESS.LOGIN);
     setLoginModalOpen(false);
   };
@@ -209,7 +209,7 @@ const BalanceGameSection = ({
         />
         <LoginModal
           isOpen={loginModalOpen}
-          onModalLoginSuccess={onHandleLogin}
+          onModalLoginSuccess={handleLogin}
           onClose={() => {
             setLoginModalOpen(false);
           }}
