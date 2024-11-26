@@ -27,7 +27,7 @@ const BalanceGameCreationPage = () => {
 
   const { handleCreateBalanceGame } = useCreateBalanceGameMutation();
   const { mutateAsync: uploadImage } = useFileUploadMutation();
-  const { isVisible, showToastModal } = useToastModal();
+  const { isVisible, modalText, showToastModal } = useToastModal();
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
@@ -146,9 +146,7 @@ const BalanceGameCreationPage = () => {
     try {
       console.log('게임 생성 요청 중...');
       await handleCreateBalanceGame(gameData);
-
-      alert('게임 생성이 완료되었습니다.');
-      navigate('/');
+      showToastModal('게임 생성이 완료되었습니다.', () => navigate('/'));
     } catch (error) {
       console.error('게임 생성 실패:', error);
       alert('게임 생성에 실패했습니다. 다시 시도해주세요.');
@@ -221,9 +219,7 @@ const BalanceGameCreationPage = () => {
           </>
         )}
         <div css={S.toastModalStyling}>
-          {isVisible && (
-            <ToastModal bgColor="black">삭제되었습니다.</ToastModal>
-          )}
+          {isVisible && <ToastModal bgColor="black">{modalText}</ToastModal>}
         </div>
       </div>
     </div>
