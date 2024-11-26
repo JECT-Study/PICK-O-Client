@@ -69,11 +69,18 @@ const BalanceGameCreationPage = () => {
     const formData = new FormData();
     formData.append('file', imageFile);
 
-    const { imgUrls, fileIds } = await uploadImage({
-      formData,
-      params: { type },
-    });
-    return { imgUrl: imgUrls[0], fileId: fileIds[0] };
+    try {
+      const response = await uploadImage({
+        formData,
+        params: { type },
+      });
+
+      const { imgUrls, fileIds } = response;
+      return { imgUrl: imgUrls[0], fileId: fileIds[0] };
+    } catch (error) {
+      console.error('API 호출 에러:', error);
+      throw new Error('이미지 업로드 실패');
+    }
   };
 
   const onImageChange = async (
@@ -96,7 +103,7 @@ const BalanceGameCreationPage = () => {
         return updatedGames;
       });
     } catch (error) {
-      console.error('Image upload failed:', error);
+      console.error('onImageChange 에러:', error);
       alert('이미지 업로드에 실패했습니다. 다시 시도해주세요.');
     }
   };
@@ -122,7 +129,9 @@ const BalanceGameCreationPage = () => {
     };
 
     try {
+      console.log('게임 생성 요청 중...');
       await handleCreateBalanceGame(gameData);
+
       alert('게임 생성이 완료되었습니다.');
     } catch (error) {
       console.error('게임 생성 실패:', error);
