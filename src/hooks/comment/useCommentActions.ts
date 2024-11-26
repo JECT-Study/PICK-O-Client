@@ -10,7 +10,7 @@ export const useCommentActions = (
   editText: string,
   selectedPage: number,
   setEditButtonClicked: (value: boolean) => void,
-  showToastModal: (message: string) => () => void,
+  showToastModal: (message: string, callback?: () => void) => void,
   parentId?: number,
 ) => {
   const { id, talkPickId, content, myLike } = commentData;
