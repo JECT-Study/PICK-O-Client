@@ -2,6 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Envelope, Lock } from '@/assets';
+import { PATH } from '@/constants/path';
 import Button from '@/components/atoms/Button/Button';
 import Input from '@/components/atoms/Input/Input';
 import Divider from '@/components/atoms/Divider/Divider';
@@ -61,11 +62,11 @@ const LoginForm = ({ withSignInText, pathTalkPickId }: LoginFormProps) => {
         </Button>
       </div>
       <div css={S.textWrapperStyling}>
-        <Link to="/signup">
+        <Link to={`/${PATH.SIGN_UP}`}>
           <div css={S.textStyling}>회원가입</div>
         </Link>
         <Divider orientation="height" length={14} />
-        <Link to="/changePassword">
+        <Link to={`/${PATH.CHANGE.PASSWORD}`}>
           <div css={S.textStyling}>비밀번호 찾기</div>
         </Link>
       </div>

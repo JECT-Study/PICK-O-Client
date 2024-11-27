@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { putTalkPick, postTalkPickSummary } from '@/api/talk-pick';
+import { PATH } from '@/constants/path';
 import { NewTalkPick } from '@/types/talk-pick';
 
 export const useEditTalkPickMutation = (talkPickId: Id) => {
@@ -22,7 +23,7 @@ export const useEditTalkPickMutation = (talkPickId: Id) => {
       await postTalkPickSummary(talkPickId);
 
       setTimeout(() => {
-        navigate('/talkpickplace');
+        navigate(`/${PATH.TALKPICK_PLACE}`);
       }, 2000);
     },
   });

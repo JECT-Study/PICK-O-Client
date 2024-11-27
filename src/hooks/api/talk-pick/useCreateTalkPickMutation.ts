@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AxiosErrorResponse } from '@/api/interceptor';
 import { ERROR } from '@/constants/message';
+import { PATH } from '@/constants/path';
 
 export const useCreateTalkPickMutation = () => {
   const queryClient = useQueryClient();
@@ -34,7 +35,7 @@ export const useCreateTalkPickMutation = () => {
       await postTalkPickSummary(talkPickId);
 
       setTimeout(() => {
-        navigate('/talkpickplace');
+        navigate(`/${PATH.TALKPICK_PLACE}`);
       }, 2000);
     },
     onError: (err: AxiosErrorResponse) => {

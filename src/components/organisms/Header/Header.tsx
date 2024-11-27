@@ -83,31 +83,31 @@ const Header = () => {
     if (accessToken) {
       logout.mutate();
     } else {
-      navigate('/login');
+      navigate(`/${PATH.LOGIN}`);
     }
   };
 
   const handleProfileIcon = () => {
     if (accessToken) {
-      navigate('/mypage');
+      navigate(`/${PATH.MYPAGE}`);
     } else {
-      navigate('/login');
+      navigate(`/${PATH.LOGIN}`);
     }
   };
 
   const handleCreatePostButton = () => {
     if (accessToken) {
-      navigate('/post/create');
+      navigate(`/${PATH.CREATE.TALK_PICK}`);
     } else {
-      navigate('/login');
+      navigate(`/${PATH.LOGIN}`);
     }
   };
 
   const handleCreateGameButton = () => {
     if (accessToken) {
-      navigate(PATH.CREATE.GAME);
+      navigate(`/${PATH.CREATE.GAME}`);
     } else {
-      navigate(PATH.LOGIN);
+      navigate(`/${PATH.LOGIN}`);
     }
   };
 

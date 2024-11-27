@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useNewSelector } from '@/store';
 import { selectAccessToken } from '@/store/auth';
 import { TalkPickBubble } from '@/assets';
+import { PATH } from '@/constants/path';
 import { createRangeArray } from '@/utils/array';
 import { TalkPickListPagination } from '@/types/talk-pick';
 import ToggleGroup from '@/components/atoms/ToggleGroup/ToggleGroup';
@@ -33,9 +34,9 @@ const TalkPickListSection = ({
 
   const handleCreatePostButton = () => {
     if (accessToken) {
-      navigate('/post/create');
+      navigate(`/${PATH.CREATE.TALK_PICK}`);
     } else {
-      navigate('/login');
+      navigate(`/${PATH.LOGIN}`);
     }
   };
 

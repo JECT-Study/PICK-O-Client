@@ -1,3 +1,4 @@
+import { ChangeEvent, useState } from 'react';
 import { AxiosErrorResponse, axiosInstance } from '@/api/interceptor';
 import { postLogin } from '@/api/member';
 import { HTTP_STATUS_CODE } from '@/constants/api';
@@ -5,8 +6,8 @@ import { useNewDispatch } from '@/store';
 import { tokenActions } from '@/store/auth';
 import { MemberForm } from '@/types/member';
 import { useMutation } from '@tanstack/react-query';
-import { ChangeEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { PATH } from '@/constants/path';
 import { ERROR } from '../../constants/message';
 import useInputs from '../common/useInputs';
 import { validateLoginForm } from './validateLoginForm';
@@ -52,7 +53,7 @@ export const useLoginForm = (pathTalkPickId: number | undefined) => {
 
       setTimeout(() => {
         if (pathTalkPickId) {
-          navigate(`/talkpick/${pathTalkPickId}`);
+          navigate(`${PATH.TALKPICK(pathTalkPickId)}`);
         } else {
           navigate('/');
         }
