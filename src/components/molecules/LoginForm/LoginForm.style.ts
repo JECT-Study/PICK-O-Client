@@ -6,7 +6,6 @@ export const loginFormStyling = css({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  position: 'relative',
 });
 
 export const loginTextStyling = css(typo.Component.Bold, {

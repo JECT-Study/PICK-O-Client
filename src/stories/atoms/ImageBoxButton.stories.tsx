@@ -9,10 +9,10 @@ const meta = {
   parameters: {
     layout: 'centered',
   },
-  tags: ['autodocs'],
   argTypes: {
-    imageFile: { control: { type: 'file' }, defaultValue: null },
-    onChange: { action: 'file selected' },
+    imgUrl: { control: 'text', defaultValue: '' },
+    onFileSelect: { action: 'file selected' },
+    onDelete: { action: 'image deleted' },
   },
 } satisfies Meta<typeof ImageBoxButton>;
 
@@ -22,37 +22,44 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    imageFile: null,
-    onChange: () => {},
+    imgUrl: '',
+    onFileSelect: () => {},
+    onDelete: () => {},
   },
 };
 
 export const All: Story = {
   render: () => {
-    const [imageFile, setImageFile] = useState<File | null>(null);
+    const [imgUrl, setImgUrl] = useState<string>('');
 
-    const handleImageUpload = (event: ChangeEvent<HTMLInputElement>) => {
-      const file = event.target.files?.[0];
-      if (file) {
-        setImageFile(file);
-      }
+    const handleImageUpload = (file: File) => {
+      const url = URL.createObjectURL(file);
+      setImgUrl(url);
+    };
+
+    const handleImageDelete = () => {
+      setImgUrl('');
     };
 
     return (
       <ul css={storyContainer}>
         <li css={storyInnerContainer}>
           <h3>기본 상태</h3>
-          <ImageBoxButton imageFile={null} onChange={handleImageUpload} />
+          <ImageBoxButton
+            imgUrl=""
+            onFileSelect={() => {}}
+            onDelete={() => {}}
+          />
         </li>
         <li css={storyInnerContainer}>
           <h3>업로드된 이미지</h3>
-          <ImageBoxButton imageFile={imageFile} onChange={handleImageUpload} />
+          <ImageBoxButton imgUrl={imgUrl} onFileSelect={handleImageUpload} />
         </li>
       </ul>
     );
   },
   args: {
-    imageFile: null,
-    onChange: () => {},
+    imgUrl: '',
+    onFileSelect: () => {},
   },
 };

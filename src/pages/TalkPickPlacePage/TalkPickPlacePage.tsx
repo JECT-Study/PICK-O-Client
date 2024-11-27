@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import BestTalkPick from '@/components/molecules/BestTalkPick/BestTalkPick';
 import TalkPickListSection from '@/components/organisms/TalkPickListSection/TalkPickListSection';
 import { useBestTalkPickListQuery } from '@/hooks/api/talk-pick/useBestTalkPickListQuery';
@@ -6,23 +7,33 @@ import { useTalkPickListQuery } from '@/hooks/api/talk-pick/useTalkPickListQuery
 import * as S from './TalkPickPlacePage.style';
 
 const TalkPickPlacePage = () => {
-  const [selectedPage, setSelectedPage] = useState<number>(1);
+  const [searchParams, setSearchParams] = useSearchParams();
   const [selectedValue, setSelectedValue] = useState<string>('views');
+
+  const initialPage = parseInt(searchParams.get('page') ?? '1', 10) || 1;
+  const [currentPage, setCurrentPage] = useState<number>(initialPage);
+
+  useEffect(() => {
+    setSearchParams((prevParams) => ({
+      ...Object.fromEntries(prevParams.entries()),
+      page: currentPage.toString(),
+    }));
+  }, [currentPage, setSearchParams]);
+
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
+  };
 
   const { bestTalkPick } = useBestTalkPickListQuery();
   const { talkPickList } = useTalkPickListQuery({
-    page: selectedPage - 1,
+    page: currentPage - 1,
     size: 20,
     sort: selectedValue,
   });
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [selectedPage, selectedValue]);
-
-  useEffect(() => {
-    setSelectedPage(1);
-  }, [selectedValue]);
+  }, [currentPage, selectedValue]);
 
   return (
     <div css={S.talkPickPlaceStyling}>
@@ -39,8 +50,8 @@ const TalkPickPlacePage = () => {
         talkPickList={talkPickList}
         selectedValue={selectedValue}
         setToggleValue={setSelectedValue}
-        selectedPage={selectedPage}
-        handlePageChange={setSelectedPage}
+        selectedPage={currentPage}
+        handlePageChange={handlePageChange}
       />
     </div>
   );

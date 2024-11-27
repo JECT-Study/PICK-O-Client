@@ -53,6 +53,8 @@ export const SUCCESS = {
   NICKNAME: {
     AVAILABLE: '사용 가능한 닉네임입니다.',
   },
+  SIGN_UP: '회원가입 완료!',
+  LOGIN: '로그인 완료!',
   COPY: {
     LINK: '복사 완료!',
   },

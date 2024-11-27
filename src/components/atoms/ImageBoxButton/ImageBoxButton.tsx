@@ -1,17 +1,17 @@
 import React, { ChangeEvent, KeyboardEvent } from 'react';
-import { Camera } from '@/assets';
+import { Camera, IcTrash } from '@/assets';
 import * as S from './ImageBoxButton.style';
 
 interface ImageBoxButtonProps {
-  imageFile: File | null;
   imgUrl?: string;
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  onFileSelect: (file: File) => void;
+  onDelete?: () => void;
 }
 
 const ImageBoxButton = ({
-  imageFile,
   imgUrl = '',
-  onChange,
+  onFileSelect,
+  onDelete,
 }: ImageBoxButtonProps) => {
   const fileInputRef = React.useRef<HTMLInputElement | null>(null);
 
@@ -28,45 +28,47 @@ const ImageBoxButton = ({
     }
   };
 
-  const renderImage = () => {
-    if (imageFile instanceof File) {
-      return (
-        <img
-          src={URL.createObjectURL(imageFile)}
-          alt="Uploaded"
-          css={S.uploadedImage}
-        />
-      );
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      onFileSelect(file);
     }
-
-    if (imgUrl && imgUrl.length > 0) {
-      return (
-        <img src={imgUrl} alt="Uploaded from server" css={S.uploadedImage} />
-      );
-    }
-
-    return (
-      <div css={S.defaultImageBox}>
-        <Camera css={S.iconStyle} />
-      </div>
-    );
   };
 
   return (
     <div
       css={S.imageContainer}
-      onClick={handleClick}
+      data-has-img={imgUrl ? 'true' : 'false'}
+      onClick={imgUrl ? undefined : handleClick}
       onKeyDown={handleKeyDown}
       role="button"
       tabIndex={0}
     >
-      {renderImage()}
+      {imgUrl ? (
+        <>
+          <img src={imgUrl} alt="Uploaded from server" css={S.uploadedImage} />
+          <div
+            css={S.trashImageBox}
+            className="trashIcon"
+            onClick={(e) => {
+              e.stopPropagation();
+              onDelete?.();
+            }}
+          >
+            <IcTrash css={S.trashImage} />
+          </div>
+        </>
+      ) : (
+        <div css={S.defaultImageBox}>
+          <Camera css={S.iconStyle} />
+        </div>
+      )}
       <input
         id="file-upload"
         type="file"
         accept="image/*"
         ref={fileInputRef}
-        onChange={onChange}
+        onChange={handleFileChange}
         css={S.fileInput}
       />
     </div>

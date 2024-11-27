@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from 'react';
+import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import BalanceGameOptionCard from '@/components/molecules/BalanceGameOptionCard/BalanceGameOptionCard';
 import { storyContainer, storyInnerContainer } from '@/stories/story.styles';
@@ -10,9 +10,9 @@ const meta: Meta<typeof BalanceGameOptionCard> = {
     layout: 'centered',
   },
   argTypes: {
-    imageFile: { control: { type: 'file' }, defaultValue: null },
     imgUrl: { control: { type: 'text' }, defaultValue: '' },
     onImageChange: { action: 'file selected' },
+    onImageDelete: { action: 'image deleted' },
     option: {
       control: { type: 'radio' },
       options: ['A', 'B'],
@@ -28,35 +28,38 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     option: 'A',
-    imageFile: null,
     imgUrl: '',
     onImageChange: () => {},
+    onImageDelete: () => {},
   },
 };
 
 export const All: Story = {
   args: {
     option: 'A',
-    imageFile: null,
     imgUrl: '',
     onImageChange: () => {},
   },
   render: (args) => {
-    const [imageA, setImageA] = useState<File | null>(null);
-    const [imageB, setImageB] = useState<File | null>(null);
+    const [imgUrlA, setImgUrlA] = useState<string>('');
+    const [imgUrlB, setImgUrlB] = useState<string>('');
 
-    const handleImageAChange = (event: ChangeEvent<HTMLInputElement>) => {
-      const file = event.target.files?.[0];
-      if (file) {
-        setImageA(file);
-      }
+    const handleImageAChange = (file: File) => {
+      const url = URL.createObjectURL(file);
+      setImgUrlA(url);
     };
 
-    const handleImageBChange = (event: ChangeEvent<HTMLInputElement>) => {
-      const file = event.target.files?.[0];
-      if (file) {
-        setImageB(file);
-      }
+    const handleImageBChange = (file: File) => {
+      const url = URL.createObjectURL(file);
+      setImgUrlB(url);
+    };
+
+    const handleImageADelete = () => {
+      setImgUrlA('');
+    };
+
+    const handleImageBDelete = () => {
+      setImgUrlB('');
     };
 
     return (
@@ -66,7 +69,6 @@ export const All: Story = {
           <BalanceGameOptionCard
             {...args}
             option="A"
-            imageFile={null}
             imgUrl=""
             onImageChange={handleImageAChange}
           />
@@ -76,9 +78,9 @@ export const All: Story = {
           <BalanceGameOptionCard
             {...args}
             option="A"
-            imageFile={imageA}
-            imgUrl=""
+            imgUrl={imgUrlA}
             onImageChange={handleImageAChange}
+            onImageDelete={handleImageADelete}
           />
         </li>
         <li css={storyInnerContainer}>
@@ -86,9 +88,9 @@ export const All: Story = {
           <BalanceGameOptionCard
             {...args}
             option="A"
-            imageFile={null}
             imgUrl="https://picko-image.s3.ap-northeast-2.amazonaws.com/talk-pick/9b4856fe-b624-4e54-ad80-a94e083301d2_czz.png"
             onImageChange={handleImageAChange}
+            onImageDelete={handleImageADelete}
           />
         </li>
         <li css={storyInnerContainer}>
@@ -96,7 +98,6 @@ export const All: Story = {
           <BalanceGameOptionCard
             {...args}
             option="B"
-            imageFile={null}
             imgUrl=""
             onImageChange={handleImageBChange}
           />
@@ -106,9 +107,9 @@ export const All: Story = {
           <BalanceGameOptionCard
             {...args}
             option="B"
-            imageFile={imageB}
-            imgUrl=""
+            imgUrl={imgUrlB}
             onImageChange={handleImageBChange}
+            onImageDelete={handleImageBDelete}
           />
         </li>
         <li css={storyInnerContainer}>
@@ -116,9 +117,9 @@ export const All: Story = {
           <BalanceGameOptionCard
             {...args}
             option="B"
-            imageFile={null}
             imgUrl="https://picko-image.s3.ap-northeast-2.amazonaws.com/talk-pick/9b4856fe-b624-4e54-ad80-a94e083301d2_czz.png"
             onImageChange={handleImageBChange}
+            onImageDelete={handleImageBDelete}
           />
         </li>
       </ul>

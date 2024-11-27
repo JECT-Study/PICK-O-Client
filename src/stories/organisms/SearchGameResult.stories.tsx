@@ -37,6 +37,7 @@ export const Default: Story = {
   args: {
     gameList: gameListSample,
     keyword: '유진',
+    isLoading: false,
   },
 };
 
