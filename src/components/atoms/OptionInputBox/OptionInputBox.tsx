@@ -1,19 +1,19 @@
 import React, { forwardRef, useState } from 'react';
-import type { ForwardedRef } from 'react';
+import type { ComponentPropsWithRef, ForwardedRef } from 'react';
 import { OptionError } from '@/assets';
 import { ERROR } from '@/constants/message';
 import { isEmptyString, isLongerThan } from '@/utils/validator';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import * as S from './OptionInputBox.style';
 
-interface OptionInputProps {
+interface OptionInputProps extends ComponentPropsWithRef<'input'> {
   option?: 'A' | 'B';
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const OptionInputBox = (
-  { option = 'A', value, onChange }: OptionInputProps,
+  { option = 'A', value, onChange, ...props }: OptionInputProps,
   ref: ForwardedRef<HTMLInputElement>,
 ) => {
   const [hasText, setHasText] = useState(value.trim() !== '');
@@ -47,6 +47,7 @@ const OptionInputBox = (
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
           onChange={handleInputChange}
+          {...props}
         />
         {hasError && <OptionError />}
       </div>

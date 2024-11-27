@@ -28,6 +28,7 @@ export const ERROR = {
     EMPTY_TITLE: '제목을 작성해주세요!',
     EMPTY_OPTION: '선택지 2개를 모두 작성해주세요!',
     EMPTY_CONTENT: '내용을 작성해주세요!',
+    IMAGE_UPLOAD: '이미지를 업로드하고 있어요!',
     FAIL: '게시글 작성에 실패했습니다. 다시 시도해주세요.',
   },
   SAVE: {
@@ -62,6 +63,11 @@ export const SUCCESS = {
     REPORT: '신고 완료되었습니다.',
   },
   EDIT_PROFILE: '수정 완료 되었습니다!',
+  POST: {
+    CREATE: '등록 완료!',
+    EDIT: '수정 완료!',
+    SAVE: '임시저장 완료!',
+  },
 } as const;
 
 export const NOTICE = {
@@ -83,6 +89,7 @@ export const PLACE_HOLDER = {
     TITLE: '게시글 제목을 입력해 주세요.',
     CHOICE_TITLE: '선택지 제목을 입력해 주세요.',
     CHOICE_DESCRIPTION: '선택지 설명을 입력해 주세요.',
+    CONTENT: '다른 토커들에게 내 이야기를 공유하고 의견을 들어보세요!',
   },
 };
 

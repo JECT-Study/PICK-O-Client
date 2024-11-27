@@ -14,11 +14,15 @@ const meta = {
   },
   tags: ['autodocs'],
   args: {
-    imageFiles: [],
-    setImageFiles: () => {},
     imgUrls: [OctopusProfile, JellyfishProfile, EelProfile],
     setImgUrls: () => {},
-    storedNames: [],
+    fileIds: [1, 2, 3],
+    setFileIds: () => {},
+    setIsUploadingImage: () => {},
+    isEditing: false,
+    isTempLoaded: false,
+    setNewFileIds: () => {},
+    setDeleteFileIds: () => {},
   },
   decorators: [
     (Story) => (

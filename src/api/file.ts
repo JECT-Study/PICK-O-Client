@@ -15,9 +15,9 @@ export const postFile = async (file: FormData, params: FileUploadType) => {
   return response.data as UploadedImage;
 };
 
-export const deleteFile = async (storedName: string) => {
+export const deleteFile = async (fileId: number) => {
   const { data } = await axiosInstance.delete<ServerResponse>(
-    END_POINT.FILE_DELETE(storedName),
+    END_POINT.FILE_DELETE(fileId),
   );
   return data;
 };

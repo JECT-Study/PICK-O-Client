@@ -1,10 +1,4 @@
-import React, {
-  useRef,
-  useState,
-  useEffect,
-  useCallback,
-  useMemo,
-} from 'react';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
 import ImageUploadButton from '@/components/atoms/ImageUploadButton/ImageUploadButton';
 import ImagePreview from '@/components/atoms/ImagePreview/ImagePreview';
 import { RightArrowButton, LeftArrowButton } from '@/assets';
@@ -12,19 +6,27 @@ import { useDeleteFileMutation } from '@/hooks/api/file/useDeleteFileMutation';
 import * as S from './ImageUploader.style';
 
 interface ImageUploaderProps {
-  imageFiles: File[];
-  setImageFiles: React.Dispatch<React.SetStateAction<File[]>>;
   imgUrls: string[];
   setImgUrls: React.Dispatch<React.SetStateAction<string[]>>;
-  storedNames: string[];
+  fileIds: number[];
+  setFileIds: (name: string, fileIds: number[]) => void;
+  setIsUploadingImage: React.Dispatch<React.SetStateAction<boolean>>;
+  isEditing: boolean;
+  isTempLoaded: boolean;
+  setNewFileIds: React.Dispatch<React.SetStateAction<number[]>>;
+  setDeleteFileIds: React.Dispatch<React.SetStateAction<number[]>>;
 }
 
 const ImageUploader = ({
-  imageFiles,
-  setImageFiles,
   imgUrls,
   setImgUrls,
-  storedNames,
+  fileIds,
+  setFileIds,
+  setIsUploadingImage,
+  isEditing,
+  isTempLoaded,
+  setNewFileIds,
+  setDeleteFileIds,
 }: ImageUploaderProps) => {
   const imageContainerRef = useRef<HTMLDivElement | null>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -32,22 +34,19 @@ const ImageUploader = ({
 
   const deleteFileMutation = useDeleteFileMutation();
 
-  const imageList: string[] = useMemo(
-    () => [...imgUrls, ...imageFiles.map((file) => URL.createObjectURL(file))],
-    [imgUrls, imageFiles],
-  );
-
   const handleDelete = (index: number) => {
-    const isObjectUrl: boolean = imageList[index].startsWith('blob:');
+    const fileId: number = fileIds[index];
+    const updatedFileIds = fileIds.filter((_, i) => i !== index);
 
-    if (isObjectUrl) {
-      setImageFiles((prev) => prev.filter((_, i) => i !== index));
+    setImgUrls((prev) => prev.filter((_, i) => i !== index));
+    setDeleteFileIds((prev) => [...prev, fileId]);
+
+    if (isEditing || isTempLoaded) {
+      setFileIds('fileIds', updatedFileIds);
     } else {
-      const storedName = storedNames[index];
-
-      deleteFileMutation.mutate(storedName, {
+      deleteFileMutation.mutate(fileId, {
         onSuccess: () => {
-          setImgUrls((prev) => prev.filter((_, i) => i !== index));
+          setFileIds('fileIds', updatedFileIds);
         },
       });
     }
@@ -72,10 +71,10 @@ const ImageUploader = ({
       setCanScrollLeft(scrollLeft > 0);
 
       setCanScrollRight(
-        imageFiles.length > 0 && scrollLeft < scrollWidth - clientWidth,
+        imgUrls.length > 0 && scrollLeft < scrollWidth - clientWidth,
       );
     }
-  }, [imageFiles]);
+  }, [imgUrls]);
 
   useEffect(() => {
     const container = imageContainerRef.current;
@@ -90,17 +89,21 @@ const ImageUploader = ({
         container.removeEventListener('scroll', checkScrollPosition);
       }
     };
-  }, [imageFiles, checkScrollPosition]);
+  }, [imgUrls, checkScrollPosition]);
 
   return (
     <div css={S.uploaderContainerStyle}>
       <div css={S.imageContainerStyle} ref={imageContainerRef}>
         <ImageUploadButton
-          imageCount={imageList.length}
-          setImageFiles={setImageFiles}
+          imageCount={imgUrls.length}
+          setImgUrls={setImgUrls}
+          fileIds={fileIds}
+          setFileIds={setFileIds}
+          setIsUploadingImage={setIsUploadingImage}
+          setNewFileIds={setNewFileIds}
         />
 
-        {imageList.map((url, index) => (
+        {imgUrls.map((url, index) => (
           <ImagePreview
             key={url}
             imgUrl={url}
