@@ -2,28 +2,16 @@ import React, { forwardRef } from 'react';
 import type { ComponentPropsWithRef, ForwardedRef } from 'react';
 import * as S from './CitationBox.style';
 
-interface CitationBoxProps extends ComponentPropsWithRef<'input'> {
-  setSourceUrl: (url: string) => void;
-}
+export interface CitationBoxProps extends ComponentPropsWithRef<'input'> {}
 
 const CitationBox = (
-  { setSourceUrl, ...props }: CitationBoxProps,
+  props: CitationBoxProps,
   ref: ForwardedRef<HTMLInputElement>,
 ) => {
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSourceUrl(e.target.value);
-  };
-
   return (
     <div css={S.boxStyle}>
       <div css={S.boxTitleStyle}>출처</div>
-      <input
-        css={S.inputStyle}
-        type="text"
-        ref={ref}
-        onChange={handleInputChange}
-        {...props}
-      />
+      <input css={S.inputStyle} type="text" ref={ref} {...props} />
     </div>
   );
 };

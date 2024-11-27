@@ -1,45 +1,30 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { HTTP_STATUS_CODE } from '@/constants/api';
 import { postTempTalkPick } from '@/api/talk-pick';
-import { NewTalkPick } from '@/types/talk-pick';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { NewTempTalkPick } from '@/types/talk-pick';
 import { AxiosErrorResponse } from '@/api/interceptor';
-import { ERROR } from '@/constants/message';
+import { ERROR, SUCCESS } from '@/constants/message';
 
-export const useSaveTempTalkPickMutation = () => {
+export const useSaveTempTalkPickMutation = (
+  showToastModal: (message: string, callback?: () => void) => void,
+) => {
   const queryClient = useQueryClient();
-  const [saveSuccess, setSaveSuccess] = useState<boolean>(false);
-  const [isError, setIsError] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<string | undefined>(
-    undefined,
-  );
-  const navigate = useNavigate();
-
-  const setCreateError = (message: string) => {
-    setIsError(true);
-    setErrorMessage(message);
-  };
 
   const mutation = useMutation({
-    mutationFn: (data: NewTalkPick) => postTempTalkPick(data),
+    mutationFn: (data: NewTempTalkPick) => postTempTalkPick(data),
     onSuccess: async () => {
       await queryClient.invalidateQueries({
         queryKey: ['tempTalkPick'],
       });
 
-      setSaveSuccess(true);
+      showToastModal(SUCCESS.POST.SAVE);
     },
     onError: (err: AxiosErrorResponse) => {
       if (err.status === HTTP_STATUS_CODE.UNAUTHORIZED) {
-        setCreateError(ERROR.SAVE.FAIL);
+        showToastModal(ERROR.SAVE.FAIL);
       }
     },
   });
 
-  return {
-    ...mutation,
-    saveSuccess,
-  };
+  return { ...mutation };
 };

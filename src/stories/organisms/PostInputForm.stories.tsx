@@ -31,13 +31,4 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
-  args: {
-    onSave: (data) => {
-      console.log('Save clicked with data:', data);
-    },
-    onSubmit: (data) => {
-      console.log('Submit clicked with data:', data);
-    },
-  },
-};
+export const Default: Story = {};

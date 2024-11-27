@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 export const useDeleteFileMutation = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (storedName: string) => deleteFile(storedName),
+    mutationFn: (fileId: number) => deleteFile(fileId),
     onSuccess: async () => {
       await queryClient.invalidateQueries({
         queryKey: ['deleteFiles'],

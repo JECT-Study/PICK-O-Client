@@ -49,8 +49,18 @@ export type NewTalkPick = {
   fileIds: number[];
 };
 
+export type EditTalkPick = {
+  baseFields: TalkPickField;
+  newFileIds: number[];
+  deleteFileIds: number[];
+};
+
 export interface TempTalkPick extends NewTalkPick {
   imgUrls: string[];
+}
+
+export interface NewTempTalkPick extends EditTalkPick {
+  isLoaded: boolean;
 }
 
 export type TodayTalkPick = {

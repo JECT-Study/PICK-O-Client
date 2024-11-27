@@ -1,5 +1,8 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
+import store from '@/store';
+import { Provider } from 'react-redux';
+import ReactQueryProvider from '@/providers/ReactQueryProvider';
 import ImageUploadButton from '@/components/atoms/ImageUploadButton/ImageUploadButton';
 import { storyContainer, storyInnerContainer } from '@/stories/story.styles';
 
@@ -15,8 +18,21 @@ const meta = {
   },
   args: {
     imageCount: 1,
-    setImageFiles: () => {},
+    setImgUrls: () => {},
+    fileIds: [],
+    setFileIds: () => {},
+    setIsUploadingImage: () => {},
+    setNewFileIds: () => {},
   },
+  decorators: [
+    (Story) => (
+      <Provider store={store}>
+        <ReactQueryProvider>
+          <Story />
+        </ReactQueryProvider>
+      </Provider>
+    ),
+  ],
 } satisfies Meta<typeof ImageUploadButton>;
 
 export default meta;
@@ -33,7 +49,14 @@ export const All: Story = {
       </li>
       <li css={storyInnerContainer}>
         <h3>ImageCount 10</h3>
-        <ImageUploadButton imageCount={10} setImageFiles={() => {}} />
+        <ImageUploadButton
+          imageCount={10}
+          setImgUrls={() => {}}
+          fileIds={[]}
+          setFileIds={() => {}}
+          setIsUploadingImage={() => {}}
+          setNewFileIds={() => {}}
+        />
       </li>
     </ul>
   ),
