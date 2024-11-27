@@ -5,6 +5,10 @@ on:
     branches:
       - release/v2.0.0
       - dev
+  pull_request:
+    branches:
+      - release/v2.0.0
+      - dev
 
 jobs:
   deploy:
