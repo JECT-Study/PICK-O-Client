@@ -21,7 +21,7 @@ export const useCheckPasswordVerify = (
         handleVerifySuccess(true);
       } else {
         setIsError(true);
-        setErrorMessage('비밀번호가 일치하지 않습니다.');
+        setErrorMessage(ERROR.PW.NOT_MATCH);
       }
     },
   });
