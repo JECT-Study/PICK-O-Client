@@ -53,7 +53,7 @@ export const useLoginForm = (pathTalkPickId: number | undefined) => {
 
       setTimeout(() => {
         if (pathTalkPickId) {
-          navigate(`${PATH.TALKPICK(pathTalkPickId)}`);
+          navigate(`/${PATH.TALKPICK(pathTalkPickId)}`);
         } else {
           navigate('/');
         }
