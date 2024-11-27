@@ -16,7 +16,7 @@ const useToastModal = () => {
     modalTimerRef.current = setTimeout(() => {
       setIsVisible(false);
       callback?.();
-    }, 2000);
+    }, 1000);
   };
 
   useEffect(() => {
