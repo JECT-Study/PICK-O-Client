@@ -6,27 +6,31 @@ export const PageContainer = css({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
+  marginTop: '60px',
+  marginBottom: '78px',
 });
 
 export const pageWrapper = css({
   display: 'flex',
   flexDirection: 'column',
   gap: '20px',
-  paddingTop: '64px',
-  paddingBottom: '58px',
+});
+
+export const textWrapper = css({
+  display: 'flex',
+  flexDirection: 'column',
+  marginBottom: '15px',
 });
 
 export const subLabel = css(typo.SubTitle, {
-  display: 'inline-block',
+  display: 'flex',
+  fontWeight: 'bold',
   color: color.BK,
-  textAlign: 'left',
 });
 
 export const titleLabel = css(typo.Title, {
-  display: 'inline-block',
+  display: 'flex',
   color: color.BK,
-  textAlign: 'left',
-  marginBottom: '15px',
 });
 
 export const buttonContainer = css({

@@ -4,7 +4,7 @@ import color from '@/styles/color';
 
 export const pageStyle = css({
   height: '1217px',
-  marginTop: '64px',
+  marginTop: '60px',
   marginBottom: '78px',
   display: 'flex',
   flexDirection: 'column',
@@ -12,25 +12,25 @@ export const pageStyle = css({
   alignItems: 'center',
 });
 
-export const bestTalkPickStyling = css({
+export const createTalkPickStyling = css({
   display: 'flex',
   flexDirection: 'column',
-  marginBottom: '56px',
+  marginBottom: '20px',
 });
 
-export const bestTalkPickTextWrapper = css({
+export const createTalkPickTextWrapper = css({
   display: 'flex',
   flexDirection: 'column',
   marginBottom: '35px',
 });
 
-export const bestTalkPickSubTitle = css(typo.SubTitle, {
+export const createTalkPickSubTitle = css(typo.SubTitle, {
   display: 'flex',
   fontWeight: 'bold',
   color: color.BK,
 });
 
-export const bestTalkPickTitle = css(typo.Title, {
+export const createTalkPickTitle = css(typo.Title, {
   display: 'flex',
   color: color.BK,
 });
