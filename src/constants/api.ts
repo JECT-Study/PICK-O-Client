@@ -124,6 +124,10 @@ export const END_POINT = {
   // notification API
   NOTIFICATON: 'notifications',
   READ_NOTIFICATION: (msgId: Id) => `/notifications/${msgId}/read`,
+
+  // friends API
+  FRIENDS: '/friends',
+  FRIENDS_LIST: '/friends/images',
 };
 
 export const AXIOS = {
