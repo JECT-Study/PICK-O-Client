@@ -71,38 +71,58 @@ export interface BalanceGame {
   subTag: string;
   games: BalanceGameSet[];
 }
+//
+// export interface TempGame {
+//   mainTag: string;
+//   subTag: string;
+//   tempGames: TempGameSet[];
+// }
+//
+// export interface TempGameSet {
+//   title: string;
+//   description: string;
+//   tempGameOptions: {
+//     name: string;
+//     imgUrl: string;
+//     fileId: number;
+//     description: string;
+//     optionType: 'A' | 'B';
+//   }[];
+// }
+//
+// export interface TempGameOptionResponse {
+//   name: string;
+//   description: string;
+//   imgUrl: string;
+//   optionType: 'A' | 'B';
+// }
+//
+// export interface TempGameDetailResponse {
+//   title: string;
+//   mainTag: string;
+//   subTag: string;
+//   tempGames: TempGameOptionResponse[];
+// }
+//
+// export interface TempGameResponse {
+//   tempGameDetailResponses: TempGameDetailResponse[];
+// }
 
-export interface TempGame {
-  mainTag: string;
-  subTag: string;
-  tempGames: TempGameSet[];
-}
-
-export interface TempGameSet {
-  title: string;
-  description: string;
-  tempGameOptions: {
-    name: string;
-    imgUrl: string;
-    fileId: number;
-    description: string;
-    optionType: 'A' | 'B';
-  }[];
-}
-
-export interface TempGameOptionResponse {
+export interface TempGameOption {
   name: string;
   description: string;
-  imgUrl: string;
+  fileId?: number | null;
   optionType: 'A' | 'B';
 }
 
-export interface TempGameDetailResponse {
-  title: string;
+export interface TempGameSet {
   description: string;
-  tempGameOptions: TempGameOptionResponse[];
+  tempGameOptions: TempGameOption[];
 }
 
-export interface TempGameResponse {
-  tempGameDetailResponses: TempGameDetailResponse[];
+export interface TempGame {
+  title: string;
+  mainTag: string;
+  subTag: string;
+  tempGames: TempGameSet[];
 }
