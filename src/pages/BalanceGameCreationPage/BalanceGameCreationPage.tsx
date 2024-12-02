@@ -59,9 +59,9 @@ const BalanceGameCreationPage = () => {
 
       setTitle(tempGame.title);
       setLoadedGames(mappedGames);
-      alert('임시 저장 데이터를 불러왔습니다!');
+      showToastModal('임시 저장 데이터를 불러왔습니다!');
     } else {
-      alert('임시 저장 데이터를 불러오는 데 실패했습니다.');
+      showToastModal('임시 저장 데이터를 불러오는 데 실패했습니다.');
     }
   };
 
@@ -190,7 +190,14 @@ const BalanceGameCreationPage = () => {
       tempGames: convertToTempGameSets(games),
     };
     console.log('임시 저장 실행 데이터:', tempGameData);
-    saveTempGame(tempGameData);
+    saveTempGame(tempGameData, {
+      onSuccess: () => {
+        showToastModal('임시 저장이 완료되었습니다!');
+      },
+      onError: () => {
+        showToastModal('임시 저장에 실패했습니다. 다시 시도해주세요.');
+      },
+    });
   };
 
   return (
