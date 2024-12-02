@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { ERROR } from '@/constants/message';
-import { getPasswordVerify } from '@/api/member';
+import { postPasswordVerify } from '@/api/member';
 import { isEmptyString } from '@/utils/validator';
 import { useMutation } from '@tanstack/react-query';
 
@@ -15,14 +15,13 @@ export const useCheckPasswordVerify = (
   const [isError, setIsError] = useState<boolean>(false);
 
   const passwordVerify = useMutation({
-    mutationFn: () => getPasswordVerify(value),
-    onSuccess: (data: boolean) => {
-      if (data) {
-        handleVerifySuccess(true);
-      } else {
-        setIsError(true);
-        setErrorMessage(ERROR.PW.NOT_MATCH);
-      }
+    mutationFn: () => postPasswordVerify(value),
+    onSuccess: () => {
+      handleVerifySuccess(true);
+    },
+    onError: () => {
+      setIsError(true);
+      setErrorMessage(ERROR.PW.NOT_MATCH);
     },
   });
 

@@ -1,7 +1,7 @@
-// import { DEFAULT_PROFILE_URL } from '@/constants/image';
-import { useFileUploadMutation } from '@/hooks/api/file/useFileUploadMutation';
 import { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
+import { useFriendsListQuery } from '@/hooks/api/friends/useFriendsListQuery';
+import { useFileUploadMutation } from '@/hooks/api/file/useFileUploadMutation';
 
 export interface InputProfileImageProps {
   setImageFileId: (name: string, profileImgId: number | null) => void;
@@ -16,7 +16,10 @@ export const useCheckProfileImage = ({
 }: InputProfileImageProps) => {
   const [imageSrc, setImageSrc] = useState<string>(imgSrc || '');
   const [isError, setIsError] = useState<boolean>(false);
+
   const { mutate: fileUpload } = useFileUploadMutation();
+  const { friendsList } = useFriendsListQuery();
+  const friendsImageList = friendsList?.map((friend) => friend.imgUrl);
 
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
@@ -41,7 +44,7 @@ export const useCheckProfileImage = ({
         );
       } else {
         setIsError(true);
-        setImageFileId('profileImgUrl', null);
+        setImageFileId('profileImgId', null);
       }
     },
     [fileUpload, setImageFileId, setIsImgChanged],
@@ -57,24 +60,22 @@ export const useCheckProfileImage = ({
 
   const handleDefaultImage = useCallback(
     (src: string) => {
-      // const defaultProfileUrlMapping: { [key: string]: string } = {
-      //   [DEFAULT_PROFILE_URL.OCTOPUS.CLIENT]:
-      //     DEFAULT_PROFILE_URL.OCTOPUS.SERVER,
-      //   [DEFAULT_PROFILE_URL.JELLYFISH.CLIENT]:
-      //     DEFAULT_PROFILE_URL.JELLYFISH.SERVER,
-      //   [DEFAULT_PROFILE_URL.RAY.CLIENT]: DEFAULT_PROFILE_URL.RAY.SERVER,
-      //   [DEFAULT_PROFILE_URL.EEL.CLIENT]: DEFAULT_PROFILE_URL.EEL.SERVER,
-      //   [DEFAULT_PROFILE_URL.TURTLE.CLIENT]: DEFAULT_PROFILE_URL.TURTLE.SERVER,
-      //   [DEFAULT_PROFILE_URL.RABBIT.CLIENT]: DEFAULT_PROFILE_URL.RABBIT.SERVER,
-      // };
-
-      // const profileImgUrl = defaultProfileUrlMapping[src] || '';
+      const selectedFriend = friendsList?.find(
+        (friend) => friend.imgUrl === src,
+      );
 
       setImageSrc(src);
-      // setImageFileId('profileImgUrl', profileImgUrl);
+      setImageFileId('profileImgId', selectedFriend?.fileId ?? 0);
+      setIsImgChanged?.(true);
     },
-    [setImageSrc],
+    [friendsList, setImageFileId, setIsImgChanged],
   );
 
-  return { imageSrc, isError, getRootProps, handleDefaultImage };
+  return {
+    imageSrc,
+    isError,
+    getRootProps,
+    friendsImageList,
+    handleDefaultImage,
+  };
 };
