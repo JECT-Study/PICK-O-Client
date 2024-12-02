@@ -18,6 +18,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSaveTempGameMutation } from '@/hooks/api/game/useSaveTempGameMutation';
 import { createInitialGameStages } from '@/utils/balanceGameUtils';
 import { useLoadTempGameQuery } from '@/hooks/api/game/useLoadTempGameQuery';
+import { resizeImage } from '@/utils/imageUtils';
 import * as S from './BalanceGameCreationPage.style';
 
 const BalanceGameCreationPage = () => {
@@ -69,8 +70,13 @@ const BalanceGameCreationPage = () => {
     imageFile: File,
     type: 'GAME_OPTION',
   ): Promise<{ imgUrl: string; fileId: number }> => {
+    const resizedBlob = await resizeImage(imageFile, 577, 359);
+    const resizedFile = new File([resizedBlob], imageFile.name, {
+      type: imageFile.type,
+    });
+
     const formData = new FormData();
-    formData.append('file', imageFile);
+    formData.append('file', resizedFile);
 
     try {
       const response = await uploadImage({
