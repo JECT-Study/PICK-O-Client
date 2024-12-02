@@ -21,7 +21,9 @@ export const useCreateBalanceGameMutation = () => {
     },
   });
 
-  const handleCreateBalanceGame = async (gameData: BalanceGame) => {
+  const handleCreateBalanceGame = async (
+    gameData: BalanceGame,
+  ): Promise<number> => {
     try {
       const gameId = await mutation.mutateAsync(gameData);
       console.log('게임 생성 성공, 게임 ID:', gameId);
