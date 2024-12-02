@@ -5,7 +5,6 @@ import {
   GameContent,
   GameSet,
   TempGame,
-  TempGameResponse,
 } from '@/types/game';
 import { Id } from '@/types/api';
 import { axiosInstance } from './interceptor';
@@ -20,12 +19,12 @@ export const postTempGame = async (tempGameData: TempGame) => {
   return response;
 };
 
-export const getTempGame = async () => {
-  const { data } = await axiosInstance.get<TempGameResponse>(
-    END_POINT.TEMP_GAME,
-  );
-  return data;
-};
+// export const getTempGame = async () => {
+//   const { data } = await axiosInstance.get<TempGameResponse>(
+//     END_POINT.TEMP_GAME,
+//   );
+//   return data;
+// };
 
 export const postGame = async (gameData: Game) => {
   const { data } = await axiosInstance.post<GameContent>(

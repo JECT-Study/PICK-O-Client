@@ -122,7 +122,5 @@ export interface TempGameSet {
 
 export interface TempGame {
   title: string;
-  mainTag: string;
-  subTag: string;
   tempGames: TempGameSet[];
 }
