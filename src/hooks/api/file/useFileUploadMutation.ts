@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { postFile } from '@/api/file';
 import { FileUploadType } from '@/types/file';
@@ -18,6 +17,11 @@ export const useFileUploadMutation = (
       await queryClient.invalidateQueries({
         queryKey: ['uploadedFiles'],
       });
+    },
+    onSettled: () => {
+      if (setIsUploadingImage) {
+        setIsUploadingImage(false);
+      }
     },
   });
 };

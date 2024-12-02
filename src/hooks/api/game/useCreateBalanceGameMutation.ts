@@ -8,9 +8,9 @@ export const useCreateBalanceGameMutation = () => {
   const mutation = useMutation({
     mutationFn: async (gameData: BalanceGame) => {
       const response = await postBalanceGame(gameData);
-      return response;
+      return response.data;
     },
-    onSuccess: async () => {
+    onSuccess: async (response) => {
       console.log('게임 생성 성공');
       await queryClient.invalidateQueries({
         queryKey: ['games'],
@@ -21,11 +21,13 @@ export const useCreateBalanceGameMutation = () => {
     },
   });
 
-  const handleCreateBalanceGame = async (gameData: BalanceGame) => {
+  const handleCreateBalanceGame = async (
+    gameData: BalanceGame,
+  ): Promise<number> => {
     try {
-      const response = await mutation.mutateAsync(gameData);
-      console.log('게임 생성 응답:', response);
-      return response;
+      const gameId = await mutation.mutateAsync(gameData);
+      console.log('게임 생성 성공, 게임 ID:', gameId);
+      return gameId;
     } catch (error) {
       console.error('게임 생성 중 오류 발생:', error);
       throw error;

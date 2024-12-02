@@ -24,9 +24,9 @@ export const createInitialGameStages = (totalStage: number): BalanceGameSet[] =>
   }));
 
 export const updateOptionInGameSets = (
-  options: BalanceGameOption[], // 옵션 배열
-  optionType: 'A' | 'B', // 업데이트할 옵션 타입
-  newOption: Partial<BalanceGameOption>, // 업데이트할 데이터
+  options: BalanceGameOption[],
+  optionType: 'A' | 'B',
+  newOption: Partial<BalanceGameOption>,
 ): BalanceGameOption[] => {
   return options.map((option) =>
     option.optionType === optionType ? { ...option, ...newOption } : option,
