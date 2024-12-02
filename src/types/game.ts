@@ -122,5 +122,6 @@ export interface TempGameSet {
 
 export interface TempGame {
   title: string;
+  isLoaded?: boolean;
   tempGames: TempGameSet[];
 }
