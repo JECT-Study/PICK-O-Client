@@ -9,13 +9,13 @@ import {
 
 export type ToggleGroupItem = {
   label: string;
-  value: string;
+  value: 'views' | 'createdAt';
 };
 
 export interface ToggleGroupProps {
   items?: ToggleGroupItem[];
   selectedValue?: string;
-  onClick?: (value: string) => void;
+  onClick?: (value: 'views' | 'createdAt') => void;
 }
 
 const defaultItems: ToggleGroupItem[] = [
