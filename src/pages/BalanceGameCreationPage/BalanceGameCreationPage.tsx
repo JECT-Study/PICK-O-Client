@@ -35,9 +35,7 @@ const BalanceGameCreationPage = () => {
   const { mutate: saveTempGame } = useSaveTempGameMutation();
   const { data: tempGame, isSuccess } = useLoadTempGameQuery();
   const { isVisible, modalText, showToastModal } = useToastModal();
-  const [loadedGames, setLoadedGames] = useState<BalanceGameSet[] | undefined>(
-    undefined,
-  );
+  const [loadedGames, setLoadedGames] = useState<BalanceGameSet[] | null>(null);
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
@@ -211,7 +209,7 @@ const BalanceGameCreationPage = () => {
           onGamesUpdate={(updatedGames) => setGames(updatedGames)}
           onImageChange={onImageChange}
           onImageDelete={onImageDelete}
-          loadedGames={loadedGames}
+          loadedGames={loadedGames || undefined}
         />
         <div css={S.buttonContainer}>
           <Button
