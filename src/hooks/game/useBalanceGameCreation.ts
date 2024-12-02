@@ -17,6 +17,12 @@ export const useBalanceGameCreation = (
   const [currentDescription, setCurrentDescription] = useState<string>('');
 
   useEffect(() => {
+    if (loadedGames) {
+      setGames(loadedGames);
+    }
+  }, [loadedGames]);
+
+  useEffect(() => {
     const stage = games[currentStage] || { gameOptions: [], description: '' };
     setCurrentOptions(stage.gameOptions);
     setCurrentDescription(stage.description);
