@@ -2,7 +2,12 @@ import React, { useState } from 'react';
 import BalanceGameCreation from '@/components/organisms/BalanceGameCreation/BalanceGameCreation';
 import Button from '@/components/atoms/Button/Button';
 import Divider from '@/components/atoms/Divider/Divider';
-import { BalanceGame, BalanceGameSet } from '@/types/game';
+import {
+  BalanceGame,
+  BalanceGameSet,
+  TempGame,
+  TempGameSet,
+} from '@/types/game';
 import { useFileUploadMutation } from '@/hooks/api/file/useFileUploadMutation';
 import ToastModal from '@/components/atoms/ToastModal/ToastModal';
 import TagModal from '@/components/molecules/TagModal/TagModal';
@@ -10,6 +15,7 @@ import { useCreateBalanceGameMutation } from '@/hooks/api/game/useCreateBalanceG
 import useToastModal from '@/hooks/modal/useToastModal';
 import TextModal from '@/components/molecules/TextModal/TextModal';
 import { useNavigate } from 'react-router-dom';
+import { useSaveTempGameMutation } from '@/hooks/api/game/useSaveTempGameMutation';
 import * as S from './BalanceGameCreationPage.style';
 
 const BalanceGameCreationPage = () => {
@@ -24,6 +30,7 @@ const BalanceGameCreationPage = () => {
   const navigate = useNavigate();
   const { handleCreateBalanceGame } = useCreateBalanceGameMutation();
   const { mutateAsync: uploadImage } = useFileUploadMutation();
+  const { mutate: saveTempGame } = useSaveTempGameMutation();
   const { isVisible, modalText, showToastModal } = useToastModal();
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -138,8 +145,20 @@ const BalanceGameCreationPage = () => {
     }
   };
 
+  const mapToTempGameSets = (games: BalanceGameSet[]): TempGameSet[] => {
+    return games.map(({ description, gameOptions }) => ({
+      description,
+      tempGameOptions: gameOptions,
+    }));
+  };
+
   const handleSaveDraft = () => {
-    alert('준비 중입니다!');
+    const tempGameData: TempGame = {
+      title,
+      tempGames: mapToTempGameSets(games),
+    };
+
+    saveTempGame(tempGameData);
   };
 
   return (
