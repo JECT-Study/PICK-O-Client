@@ -45,7 +45,10 @@ const BalanceGameCreationPage = () => {
 
   const handleDraftLoad = () => {
     if (isSuccess && tempGame) {
+      console.log('임시 저장 불러오기 시작');
+      console.log('불러온 임시 저장 데이터:', tempGame);
       const initialStages = createInitialGameStages(10);
+      console.log('생성된 초기 스테이지 데이터:', initialStages);
 
       const mappedGames: BalanceGameSet[] = initialStages.map((stage, idx) => ({
         description: tempGame.tempGames[idx]?.description || stage.description,
@@ -54,6 +57,7 @@ const BalanceGameCreationPage = () => {
           ...tempGame.tempGames[idx]?.tempGameOptions[optionIdx],
         })),
       }));
+      console.log('병합된 게임 데이터:', mappedGames);
 
       setTitle(tempGame.title);
       setLoadedGames(mappedGames);
