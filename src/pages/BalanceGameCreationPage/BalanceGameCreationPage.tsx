@@ -21,9 +21,7 @@ const BalanceGameCreationPage = () => {
     stageIndex: number;
     optionIndex: number;
   } | null>(null);
-  const [activeStage, setActiveStage] = useState(0);
   const navigate = useNavigate();
-
   const { handleCreateBalanceGame } = useCreateBalanceGameMutation();
   const { mutateAsync: uploadImage } = useFileUploadMutation();
   const { isVisible, modalText, showToastModal } = useToastModal();
@@ -157,7 +155,6 @@ const BalanceGameCreationPage = () => {
           onTitleChange={handleTitleChange}
           handleCompleteClick={handleCompleteClick}
           onDraftLoad={handleDraftLoad}
-          onStageChange={(stage) => setActiveStage(stage)}
           onGamesUpdate={(updatedGames) => setGames(updatedGames)}
           onImageChange={onImageChange}
           onImageDelete={onImageDelete}
