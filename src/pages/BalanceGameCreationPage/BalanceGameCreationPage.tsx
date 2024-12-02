@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import BalanceGameCreation from '@/components/organisms/BalanceGameCreation/BalanceGameCreation';
 import Button from '@/components/atoms/Button/Button';
 import Divider from '@/components/atoms/Divider/Divider';
@@ -14,7 +14,6 @@ import * as S from './BalanceGameCreationPage.style';
 
 const BalanceGameCreationPage = () => {
   const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
   const [games, setGames] = useState<BalanceGameSet[]>([]);
   const [isTagModalOpen, setIsTagModalOpen] = useState(false);
   const [isTextModalOpen, setIsTextModalOpen] = useState(false);
@@ -31,18 +30,6 @@ const BalanceGameCreationPage = () => {
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
-  };
-
-  const handleDescriptionChange = (newDescription: string) => {
-    setDescription(newDescription);
-    setGames((prevGames) => {
-      const updatedGames = [...prevGames];
-      updatedGames[activeStage] = {
-        ...updatedGames[activeStage],
-        description,
-      };
-      return updatedGames;
-    });
   };
 
   const handleDraftLoad = () => {
@@ -157,12 +144,6 @@ const BalanceGameCreationPage = () => {
     alert('준비 중입니다!');
   };
 
-  useEffect(() => {
-    if (games[activeStage]) {
-      setDescription(games[activeStage].description || '');
-    }
-  }, [activeStage, games]);
-
   return (
     <div css={S.PageContainer}>
       <div css={S.pageWrapper}>
@@ -173,9 +154,7 @@ const BalanceGameCreationPage = () => {
         <Divider orientation="width" length={1175} />
         <BalanceGameCreation
           title={title}
-          description={description}
           onTitleChange={handleTitleChange}
-          onDescriptionChange={handleDescriptionChange}
           handleCompleteClick={handleCompleteClick}
           onDraftLoad={handleDraftLoad}
           onStageChange={(stage) => setActiveStage(stage)}

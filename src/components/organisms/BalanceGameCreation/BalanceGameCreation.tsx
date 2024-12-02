@@ -10,9 +10,7 @@ import * as S from './BalanceGameCreation.style';
 
 export interface BalanceGameCreationProps {
   title: string;
-  description?: string;
   onTitleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onDescriptionChange: (description: string) => void;
   handleCompleteClick: () => void;
   onDraftLoad: () => void;
   onStageChange: (stage: number) => void;
@@ -23,9 +21,7 @@ export interface BalanceGameCreationProps {
 
 const BalanceGameCreation = ({
   title,
-  description,
   onTitleChange,
-  onDescriptionChange,
   handleCompleteClick,
   onDraftLoad,
   onStageChange,
@@ -49,8 +45,7 @@ const BalanceGameCreation = ({
 
   useEffect(() => {
     onStageChange(currentStage);
-    onDescriptionChange(currentDescription);
-  }, [currentStage, onStageChange, currentDescription, onDescriptionChange]);
+  }, [currentStage, onStageChange]);
 
   useEffect(() => {
     if (currentOptions.length > 0) {
@@ -62,7 +57,7 @@ const BalanceGameCreation = ({
     <div css={S.pageContainer}>
       <TitleDescriptionField
         title={title}
-        description={description}
+        description={currentDescription}
         onTitleChange={onTitleChange}
         onDescriptionChange={(e) =>
           handleStageDescriptionChange(e.target.value)
