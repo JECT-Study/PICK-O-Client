@@ -171,7 +171,7 @@ const BalanceGameCreationPage = () => {
     }
   };
 
-  const mapToTempGameSets = (gameSets: BalanceGameSet[]): TempGameSet[] => {
+  const convertToTempGameSets = (gameSets: BalanceGameSet[]): TempGameSet[] => {
     return gameSets.map(({ description: setDescription, gameOptions }) => ({
       description: setDescription,
       tempGameOptions: gameOptions.map(
@@ -189,7 +189,7 @@ const BalanceGameCreationPage = () => {
     const tempGameData: TempGame = {
       title,
       isLoaded: false,
-      tempGames: mapToTempGameSets(games),
+      tempGames: convertToTempGameSets(games),
     };
     console.log('임시 저장 실행 데이터:', tempGameData);
     saveTempGame(tempGameData);
