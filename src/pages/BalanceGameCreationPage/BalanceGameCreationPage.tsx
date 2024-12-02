@@ -171,13 +171,13 @@ const BalanceGameCreationPage = () => {
     }
   };
 
-  const mapToTempGameSets = (games: BalanceGameSet[]): TempGameSet[] => {
-    return games.map(({ description, gameOptions }) => ({
-      description,
+  const mapToTempGameSets = (gameSets: BalanceGameSet[]): TempGameSet[] => {
+    return gameSets.map(({ description: setDescription, gameOptions }) => ({
+      description: setDescription,
       tempGameOptions: gameOptions.map(
-        ({ name, description, fileId, optionType }) => ({
+        ({ name, description: optionDescription, fileId, optionType }) => ({
           name,
-          description,
+          description: optionDescription,
           fileId: fileId || null,
           optionType,
         }),
