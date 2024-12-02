@@ -18,6 +18,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSaveTempGameMutation } from '@/hooks/api/game/useSaveTempGameMutation';
 import { createInitialGameStages } from '@/utils/balanceGameUtils';
 import { useLoadTempGameQuery } from '@/hooks/api/game/useLoadTempGameQuery';
+import { resizeImage } from '@/utils/imageUtils';
 import * as S from './BalanceGameCreationPage.style';
 
 const BalanceGameCreationPage = () => {
@@ -69,8 +70,13 @@ const BalanceGameCreationPage = () => {
     imageFile: File,
     type: 'GAME_OPTION',
   ): Promise<{ imgUrl: string; fileId: number }> => {
+    const resizedBlob = await resizeImage(imageFile, 577, 359);
+    const resizedFile = new File([resizedBlob], imageFile.name, {
+      type: imageFile.type,
+    });
+
     const formData = new FormData();
-    formData.append('file', imageFile);
+    formData.append('file', resizedFile);
 
     try {
       const response = await uploadImage({
@@ -148,7 +154,7 @@ const BalanceGameCreationPage = () => {
     selectedSubTag: string,
   ) => {
     if (!games.length) {
-      alert('게임 데이터가 없습니다. 입력 후 완료 버튼을 눌러주세요.');
+      showToastModal('게임 데이터가 없습니다.');
       return;
     }
 
@@ -160,12 +166,14 @@ const BalanceGameCreationPage = () => {
     };
 
     try {
-      console.log('게임 생성 요청 중...');
-      await handleCreateBalanceGame(gameData);
-      showToastModal('게임 생성이 완료되었습니다.', () => navigate('/'));
+      const gameId = await handleCreateBalanceGame(gameData);
+      console.log('게임 생성 완료, 게임 ID:', gameId);
+      showToastModal('등록되었습니다!', () => {
+        navigate(`/balancegame/${gameId}`);
+      });
     } catch (error) {
       console.error('게임 생성 실패:', error);
-      alert('게임 생성에 실패했습니다. 다시 시도해주세요.');
+      showToastModal('게임 생성에 실패했습니다.');
     }
   };
 
