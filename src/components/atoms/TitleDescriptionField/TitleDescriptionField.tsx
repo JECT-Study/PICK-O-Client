@@ -20,6 +20,18 @@ const TitleDescriptionField = (
 ) => {
   const descriptionRef = useRef<HTMLInputElement>(null);
 
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value.length <= 100) {
+      onTitleChange(e);
+    }
+  };
+
+  const handleDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (onDescriptionChange && e.target.value.length <= 30) {
+      onDescriptionChange(e);
+    }
+  };
+
   return (
     <div css={S.fieldWrapStyle}>
       <div css={S.titleWrapStyle}>
@@ -30,7 +42,7 @@ const TitleDescriptionField = (
           type="text"
           placeholder="ex) 연인 상황별 더 킹받는 순간은?"
           value={title}
-          onChange={onTitleChange}
+          onChange={handleTitleChange}
           ref={ref}
           css={S.textStyle}
         />
@@ -44,7 +56,7 @@ const TitleDescriptionField = (
           type="text"
           placeholder="ex) 나와 내 연인, 내 친구의 조합으로 밥집에 갔다. 반찬으로 깻잎이 등장!"
           value={description}
-          onChange={onDescriptionChange}
+          onChange={handleDescriptionChange}
           css={S.textStyle}
           ref={descriptionRef}
         />
