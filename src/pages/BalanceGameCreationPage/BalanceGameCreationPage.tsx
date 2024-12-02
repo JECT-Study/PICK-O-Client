@@ -178,7 +178,7 @@ const BalanceGameCreationPage = () => {
         ({ name, description: optionDescription, fileId, optionType }) => ({
           name,
           description: optionDescription,
-          fileId: fileId || null,
+          fileId: fileId ?? null,
           optionType,
         }),
       ),
