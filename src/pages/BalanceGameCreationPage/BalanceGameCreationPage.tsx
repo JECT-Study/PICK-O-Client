@@ -19,6 +19,10 @@ import { useSaveTempGameMutation } from '@/hooks/api/game/useSaveTempGameMutatio
 import { createInitialGameStages } from '@/utils/balanceGameUtils';
 import { useLoadTempGameQuery } from '@/hooks/api/game/useLoadTempGameQuery';
 import * as S from './BalanceGameCreationPage.style';
+import {
+  deleteModalBackdrop,
+  submitModalBackdrop,
+} from './BalanceGameCreationPage.style';
 
 const BalanceGameCreationPage = () => {
   const [title, setTitle] = useState('');
@@ -225,7 +229,7 @@ const BalanceGameCreationPage = () => {
         </div>
         {isTagModalOpen && (
           <>
-            <div css={S.modalBackdrop} />
+            <div css={S.submitModalBackdrop} />
             <div css={S.centerStyling}>
               <TagModal
                 isOpen={isTagModalOpen}
@@ -237,7 +241,7 @@ const BalanceGameCreationPage = () => {
         )}
         {isTextModalOpen && (
           <>
-            <div css={S.modalBackdrop} />
+            <div css={S.deleteModalBackdrop} />
             <div css={S.centerStyling}>
               <TextModal
                 text="이미지를 삭제하시겠습니까?"
