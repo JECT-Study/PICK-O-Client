@@ -19,10 +19,6 @@ import { useSaveTempGameMutation } from '@/hooks/api/game/useSaveTempGameMutatio
 import { createInitialGameStages } from '@/utils/balanceGameUtils';
 import { useLoadTempGameQuery } from '@/hooks/api/game/useLoadTempGameQuery';
 import * as S from './BalanceGameCreationPage.style';
-import {
-  deleteModalBackdrop,
-  submitModalBackdrop,
-} from './BalanceGameCreationPage.style';
 
 const BalanceGameCreationPage = () => {
   const [title, setTitle] = useState('');
