@@ -13,7 +13,6 @@ export interface BalanceGameCreationProps {
   onTitleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleCompleteClick: () => void;
   onDraftLoad: () => void;
-  onStageChange: (stage: number) => void;
   onGamesUpdate: (games: BalanceGameSet[]) => void;
   onImageChange: (stageIndex: number, optionIndex: number, file: File) => void;
   onImageDelete: (stageIndex: number, optionIndex: number) => void;
@@ -24,7 +23,6 @@ const BalanceGameCreation = ({
   onTitleChange,
   handleCompleteClick,
   onDraftLoad,
-  onStageChange,
   onGamesUpdate,
   onImageChange,
   onImageDelete,
@@ -42,10 +40,6 @@ const BalanceGameCreation = ({
     handleDescriptionChange,
     handleStageDescriptionChange,
   } = useBalanceGameCreation(totalStage, currentStage);
-
-  useEffect(() => {
-    onStageChange(currentStage);
-  }, [currentStage, onStageChange]);
 
   useEffect(() => {
     if (currentOptions.length > 0) {
