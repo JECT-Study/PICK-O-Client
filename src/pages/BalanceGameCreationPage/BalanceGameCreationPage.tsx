@@ -16,6 +16,8 @@ import useToastModal from '@/hooks/modal/useToastModal';
 import TextModal from '@/components/molecules/TextModal/TextModal';
 import { useNavigate } from 'react-router-dom';
 import { useSaveTempGameMutation } from '@/hooks/api/game/useSaveTempGameMutation';
+import { createInitialGameStages } from '@/utils/balanceGameUtils';
+import { useLoadTempGameQuery } from '@/hooks/api/game/useLoadTempGameQuery';
 import * as S from './BalanceGameCreationPage.style';
 
 const BalanceGameCreationPage = () => {
@@ -31,14 +33,34 @@ const BalanceGameCreationPage = () => {
   const { handleCreateBalanceGame } = useCreateBalanceGameMutation();
   const { mutateAsync: uploadImage } = useFileUploadMutation();
   const { mutate: saveTempGame } = useSaveTempGameMutation();
+  const { data: tempGame, isSuccess } = useLoadTempGameQuery();
   const { isVisible, modalText, showToastModal } = useToastModal();
+  const [loadedGames, setLoadedGames] = useState<BalanceGameSet[] | undefined>(
+    undefined,
+  );
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
 
   const handleDraftLoad = () => {
-    alert('준비 중입니다!');
+    if (isSuccess && tempGame) {
+      const initialStages = createInitialGameStages(10);
+
+      const mappedGames: BalanceGameSet[] = initialStages.map((stage, idx) => ({
+        description: tempGame.tempGames[idx]?.description || stage.description,
+        gameOptions: stage.gameOptions.map((option, optionIdx) => ({
+          ...option,
+          ...tempGame.tempGames[idx]?.tempGameOptions[optionIdx],
+        })),
+      }));
+
+      setTitle(tempGame.title);
+      setLoadedGames(mappedGames);
+      alert('임시 저장 데이터를 불러왔습니다!');
+    } else {
+      alert('임시 저장 데이터를 불러오는 데 실패했습니다.');
+    }
   };
 
   const handleImageUpload = async (
@@ -185,6 +207,7 @@ const BalanceGameCreationPage = () => {
           onGamesUpdate={(updatedGames) => setGames(updatedGames)}
           onImageChange={onImageChange}
           onImageDelete={onImageDelete}
+          loadedGames={loadedGames}
         />
         <div css={S.buttonContainer}>
           <Button
