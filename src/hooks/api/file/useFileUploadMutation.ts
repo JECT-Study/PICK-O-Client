@@ -4,7 +4,7 @@ import { postFile } from '@/api/file';
 import { UploadedImage, FileUploadType } from '@/types/file';
 
 export const useFileUploadMutation = (
-  setIsUploadingImage: React.Dispatch<React.SetStateAction<boolean>>,
+  setIsUploadingImage?: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
   const queryClient = useQueryClient();
 
@@ -12,12 +12,19 @@ export const useFileUploadMutation = (
     mutationFn: (data: { formData: FormData; params: FileUploadType }) =>
       postFile(data.formData, data.params),
     onMutate: () => {
-      setIsUploadingImage(true);
+      if (setIsUploadingImage) {
+        setIsUploadingImage(true);
+      }
     },
     onSuccess: async (response: UploadedImage) => {
       await queryClient.invalidateQueries({
         queryKey: ['uploadedFiles'],
       });
+    },
+    onSettled: () => {
+      if (setIsUploadingImage) {
+        setIsUploadingImage(false);
+      }
     },
   });
 };

@@ -40,7 +40,7 @@ export const customButtonStyle = css({
   height: '60px',
 });
 
-export const modalBackdrop = css({
+export const submitModalBackdrop = css({
   position: 'fixed',
   top: 0,
   left: 0,
@@ -48,6 +48,15 @@ export const modalBackdrop = css({
   height: '100%',
   backgroundColor: 'rgba(255, 255, 255, 0.11)',
   backdropFilter: 'blur(20px)',
+  zIndex: '900',
+});
+
+export const deleteModalBackdrop = css({
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%',
   zIndex: '900',
 });
 

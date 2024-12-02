@@ -54,7 +54,7 @@ export interface BalanceGameOption {
   id: number;
   name: string;
   imgUrl: string;
-  fileId: number;
+  fileId: number | null;
   description: string;
   optionType: 'A' | 'B';
   imageFile?: File | null;
@@ -72,37 +72,20 @@ export interface BalanceGame {
   games: BalanceGameSet[];
 }
 
-export interface TempGame {
-  mainTag: string;
-  subTag: string;
-  tempGames: TempGameSet[];
-}
-
-export interface TempGameSet {
-  title: string;
-  description: string;
-  tempGameOptions: {
-    name: string;
-    imgUrl: string;
-    fileId: number;
-    description: string;
-    optionType: 'A' | 'B';
-  }[];
-}
-
-export interface TempGameOptionResponse {
+export interface TempGameOption {
   name: string;
   description: string;
-  imgUrl: string;
+  fileId?: number | null;
   optionType: 'A' | 'B';
 }
 
-export interface TempGameDetailResponse {
-  title: string;
+export interface TempGameSet {
   description: string;
-  tempGameOptions: TempGameOptionResponse[];
+  tempGameOptions: TempGameOption[];
 }
 
-export interface TempGameResponse {
-  tempGameDetailResponses: TempGameDetailResponse[];
+export interface TempGame {
+  title: string;
+  isLoaded?: boolean;
+  tempGames: TempGameSet[];
 }
