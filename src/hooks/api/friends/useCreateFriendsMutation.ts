@@ -12,6 +12,4 @@ export const useCreateFriendsMutation = () => {
         queryKey: ['friends'],
       }),
   });
-
-  return { ...mutation };
 };
