@@ -14,8 +14,11 @@ export const useCheckPasswordVerify = (
   );
   const [isError, setIsError] = useState<boolean>(false);
 
+  const passwordData = new FormData();
+  passwordData.append('password', value);
+
   const passwordVerify = useMutation({
-    mutationFn: () => postPasswordVerify(value),
+    mutationFn: () => postPasswordVerify(passwordData),
     onSuccess: () => {
       handleVerifySuccess(true);
     },

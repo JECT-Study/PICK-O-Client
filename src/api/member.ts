@@ -135,13 +135,10 @@ export const getNicknameVerify = async (nickname: string) => {
   return data;
 };
 
-export const postPasswordVerify = async (password: string) => {
-  const formData = new FormData();
-  formData.append('password', password);
-
+export const postPasswordVerify = async (password: FormData) => {
   const response = await axiosInstance.post(
     `${END_POINT.PASSWORD_VERIFY}`,
-    formData,
+    password,
     {
       headers: {
         'Content-Type': 'multipart/form-data',
