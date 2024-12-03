@@ -29,3 +29,11 @@ export const navigationContainer = css({
   width: '100%',
   justifyContent: 'center',
 });
+
+export const toastModalStyling = css({
+  position: 'fixed',
+  top: '110px',
+  left: '50%',
+  transform: 'translate(-50%)',
+  zIndex: '1000',
+});
