@@ -23,10 +23,12 @@ export const useStageNavigation = (totalStage: number) => {
     }
   }, [currentStage, clearInput]);
 
-  const handleNextStage = () => {
-    if (currentStage < totalStage - 1) {
+  const handleNextStage = (canNavigateNext: () => boolean) => {
+    if (currentStage < totalStage - 1 && canNavigateNext()) {
       setClearInput(true);
       setCurrentStage((prev) => prev + 1);
+    } else if (!canNavigateNext()) {
+      alert('모든 옵션의 설명을 입력해주세요.');
     }
   };
 

@@ -60,6 +60,13 @@ export const useBalanceGameCreation = (
       updateOption(currentStage, optionType, { name: event.target.value });
     };
 
+  const isStageComplete = () => {
+    return (
+      currentOptions[0]?.name.trim().length > 0 &&
+      currentOptions[1]?.name.trim().length > 0
+    );
+  };
+
   const handleDescriptionChange = (
     optionType: 'A' | 'B',
     event: React.ChangeEvent<HTMLInputElement>,
@@ -81,6 +88,7 @@ export const useBalanceGameCreation = (
   return {
     games,
     currentOptions,
+    isStageComplete,
     currentDescription,
     handleOptionChange,
     handleDescriptionChange,

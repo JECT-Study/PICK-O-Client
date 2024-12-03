@@ -39,6 +39,7 @@ const BalanceGameCreation = ({
     currentOptions,
     currentDescription,
     handleOptionChange,
+    isStageComplete,
     handleDescriptionChange,
     handleStageDescriptionChange,
   } = useBalanceGameCreation(currentStage, loadedGames, totalStage);
@@ -98,7 +99,7 @@ const BalanceGameCreation = ({
         <GameNavigationSection
           currentStage={currentStage}
           totalStage={totalStage}
-          handleNextClick={handleNextStage}
+          handleNextClick={() => handleNextStage(isStageComplete)}
           handlePrevClick={handlePrevStage}
           handleCompleteClick={handleCompleteClick}
         />
