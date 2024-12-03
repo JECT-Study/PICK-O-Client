@@ -65,7 +65,7 @@ export const useCheckProfileImage = ({
       );
 
       setImageSrc(src);
-      setImageFileId('profileImgId', selectedFriend?.fileId ?? 0);
+      setImageFileId('profileImgId', selectedFriend?.fileId ?? null);
       setIsImgChanged?.(true);
     },
     [friendsList, setImageFileId, setIsImgChanged],
