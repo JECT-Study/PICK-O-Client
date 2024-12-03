@@ -20,11 +20,9 @@ export const useEditTalkPickMutation = (
       await queryClient.invalidateQueries({
         queryKey: ['talkPick', talkPickId],
       });
-      showToastModal(SUCCESS.POST.EDIT);
-
-      setTimeout(() => {
+      showToastModal(SUCCESS.POST.EDIT, () => {
         navigate(`/${PATH.TALKPICK_PLACE}`);
-      }, 2000);
+      });
 
       await postTalkPickSummary(talkPickId);
     },

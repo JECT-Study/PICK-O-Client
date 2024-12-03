@@ -20,11 +20,9 @@ export const useCreateTalkPickMutation = (
       await queryClient.invalidateQueries({
         queryKey: ['talkPick'],
       });
-      showToastModal(SUCCESS.POST.CREATE);
-
-      setTimeout(() => {
+      showToastModal(SUCCESS.POST.CREATE, () => {
         navigate(`/${PATH.TALKPICK_PLACE}`);
-      }, 2000);
+      });
 
       await postTalkPickSummary(talkPickId);
     },
