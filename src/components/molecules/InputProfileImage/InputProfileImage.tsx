@@ -11,7 +11,7 @@ import * as S from './InputProfileImage.style';
 const InputProfileImage = ({
   setImageFileId,
   imgSrc,
-  setIsImgChanged,
+  setIsImageChanged,
 }: InputProfileImageProps) => {
   const {
     imageSrc,
@@ -19,7 +19,7 @@ const InputProfileImage = ({
     getRootProps,
     friendsImageList,
     handleDefaultImage,
-  } = useCheckProfileImage({ setImageFileId, imgSrc, setIsImgChanged });
+  } = useCheckProfileImage({ setImageFileId, imgSrc, setIsImageChanged });
 
   const [defaultProfileModalOpen, setDefaultProfileModalOpen] =
     useState<boolean>(false);

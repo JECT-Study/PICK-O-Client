@@ -27,7 +27,7 @@ const ChangeUserInfoPage = () => {
     form,
     onChange,
     setEach,
-    setIsImgChanged,
+    setIsImageChanged,
     setIsNicknameChanged,
     setIsNicknameSuccess,
     isVisible,
@@ -50,7 +50,7 @@ const ChangeUserInfoPage = () => {
               <InputProfileImage
                 setImageFileId={setEach}
                 imgSrc={member?.profileImgUrl}
-                setIsImgChanged={setIsImgChanged}
+                setIsImageChanged={setIsImageChanged}
               />
               <InputInfoNickname
                 value={form.nickname}

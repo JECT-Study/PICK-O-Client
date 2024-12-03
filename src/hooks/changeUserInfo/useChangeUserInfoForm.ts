@@ -13,7 +13,7 @@ export const useChangeUserInfoForm = (nickname?: string, memberId?: number) => {
   const { form, onChange, setEach } = useInputs<MemberEditForm>(initialState);
   const { isVisible, modalText, showToastModal } = useToastModal();
 
-  const [isImgChanged, setIsImgChanged] = useState<boolean>(false);
+  const [isImageChanged, setIsImageChanged] = useState<boolean>(false);
   const [isNicknameChanged, setIsNicknameChanged] = useState<boolean>(false);
   const [isNicknameSuccess, setIsNicknameSuccess] = useState<boolean>(false);
 
@@ -35,13 +35,13 @@ export const useChangeUserInfoForm = (nickname?: string, memberId?: number) => {
       return;
     }
 
-    if (isImgChanged && isNicknameChanged && isNicknameSuccess) {
+    if (isImageChanged && isNicknameChanged && isNicknameSuccess) {
       changeUserInfo(form);
     } else if (isNicknameChanged && isNicknameSuccess) {
       changeUserInfo({
         nickname: form.nickname,
       });
-    } else if (isImgChanged) {
+    } else if (isImageChanged) {
       changeUserInfo({
         profileImgId: form.profileImgId,
       });
@@ -52,7 +52,7 @@ export const useChangeUserInfoForm = (nickname?: string, memberId?: number) => {
     form,
     onChange,
     setEach,
-    setIsImgChanged,
+    setIsImageChanged,
     setIsNicknameChanged,
     setIsNicknameSuccess,
     isVisible,

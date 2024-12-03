@@ -6,13 +6,13 @@ import { useFileUploadMutation } from '@/hooks/api/file/useFileUploadMutation';
 export interface InputProfileImageProps {
   setImageFileId: (name: string, profileImgId: number | null) => void;
   imgSrc?: string;
-  setIsImgChanged?: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsImageChanged?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const useCheckProfileImage = ({
   setImageFileId,
   imgSrc,
-  setIsImgChanged,
+  setIsImageChanged,
 }: InputProfileImageProps) => {
   const [imageSrc, setImageSrc] = useState<string>(imgSrc || '');
   const [isError, setIsError] = useState<boolean>(false);
@@ -38,7 +38,7 @@ export const useCheckProfileImage = ({
             onSuccess: (res) => {
               setImageSrc(res.imgUrls[0]);
               setImageFileId('profileImgId', res.fileIds[0]);
-              setIsImgChanged?.(true);
+              setIsImageChanged?.(true);
             },
           },
         );
@@ -47,7 +47,7 @@ export const useCheckProfileImage = ({
         setImageFileId('profileImgId', null);
       }
     },
-    [fileUpload, setImageFileId, setIsImgChanged],
+    [fileUpload, setImageFileId, setIsImageChanged],
   );
 
   const { getRootProps } = useDropzone({
@@ -66,9 +66,9 @@ export const useCheckProfileImage = ({
 
       setImageSrc(src);
       setImageFileId('profileImgId', selectedFriend?.fileId ?? null);
-      setIsImgChanged?.(true);
+      setIsImageChanged?.(true);
     },
-    [friendsList, setImageFileId, setIsImgChanged],
+    [friendsList, setImageFileId, setIsImageChanged],
   );
 
   return {
