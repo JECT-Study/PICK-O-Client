@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { ChangeEvent, useEffect } from 'react';
 import Button from '@/components/atoms/Button/Button';
 import Input from '@/components/atoms/Input/Input';
@@ -32,7 +31,7 @@ const InputInfoNickname = ({
       setIsNicknameChanged(false);
     }
     setIsNicknameSuccess(false);
-  }, [value]);
+  }, [value, defaultValue, setIsNicknameChanged, setIsNicknameSuccess]);
 
   return (
     <div css={S.inputNicknameContainer}>
