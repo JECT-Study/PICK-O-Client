@@ -35,6 +35,10 @@ const BalanceGameCreation = ({
   const { isVisible, modalText, showToastModal } = useToastModal();
 
   const validateStage = (): true | string => {
+    if (!currentOptions || currentOptions.length < 2) {
+      return '옵션 데이터가 올바르지 않습니다!';
+    }
+
     if (!currentOptions[0]?.name.trim() || !currentOptions[1]?.name.trim()) {
       return '모든 옵션의 설명을 입력해주세요!';
     }
@@ -118,7 +122,7 @@ const BalanceGameCreation = ({
         <GameNavigationSection
           currentStage={currentStage}
           totalStage={totalStage}
-          handleNextClick={() => handleNextStage()}
+          handleNextClick={handleNextStage}
           handlePrevClick={handlePrevStage}
           handleCompleteClick={handleCompleteClick}
         />
