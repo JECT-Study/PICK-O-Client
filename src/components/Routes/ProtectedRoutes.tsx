@@ -4,7 +4,7 @@ import { useTokenRefresh } from '@/hooks/common/useTokenRefresh';
 import { Navigate, Outlet } from 'react-router-dom';
 
 type Props = {
-  isLoggedIn?: boolean;
+  isLoggedIn: boolean;
 };
 
 const ProtectedRoutes = ({ isLoggedIn }: Props) => {
