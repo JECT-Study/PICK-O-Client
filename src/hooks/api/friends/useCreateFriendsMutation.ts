@@ -5,7 +5,7 @@ import { postFriends } from '@/api/friends';
 export const useCreateFriendsMutation = () => {
   const queryClient = useQueryClient();
 
-  const mutation = useMutation({
+  return useMutation({
     mutationFn: (data: Friends) => postFriends(data),
     onSuccess: () =>
       queryClient.invalidateQueries({
