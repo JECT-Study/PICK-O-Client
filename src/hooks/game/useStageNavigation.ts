@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 
-export const useStageNavigation = (totalStage: number) => {
+export const useStageNavigation = (
+  totalStage: number,
+  showToast: (message: string) => void,
+) => {
   const [currentStage, setCurrentStage] = useState(0);
   const [clearInput, setClearInput] = useState(false);
   const timerRef = useRef<number | NodeJS.Timeout | null>(null);
@@ -28,7 +31,7 @@ export const useStageNavigation = (totalStage: number) => {
       setClearInput(true);
       setCurrentStage((prev) => prev + 1);
     } else if (!canNavigateNext()) {
-      alert('모든 옵션의 설명을 입력해주세요.');
+      showToast('모든 옵션의 설명을 입력해주세요.');
     }
   };
 

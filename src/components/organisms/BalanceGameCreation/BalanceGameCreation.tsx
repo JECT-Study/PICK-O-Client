@@ -6,6 +6,8 @@ import { BalanceGameSet } from '@/types/game';
 import { useBalanceGameCreation } from '@/hooks/game/useBalanceGameCreation';
 import GameNavigationSection from '@/components/molecules/GameNavigationSection/GameNavigationSection';
 import { useStageNavigation } from '@/hooks/game/useStageNavigation';
+import useToastModal from '@/hooks/modal/useToastModal';
+import ToastModal from '@/components/atoms/ToastModal/ToastModal';
 import * as S from './BalanceGameCreation.style';
 
 export interface BalanceGameCreationProps {
@@ -30,9 +32,10 @@ const BalanceGameCreation = ({
   loadedGames,
 }: BalanceGameCreationProps) => {
   const totalStage = 10;
+  const { isVisible, modalText, showToastModal } = useToastModal();
 
   const { currentStage, clearInput, handleNextStage, handlePrevStage } =
-    useStageNavigation(totalStage);
+    useStageNavigation(totalStage, showToastModal);
 
   const {
     games,
@@ -103,6 +106,9 @@ const BalanceGameCreation = ({
           handlePrevClick={handlePrevStage}
           handleCompleteClick={handleCompleteClick}
         />
+      </div>
+      <div css={S.toastModalStyling}>
+        {isVisible && <ToastModal>{modalText}</ToastModal>}
       </div>
     </div>
   );
