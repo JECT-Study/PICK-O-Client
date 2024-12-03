@@ -42,6 +42,11 @@ export const useBalanceGameCreation = (
           optionType,
           newOption,
         );
+
+        if (idx === currentStage) {
+          setCurrentOptions(updatedOptions);
+        }
+
         return {
           ...game,
           gameOptions: updatedOptions,
