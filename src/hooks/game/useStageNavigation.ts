@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 
 export const useStageNavigation = (
   totalStage: number,
+  validateStage: () => true | string,
   showToast: (message: string) => void,
 ) => {
   const [currentStage, setCurrentStage] = useState(0);
@@ -26,12 +27,15 @@ export const useStageNavigation = (
     }
   }, [currentStage, clearInput]);
 
-  const handleNextStage = (canNavigateNext: () => boolean) => {
-    if (currentStage < totalStage - 1 && canNavigateNext()) {
-      setClearInput(true);
-      setCurrentStage((prev) => prev + 1);
-    } else if (!canNavigateNext()) {
-      showToast('모든 옵션의 설명을 입력해주세요.');
+  const handleNextStage = () => {
+    if (currentStage < totalStage - 1) {
+      const validationResult = validateStage();
+      if (validationResult === true) {
+        setClearInput(true);
+        setCurrentStage((prev) => prev + 1);
+      } else {
+        showToast(validationResult);
+      }
     }
   };
 

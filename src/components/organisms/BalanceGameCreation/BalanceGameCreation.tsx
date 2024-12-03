@@ -34,15 +34,31 @@ const BalanceGameCreation = ({
   const totalStage = 10;
   const { isVisible, modalText, showToastModal } = useToastModal();
 
+  const validateStage = (): true | string => {
+    if (!currentOptions[0]?.name.trim() || !currentOptions[1]?.name.trim()) {
+      return '모든 옵션의 설명을 입력해주세요!';
+    }
+
+    const hasBothImages =
+      currentOptions[0]?.imgUrl.trim() && currentOptions[1]?.imgUrl.trim();
+    const hasNoImages =
+      !currentOptions[0]?.imgUrl.trim() && !currentOptions[1]?.imgUrl.trim();
+
+    if (!(hasBothImages || hasNoImages)) {
+      return 'A와 B의 이미지가 모두 없거나 모두 있어야 합니다!';
+    }
+
+    return true;
+  };
+
   const { currentStage, clearInput, handleNextStage, handlePrevStage } =
-    useStageNavigation(totalStage, showToastModal);
+    useStageNavigation(totalStage, validateStage, showToastModal);
 
   const {
     games,
     currentOptions,
     currentDescription,
     handleOptionChange,
-    isStageComplete,
     handleDescriptionChange,
     handleStageDescriptionChange,
   } = useBalanceGameCreation(currentStage, loadedGames, totalStage);
@@ -102,7 +118,7 @@ const BalanceGameCreation = ({
         <GameNavigationSection
           currentStage={currentStage}
           totalStage={totalStage}
-          handleNextClick={() => handleNextStage(isStageComplete)}
+          handleNextClick={() => handleNextStage()}
           handlePrevClick={handlePrevStage}
           handleCompleteClick={handleCompleteClick}
         />
