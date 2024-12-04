@@ -17,8 +17,8 @@ import TextModal from '@/components/molecules/TextModal/TextModal';
 import { useNavigate } from 'react-router-dom';
 import { useSaveTempGameMutation } from '@/hooks/api/game/useSaveTempGameMutation';
 import { createInitialGameStages } from '@/utils/balanceGameUtils';
-import { useLoadTempGameQuery } from '@/hooks/api/game/useLoadTempGameQuery';
 import { resizeImage } from '@/utils/imageUtils';
+import { useLoadTempGameQuery } from '@/hooks/api/game/useLoadTempGameQuery';
 import * as S from './BalanceGameCreationPage.style';
 
 const BalanceGameCreationPage = () => {
@@ -198,6 +198,7 @@ const BalanceGameCreationPage = () => {
       tempGames: convertToTempGameSets(games),
     };
     console.log('임시 저장 실행 데이터:', tempGameData);
+    console.table(tempGameData);
     saveTempGame(tempGameData, {
       onSuccess: () => {
         showToastModal('임시 저장이 완료되었습니다!');
