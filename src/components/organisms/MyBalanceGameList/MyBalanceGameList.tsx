@@ -25,11 +25,11 @@ const MyBalanceGameList = ({ items = [] }: MyBalanceGameListProps) => {
 
   const groupedItems = useMemo(() => {
     return items.reduce(
-      (acc, item) => {
-        if (!acc[item.editedAt]) {
-          acc[item.editedAt] = [];
+      (acc, { editedAt, ...rest }) => {
+        if (!acc[editedAt]) {
+          acc[editedAt] = [];
         }
-        acc[item.editedAt].push(item);
+        acc[editedAt].push({ editedAt, ...rest });
         return acc;
       },
       {} as Record<string, MyBalanceGameItem[]>,
@@ -46,23 +46,31 @@ const MyBalanceGameList = ({ items = [] }: MyBalanceGameListProps) => {
         <div key={date} css={S.dateWrapper}>
           <span css={S.dateLabel}>{date}</span>
           <ul css={S.contentList}>
-            {groupedItems[date].map((balanceGameItem) => (
-              <li key={balanceGameItem.gameId} css={S.contentItem}>
-                <ContentsButton
-                  images={[
-                    balanceGameItem.optionAImg,
-                    balanceGameItem.optionBImg,
-                  ]}
-                  title={balanceGameItem.title}
-                  mainTag={balanceGameItem.mainTagName}
-                  subTag={balanceGameItem.subTag}
-                  bookmarked={balanceGameItem.bookmarked}
-                  showBookmark={balanceGameItem.showBookmark}
-                  size="medium"
-                  onClick={() => handleItemClick(balanceGameItem.gameId)}
-                />
-              </li>
-            ))}
+            {groupedItems[date].map(
+              ({
+                gameId,
+                optionAImg,
+                optionBImg,
+                title,
+                mainTagName,
+                subTag,
+                bookmarked,
+                showBookmark,
+              }) => (
+                <li key={gameId} css={S.contentItem}>
+                  <ContentsButton
+                    images={[optionAImg, optionBImg]}
+                    title={title}
+                    mainTag={mainTagName}
+                    subTag={subTag}
+                    bookmarked={bookmarked}
+                    showBookmark={showBookmark}
+                    size="medium"
+                    onClick={() => handleItemClick(gameId)}
+                  />
+                </li>
+              ),
+            )}
           </ul>
         </div>
       ))}
