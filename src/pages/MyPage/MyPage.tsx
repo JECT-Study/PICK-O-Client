@@ -92,10 +92,9 @@ const MyPage = () => {
     gameWrittens: gameWrittensQuery,
   };
 
-  // const isQueryLoading = Object.values(queries).some(
-  //   (query) => query.isLoading,
-  // );
-  const isQueryLoading = true;
+  const isQueryLoading = Object.values(queries).some(
+    (query) => query.isLoading,
+  );
 
   const { ref, isFetchingAnyNextPage } = useObserver(queries);
 
