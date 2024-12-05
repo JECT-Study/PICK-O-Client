@@ -44,18 +44,28 @@ const MyPage = () => {
   const [selectedGroup, setSelectedGroup] = useState<OptionKeys>(initialGroup);
   const [selectedOption, setSelectedOption] = useState<string>(initialOption);
 
-  useEffect(() => {
-    setSearchParams({ group: selectedGroup, option: selectedOption });
-  }, [selectedGroup, selectedOption, setSearchParams]);
-
   const handleGroupSelect = (group: OptionKeys) => {
+    const firstOption = optionSets[group][0].value;
     setSelectedGroup(group);
-    setSelectedOption(optionSets[group][0].value);
+    setSelectedOption(firstOption);
+    setSearchParams({ group });
   };
 
   const handleOptionSelect = (option: string) => {
     setSelectedOption(option);
+    setSearchParams({ group: selectedGroup, option });
   };
+
+  useEffect(() => {
+    const group = validateUrlParam(
+      searchParams.get('group'),
+      OptionKeys.TALK_PICK,
+      isValidOptionKey,
+    );
+    const option = searchParams.get('option') || optionSets[group][0].value;
+    setSelectedGroup(group);
+    setSelectedOption(option);
+  }, [searchParams]);
 
   const options = optionSets[selectedGroup];
 
