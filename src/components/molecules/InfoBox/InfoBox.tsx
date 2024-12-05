@@ -27,6 +27,7 @@ const InfoBox = ({
           onClick();
         }
       }}
+      tabIndex={0}
     >
       <div css={S.textContainer}>
         <p css={S.titleLabel}>{title}</p>
