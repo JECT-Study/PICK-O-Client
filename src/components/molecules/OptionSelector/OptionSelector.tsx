@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '@/components/atoms/Button/Button';
 import * as S from './OptionSelector.style';
 
@@ -15,6 +15,12 @@ const OptionSelector = ({
   const [selected, setSelected] = useState(
     selectedOption || (options[0]?.value ?? ''),
   );
+
+  useEffect(() => {
+    if (selectedOption) {
+      setSelected(selectedOption);
+    }
+  }, [selectedOption]);
 
   const handleSelect = (optionValue: string) => {
     setSelected(optionValue);
