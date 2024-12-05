@@ -57,6 +57,11 @@ export const cardWrapper = (size: SizeType) => css`
       transform: scale(1.05);
     }
   }
+
+  &:focus-visible {
+    outline: 1px solid ${color.BK};
+    outline-offset: 1px;
+  }
 `;
 
 export const imageContainer = (size: SizeType) => css`

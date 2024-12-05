@@ -29,7 +29,19 @@ const ContentsButton = ({
   ...attributes
 }: ContentsButtonProps) => {
   return (
-    <div css={S.cardWrapper(size)} {...attributes} onClick={onClick}>
+    <div
+      role="button"
+      tabIndex={0}
+      onClick={onClick}
+      css={S.cardWrapper(size)}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onClick();
+        }
+      }}
+      {...attributes}
+    >
       <div css={S.imageContainer(size)}>
         <div css={S.imageWrapper}>
           <img src={images[0]} alt="option A" css={S.image} />

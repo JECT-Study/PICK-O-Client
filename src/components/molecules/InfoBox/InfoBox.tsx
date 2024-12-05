@@ -19,9 +19,10 @@ const InfoBox = ({
   onClick,
 }: InfoBoxProps) => {
   return (
-    <button
-      type="button"
+    <div
+      role="button"
       css={S.infoContainer}
+      onClick={onClick}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           onClick();
@@ -38,7 +39,7 @@ const InfoBox = ({
       </div>
       <InfoLabel label="톡댓톡" count={commentCount} />
       <InfoLabel label="저장" count={bookmarks} />
-    </button>
+    </div>
   );
 };
 
