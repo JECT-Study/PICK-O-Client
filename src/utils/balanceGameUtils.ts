@@ -8,7 +8,7 @@ export const createInitialGameStages = (totalStage: number): BalanceGameSet[] =>
         id: idx * 2,
         name: '',
         imgUrl: '',
-        storedName: '',
+        fileId: 0,
         description: '',
         optionType: 'A',
       },
@@ -16,7 +16,7 @@ export const createInitialGameStages = (totalStage: number): BalanceGameSet[] =>
         id: idx * 2 + 1,
         name: '',
         imgUrl: '',
-        storedName: '',
+        fileId: 0,
         description: '',
         optionType: 'B',
       },
@@ -27,8 +27,8 @@ export const updateOptionInGameSets = (
   options: BalanceGameOption[],
   optionType: 'A' | 'B',
   newOption: Partial<BalanceGameOption>,
-) => {
-  return options.map((opt) =>
-    opt.optionType === optionType ? { ...opt, ...newOption } : opt,
+): BalanceGameOption[] => {
+  return options.map((option) =>
+    option.optionType === optionType ? { ...option, ...newOption } : option,
   );
 };

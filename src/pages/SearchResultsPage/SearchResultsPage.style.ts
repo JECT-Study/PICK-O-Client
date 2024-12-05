@@ -4,7 +4,7 @@ export const container = css({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  paddingTop: '47px',
+  paddingTop: '147px',
   width: '100%',
   maxWidth: '1147px',
 });

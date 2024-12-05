@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useNewSelector } from '@/store';
 import { selectAccessToken } from '@/store/auth';
 import { TalkPickBubble } from '@/assets';
-import { createRangeArray } from '@/utils/array';
+import { generatePageNumbers } from '@/utils/pagination';
 import { TalkPickListPagination } from '@/types/talk-pick';
 import ToggleGroup from '@/components/atoms/ToggleGroup/ToggleGroup';
 import Button from '@/components/atoms/Button/Button';
@@ -18,7 +18,7 @@ export interface TalkPickListProps {
     React.SetStateAction<{ fileId: string; order: 'asc' | 'desc' }>
   >;
   selectedPage: number;
-  handlePageChange: React.Dispatch<React.SetStateAction<number>>;
+  handlePageChange: (page: number) => void;
 }
 
 const TalkPickListSection = ({
@@ -31,7 +31,8 @@ const TalkPickListSection = ({
   const accessToken = useNewSelector(selectAccessToken);
 
   const navigate = useNavigate();
-  const pages = createRangeArray(selectedPage, talkPickList?.totalPages || 0);
+  const totalPages = talkPickList?.totalPages ?? 0;
+  const pages = generatePageNumbers(totalPages);
 
   const handleCreatePostButton = () => {
     if (accessToken) {
@@ -63,7 +64,7 @@ const TalkPickListSection = ({
       <Pagination
         pages={pages}
         selected={selectedPage}
-        maxPage={talkPickList?.totalPages ?? 0}
+        maxPage={totalPages}
         onChangeNavigate={handlePageChange}
       />
     </div>

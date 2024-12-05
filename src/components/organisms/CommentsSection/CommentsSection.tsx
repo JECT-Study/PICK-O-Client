@@ -4,6 +4,7 @@ import { selectAccessToken } from '@/store/auth';
 import { useParseJwt } from '@/hooks/common/useParseJwt';
 import { useMemberQuery } from '@/hooks/api/member/useMemberQuery';
 import { CommentsPagination } from '@/types/comment';
+import { generatePageNumbers } from '@/utils/pagination';
 import Pagination from '@/components/atoms/Pagination/Pagination';
 import TextArea from '@/components/molecules/TextArea/TextArea';
 import Toggle from '@/components/atoms/Toggle/Toggle';
@@ -12,7 +13,6 @@ import ToggleGroup, {
   ToggleGroupItem,
 } from '@/components/atoms/ToggleGroup/ToggleGroup';
 import { NOTICE } from '@/constants/message';
-import { createRangeArray } from '@/utils/array';
 import CommentItem from '@/components/molecules/CommentItem/CommentItem';
 import { useCreateCommentMutation } from '@/hooks/api/comment/useCreateCommentMutation';
 import * as S from './CommentsSection.style';
@@ -27,7 +27,7 @@ export interface CommentsSectionProps {
     React.SetStateAction<{ fileId: string; order: 'asc' | 'desc' }>
   >;
   selectedPage: number;
-  handlePageChange: React.Dispatch<React.SetStateAction<number>>;
+  handlePageChange: (page: number) => void;
   voted: boolean;
 }
 
@@ -46,7 +46,8 @@ const CommentsSection = ({
   const { member } = useMemberQuery(useParseJwt(accessToken).memberId);
   const isMyTalkPick: boolean = talkPickWriter === member?.nickname;
 
-  const pages = createRangeArray(selectedPage, commentList?.totalPages || 0);
+  const totalPages = commentList?.totalPages ?? 0;
+  const pages = generatePageNumbers(totalPages);
   const [commentValue, setCommentValue] = useState<string>('');
 
   const { mutate: createComment } = useCreateCommentMutation(
@@ -112,7 +113,7 @@ const CommentsSection = ({
         <Pagination
           pages={pages}
           selected={selectedPage}
-          maxPage={commentList?.totalPages ?? 0}
+          maxPage={totalPages}
           onChangeNavigate={handlePageChange}
         />
       </div>

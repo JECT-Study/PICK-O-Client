@@ -1,24 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import { BalanceGameOption, BalanceGameSet } from '@/types/game';
-import { createImageUrlFromFile } from '@/utils/file';
 import {
   createInitialGameStages,
   updateOptionInGameSets,
 } from '@/utils/balanceGameUtils';
 
 export const useBalanceGameCreation = (
-  totalStage: number,
   currentStage: number,
+  loadedGames?: BalanceGameSet[],
+  totalStage: number = 10,
 ) => {
   const [games, setGames] = useState<BalanceGameSet[]>(
-    createInitialGameStages(totalStage),
+    loadedGames || createInitialGameStages(totalStage),
   );
-  const [currentOptions, setCurrentOptions] = useState<BalanceGameOption[]>(
-    games[currentStage].gameOptions,
-  );
+  const [currentOptions, setCurrentOptions] = useState<BalanceGameOption[]>([]);
+  const [currentDescription, setCurrentDescription] = useState<string>('');
 
   useEffect(() => {
-    setCurrentOptions(games[currentStage].gameOptions || []);
+    if (loadedGames) {
+      setGames(loadedGames);
+    }
+  }, [loadedGames]);
+
+  useEffect(() => {
+    const stage = games[currentStage] || { gameOptions: [], description: '' };
+    setCurrentOptions(stage.gameOptions);
+    setCurrentDescription(stage.description);
   }, [currentStage, games]);
 
   const updateOption = (
@@ -43,19 +50,6 @@ export const useBalanceGameCreation = (
     );
   };
 
-  const handleImageChange =
-    (optionType: 'A' | 'B') => (event: React.ChangeEvent<HTMLInputElement>) => {
-      const file = event.target.files?.[0];
-      if (file) {
-        const imgUrl = createImageUrlFromFile(file);
-        updateOption(currentStage, optionType, {
-          imgUrl,
-          storedName: file.name,
-          imageFile: file,
-        });
-      }
-    };
-
   const handleOptionChange =
     (optionType: 'A' | 'B') => (event: React.ChangeEvent<HTMLInputElement>) => {
       updateOption(currentStage, optionType, { name: event.target.value });
@@ -69,11 +63,22 @@ export const useBalanceGameCreation = (
     updateOption(currentStage, optionType, { description: value });
   };
 
+  const handleStageDescriptionChange = (newDescription: string) => {
+    setCurrentDescription(newDescription);
+
+    setGames((prevGames) =>
+      prevGames.map((game, idx) =>
+        idx === currentStage ? { ...game, description: newDescription } : game,
+      ),
+    );
+  };
+
   return {
     games,
     currentOptions,
-    handleImageChange,
+    currentDescription,
     handleOptionChange,
     handleDescriptionChange,
+    handleStageDescriptionChange,
   };
 };

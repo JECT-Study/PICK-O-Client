@@ -44,5 +44,5 @@ export const textStyle = css(typo.SubTitle, {
   '::placeholder': {
     color: color.GY[1],
   },
-  minWidth: '627px',
+  width: '1024px',
 });

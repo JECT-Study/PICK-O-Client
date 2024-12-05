@@ -1,4 +1,4 @@
-import React, { ChangeEvent, ComponentPropsWithoutRef } from 'react';
+import React, { ComponentPropsWithoutRef } from 'react';
 import ImageBoxButton from '@/components/atoms/ImageBoxButton/ImageBoxButton';
 import ChoiceInputButton from '@/components/atoms/ChoiceInputButton/ChoiceInputButton';
 import * as S from './BalanceGameOptionCard.style';
@@ -6,8 +6,8 @@ import * as S from './BalanceGameOptionCard.style';
 interface BalanceGameOptionCardProps {
   option: 'A' | 'B';
   imgUrl?: string;
-  imageFile: File | null;
-  onImageChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  onImageChange: (file: File) => void;
+  onImageDelete?: () => void;
   choiceInputProps?: ComponentPropsWithoutRef<'input'>;
   infoInputProps?: ComponentPropsWithoutRef<'input'>;
   clearInput?: boolean;
@@ -16,8 +16,8 @@ interface BalanceGameOptionCardProps {
 const BalanceGameOptionCard = ({
   option,
   imgUrl,
-  imageFile,
   onImageChange,
+  onImageDelete,
   choiceInputProps,
   infoInputProps,
   clearInput = false,
@@ -25,9 +25,9 @@ const BalanceGameOptionCard = ({
   return (
     <div css={S.imageChoiceContainer}>
       <ImageBoxButton
-        imageFile={imageFile}
         imgUrl={imgUrl}
-        onChange={onImageChange}
+        onFileSelect={onImageChange}
+        onDelete={onImageDelete}
       />
       <ChoiceInputButton
         option={option}

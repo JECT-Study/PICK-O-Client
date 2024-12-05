@@ -82,6 +82,7 @@ export { default as PinkGameBg } from './images/pink-game-bg.png';
 export { default as GameEnding } from './gif/game-ending.gif';
 export { default as OptionError } from './svg/option-error.svg';
 export { default as MoreReply } from './svg/more-reply.svg';
+export { default as IcTrash } from './svg/trash.svg';
 
 // TODO: 이전 SVG
 export { default as Email } from './svg/email.svg';

@@ -13,6 +13,7 @@ const SearchTalkPickItems: SearchTalkPickItemProps[] = Array.from(
     content: '우하하우하하 내용입니다.',
     firstImgUrl: SampleWhole,
     keyword: '정국',
+    isLoading: false,
   }),
 );
 
@@ -23,6 +24,7 @@ const meta: Meta<typeof SearchTalkPickResult> = {
   args: {
     searchTalkPickList: SearchTalkPickItems,
     keyword: '정국',
+    isLoading: false,
   },
   decorators: [
     (Story) => (

@@ -2,81 +2,147 @@ import React, { useState } from 'react';
 import BalanceGameCreation from '@/components/organisms/BalanceGameCreation/BalanceGameCreation';
 import Button from '@/components/atoms/Button/Button';
 import Divider from '@/components/atoms/Divider/Divider';
-import { BalanceGame, BalanceGameSet, TempGame } from '@/types/game';
+import {
+  BalanceGame,
+  BalanceGameSet,
+  TempGame,
+  TempGameSet,
+} from '@/types/game';
 import { useFileUploadMutation } from '@/hooks/api/file/useFileUploadMutation';
-import { UploadedImage } from '@/types/file';
 import ToastModal from '@/components/atoms/ToastModal/ToastModal';
 import TagModal from '@/components/molecules/TagModal/TagModal';
 import { useCreateBalanceGameMutation } from '@/hooks/api/game/useCreateBalanceGameMutation';
-import { useSaveTempGameMutation } from '@/hooks/api/game/useTempGameSaveMutation';
-import { useTempGameQuery } from '@/hooks/api/game/useTempGameQuery';
 import useToastModal from '@/hooks/modal/useToastModal';
+import TextModal from '@/components/molecules/TextModal/TextModal';
+import { useNavigate } from 'react-router-dom';
+import { useSaveTempGameMutation } from '@/hooks/api/game/useSaveTempGameMutation';
+import { createInitialGameStages } from '@/utils/balanceGameUtils';
+import { useLoadTempGameQuery } from '@/hooks/api/game/useLoadTempGameQuery';
+import { resizeImage } from '@/utils/imageUtils';
 import * as S from './BalanceGameCreationPage.style';
-import { PageContainer, pageWrapper } from './BalanceGameCreationPage.style';
 
 const BalanceGameCreationPage = () => {
   const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
   const [games, setGames] = useState<BalanceGameSet[]>([]);
   const [isTagModalOpen, setIsTagModalOpen] = useState(false);
-  const [activeStage, setActiveStage] = useState(0);
-
+  const [isTextModalOpen, setIsTextModalOpen] = useState(false);
+  const [popupData, setPopupData] = useState<{
+    stageIndex: number;
+    optionIndex: number;
+  } | null>(null);
+  const navigate = useNavigate();
   const { handleCreateBalanceGame } = useCreateBalanceGameMutation();
-  const { handleSaveTempGame } = useSaveTempGameMutation();
   const { mutateAsync: uploadImage } = useFileUploadMutation();
-  const { refetch: fetchTempGame } = useTempGameQuery();
-  const { isVisible, showToastModal } = useToastModal();
+  const { mutate: saveTempGame } = useSaveTempGameMutation();
+  const { data: tempGame, isSuccess } = useLoadTempGameQuery();
+  const { isVisible, modalText, showToastModal } = useToastModal();
+  const [loadedGames, setLoadedGames] = useState<BalanceGameSet[] | null>(null);
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
 
-  const handleDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDescription(e.target.value);
-  };
+  const handleDraftLoad = () => {
+    if (isSuccess && tempGame) {
+      console.log('임시 저장 불러오기 시작');
+      console.log('불러온 임시 저장 데이터:', tempGame);
+      const initialStages = createInitialGameStages(10);
+      console.log('생성된 초기 스테이지 데이터:', initialStages);
 
-  const handleDraftLoad = async () => {
-    const { data } = await fetchTempGame();
-    if (data) {
-      setTitle(data.tempGameDetailResponses[0].title);
-      setDescription(data.tempGameDetailResponses[0].description);
-      setGames(
-        data.tempGameDetailResponses.map((gameDetail) => ({
-          description: gameDetail.description,
-          gameOptions: gameDetail.tempGameOptions.map((option) => ({
-            id: 100,
-            name: option.name,
-            imgUrl: option.imgUrl,
-            storedName: '',
-            description: option.description,
-            optionType: option.optionType,
-          })),
+      const mappedGames: BalanceGameSet[] = initialStages.map((stage, idx) => ({
+        description: tempGame.tempGames[idx]?.description || stage.description,
+        gameOptions: stage.gameOptions.map((option, optionIdx) => ({
+          ...option,
+          ...tempGame.tempGames[idx]?.tempGameOptions[optionIdx],
         })),
-      );
+      }));
+      console.log('병합된 게임 데이터:', mappedGames);
+
+      setTitle(tempGame.title);
+      setLoadedGames(mappedGames);
+      showToastModal('임시 저장 데이터를 불러왔습니다!');
+    } else {
+      showToastModal('임시 저장 데이터를 불러오는 데 실패했습니다.');
     }
   };
 
   const handleImageUpload = async (
-    imageFiles: File[],
-  ): Promise<UploadedImage> => {
-    const formData = new FormData();
-    imageFiles.forEach((file) => {
-      formData.append('file', file);
+    imageFile: File,
+    type: 'GAME_OPTION',
+  ): Promise<{ imgUrl: string; fileId: number }> => {
+    const resizedBlob = await resizeImage(imageFile, 577, 359);
+    const resizedFile = new File([resizedBlob], imageFile.name, {
+      type: imageFile.type,
     });
-    return uploadImage({ formData, params: { type: 'GAME' } });
+
+    const formData = new FormData();
+    formData.append('file', resizedFile);
+
+    try {
+      const response = await uploadImage({
+        formData,
+        params: { type },
+      });
+
+      const { imgUrls, fileIds } = response;
+      return { imgUrl: imgUrls[0], fileId: fileIds[0] };
+    } catch (error) {
+      console.error('API 호출 에러:', error);
+      throw new Error('이미지 업로드 실패');
+    }
   };
 
-  const uploadAllImages = async (
-    BalanceGameSets: BalanceGameSet[],
-  ): Promise<UploadedImage[]> => {
-    const uploadPromises = BalanceGameSets.flatMap((game) =>
-      game.gameOptions.map(async (option) => {
-        const imageFile = option.imageFile as File;
-        return handleImageUpload([imageFile]);
-      }),
-    );
+  const onImageChange = async (
+    stageIndex: number,
+    optionIndex: number,
+    imageFile: File,
+  ) => {
+    try {
+      const { imgUrl, fileId } = await handleImageUpload(
+        imageFile,
+        'GAME_OPTION',
+      );
+      setGames((prevGames) => {
+        const updatedGames = [...prevGames];
+        updatedGames[stageIndex].gameOptions[optionIndex] = {
+          ...updatedGames[stageIndex].gameOptions[optionIndex],
+          imgUrl,
+          fileId,
+        };
+        return updatedGames;
+      });
+    } catch (error) {
+      console.error('onImageChange 에러:', error);
+      alert('이미지 업로드에 실패했습니다. 다시 시도해주세요.');
+    }
+  };
 
-    return Promise.all(uploadPromises);
+  const onImageDelete = (stageIndex: number, optionIndex: number) => {
+    setPopupData({ stageIndex, optionIndex });
+    setIsTextModalOpen(true);
+  };
+
+  const confirmDeleteImage = () => {
+    if (popupData) {
+      const { stageIndex, optionIndex } = popupData;
+      setGames((prevGames) => {
+        const updatedGames = [...prevGames];
+        updatedGames[stageIndex].gameOptions[optionIndex] = {
+          ...updatedGames[stageIndex].gameOptions[optionIndex],
+          imgUrl: '',
+          fileId: 0,
+        };
+        return updatedGames;
+      });
+      showToastModal('이미지가 삭제되었습니다.');
+    }
+    setPopupData(null);
+    setIsTextModalOpen(false);
+  };
+
+  const cancelDeleteImage = () => {
+    setPopupData(null);
+    setIsTextModalOpen(false);
   };
 
   const handleCompleteClick = () => {
@@ -87,55 +153,59 @@ const BalanceGameCreationPage = () => {
     selectedMainTag: string,
     selectedSubTag: string,
   ) => {
-    setIsTagModalOpen(false);
-
-    const allUploadedImages = await uploadAllImages(games);
-
-    let imageIndex = 0;
-    const updatedGames = games.map((game) => ({
-      description,
-      gameOptions: game.gameOptions.map((option) => {
-        const { imgUrls, storedNames } = allUploadedImages[imageIndex];
-        imageIndex += 1;
-        return {
-          ...option,
-          imgUrl: imgUrls[0],
-          storedName: storedNames[0],
-        };
-      }),
-    }));
+    if (!games.length) {
+      showToastModal('게임 데이터가 없습니다.');
+      return;
+    }
 
     const gameData: BalanceGame = {
       title,
       mainTag: selectedMainTag,
       subTag: selectedSubTag,
-      games: updatedGames,
+      games,
     };
 
-    await handleCreateBalanceGame(gameData);
+    try {
+      const gameId = await handleCreateBalanceGame(gameData);
+      console.log('게임 생성 완료, 게임 ID:', gameId);
+      showToastModal('등록되었습니다!', () => {
+        navigate(`/balancegame/${gameId}`);
+      });
+    } catch (error) {
+      console.error('게임 생성 실패:', error);
+      showToastModal('게임 생성에 실패했습니다.');
+    }
   };
 
-  const handleSaveDraft = async () => {
-    const activeGame = games[activeStage];
+  const convertToTempGameSets = (gameSets: BalanceGameSet[]): TempGameSet[] => {
+    return gameSets.map(({ description: setDescription, gameOptions }) => ({
+      description: setDescription,
+      tempGameOptions: gameOptions.map(
+        ({ name, description: optionDescription, fileId, optionType }) => ({
+          name,
+          description: optionDescription,
+          fileId: fileId ?? null,
+          optionType,
+        }),
+      ),
+    }));
+  };
+
+  const handleSaveDraft = () => {
     const tempGameData: TempGame = {
-      mainTag: '임시메인태그',
-      subTag: '임시서브태그',
-      tempGames: [
-        {
-          title,
-          description,
-          tempGameOptions: activeGame.gameOptions.map((option) => ({
-            name: option.name,
-            imgUrl: option.imgUrl,
-            storedName: option.storedName,
-            description: option.description,
-            optionType: option.optionType,
-          })),
-        },
-      ],
+      title,
+      isLoaded: false,
+      tempGames: convertToTempGameSets(games),
     };
-    await handleSaveTempGame(tempGameData);
-    showToastModal('임시저장완료');
+    console.log('임시 저장 실행 데이터:', tempGameData);
+    saveTempGame(tempGameData, {
+      onSuccess: () => {
+        showToastModal('임시 저장이 완료되었습니다!');
+      },
+      onError: () => {
+        showToastModal('임시 저장에 실패했습니다. 다시 시도해주세요.');
+      },
+    });
   };
 
   return (
@@ -148,13 +218,13 @@ const BalanceGameCreationPage = () => {
         <Divider orientation="width" length={1175} />
         <BalanceGameCreation
           title={title}
-          description={description}
           onTitleChange={handleTitleChange}
-          onDescriptionChange={handleDescriptionChange}
           handleCompleteClick={handleCompleteClick}
           onDraftLoad={handleDraftLoad}
-          onStageChange={(stage) => setActiveStage(stage)}
           onGamesUpdate={(updatedGames) => setGames(updatedGames)}
+          onImageChange={onImageChange}
+          onImageDelete={onImageDelete}
+          loadedGames={loadedGames || undefined}
         />
         <div css={S.buttonContainer}>
           <Button
@@ -168,7 +238,7 @@ const BalanceGameCreationPage = () => {
         </div>
         {isTagModalOpen && (
           <>
-            <div css={S.modalBackdrop} />
+            <div css={S.submitModalBackdrop} />
             <div css={S.centerStyling}>
               <TagModal
                 isOpen={isTagModalOpen}
@@ -178,8 +248,21 @@ const BalanceGameCreationPage = () => {
             </div>
           </>
         )}
+        {isTextModalOpen && (
+          <>
+            <div css={S.deleteModalBackdrop} />
+            <div css={S.centerStyling}>
+              <TextModal
+                text="이미지를 삭제하시겠습니까?"
+                isOpen={isTextModalOpen}
+                onConfirm={confirmDeleteImage}
+                onClose={cancelDeleteImage}
+              />
+            </div>
+          </>
+        )}
         <div css={S.toastModalStyling}>
-          {isVisible && <ToastModal bgColor="black">임시저장완료</ToastModal>}
+          {isVisible && <ToastModal bgColor="black">{modalText}</ToastModal>}
         </div>
       </div>
     </div>

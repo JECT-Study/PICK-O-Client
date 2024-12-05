@@ -28,10 +28,6 @@ const SearchResultsPage = () => {
   );
 
   const renderResults = () => {
-    if (isTalkPickLoading || isGameLoading) {
-      return null;
-    }
-
     const noTalkPickResults = talkPickResults.length === 0;
     const noGameResults = gameResults.length === 0;
 
@@ -48,8 +44,13 @@ const SearchResultsPage = () => {
         <SearchTalkPickResult
           searchTalkPickList={talkPickResults}
           keyword={query}
+          isLoading={isTalkPickLoading}
         />
-        <SearchGameResult gameList={gameResults} keyword={query} />
+        <SearchGameResult
+          gameList={gameResults}
+          keyword={query}
+          isLoading={isGameLoading}
+        />
       </div>
     );
   };

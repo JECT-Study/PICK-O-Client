@@ -12,7 +12,7 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "chromatic": "npx chromatic --project-token=$CHROMATIC_PROJECT_TOKEN",
-    "deploy": "npm run build && aws s3 sync ./build/ s3://${AWS_S3_BUCKET} --delete && aws cloudfront create-invalidation --distribution-id ${AWS_CLOUDFRONT_ID} --paths '/*'"
+    "deploy": "npm run build && aws s3 sync ./dist/ s3://${S3_BUCKET_NAME} --delete && aws cloudfront create-invalidation --distribution-id ${CLOUDFRONT_DISTRIBUTION_ID} --paths '/*'"
   },
   "author": "",
   "license": "ISC",
@@ -24,9 +24,11 @@
     "@reduxjs/toolkit": "^2.2.1",
     "@tanstack/react-query": "^5.20.2",
     "@tanstack/react-query-devtools": "^5.20.2",
+    "@types/lodash": "^4.17.13",
     "axios": "^1.6.7",
     "dayjs": "^1.11.10",
     "event-source-polyfill": "^1.0.31",
+    "lodash": "^4.17.21",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
@@ -73,7 +75,7 @@
     "eslint-plugin-storybook": "^0.8.0",
     "file-loader": "^6.2.0",
     "html-loader": "^5.0.0",
-    "html-webpack-plugin": "^5.6.0",
+    "html-webpack-plugin": "^5.6.3",
     "msw": "^1.3.2",
     "prettier": "^3.2.4",
     "storybook": "^8.1.9",
@@ -81,7 +83,7 @@
     "terser-webpack-plugin": "^5.3.10",
     "ts-loader": "^9.5.1",
     "typescript": "^5.2.2",
-    "webpack": "^5.90.0",
+    "webpack": "^5.96.1",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1",
     "webpack-merge": "^5.10.0"

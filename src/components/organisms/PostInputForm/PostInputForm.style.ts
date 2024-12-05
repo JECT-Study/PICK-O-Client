@@ -59,3 +59,14 @@ export const toastModalStyling = css({
   transform: 'translate(-50%)',
   zIndex: '1000',
 });
+
+export const getButtonStyle = (isEdited: boolean) => {
+  if (isEdited) {
+    return css({
+      backgroundColor: color.GY[2],
+      color: color.GY[1],
+    });
+  }
+
+  return css();
+};
