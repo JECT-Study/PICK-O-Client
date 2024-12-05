@@ -17,8 +17,12 @@ const meta: Meta<typeof BalanceGameList> = {
     },
     selectedValue: {
       control: 'select',
-      options: ['views,desc', 'createdAt,desc'],
+      options: [
+        { field: 'views', order: 'desc' },
+        { field: 'createdAt', order: 'desc' },
+      ],
     },
+
     activeTab: {
       control: 'select',
       options: ['인기', '커플', '취향', '월드컵'],
@@ -51,9 +55,10 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   render: (args) => {
-    const [selectedValue, setSelectedValue] = useState<
-      'views,desc' | 'createdAt,desc'
-    >('views,desc');
+    const [selectedValue, setSelectedValue] = useState<{
+      field: string;
+      order: 'asc' | 'desc';
+    }>({ field: 'views', order: 'desc' });
     const [activeTab, setActiveTab] = useState<
       '인기' | '커플' | '취향' | '월드컵'
     >('인기');
@@ -74,9 +79,10 @@ export const Default: Story = {
 
 export const All: Story = {
   render: (args) => {
-    const [selectedValue, setSelectedValue] = useState<
-      'views,desc' | 'createdAt,desc'
-    >('views,desc');
+    const [selectedValue, setSelectedValue] = useState<{
+      field: string;
+      order: 'asc' | 'desc';
+    }>({ field: 'views', order: 'desc' });
     const [activeTab, setActiveTab] = useState<
       '인기' | '커플' | '취향' | '월드컵'
     >('인기');

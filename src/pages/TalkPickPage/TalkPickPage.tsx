@@ -19,7 +19,10 @@ interface State {
 
 const TalkPickPage = () => {
   const [selectedPage, setSelectedPage] = useState<number>(1);
-  const [selectedValue, setSelectedValue] = useState<string>('trend');
+  const [selectedValue, setSelectedValue] = useState<{
+    field: string;
+    order: 'asc' | 'desc';
+  }>({ field: 'views', order: 'desc' });
 
   const accessToken = useNewSelector(selectAccessToken);
   const { member } = useMemberQuery(useParseJwt(accessToken).memberId);
@@ -36,11 +39,11 @@ const TalkPickPage = () => {
   const toggleItem: ToggleGroupItem[] = [
     {
       label: '인기순',
-      value: 'trend',
+      value: { field: 'trend', order: 'desc' },
     },
     {
       label: '최신순',
-      value: 'recent',
+      value: { field: 'recent', order: 'desc' },
     },
   ];
 
@@ -73,7 +76,9 @@ const TalkPickPage = () => {
         <CommentsSection
           talkPickId={id}
           talkPickWriter={talkPick?.writer ?? ''}
-          commentList={selectedValue === 'trend' ? bestComments : comments}
+          commentList={
+            selectedValue.field === 'trend' ? bestComments : comments
+          }
           toggleItem={toggleItem}
           selectedValue={selectedValue}
           setToggleValue={setSelectedValue}

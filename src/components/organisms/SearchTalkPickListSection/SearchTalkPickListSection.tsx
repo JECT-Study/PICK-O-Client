@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import ToggleGroup from '@/components/atoms/ToggleGroup/ToggleGroup';
 import { SearchTalkPickItemProps } from '@/components/atoms/SearchTalkPickItem/SearchTalkPickItem';
@@ -13,9 +12,9 @@ interface SearchTalkPickSectionProps {
   keyword: string;
   selectedPage: number;
   totalPages: number;
-  sort: string;
+  sort: { field: string; order: 'asc' | 'desc' };
   onPageChange: (page: number) => void;
-  onSortChange: (sort: string) => void;
+  onSortChange: (sort: { field: string; order: 'asc' | 'desc' }) => void;
   isLoading: boolean;
 }
 

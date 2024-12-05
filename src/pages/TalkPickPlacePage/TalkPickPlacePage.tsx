@@ -7,13 +7,18 @@ import * as S from './TalkPickPlacePage.style';
 
 const TalkPickPlacePage = () => {
   const [selectedPage, setSelectedPage] = useState<number>(1);
-  const [selectedValue, setSelectedValue] = useState<string>('views');
-
+  const [selectedValue, setSelectedValue] = useState<{
+    field: string;
+    order: 'asc' | 'desc';
+  }>({
+    field: 'views',
+    order: 'desc',
+  });
   const { bestTalkPick } = useBestTalkPickListQuery();
   const { talkPickList } = useTalkPickListQuery({
     page: selectedPage - 1,
     size: 20,
-    sort: selectedValue,
+    sort: `${selectedValue.field},${selectedValue.order}`,
   });
 
   useEffect(() => {

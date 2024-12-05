@@ -1,9 +1,16 @@
 import { useState } from 'react';
 
-const useSort = (defaultSort = 'views') => {
-  const [sort, setSort] = useState(defaultSort);
+interface SortOption {
+  field: string;
+  order: 'asc' | 'desc';
+}
 
-  const handleSortChange = (newSort: string) => {
+const useSort = (
+  defaultSort: SortOption = { field: 'views', order: 'desc' },
+) => {
+  const [sort, setSort] = useState<SortOption>(defaultSort);
+
+  const handleSortChange = (newSort: SortOption) => {
     setSort(newSort);
   };
 

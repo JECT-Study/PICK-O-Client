@@ -13,8 +13,10 @@ import * as S from './TalkPickListSection.style';
 
 export interface TalkPickListProps {
   talkPickList?: TalkPickListPagination;
-  selectedValue: string;
-  setToggleValue: React.Dispatch<React.SetStateAction<string>>;
+  selectedValue: { field: string; order: 'asc' | 'desc' };
+  setToggleValue: React.Dispatch<
+    React.SetStateAction<{ field: string; order: 'asc' | 'desc' }>
+  >;
   selectedPage: number;
   handlePageChange: React.Dispatch<React.SetStateAction<number>>;
 }

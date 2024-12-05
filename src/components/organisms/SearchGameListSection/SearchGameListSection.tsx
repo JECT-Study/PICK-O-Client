@@ -13,9 +13,9 @@ interface SearchGameListSectionProps {
   keyword: string;
   selectedPage: number;
   totalPages: number;
-  sort: string;
+  sort: { field: string; order: 'asc' | 'desc' };
   onPageChange: (page: number) => void;
-  onSortChange: (sort: string) => void;
+  onSortChange: (sort: { field: string; order: 'asc' | 'desc' }) => void;
   isLoading: boolean;
 }
 

@@ -10,9 +10,9 @@ import * as S from './BalanceGameList.style';
 
 export interface ContentListProps {
   contents: GameContent[];
-  selectedValue: 'views,desc' | 'createdAt,desc';
+  selectedValue: { field: string; order: 'asc' | 'desc' };
   setSelectedValue: React.Dispatch<
-    React.SetStateAction<'views,desc' | 'createdAt,desc'>
+    React.SetStateAction<{ field: string; order: 'asc' | 'desc' }>
   >;
   activeTab: '인기' | '커플' | '취향' | '월드컵';
   setActiveTab: React.Dispatch<
@@ -42,10 +42,11 @@ const BalanceGameList = ({
     setVisibleItems((prev) => Math.min(prev + 6, contents.length));
   };
 
-  const handleToggleChange = (value: string) => {
-    if (value === 'views,desc' || value === 'createdAt,desc') {
-      setSelectedValue(value);
-    }
+  const handleToggleChange = (value: {
+    field: string;
+    order: 'asc' | 'desc';
+  }) => {
+    setSelectedValue(value);
   };
 
   return (

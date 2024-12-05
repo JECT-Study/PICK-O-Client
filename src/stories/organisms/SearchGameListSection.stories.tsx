@@ -9,6 +9,10 @@ const meta: Meta<typeof SearchGameListSection> = {
   parameters: {
     layout: 'centered',
   },
+  argTypes: {
+    onPageChange: { action: '페이지 변경' },
+    onSortChange: { action: '정렬 변경' },
+  },
 };
 
 export default meta;
@@ -28,20 +32,24 @@ export const Default: Story = {
     keyword: '예시 키워드',
     selectedPage: 1,
     totalPages: 2,
-    sort: 'views',
+    sort: { field: 'views', order: 'desc' },
     isLoading: false,
-    onPageChange: (page) => console.log(`페이지 변경: ${page}`),
-    onSortChange: (sort) => console.log(`정렬 변경: ${sort}`),
   },
 };
 
 export const All: Story = {
   render: (args) => {
-    const [sort, setSort] = useState('views');
+    const [sort, setSort] = useState<{ field: string; order: 'asc' | 'desc' }>({
+      field: 'views',
+      order: 'desc',
+    });
 
-    const handleSortChange = (newSort: string) => {
+    const handleSortChange = (newSort: {
+      field: string;
+      order: 'asc' | 'desc';
+    }) => {
       setSort(newSort);
-      console.log(`정렬 변경: ${newSort}`);
+      args.onSortChange(newSort);
     };
 
     return (

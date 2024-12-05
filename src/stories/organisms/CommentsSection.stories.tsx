@@ -61,11 +61,11 @@ const exampleCommentPagination: CommentsPagination = {
 const toggleItem: ToggleGroupItem[] = [
   {
     label: '인기순',
-    value: 'trend',
+    value: { field: 'trend', order: 'desc' },
   },
   {
     label: '최신순',
-    value: 'recent',
+    value: { field: 'recent', order: 'desc' },
   },
 ];
 
@@ -75,12 +75,11 @@ const meta: Meta<typeof CommentsSection> = {
   parameters: {
     layout: 'centered',
   },
-  tags: ['autodocs'],
   args: {
     commentList: exampleCommentPagination,
     voted: true,
     toggleItem,
-    selectedValue: 'trend',
+    selectedValue: { field: 'trend', order: 'desc' },
     setToggleValue: () => {},
   },
   argTypes: {
