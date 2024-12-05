@@ -15,6 +15,11 @@ export const infoContainer = css`
   border-radius: 15px;
   background-color: ${color.WT};
   box-sizing: border-box;
+
+  &:focus-visible {
+    outline: 1px solid ${color.BK};
+    outline-offset: 1px;
+  }
 `;
 
 export const textContainer = css`
@@ -33,6 +38,7 @@ export const titleLabel = css`
   ${typo.Main.Medium_16};
   color: ${color.BK};
   margin: 0;
+  text-align: left;
 `;
 
 export const subtitleWrapper = css`
