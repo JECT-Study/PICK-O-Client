@@ -39,7 +39,7 @@ const MyPage = () => {
     isValidOptionKey,
   );
   const initialOption =
-    searchParams.get('option') || optionSets[initialGroup][0].value;
+    searchParams.get('option') ?? optionSets[initialGroup][0].value;
   const [selectedGroup, setSelectedGroup] = useState<OptionKeys>(initialGroup);
   const [selectedOption, setSelectedOption] = useState<string>(initialOption);
 
@@ -61,7 +61,7 @@ const MyPage = () => {
       OptionKeys.TALK_PICK,
       isValidOptionKey,
     );
-    const option = searchParams.get('option') || optionSets[group][0].value;
+    const option = searchParams.get('option') ?? optionSets[group][0].value;
     setSelectedGroup(group);
     setSelectedOption(option);
   }, [searchParams]);
