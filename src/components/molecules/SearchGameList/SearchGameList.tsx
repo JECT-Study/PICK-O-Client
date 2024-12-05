@@ -1,15 +1,17 @@
 import React from 'react';
-import ContentsButton from '@/components/molecules/ContentsButton/ContentsButton';
+import ContentsButton, {
+  ContentsButtonProps,
+} from '@/components/molecules/ContentsButton/ContentsButton';
 import { useNavigate } from 'react-router-dom';
 import * as S from './SearchGameList.style';
 
-export type GameItem = {
+export type GameItem = Pick<
+  ContentsButtonProps,
+  'title' | 'mainTag' | 'subTag'
+> & {
+  optionAImg?: string;
+  optionBImg?: string;
   id: number;
-  optionAImg: string;
-  optionBImg: string;
-  title: string;
-  mainTag: string;
-  subTag: string;
 };
 
 export interface SearchGameListProps {
@@ -29,7 +31,7 @@ const SearchGameList = ({ gameList, keyword }: SearchGameListProps) => {
       {gameList.map((game) => (
         <ContentsButton
           key={game.title}
-          images={[game.optionAImg, game.optionBImg]}
+          images={[game.optionAImg, game.optionBImg] as string[]}
           title={game.title}
           mainTag={game.mainTag}
           subTag={game.subTag}
