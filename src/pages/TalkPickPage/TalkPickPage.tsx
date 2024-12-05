@@ -18,7 +18,7 @@ interface State {
 }
 
 const TalkPickPage = () => {
-  const [selectedPage, setSelectedPage] = useState<number>(1);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const [selectedValue, setSelectedValue] = useState<{
     fileId: string;
     order: 'asc' | 'desc';
