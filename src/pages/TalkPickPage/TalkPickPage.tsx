@@ -39,11 +39,11 @@ const TalkPickPage = () => {
   const toggleItem: ToggleGroupItem[] = [
     {
       label: '인기순',
-      value: { fileId: 'trend', order: 'desc' },
+      value: { fileId: 'views', order: 'desc' },
     },
     {
       label: '최신순',
-      value: { fileId: 'recent', order: 'desc' },
+      value: { fileId: 'createdAt', order: 'desc' },
     },
   ];
 
