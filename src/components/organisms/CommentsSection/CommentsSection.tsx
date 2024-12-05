@@ -60,8 +60,8 @@ const CommentsSection = ({
       { content: commentValue },
       {
         onSuccess: () => {
-          if (selectedValue.fileId === 'trend') {
-            setToggleValue({ fileId: 'recent', order: 'desc' });
+          if (selectedValue.fileId === 'views') {
+            setToggleValue({ fileId: 'createdAt', order: 'desc' });
           }
           handlePageChange(1);
         },

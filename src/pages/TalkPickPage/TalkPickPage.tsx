@@ -77,7 +77,7 @@ const TalkPickPage = () => {
           talkPickId={id}
           talkPickWriter={talkPick?.writer ?? ''}
           commentList={
-            selectedValue.fileId === 'trend' ? bestComments : comments
+            selectedValue.fileId === 'views' ? bestComments : comments
           }
           toggleItem={toggleItem}
           selectedValue={selectedValue}
