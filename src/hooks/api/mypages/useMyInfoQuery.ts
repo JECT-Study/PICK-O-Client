@@ -11,12 +11,12 @@ export const useMyInfoQuery = (memberId: Id) => {
   });
 
   const memberInfo = {
-    id: data?.id || 0,
-    nickname: data?.nickname || '',
-    profileImageUrl: data?.profileImageUrl || '',
-    createdAt: data?.createdAt || '',
-    postsCount: data?.postsCount || 0,
-    bookmarkedPostsCount: data?.bookmarkedPostsCount || 0,
+    id: data?.id ?? 0,
+    nickname: data?.nickname ?? '',
+    profileImageUrl: data?.profileImageUrl ?? '',
+    createdAt: data?.createdAt ?? '',
+    postsCount: data?.postsCount ?? 0,
+    bookmarkedPostsCount: data?.bookmarkedPostsCount ?? 0,
   };
 
   return { memberInfo, isLoading };
