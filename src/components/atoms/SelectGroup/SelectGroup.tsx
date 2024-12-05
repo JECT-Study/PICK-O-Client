@@ -1,21 +1,26 @@
 import React from 'react';
 import * as S from './SelectGroup.style';
 
-export type SelectGroupItem = {
+export type SelectGroupItem<T> = {
   label: string;
-  value: string;
+  value: T;
 };
 
-export interface SelectGroupProps {
-  items: [SelectGroupItem, SelectGroupItem];
-  selectedValue?: string;
-  onSelect?: (value: string) => void;
+export interface SelectGroupProps<T> {
+  items: [SelectGroupItem<T>, SelectGroupItem<T>];
+  selectedValue?: T;
+  onSelect?: (value: T) => void;
 }
-const SelectGroup = ({ items, selectedValue, onSelect }: SelectGroupProps) => (
+
+const SelectGroup = <T,>({
+  items,
+  selectedValue,
+  onSelect,
+}: SelectGroupProps<T>) => (
   <div css={S.selectGroupStyling} role="group" aria-label="옵션 선택">
     {items.map(({ label, value }) => (
       <button
-        key={value}
+        key={String(value)}
         type="button"
         css={[
           S.selectGroupItemStyling,
