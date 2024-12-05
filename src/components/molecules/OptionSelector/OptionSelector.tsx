@@ -13,7 +13,7 @@ const OptionSelector = ({
   onSelect,
 }: OptionSelectorProps) => {
   const [selected, setSelected] = useState(
-    selectedOption || (options.length > 0 ? options[0].value : ''),
+    selectedOption || (options[0]?.value ?? ''),
   );
 
   const handleSelect = (optionValue: string) => {
