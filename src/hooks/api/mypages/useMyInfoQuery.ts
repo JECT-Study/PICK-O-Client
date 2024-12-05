@@ -10,14 +10,14 @@ export const useMyInfoQuery = (memberId: Id) => {
     enabled: !!memberId,
   });
 
-  const formattedMemberInfo: SideBar | null = data
-    ? {
-        ...data,
-        profileImageUrl: data.profileImageUrl || '',
-        postsCount: data.postsCount || 0,
-        bookmarkedPostsCount: data.bookmarkedPostsCount || 0,
-      }
-    : null;
+  const memberInfo = {
+    id: data?.id || 0,
+    nickname: data?.nickname || '',
+    profileImageUrl: data?.profileImageUrl || '',
+    createdAt: data?.createdAt || '',
+    postsCount: data?.postsCount || 0,
+    bookmarkedPostsCount: data?.bookmarkedPostsCount || 0,
+  };
 
-  return { memberInfo: formattedMemberInfo, isLoading };
+  return { memberInfo, isLoading };
 };
