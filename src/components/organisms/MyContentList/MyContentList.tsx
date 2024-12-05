@@ -38,13 +38,13 @@ const MyContentList = ({ items = [] }: MyContentListProps) => {
   };
 
   return (
-    <div css={S.container}>
+    <section aria-label="내 콘텐츠 목록" css={S.container}>
       {Object.entries(groupedItems).map(([date, contentItems]) => (
-        <div key={date} css={S.dateWrapper}>
+        <section key={date} css={S.dateWrapper}>
           <span css={S.dateLabel}>{date}</span>
           <ul css={S.contentList}>
             {contentItems.map((contentItem) => (
-              <li key={contentItem.id} css={S.contentItem}>
+              <li key={contentItem.id} css={S.contentItem} role="article">
                 <MyContentBox
                   title={contentItem.title}
                   commentCount={contentItem.commentCount}
@@ -56,9 +56,9 @@ const MyContentList = ({ items = [] }: MyContentListProps) => {
               </li>
             ))}
           </ul>
-        </div>
+        </section>
       ))}
-    </div>
+    </section>
   );
 };
 
