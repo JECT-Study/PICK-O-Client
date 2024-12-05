@@ -13,20 +13,20 @@ export interface SelectGroupProps {
 }
 const SelectGroup = ({ items, selectedValue, onSelect }: SelectGroupProps) => (
   <div css={S.selectGroupStyling} role="group" aria-label="옵션 선택">
-    {items.map((item) => (
+    {items.map(({ label, value }) => (
       <button
-        key={item.value}
+        key={value}
         type="button"
         css={[
           S.selectGroupItemStyling,
           S.itemRadius,
-          item.value === selectedValue && S.selectedStyling,
+          value === selectedValue && S.selectedStyling,
         ]}
-        onClick={() => onSelect?.(item.value)}
-        aria-pressed={item.value === selectedValue}
-        aria-label={`${item.label} 선택`}
+        onClick={() => onSelect?.(value)}
+        aria-pressed={value === selectedValue}
+        aria-label={`${label} 선택`}
       >
-        {item.label}
+        {label}
       </button>
     ))}
     <div css={S.bottomBarStyling} />
