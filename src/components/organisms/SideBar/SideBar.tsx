@@ -19,37 +19,49 @@ export interface LoadedSideBarProps {
 
 type SideBarProps = LoadingProps | LoadedSideBarProps;
 
-const SideBar = ({ isLoading, ...rest }: SideBarProps) => {
+const isLoadedSideBarProps = (
+  props: SideBarProps,
+): props is LoadedSideBarProps => {
+  return !props.isLoading;
+};
+
+const SideBar = (props: SideBarProps) => {
+  const { isLoading } = props;
+
   if (isLoading) {
     return <div css={S.sidebarContainer(true)} />;
   }
 
-  const { profileImageUrl, nickname, postsCount, bookmarkedPostsCount } =
-    rest as LoadedSideBarProps;
+  if (isLoadedSideBarProps(props)) {
+    const { profileImageUrl, nickname, postsCount, bookmarkedPostsCount } =
+      props;
 
-  return (
-    <div css={S.sidebarContainer(false)}>
-      <div css={S.profileWrapper}>
-        <ProfileIcon
-          interaction={profileImageUrl ? 'custom' : 'default'}
-          imgUrl={profileImageUrl}
-          size="large"
-        />
-        <div css={S.profileLabelBox}>
-          <ProfileLabel nickname={nickname} />
-        </div>
-        <div css={S.sideBoxWrapper}>
-          <SideBox
-            postsCount={postsCount}
-            bookmarkedPostsCount={bookmarkedPostsCount}
+    return (
+      <div css={S.sidebarContainer(false)}>
+        <div css={S.profileWrapper}>
+          <ProfileIcon
+            interaction={profileImageUrl ? 'custom' : 'default'}
+            imgUrl={profileImageUrl}
+            size="large"
           />
-        </div>
-        <div css={S.actionWrapper}>
-          <ActionBox />
+          <div css={S.profileLabelBox}>
+            <ProfileLabel nickname={nickname} />
+          </div>
+          <div css={S.sideBoxWrapper}>
+            <SideBox
+              postsCount={postsCount}
+              bookmarkedPostsCount={bookmarkedPostsCount}
+            />
+          </div>
+          <div css={S.actionWrapper}>
+            <ActionBox />
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
+
+  return null;
 };
 
 export default SideBar;
