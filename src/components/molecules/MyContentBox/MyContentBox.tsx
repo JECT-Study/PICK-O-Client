@@ -20,7 +20,15 @@ const MyContentBox = ({
   onClick,
 }: MyContentBoxProps) => {
   return (
-    <div css={S.infoContainer} onClick={onClick}>
+    <button
+      type="button"
+      css={S.infoContainer}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          onClick();
+        }
+      }}
+    >
       <div css={S.textContainer}>
         <p css={S.titleLabel}>{title}</p>
       </div>
@@ -29,7 +37,7 @@ const MyContentBox = ({
       {showBookmark && (
         <Bookmark bookmarked={bookmarked} css={S.bookmarkWrapper} />
       )}
-    </div>
+    </button>
   );
 };
 
