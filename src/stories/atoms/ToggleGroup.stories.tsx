@@ -9,22 +9,22 @@ import { storyContainer, storyInnerContainer } from '@/stories/story.styles';
 const toggleOneTwo: ToggleGroupItem[] = [
   {
     label: 'ONE',
-    value: 'ONE',
+    value: { field: 'one', order: 'asc' },
   },
   {
     label: 'TWO',
-    value: 'TWO',
+    value: { field: 'two', order: 'desc' },
   },
 ];
 
 const toggleItem: ToggleGroupItem[] = [
   {
     label: '인기순',
-    value: 'views,desc',
+    value: { field: 'views', order: 'desc' },
   },
   {
     label: '최신순',
-    value: 'createdAt,desc',
+    value: { field: 'createdAt', order: 'desc' },
   },
 ];
 
@@ -36,7 +36,7 @@ const meta = {
   },
   argTypes: {
     selectedValue: {
-      options: toggleOneTwo.map((item) => item.value),
+      options: toggleOneTwo.map((item) => item.value.field),
       control: { type: 'radio' },
     },
   },
@@ -57,8 +57,9 @@ export const Default: Story = {
 
 export const All: Story = {
   render: () => {
-    const [selectedValue, setSelectedValue] =
-      useState<ToggleGroupProps['selectedValue']>('views,desc');
+    const [selectedValue, setSelectedValue] = useState<
+      ToggleGroupProps['selectedValue']
+    >({ field: 'views', order: 'desc' });
 
     return (
       <ul css={storyContainer}>
@@ -72,9 +73,9 @@ export const All: Story = {
         </li>
         <li css={storyInnerContainer}>
           <h3>Trend</h3>
-          <ToggleGroup selectedValue="views,desc" />
+          <ToggleGroup selectedValue={{ field: 'views', order: 'desc' }} />
           <h3>Recent</h3>
-          <ToggleGroup selectedValue="createdAt,desc" />
+          <ToggleGroup selectedValue={{ field: 'createdAt', order: 'desc' }} />
         </li>
       </ul>
     );

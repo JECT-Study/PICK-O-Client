@@ -9,18 +9,21 @@ import {
 
 export type ToggleGroupItem = {
   label: string;
-  value: string;
+  value: {
+    field: string;
+    order: 'asc' | 'desc';
+  };
 };
 
 export interface ToggleGroupProps {
   items?: ToggleGroupItem[];
-  selectedValue?: string;
-  onClick?: (value: string) => void;
+  selectedValue?: { field: string; order: 'asc' | 'desc' };
+  onClick?: (value: { field: string; order: 'asc' | 'desc' }) => void;
 }
 
 const defaultItems: ToggleGroupItem[] = [
-  { label: '인기순', value: 'views,desc' },
-  { label: '최신순', value: 'createdAt,desc' },
+  { label: '인기순', value: { field: 'views', order: 'desc' } },
+  { label: '최신순', value: { field: 'createdAt', order: 'desc' } },
 ];
 
 const ToggleGroup = ({
@@ -31,18 +34,21 @@ const ToggleGroup = ({
   <div css={toggleButtonStyling}>
     {Array.isArray(items) &&
       items.length === 2 &&
-      items.map((item, idx) => (
+      items.map(({ label, value }, idx) => (
         <button
           type="button"
-          key={item.value}
+          key={`${value.field},${value.order}`}
           css={[
             toggleButtonItemStyling,
             idx === 0 ? firstItemRadius : secondItemRadius,
-            item.value === selectedValue && selectedStyling,
+            selectedValue &&
+              value.field === selectedValue.field &&
+              value.order === selectedValue.order &&
+              selectedStyling,
           ]}
-          onClick={() => onClick?.(item.value)}
+          onClick={() => onClick?.(value)}
         >
-          {item.label}
+          {label}
         </button>
       ))}
   </div>
