@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import InfoBox, { InfoBoxProps } from '@/components/molecules/InfoBox/InfoBox';
+import InfoBox from '@/components/molecules/InfoBox/InfoBox';
 import { useNavigate } from 'react-router-dom';
 import * as S from './InfoList.style';
 
@@ -21,15 +21,15 @@ const InfoList = ({ items = [] }: InfoListProps) => {
   const navigate = useNavigate();
 
   const groupedItems = useMemo(() => {
-    return items.reduce(
-      (acc, item) => {
-        if (!acc[item.editedAt]) {
-          acc[item.editedAt] = [];
+    return items.reduce<Record<string, InfoItem[]>>(
+      (acc, { editedAt, ...rest }) => {
+        if (!acc[editedAt]) {
+          acc[editedAt] = [];
         }
-        acc[item.editedAt].push(item);
+        acc[editedAt].push({ editedAt, ...rest });
         return acc;
       },
-      {} as Record<string, InfoItem[]>,
+      {},
     );
   }, [items]);
 
@@ -43,18 +43,27 @@ const InfoList = ({ items = [] }: InfoListProps) => {
         <div key={editedAt} css={S.dateWrapper}>
           <span css={S.dateLabel}>{editedAt}</span>
           <ul css={S.infoList}>
-            {groupedItems[editedAt].map((infoItem) => (
-              <li key={infoItem.id} css={S.infoItem}>
-                <InfoBox
-                  title={infoItem.title}
-                  prefix={infoItem.prefix}
-                  commentContent={infoItem.commentContent}
-                  commentCount={infoItem.commentCount}
-                  bookmarks={infoItem.bookmarks}
-                  onClick={() => handleItemClick(infoItem.id)}
-                />
-              </li>
-            ))}
+            {groupedItems[editedAt].map(
+              ({
+                id,
+                title,
+                prefix,
+                commentContent,
+                commentCount,
+                bookmarks,
+              }) => (
+                <li key={id} css={S.infoItem}>
+                  <InfoBox
+                    title={title}
+                    prefix={prefix}
+                    commentContent={commentContent}
+                    commentCount={commentCount}
+                    bookmarks={bookmarks}
+                    onClick={() => handleItemClick(id)}
+                  />
+                </li>
+              ),
+            )}
           </ul>
         </div>
       ))}
