@@ -17,7 +17,7 @@ const SelectGroup = <T,>({
   selectedValue,
   onSelect,
 }: SelectGroupProps<T>) => (
-  <div css={S.selectGroupStyling} role="group" aria-label="옵션 선택">
+  <div css={S.selectGroupStyling} aria-label="옵션 선택">
     {items.map(({ label, value }) => (
       <button
         key={String(value)}
