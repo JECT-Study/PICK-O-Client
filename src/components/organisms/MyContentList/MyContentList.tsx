@@ -52,7 +52,7 @@ const MyContentList = ({ items = [] }: MyContentListProps) => {
                 showBookmark,
                 bookmarked,
               }) => (
-                <li key={id} css={S.contentItem} role="article">
+                <li key={id} css={S.contentItem}>
                   <MyContentBox
                     title={title}
                     commentCount={commentCount}
