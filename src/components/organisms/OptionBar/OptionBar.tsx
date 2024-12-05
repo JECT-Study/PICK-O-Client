@@ -13,6 +13,7 @@ export interface OptionBarProps {
   onOptionSelect: (option: string) => void;
   options: { label: string; value: string }[];
 }
+
 const OptionBar = ({
   selectedGroup,
   selectedOption,
@@ -20,7 +21,10 @@ const OptionBar = ({
   onOptionSelect,
   options,
 }: OptionBarProps) => {
-  const selectGroupItems: [SelectGroupItem, SelectGroupItem] = [
+  const selectGroupItems: [
+    SelectGroupItem<OptionKeys>,
+    SelectGroupItem<OptionKeys>,
+  ] = [
     { label: '톡픽', value: OptionKeys.TALK_PICK },
     { label: '밸런스 게임', value: OptionKeys.BALANCE_GAME },
   ];
@@ -30,7 +34,7 @@ const OptionBar = ({
       <SelectGroup
         items={selectGroupItems}
         selectedValue={selectedGroup}
-        onSelect={(value) => onGroupSelect(value as OptionKeys)}
+        onSelect={onGroupSelect}
       />
       <OptionSelector
         options={options}
