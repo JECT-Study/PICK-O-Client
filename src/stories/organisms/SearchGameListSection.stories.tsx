@@ -40,7 +40,7 @@ export const Default: Story = {
     keyword: '예시 키워드',
     selectedPage: 1,
     totalPages: 2,
-    sort: { field: 'views', order: 'desc' },
+    sort: { fileId: 'views', order: 'desc' },
     isLoading: false,
   },
 };

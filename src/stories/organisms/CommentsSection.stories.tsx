@@ -61,11 +61,11 @@ const exampleCommentPagination: CommentsPagination = {
 const toggleItem: ToggleGroupItem[] = [
   {
     label: '인기순',
-    value: { field: 'trend', order: 'desc' },
+    value: { fileId: 'trend', order: 'desc' },
   },
   {
     label: '최신순',
-    value: { field: 'recent', order: 'desc' },
+    value: { fileId: 'recent', order: 'desc' },
   },
 ];
 
@@ -79,7 +79,7 @@ const meta: Meta<typeof CommentsSection> = {
     commentList: exampleCommentPagination,
     voted: true,
     toggleItem,
-    selectedValue: { field: 'trend', order: 'desc' },
+    selectedValue: { fileId: 'trend', order: 'desc' },
     setToggleValue: () => {},
   },
   argTypes: {

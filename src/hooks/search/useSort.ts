@@ -1,12 +1,12 @@
 import { useState } from 'react';
 
 interface SortOption {
-  field: string;
+  fileId: string;
   order: 'asc' | 'desc';
 }
 
 const useSort = (
-  defaultSort: SortOption = { field: 'views', order: 'desc' },
+  defaultSort: SortOption = { fileId: 'views', order: 'desc' },
 ) => {
   const [sort, setSort] = useState<SortOption>(defaultSort);
 

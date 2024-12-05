@@ -58,7 +58,7 @@ const meta = {
   },
   args: {
     talkPickList: exampleTalkPickPagination,
-    selectedValue: { field: 'views', order: 'desc' },
+    selectedValue: { fileId: 'views', order: 'desc' },
     setToggleValue: () => {},
     selectedPage: 1,
     handlePageChange: () => {},

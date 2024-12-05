@@ -13,7 +13,10 @@ const SearchTalkPickPage = () => {
   const { query, handleSearch } = useSearchQuery();
   const { selectedTag, handleTagClick } = useTagFilter('talkpick');
   const { page, handlePageChange } = usePagination();
-  const { sort, handleSortChange } = useSort({ field: 'views', order: 'desc' });
+  const { sort, handleSortChange } = useSort({
+    fileId: 'views',
+    order: 'desc',
+  });
   const size = 10;
 
   const {

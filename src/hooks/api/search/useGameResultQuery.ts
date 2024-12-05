@@ -3,7 +3,7 @@ import { getGameResults } from '@/api/search';
 import { GameResult } from '@/types/search';
 
 interface SortOption {
-  field: string;
+  fileId: string;
   order: 'asc' | 'desc';
 }
 
@@ -13,7 +13,7 @@ export const useGameResultQuery = (
   size: number,
   sort: SortOption,
 ) => {
-  const sortParam = `${sort.field},${sort.order}`;
+  const sortParam = `${sort.fileId},${sort.order}`;
 
   const { data: gameResults, isLoading } = useQuery<GameResult>({
     queryKey: ['gameResults', query, page, size, sortParam],

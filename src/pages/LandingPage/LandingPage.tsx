@@ -14,9 +14,9 @@ const LandingPage = () => {
   const { todayTalkPick } = useTodayTalkPickQuery();
   const [isServicePreparing, setIsServicePreparing] = useState<boolean>(false);
   const [selectedValue, setSelectedValue] = useState<{
-    field: string;
+    fileId: string;
     order: 'asc' | 'desc';
-  }>({ field: 'views', order: 'desc' });
+  }>({ fileId: 'views', order: 'desc' });
   const [activeTab, setActiveTab] = useState<
     '인기' | '커플' | '취향' | '월드컵'
   >('인기');
@@ -25,7 +25,7 @@ const LandingPage = () => {
   const { latestGames } = useLatestGameList(activeTab);
 
   const contents = useMemo(() => {
-    if (selectedValue.field === 'views') {
+    if (selectedValue.fileId === 'views') {
       return bestGames || [];
     }
     return latestGames || [];

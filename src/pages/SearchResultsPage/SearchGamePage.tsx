@@ -13,7 +13,10 @@ const SearchGamePage = () => {
   const { query, handleSearch } = useSearchQuery();
   const { selectedTag, handleTagClick } = useTagFilter('game');
   const { page, handlePageChange } = usePagination();
-  const { sort, handleSortChange } = useSort({ field: 'views', order: 'desc' });
+  const { sort, handleSortChange } = useSort({
+    fileId: 'views',
+    order: 'desc',
+  });
   const size = 9;
 
   const {
