@@ -8,14 +8,15 @@ import useTagFilter from '@/hooks/search/useTagFilter';
 import useSearchQuery from '@/hooks/search/useSearchQuery';
 import Divider from '@/components/atoms/Divider/Divider';
 import SearchResultBarContainer from '@/components/organisms/SearchResultBarContainer/SearchResultBarContainer';
+import useSort from '@/hooks/search/useSort';
 import * as S from './SearchResultsPage.style';
 
 const SearchResultsPage = () => {
   const { query, handleSearch } = useSearchQuery();
   const { selectedTag, handleTagClick } = useTagFilter('all');
+  const { sort } = useSort({ field: 'views', order: 'desc' });
   const page = 0;
   const size = 4;
-  const sort = 'all';
 
   const { content: talkPickResults, isLoading: isTalkPickLoading } =
     useTalkPickResultQuery(query, page, size, sort);
