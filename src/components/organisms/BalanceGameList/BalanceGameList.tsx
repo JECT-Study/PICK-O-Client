@@ -31,6 +31,10 @@ const BalanceGameList = ({
   const navigate = useNavigate();
 
   const handleItemClick = (gameId: number) => {
+    if (!gameId || gameId <= 0) {
+      alert('유효하지 않은 게임 ID입니다.');
+      return;
+    }
     navigate(`/balancegame/${gameId}`);
   };
 
