@@ -9,8 +9,8 @@ import * as S from './BalanceGameList.style';
 
 export interface ContentListProps {
   contents: GameContent[];
-  selectedValue: 'views' | 'createdAt';
-  setSelectedValue: React.Dispatch<React.SetStateAction<'views' | 'createdAt'>>;
+  selectedValue: string;
+  setSelectedValue: React.Dispatch<React.SetStateAction<string>>;
   activeTab: '인기' | '커플' | '취향' | '월드컵';
   setActiveTab: React.Dispatch<
     React.SetStateAction<'인기' | '커플' | '취향' | '월드컵'>

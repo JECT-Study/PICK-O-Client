@@ -15,9 +15,7 @@ import * as S from './LandingPage.style';
 const LandingPage = () => {
   const { todayTalkPick } = useTodayTalkPickQuery();
   const [isServicePreparing, setIsServicePreparing] = useState<boolean>(false);
-  const [selectedValue, setSelectedValue] = useState<'views' | 'createdAt'>(
-    'views',
-  );
+  const [selectedValue, setSelectedValue] = useState<string>('views');
   const [activeTab, setActiveTab] = useState<
     '인기' | '커플' | '취향' | '월드컵'
   >('인기');
