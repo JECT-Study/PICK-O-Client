@@ -33,7 +33,6 @@ const MyPage = () => {
   const isValidOptionKey = (value: string): boolean => {
     return Object.values(OptionKeys).includes(value as OptionKeys);
   };
-
   const initialGroup = validateUrlParam(
     searchParams.get('group'),
     OptionKeys.TALK_PICK,
@@ -68,11 +67,9 @@ const MyPage = () => {
   }, [searchParams]);
 
   const options = optionSets[selectedGroup];
-
   const accessToken = useNewSelector(selectAccessToken);
   const { member } = useMemberQuery(useParseJwt(accessToken).memberId);
   const memberId: number = member!.id;
-
   const { memberInfo, isLoading } = useMyInfoQuery(memberId);
   const myBookmarksQuery = useMyBookmarksQuery();
   const myVotesQuery = useMyVotesQuery();
@@ -171,18 +168,10 @@ const MyPage = () => {
 
   return (
     <div css={S.pageContainer}>
-      {isLoading || !memberInfo ? (
+      {isLoading ? (
         <SideBar isLoading />
       ) : (
-        memberInfo && (
-          <SideBar
-            isLoading={false}
-            nickname={memberInfo.nickname}
-            profileImageUrl={memberInfo.profileImageUrl}
-            postsCount={memberInfo.postsCount}
-            bookmarkedPostsCount={memberInfo.bookmarkedPostsCount}
-          />
-        )
+        <SideBar isLoading={false} {...memberInfo} />
       )}
       <div css={S.contentWrapper}>
         <OptionBar
