@@ -132,13 +132,13 @@ export const All: Story = {
 
     return (
       <MemoryRouter>
-        <ul css={storyContainer}>
-          {scenarios.map((scenario) => (
-            <li css={storyInnerContainer} key={scenario.title}>
-              <h3>{scenario.title}</h3>
+        <ul css={storyContainer} aria-label="밸런스 게임 시나리오 목록">
+          {scenarios.map(({ title, contents }) => (
+            <li css={storyInnerContainer} key={title}>
+              <h2>{title}</h2>
               <BalanceGameList
                 {...args}
-                contents={scenario.contents}
+                contents={contents}
                 selectedValue={selectedValue}
                 setSelectedValue={setSelectedValue}
                 activeTab={activeTab}
