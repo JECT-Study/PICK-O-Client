@@ -20,6 +20,7 @@ import { useMyInfoQuery } from '@/hooks/api/mypages/useMyInfoQuery';
 import { useObserver } from '@/hooks/api/mypages/useObserver';
 import { useNewSelector } from '@/store';
 import { selectAccessToken } from '@/store/auth';
+import { validateUrlParam } from '@/utils/validateUrlParam';
 import { useMemberQuery } from '@/hooks/api/member/useMemberQuery';
 import { useParseJwt } from '@/hooks/common/useParseJwt';
 import MypageListSkeleton from '@/components/atoms/MypageListSkeleton/MypageListSkeleton';
@@ -29,8 +30,15 @@ import * as S from './MyPage.style';
 
 const MyPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const initialGroup =
-    (searchParams.get('group') as OptionKeys) || OptionKeys.TALK_PICK;
+  const isValidOptionKey = (value: string): boolean => {
+    return Object.values(OptionKeys).includes(value as OptionKeys);
+  };
+
+  const initialGroup = validateUrlParam(
+    searchParams.get('group'),
+    OptionKeys.TALK_PICK,
+    isValidOptionKey,
+  );
   const initialOption =
     searchParams.get('option') || optionSets[initialGroup][0].value;
   const [selectedGroup, setSelectedGroup] = useState<OptionKeys>(initialGroup);
