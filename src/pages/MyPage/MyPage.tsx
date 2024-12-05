@@ -96,7 +96,7 @@ const MyPage = () => {
     (query) => query.isLoading,
   );
 
-  const { ref, isFetchingAnyNextPage } = useObserver(queries);
+  const { ref } = useObserver(queries);
 
   const queryResult = useMemo(() => {
     if (selectedGroup === OptionKeys.TALK_PICK) {
@@ -149,7 +149,7 @@ const MyPage = () => {
     }
 
     if (!queryResult) {
-      return <div>표시할 페이지가 없습니다</div>;
+      return null;
     }
 
     if (selectedGroup === OptionKeys.TALK_PICK) {
@@ -166,7 +166,7 @@ const MyPage = () => {
       return <MyBalanceGameList items={content} />;
     }
 
-    return <div>표시할 페이지가 없습니다</div>;
+    return null;
   };
 
   return (
@@ -193,9 +193,7 @@ const MyPage = () => {
           onOptionSelect={handleOptionSelect}
         />
         <div css={S.contentList}>{renderContent()}</div>
-        <div ref={ref} css={S.loader}>
-          {isFetchingAnyNextPage && <p>Loading...</p>}
-        </div>
+        <div ref={ref} css={S.loader} />
       </div>
     </div>
   );
