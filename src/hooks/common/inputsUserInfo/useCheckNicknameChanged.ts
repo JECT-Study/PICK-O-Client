@@ -38,20 +38,17 @@ export const useCheckNicknameChanged = (
   });
 
   const handleSubmit = () => {
-    if (isEmptyString(value)) {
-      return;
-    }
-
-    if (value === defaultValue) {
+    if (isEmptyString(value) || value === defaultValue) {
       return;
     }
 
     if (!isValidNickname(value)) {
       setIsError(true);
       setErrorMessage(ERROR.NICKNAME.FORM);
-    } else {
-      nicknameVerify.mutate();
+      return;
     }
+
+    nicknameVerify.mutate();
   };
 
   return { inputRef, isError, errorMessage, handleSubmit };
