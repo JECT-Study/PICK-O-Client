@@ -2,7 +2,7 @@
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import 'dayjs/locale/ko';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import MyPage from '@/pages/MyPage/MyPage';
 import SearchGamePage from '@/pages/SearchResultsPage/SearchGamePage';
@@ -34,17 +34,32 @@ import TalkPickPage from './pages/TalkPickPage/TalkPickPage';
 // import PostPage from './pages/PostPage/PostPage';
 // import SearchResultPage from './pages/SearchResultPage/SearchResultPage';
 // import SignUpPage from './pages/SignUpPage/SignUpPage';
-import { useNewSelector } from './store';
-import { selectAccessToken } from './store/auth';
 import TalkPickPlacePage from './pages/TalkPickPlacePage/TalkPickPlacePage';
 import SignUpPage from './pages/SignUpPage/SignUpPage';
 import BalanceGamePage from './pages/BalanceGamePage/BalanceGamePage';
 import BalanceGameCreationPage from './pages/BalanceGameCreationPage/BalanceGameCreationPage';
+import { getCookie } from './utils/cookie';
+import { axiosInstance } from './api/interceptor';
+import { useNewDispatch, useNewSelector } from './store';
+import { selectAccessToken, tokenActions } from './store/auth';
 
 const App: React.FC = () => {
+  const dispatch = useNewDispatch();
+
+  useEffect(() => {
+    const token = getCookie('accessToken');
+    if (token) {
+      localStorage.setItem('accessToken', token);
+
+      dispatch(tokenActions.setToken(token));
+      axiosInstance.defaults.headers.Authorization = `Bearer ${token}`;
+    }
+  }, [dispatch]);
+
   const accessToken = useNewSelector(selectAccessToken);
   const { member } = useMemberQuery(useParseJwt(accessToken).memberId);
   useTokenRefresh();
+
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ko">
       <Routes>
