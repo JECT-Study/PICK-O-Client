@@ -1,6 +1,12 @@
 import { END_POINT } from '@/constants/api';
 import { ServerResponse } from '@/types/api';
-import { Member, MemberForm } from '@/types/member';
+import {
+  Member,
+  MemberEditForm,
+  MemberEditNicknameForm,
+  MemberEditProfileImgForm,
+  MemberForm,
+} from '@/types/member';
 import { axiosInstance } from './interceptor';
 
 export const getMember = async (memberId: number) => {
@@ -67,6 +73,19 @@ export const putMemberNickname = async (nickname: string) => {
   return data;
 };
 
+export const putMemberInfo = async (
+  memberInfo:
+    | MemberEditForm
+    | MemberEditNicknameForm
+    | MemberEditProfileImgForm,
+) => {
+  const { data } = await axiosInstance.put<ServerResponse>(
+    `${END_POINT.EDIT_MEMBERS}`,
+    memberInfo,
+  );
+  return data;
+};
+
 export const putMemberPw = async (pw: string) => {
   const { data } = await axiosInstance.put<ServerResponse>(
     `${END_POINT.MEMBER_PASSWORD}`,
@@ -114,4 +133,17 @@ export const getNicknameVerify = async (nickname: string) => {
     },
   );
   return data;
+};
+
+export const postPasswordVerify = async (password: FormData) => {
+  const response = await axiosInstance.post(
+    `${END_POINT.PASSWORD_VERIFY}`,
+    password,
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    },
+  );
+  return response;
 };

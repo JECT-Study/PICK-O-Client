@@ -62,6 +62,7 @@ export const SUCCESS = {
   COMMENT: {
     REPORT: '신고 완료되었습니다.',
   },
+  EDIT_PROFILE: '수정 완료 되었습니다!',
   POST: {
     CREATE: '등록 완료!',
     EDIT: '수정 완료!',
