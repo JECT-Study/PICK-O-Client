@@ -83,6 +83,9 @@ export { default as GameEnding } from './gif/game-ending.gif';
 export { default as OptionError } from './svg/option-error.svg';
 export { default as MoreReply } from './svg/more-reply.svg';
 export { default as IcTrash } from './svg/trash.svg';
+export { default as MobileBookmarkDF } from './svg/mobile-bookmark-df.svg';
+export { default as MobileBookmarkPR } from './svg/mobile-bookmark-pr.svg';
+export { default as MobileShare } from './svg/mobile-share.svg';
 
 // TODO: 이전 SVG
 export { default as Email } from './svg/email.svg';
