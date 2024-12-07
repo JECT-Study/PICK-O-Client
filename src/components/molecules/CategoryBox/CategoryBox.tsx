@@ -7,7 +7,7 @@ interface CategoryBoxProps {
   handleService: () => void;
 }
 
-const CategoryBox = ({ handleService }: CategoryBoxProps) => {z
+const CategoryBox = ({ handleService }: CategoryBoxProps) => {
   return (
     <div css={categoryBoxStyling}>
       <Link to="/talkpickplace">
