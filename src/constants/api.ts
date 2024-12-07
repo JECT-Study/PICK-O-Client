@@ -111,7 +111,7 @@ export const END_POINT = {
   CREATE_GAME: '/games',
   TEMP_GAME: '/games/temp',
   NEW_GAME: '/games/new',
-  BEST_GAME: '/games/best',
+  BEST_GAME: '/games/popular',
   LATEST_GAME: '/games/latest',
   GAME_SET: (gameSetId: Id) => `/games/${gameSetId}`,
   EDIT_GAME: (gameId: Id) => `/games/${gameId}`,

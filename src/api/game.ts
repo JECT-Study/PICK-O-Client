@@ -1,4 +1,5 @@
 import { END_POINT } from '@/constants/api';
+import { GAME_VALUE } from '@/constants/game';
 import {
   BalanceGame,
   Game,
@@ -63,7 +64,7 @@ export const getBestGames = async (tagName: string) => {
   const { data } = await axiosInstance.get<GameContent[]>(
     `${END_POINT.BEST_GAME}`,
     {
-      params: { tagName },
+      params: { tagName, page: GAME_VALUE.PAGE, size: GAME_VALUE.SIZE },
     },
   );
   return data;
@@ -73,7 +74,7 @@ export const getLatestGames = async (tagName: string) => {
   const { data } = await axiosInstance.get<GameContent[]>(
     `${END_POINT.LATEST_GAME}`,
     {
-      params: { tagName },
+      params: { tagName, page: GAME_VALUE.PAGE, size: GAME_VALUE.SIZE },
     },
   );
   return data;

@@ -75,6 +75,9 @@ export const NOTICE = {
     LOGIN: '투표 결과와 댓글은 로그인 후 확인할 수 있습니다.',
     VOTE: '투표 후에 확인할 수 있습니다.',
   },
+  STATUS: {
+    NOT_READY: '아직 준비 중인 서비스입니다!',
+  },
 } as const;
 
 export const NULL = {
