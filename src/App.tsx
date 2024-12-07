@@ -50,6 +50,7 @@ const App: React.FC = () => {
     const token = getCookie('accessToken');
     if (token) {
       localStorage.setItem('accessToken', token);
+      localStorage.setItem('rtk', 'rtk');
 
       dispatch(tokenActions.setToken(token));
       axiosInstance.defaults.headers.Authorization = `Bearer ${token}`;
