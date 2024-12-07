@@ -8,6 +8,7 @@ interface InputInfoPwProps {
   isError: boolean;
   errorMessage?: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onKeyDown: React.KeyboardEventHandler<HTMLInputElement>;
 }
 
 const InputInfoPw = ({
@@ -15,6 +16,7 @@ const InputInfoPw = ({
   isError,
   errorMessage,
   onChange,
+  onKeyDown,
 }: InputInfoPwProps) => {
   return (
     <div css={S.inputInfoPwContainer}>
@@ -29,6 +31,7 @@ const InputInfoPw = ({
         onChange={onChange}
         placeholder="비밀번호 입력"
         size="small"
+        onKeyDown={onKeyDown}
       />
     </div>
   );

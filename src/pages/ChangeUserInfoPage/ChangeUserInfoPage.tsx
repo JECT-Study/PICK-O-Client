@@ -23,6 +23,12 @@ const ChangeUserInfoPage = () => {
   const { inputRef, isError, errorMessage, handlePasswordSubmit } =
     useCheckPasswordVerify(passwordInput, setVerifySuccess);
 
+  const handlePasswordKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handlePasswordSubmit();
+    }
+  };
+
   const {
     form,
     onChange,
@@ -81,6 +87,7 @@ const ChangeUserInfoPage = () => {
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setPasswordInput(e.target.value)
                 }
+                onKeyDown={handlePasswordKeyDown}
               />
             </div>
             <Button
