@@ -15,6 +15,7 @@ export const useLogoutMutation = () => {
       // TODO: 백엔드에서 리프레쉬 토큰 쿠키에 저장시키면, 해당 코드 제거
       localStorage.removeItem('accessToken');
       localStorage.removeItem('rtk');
+      document.cookie = 'accessToken=; path=/; max-age=0';
 
       delete axiosInstance.defaults.headers.Authorization;
       dispatch(tokenActions.deleteToken());
