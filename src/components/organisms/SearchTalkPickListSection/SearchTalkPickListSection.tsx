@@ -13,9 +13,9 @@ interface SearchTalkPickSectionProps {
   keyword: string;
   selectedPage: number;
   totalPages: number;
-  sort: { fileId: string; order: 'asc' | 'desc' };
+  sort: { field: string; order: 'asc' | 'desc' };
   onPageChange: (page: number) => void;
-  onSortChange: (sort: { fileId: string; order: 'asc' | 'desc' }) => void;
+  onSortChange: (sort: { field: string; order: 'asc' | 'desc' }) => void;
   isLoading: boolean;
 }
 

@@ -3,7 +3,7 @@ import { getTalkPickResults } from '@/api/search';
 import { TalkPickResult } from '@/types/search';
 
 interface SortOption {
-  fileId: string;
+  field: string;
   order: 'asc' | 'desc';
 }
 
@@ -13,7 +13,7 @@ export const useTalkPickResultQuery = (
   size: number,
   sort: SortOption,
 ) => {
-  const sortParam = `${sort.fileId},${sort.order}`;
+  const sortParam = `${sort.field},${sort.order}`;
 
   const { data: talkPickResults, isLoading } = useQuery<TalkPickResult>({
     queryKey: ['talkPickResults', query, page, size, sortParam],

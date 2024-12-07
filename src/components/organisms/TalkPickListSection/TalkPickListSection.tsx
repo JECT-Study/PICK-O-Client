@@ -13,9 +13,9 @@ import * as S from './TalkPickListSection.style';
 
 export interface TalkPickListProps {
   talkPickList?: TalkPickListPagination;
-  selectedValue: { fileId: string; order: 'asc' | 'desc' };
+  selectedValue: { field: string; order: 'asc' | 'desc' };
   setToggleValue: React.Dispatch<
-    React.SetStateAction<{ fileId: string; order: 'asc' | 'desc' }>
+    React.SetStateAction<{ field: string; order: 'asc' | 'desc' }>
   >;
   selectedPage: number;
   handlePageChange: (page: number) => void;

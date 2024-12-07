@@ -22,9 +22,9 @@ export interface CommentsSectionProps {
   talkPickWriter: string;
   commentList?: CommentsPagination;
   toggleItem: ToggleGroupItem[];
-  selectedValue: { fileId: string; order: 'asc' | 'desc' };
+  selectedValue: { field: string; order: 'asc' | 'desc' };
   setToggleValue: React.Dispatch<
-    React.SetStateAction<{ fileId: string; order: 'asc' | 'desc' }>
+    React.SetStateAction<{ field: string; order: 'asc' | 'desc' }>
   >;
   selectedPage: number;
   handlePageChange: (page: number) => void;
@@ -61,8 +61,8 @@ const CommentsSection = ({
       { content: commentValue },
       {
         onSuccess: () => {
-          if (selectedValue.fileId === 'views') {
-            setToggleValue({ fileId: 'createdAt', order: 'desc' });
+          if (selectedValue.field === 'views') {
+            setToggleValue({ field: 'createdAt', order: 'desc' });
           }
           handlePageChange(1);
         },

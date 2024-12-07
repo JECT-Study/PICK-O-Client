@@ -10,9 +10,9 @@ import * as S from './BalanceGameList.style';
 
 export interface ContentListProps {
   contents: GameContent[];
-  selectedValue: { fileId: string; order: 'asc' | 'desc' };
+  selectedValue: { field: string; order: 'asc' | 'desc' };
   setSelectedValue: React.Dispatch<
-    React.SetStateAction<{ fileId: string; order: 'asc' | 'desc' }>
+    React.SetStateAction<{ field: string; order: 'asc' | 'desc' }>
   >;
   activeTab: '인기' | '커플' | '취향' | '월드컵';
   setActiveTab: React.Dispatch<
@@ -43,7 +43,7 @@ const BalanceGameList = ({
   };
 
   const handleToggleChange = (value: {
-    fileId: string;
+    field: string;
     order: 'asc' | 'desc';
   }) => {
     setSelectedValue(value);

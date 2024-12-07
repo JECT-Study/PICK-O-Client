@@ -8,10 +8,10 @@ import * as S from './TalkPickPlacePage.style';
 
 const TalkPickPlacePage = () => {
   const [selectedValue, setSelectedValue] = useState<{
-    fileId: string;
+    field: string;
     order: 'asc' | 'desc';
   }>({
-    fileId: 'views',
+    field: 'views',
     order: 'desc',
   });
   const [searchParams, setSearchParams] = useSearchParams();
@@ -33,7 +33,7 @@ const TalkPickPlacePage = () => {
   const { talkPickList } = useTalkPickListQuery({
     page: currentPage - 1,
     size: 20,
-    sort: `${selectedValue.fileId},${selectedValue.order}`,
+    sort: `${selectedValue.field},${selectedValue.order}`,
   });
 
   useEffect(() => {

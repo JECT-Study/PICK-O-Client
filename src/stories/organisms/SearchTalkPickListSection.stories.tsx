@@ -37,21 +37,19 @@ export const Default: Story = {
     keyword: '예시 키워드',
     selectedPage: 1,
     totalPages: 2,
-    sort: { fileId: 'views', order: 'desc' },
+    sort: { field: 'views', order: 'desc' },
   },
 };
 
 export const All: Story = {
   render: (args) => {
-    const [sort, setSort] = useState<{ fileId: string; order: 'asc' | 'desc' }>(
-      {
-        fileId: 'views',
-        order: 'desc',
-      },
-    );
+    const [sort, setSort] = useState<{ field: string; order: 'asc' | 'desc' }>({
+      field: 'views',
+      order: 'desc',
+    });
 
     const handleSortChange = (newSort: {
-      fileId: string;
+      field: string;
       order: 'asc' | 'desc';
     }) => {
       setSort(newSort);
