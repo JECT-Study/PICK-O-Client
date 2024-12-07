@@ -131,6 +131,80 @@ const typo = {
     },
   },
 
+  Mobile: {
+    Title: {
+      SemiBold_24: {
+        fontFamily: 'Pretendard',
+        fontSize: '24px',
+        fontWeight: 600,
+        lineHeight: '1.6',
+        letterSpacing: `${24 * -0.05}px`,
+      },
+    },
+    Main: {
+      Medium_16: {
+        fontFamily: 'Pretendard',
+        fontSize: '16px',
+        lineHeight: '1.6',
+        letterSpacing: `${16 * -0.05}px`,
+      },
+      Regular_12: {
+        fontFamily: 'Pretendard',
+        fontSize: '12px',
+        fontWeight: 400,
+        lineHeight: '1.6',
+        letterSpacing: `${12 * -0.05}px`,
+      },
+    },
+    Text: {
+      Bold_20: {
+        fontFamily: 'Pretendard',
+        fontSize: '20px',
+        fontWeight: 700,
+        letterSpacing: `${20 * -0.05}px`,
+      },
+      Bold_16: {
+        fontFamily: 'Pretendard',
+        fontSize: '16px',
+        fontWeight: 700,
+        lineHeight: '1.6',
+        letterSpacing: `${16 * -0.05}px`,
+      },
+      SemiBold_20: {
+        fontFamily: 'Pretendard',
+        fontSize: '20px',
+        fontWeight: 600,
+        lineHeight: '1.6',
+        letterSpacing: `${20 * -0.05}px`,
+      },
+      SemiBold_14: {
+        fontFamily: 'Pretendard',
+        fontSize: '14px',
+        fontWeight: 600,
+        lineHeight: '1.6',
+        letterSpacing: `${14 * -0.05}px`,
+      },
+      SemiBold_12: {
+        fontFamily: 'Pretendard',
+        fontSize: '12px',
+        fontWeight: 600,
+        lineHeight: '1.3',
+      },
+      Medium_16: {
+        fontFamily: 'Pretendard',
+        fontSize: '16px',
+        lineHeight: '1.6',
+        letterSpacing: `${16 * -0.05}px`,
+      },
+      Medium_12: {
+        fontFamily: 'Pretendard',
+        fontSize: '12px',
+        lineHeight: '1.3',
+        letterSpacing: `${12 * -0.05}px`,
+      },
+    },
+  },
+
   // TODO: 이전 타이포 타입 정리
   Heading_1: {
     fontSize: '48px',
