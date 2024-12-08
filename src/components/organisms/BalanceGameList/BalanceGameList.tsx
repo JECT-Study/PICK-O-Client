@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { AngleSmallDown } from '@/assets';
 import ToggleGroup from '@/components/atoms/ToggleGroup/ToggleGroup';
 import Button from '@/components/atoms/Button/Button';
@@ -30,21 +30,27 @@ const BalanceGameList = ({
   const [visibleItems, setVisibleItems] = useState<number>(4);
   const navigate = useNavigate();
 
-  const handleItemClick = (gameId: number) => {
-    if (!gameId || gameId <= 0) {
-      alert(ERROR.GAME.NOT_EXIST);
-      return;
-    }
-    navigate(`/balancegame/${gameId}`);
-  };
+  const handleItemClick = useCallback(
+    (gameId: number) => {
+      if (!gameId || gameId <= 0) {
+        alert(ERROR.GAME.NOT_EXIST);
+        return;
+      }
+      navigate(`/balancegame/${gameId}`);
+    },
+    [navigate],
+  );
 
-  const handleLoadMore = () => {
+  const handleLoadMore = useCallback(() => {
     setVisibleItems((prev) => Math.min(prev + 6, contents.length));
-  };
+  }, [contents.length]);
 
-  const handleToggleChange = (value: ToggleGroupValue) => {
-    setSelectedValue(value);
-  };
+  const handleToggleChange = useCallback(
+    (value: ToggleGroupValue) => {
+      setSelectedValue(value);
+    },
+    [setSelectedValue],
+  );
 
   return (
     <div css={S.containerStyle}>
