@@ -7,6 +7,7 @@ import ContentsButton from '@/components/molecules/ContentsButton/ContentsButton
 import { GameContent } from '@/types/game';
 import { ToggleGroupValue } from '@/types/toggle';
 import { useNavigate } from 'react-router-dom';
+import { ERROR } from '@/constants/message';
 import * as S from './BalanceGameList.style';
 
 export interface ContentListProps {
@@ -31,7 +32,7 @@ const BalanceGameList = ({
 
   const handleItemClick = (gameId: number) => {
     if (!gameId || gameId <= 0) {
-      alert('유효하지 않은 게임 ID입니다.');
+      alert(ERROR.GAME.NOT_EXIST);
       return;
     }
     navigate(`/balancegame/${gameId}`);
