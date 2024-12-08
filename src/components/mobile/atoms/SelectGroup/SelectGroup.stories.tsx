@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { storyContainer, storyInnerContainer } from '@/stories/story.styles';
-import SelectGroup from '@/components/mobile/atoms/SelectGroup';
+import SelectGroup from '@/components/mobile/atoms/SelectGroup/SelectGroup';
 
 const meta = {
   title: 'mobile/atoms/SelectGroup',
