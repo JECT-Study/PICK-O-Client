@@ -19,17 +19,7 @@ const InfoBox = ({
   onClick,
 }: InfoBoxProps) => {
   return (
-    <div
-      role="button"
-      css={S.infoContainer}
-      onClick={onClick}
-      onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          onClick();
-        }
-      }}
-      tabIndex={0}
-    >
+    <button type="button" css={S.infoContainer} onClick={onClick}>
       <div css={S.textContainer}>
         <p css={S.titleLabel}>{title}</p>
         <p css={S.subtitleWrapper}>
@@ -39,7 +29,7 @@ const InfoBox = ({
       </div>
       <InfoLabel label="톡댓톡" count={commentCount} />
       <InfoLabel label="저장" count={bookmarks} />
-    </div>
+    </button>
   );
 };
 

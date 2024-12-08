@@ -30,6 +30,7 @@ const sizeStyles = {
 };
 
 export const cardWrapper = (size: SizeType) => css`
+  all: unset;
   width: ${sizeStyles[size].width};
   height: ${sizeStyles[size].height};
   border-radius: 20px;

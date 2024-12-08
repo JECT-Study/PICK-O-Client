@@ -3,6 +3,7 @@ import color from '@/styles/color';
 import typo from '@/styles/typo';
 
 export const infoContainer = css`
+  all: unset;
   display: flex;
   width: 904px;
   height: 84px;

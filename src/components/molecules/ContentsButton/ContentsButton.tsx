@@ -4,7 +4,7 @@ import Bookmark, { BookmarkProps } from '@/components/atoms/Bookmark/Bookmark';
 import { highlightText } from '@/utils/highlightText';
 import * as S from './ContentsButton.style';
 
-export interface ContentsButtonProps extends ComponentPropsWithRef<'div'> {
+export interface ContentsButtonProps extends ComponentPropsWithRef<'button'> {
   title: string;
   mainTag: string;
   subTag: string;
@@ -29,17 +29,10 @@ const ContentsButton = ({
   ...attributes
 }: ContentsButtonProps) => {
   return (
-    <div
-      role="button"
-      tabIndex={0}
-      onClick={onClick}
+    <button
+      type="button"
       css={S.cardWrapper(size)}
-      onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          onClick();
-        }
-      }}
+      onClick={onClick}
       {...attributes}
     >
       <div css={S.imageContainer(size)}>
@@ -64,7 +57,7 @@ const ContentsButton = ({
           <Bookmark bookmarked={bookmarked} css={S.bookmarkWrapper} />
         )}
       </div>
-    </div>
+    </button>
   );
 };
 
