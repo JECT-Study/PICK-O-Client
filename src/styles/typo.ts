@@ -169,6 +169,13 @@ const typo = {
         lineHeight: '1.6',
         letterSpacing: `${16 * -0.05}px`,
       },
+      Bold_12: {
+        fontFamily: 'Pretendard',
+        fontSize: '12px',
+        fontWeight: 700,
+        lineHeight: '1.6',
+        letterSpacing: `${16 * -0.05}px`,
+      },
       SemiBold_20: {
         fontFamily: 'Pretendard',
         fontSize: '20px',
@@ -189,6 +196,20 @@ const typo = {
         fontWeight: 600,
         lineHeight: '1.3',
       },
+      SemiBold_10: {
+        fontFamily: 'Pretendard',
+        fontSize: '10px',
+        fontWeight: 600,
+        lineHeight: '1.6',
+        letterSpacing: `${14 * -0.05}px`,
+      },
+      SemiBold_7: {
+        fontFamily: 'Pretendard',
+        fontSize: '7.2px',
+        fontWeight: 600,
+        lineHeight: '1.6',
+        letterSpacing: '-0.05em',
+      },
       Medium_16: {
         fontFamily: 'Pretendard',
         fontSize: '16px',
@@ -198,6 +219,12 @@ const typo = {
       Medium_12: {
         fontFamily: 'Pretendard',
         fontSize: '12px',
+        lineHeight: '1.3',
+        letterSpacing: `${12 * -0.05}px`,
+      },
+      Medium_8: {
+        fontFamily: 'Pretendard',
+        fontSize: '8.5px',
         lineHeight: '1.3',
         letterSpacing: `${12 * -0.05}px`,
       },
