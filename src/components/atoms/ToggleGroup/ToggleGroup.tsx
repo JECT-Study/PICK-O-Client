@@ -13,6 +13,16 @@ const defaultItems: ToggleGroupItem[] = [
   { label: '최신순', value: { field: 'createdAt', order: 'desc' } },
 ];
 
+const isSelected = (
+  selectedValue: { field: string; order: 'asc' | 'desc' } | undefined,
+  value: { field: string; order: 'asc' | 'desc' },
+): boolean => {
+  if (!selectedValue) return false;
+  return (
+    selectedValue.field === value.field && selectedValue.order === value.order
+  );
+};
+
 const ToggleGroup = ({
   items = defaultItems,
   selectedValue,
@@ -28,10 +38,7 @@ const ToggleGroup = ({
           css={[
             toggleButtonItemStyling,
             idx === 0 ? firstItemRadius : secondItemRadius,
-            selectedValue &&
-              value.field === selectedValue.field &&
-              value.order === selectedValue.order &&
-              selectedStyling,
+            isSelected(selectedValue, value) && selectedStyling,
           ]}
           onClick={() => onClick?.(value)}
         >
