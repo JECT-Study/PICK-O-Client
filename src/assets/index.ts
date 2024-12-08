@@ -92,6 +92,14 @@ export { default as PopularSmall } from './svg/popular-small.svg';
 export { default as CoupleSmall } from './svg/couple-small.svg';
 export { default as TasteSmall } from './svg/taste-small.svg';
 export { default as WorldcupSmall } from './svg/worldcup-small.svg';
+export { default as TriangleDown } from './svg/triangle-down.svg';
+export { default as TriangleUp } from './svg/triangle-up.svg';
+export { default as BookmarkDFSmall } from './svg/bookmark-df-sm.svg';
+export { default as BookmarkPRSmall } from './svg/bookmark-pr-sm.svg';
+export { default as CirclePencil } from './svg/circle-pencil.svg';
+export { default as CircleClose } from './svg/circle-close.svg';
+export { default as CircleGame } from './svg/circle-game.svg';
+export { default as CircleTalkPick } from './svg/circle-talkpick.svg';
 
 // TODO: 이전 SVG
 export { default as Email } from './svg/email.svg';
