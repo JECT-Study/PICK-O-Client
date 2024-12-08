@@ -84,6 +84,14 @@ export { default as OptionError } from './svg/option-error.svg';
 export { default as MoreReply } from './svg/more-reply.svg';
 export { default as IcTrash } from './svg/trash.svg';
 export { default as ListIcon } from './svg/list.svg';
+export { default as LogoSmall } from './svg/logo-small.svg';
+export { default as PickVoteSmall } from './svg/pick-vote-small.svg';
+export { default as RandomGameSmall } from './svg/random-game-small.svg';
+export { default as CheckSmall } from './svg/check-small.svg';
+export { default as PopularSmall } from './svg/popular-small.svg';
+export { default as CoupleSmall } from './svg/couple-small.svg';
+export { default as TasteSmall } from './svg/taste-small.svg';
+export { default as WorldcupSmall } from './svg/worldcup-small.svg';
 
 // TODO: 이전 SVG
 export { default as Email } from './svg/email.svg';
