@@ -10,9 +10,11 @@ import { GameContent } from '@/types/game';
 import { useBestGameList } from '@/hooks/api/game/useBestGameListQuery';
 import { useLatestGameList } from '@/hooks/api/game/useLatestGameListQuery';
 import { NOTICE } from '@/constants/message';
+import MobileCreateDropdown from '@/components/mobile/MobileCreateDropdown/MobileCreateDropdown';
 import * as S from './LandingPage.style';
 
 const LandingPage = () => {
+  const isMobile = true;
   const { todayTalkPick } = useTodayTalkPickQuery();
   const [isServicePreparing, setIsServicePreparing] = useState<boolean>(false);
   const [selectedValue, setSelectedValue] = useState<string>('views');
@@ -56,27 +58,48 @@ const LandingPage = () => {
   };
 
   return (
-    <div>
+    <div css={S.pageWrapperStyle}>
       {isServicePreparing && (
         <div css={S.toastModalStyling}>
           <ToastModal bgColor="white">{NOTICE.STATUS.NOT_READY}</ToastModal>
         </div>
       )}
       <TopBanner todayTalkPick={todayTalkPick} />
-      <div css={S.contentWrapStyle}>
-        <SearchTagBar onSearch={handleSearch} />
-        <div css={S.categoryBoxStyle}>
-          <CategoryBox handleService={handleService} />
-        </div>
 
-        <BalanceGameList
-          contents={contents}
-          selectedValue={selectedValue}
-          setSelectedValue={setSelectedValue}
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
-        />
-      </div>
+      {isMobile ? (
+        <div css={S.contentWrapStyle}>
+          <CategoryBox isMobile={isMobile} handleService={handleService} />
+          <div css={S.searchBoxStyle}>
+            <p css={S.searchBoxTitleStyle}>어떤 콘텐츠를 찾아볼까요?</p>
+            <SearchTagBar isMobile onSearch={handleSearch} />
+          </div>
+          <BalanceGameList
+            isMobile
+            contents={contents}
+            selectedValue={selectedValue}
+            setSelectedValue={setSelectedValue}
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+          />
+          <div css={S.floatingDropdownStyle}>
+            <MobileCreateDropdown />
+          </div>
+        </div>
+      ) : (
+        <div css={S.contentWrapStyle}>
+          <SearchTagBar onSearch={handleSearch} />
+          <div css={S.categoryBoxStyle}>
+            <CategoryBox handleService={handleService} />
+          </div>
+          <BalanceGameList
+            contents={contents}
+            selectedValue={selectedValue}
+            setSelectedValue={setSelectedValue}
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+          />
+        </div>
+      )}
     </div>
   );
 };
