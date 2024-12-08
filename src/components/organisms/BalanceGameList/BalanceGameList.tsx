@@ -15,6 +15,7 @@ export interface ContentListProps {
   setActiveTab: React.Dispatch<
     React.SetStateAction<'인기' | '커플' | '취향' | '월드컵'>
   >;
+  isMobile?: boolean;
 }
 
 const BalanceGameList = ({
@@ -23,6 +24,7 @@ const BalanceGameList = ({
   setSelectedValue,
   activeTab,
   setActiveTab,
+  isMobile = true,
 }: ContentListProps) => {
   const [visibleItems, setVisibleItems] = useState<number>(4);
 
@@ -34,14 +36,25 @@ const BalanceGameList = ({
     <div css={S.containerStyle}>
       <div css={S.titleWrapStyle}>
         <div>주제별 밸런스 게임</div>
-        <ToggleGroup selectedValue={selectedValue} onClick={setSelectedValue} />
+
+        {isMobile ? null : (
+          <ToggleGroup
+            selectedValue={selectedValue}
+            onClick={setSelectedValue}
+          />
+        )}
       </div>
       <div css={S.barStyle}>
-        <CategoryBar activeTab={activeTab} setActiveTab={setActiveTab} />
+        <CategoryBar
+          isMobile={isMobile}
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+        />
       </div>
       <div css={S.contentStyle}>
         {contents.slice(0, visibleItems).map((content) => (
           <ContentsButton
+            size={isMobile ? 'extraSmall' : 'large'}
             key={content.id}
             images={content.images}
             title={content.title}
@@ -54,7 +67,7 @@ const BalanceGameList = ({
           <div css={S.loadMoreWrapperStyle}>
             <Button
               variant="outlineShadow"
-              size="large"
+              size="small"
               onClick={handleLoadMore}
               iconRight={<AngleSmallDown />}
             >
