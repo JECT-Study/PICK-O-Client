@@ -9,12 +9,11 @@ import Pagination from '@/components/atoms/Pagination/Pagination';
 import TextArea from '@/components/molecules/TextArea/TextArea';
 import Toggle from '@/components/atoms/Toggle/Toggle';
 import ToastModal from '@/components/atoms/ToastModal/ToastModal';
-import ToggleGroup, {
-  ToggleGroupItem,
-} from '@/components/atoms/ToggleGroup/ToggleGroup';
+import ToggleGroup from '@/components/atoms/ToggleGroup/ToggleGroup';
 import { NOTICE } from '@/constants/message';
 import CommentItem from '@/components/molecules/CommentItem/CommentItem';
 import { useCreateCommentMutation } from '@/hooks/api/comment/useCreateCommentMutation';
+import { ToggleGroupItem, ToggleGroupValue } from '@/types/toggle';
 import * as S from './CommentsSection.style';
 
 export interface CommentsSectionProps {
@@ -22,10 +21,8 @@ export interface CommentsSectionProps {
   talkPickWriter: string;
   commentList?: CommentsPagination;
   toggleItem: ToggleGroupItem[];
-  selectedValue: { field: string; order: 'asc' | 'desc' };
-  setToggleValue: React.Dispatch<
-    React.SetStateAction<{ field: string; order: 'asc' | 'desc' }>
-  >;
+  selectedValue: ToggleGroupValue;
+  setToggleValue: React.Dispatch<React.SetStateAction<ToggleGroupValue>>;
   selectedPage: number;
   handlePageChange: (page: number) => void;
   voted: boolean;

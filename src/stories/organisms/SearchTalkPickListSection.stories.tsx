@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import SearchTalkPickListSection from '@/components/organisms/SearchTalkPickListSection/SearchTalkPickListSection';
 import { SampleWhole } from '@/assets';
 import { SearchTalkPickItemProps } from '@/components/atoms/SearchTalkPickItem/SearchTalkPickItem';
+import { ToggleGroupValue } from '@/types/toggle';
 
 const meta: Meta<typeof SearchTalkPickListSection> = {
   title: 'organisms/SearchTalkPickListSection',
@@ -43,15 +44,12 @@ export const Default: Story = {
 
 export const All: Story = {
   render: (args) => {
-    const [sort, setSort] = useState<{ field: string; order: 'asc' | 'desc' }>({
+    const [sort, setSort] = useState<ToggleGroupValue>({
       field: 'views',
       order: 'desc',
     });
 
-    const handleSortChange = (newSort: {
-      field: string;
-      order: 'asc' | 'desc';
-    }) => {
+    const handleSortChange = (newSort: ToggleGroupValue) => {
       setSort(newSort);
       args.onSortChange?.(newSort);
     };

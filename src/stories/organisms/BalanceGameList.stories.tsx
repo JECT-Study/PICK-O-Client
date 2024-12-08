@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import BalanceGameList from '@/components/organisms/BalanceGameList/BalanceGameList';
 import { SampleFirst, SampleSecond } from '@/assets';
 import { MemoryRouter } from 'react-router-dom';
+import { ToggleGroupValue } from '@/types/toggle';
 import { storyContainer, storyInnerContainer } from '@/stories/story.styles';
 
 const meta: Meta<typeof BalanceGameList> = {
@@ -55,10 +56,10 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   render: (args) => {
-    const [selectedValue, setSelectedValue] = useState<{
-      field: string;
-      order: 'asc' | 'desc';
-    }>({ field: 'views', order: 'desc' });
+    const [selectedValue, setSelectedValue] = useState<ToggleGroupValue>({
+      field: 'views',
+      order: 'desc',
+    });
     const [activeTab, setActiveTab] = useState<
       '인기' | '커플' | '취향' | '월드컵'
     >('인기');
@@ -79,10 +80,10 @@ export const Default: Story = {
 
 export const All: Story = {
   render: (args) => {
-    const [selectedValue, setSelectedValue] = useState<{
-      field: string;
-      order: 'asc' | 'desc';
-    }>({ field: 'views', order: 'desc' });
+    const [selectedValue, setSelectedValue] = useState<ToggleGroupValue>({
+      field: 'views',
+      order: 'desc',
+    });
     const [activeTab, setActiveTab] = useState<
       '인기' | '커플' | '취향' | '월드컵'
     >('인기');

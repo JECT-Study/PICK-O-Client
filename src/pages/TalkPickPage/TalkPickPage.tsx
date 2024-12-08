@@ -6,10 +6,10 @@ import { useParseJwt } from '@/hooks/common/useParseJwt';
 import { useMemberQuery } from '@/hooks/api/member/useMemberQuery';
 import { useCommentsQuery } from '@/hooks/api/comment/useCommentsQuery';
 import { useBestCommentsQuery } from '@/hooks/api/comment/useBestCommentsQuery';
-import { ToggleGroupItem } from '@/components/atoms/ToggleGroup/ToggleGroup';
 import TalkPickSection from '@/components/organisms/TalkPickSection/TalkPickSection';
 import CommentsSection from '@/components/organisms/CommentsSection/CommentsSection';
 import { useTalkPickDetailQuery } from '@/hooks/api/talk-pick/useTalkPickDetailQuery';
+import { ToggleGroupItem, ToggleGroupValue } from '@/types/toggle';
 import * as S from './TalkPickPage.style';
 
 interface State {
@@ -19,10 +19,10 @@ interface State {
 
 const TalkPickPage = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [selectedValue, setSelectedValue] = useState<{
-    field: string;
-    order: 'asc' | 'desc';
-  }>({ field: 'views', order: 'desc' });
+  const [selectedValue, setSelectedValue] = useState<ToggleGroupValue>({
+    field: 'views',
+    order: 'desc',
+  });
 
   const accessToken = useNewSelector(selectAccessToken);
   const { member } = useMemberQuery(useParseJwt(accessToken).memberId);

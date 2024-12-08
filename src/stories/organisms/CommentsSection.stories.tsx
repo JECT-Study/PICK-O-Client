@@ -1,12 +1,12 @@
 import React from 'react';
 import { ProfileSample } from '@/assets';
-import { ToggleGroupItem } from '@/components/atoms/ToggleGroup/ToggleGroup';
 import type { Meta, StoryObj } from '@storybook/react';
 import store from '@/store';
 import { Provider } from 'react-redux';
 import ReactQueryProvider from '@/providers/ReactQueryProvider';
 import { Comment, CommentsPagination } from '@/types/comment';
 import CommentsSection from '@/components/organisms/CommentsSection/CommentsSection';
+import { ToggleGroupItem } from '@/types/toggle';
 import { storyContainer, storyInnerContainer } from '@/stories/story.styles';
 
 const exampleCommentList: Comment[] = Array.from({ length: 7 }, (_, index) => ({

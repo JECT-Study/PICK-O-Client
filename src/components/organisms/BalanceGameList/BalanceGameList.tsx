@@ -5,15 +5,14 @@ import Button from '@/components/atoms/Button/Button';
 import CategoryBar from '@/components/molecules/CategoryBar/CategoryBar';
 import ContentsButton from '@/components/molecules/ContentsButton/ContentsButton';
 import { GameContent } from '@/types/game';
+import { ToggleGroupValue } from '@/types/toggle';
 import { useNavigate } from 'react-router-dom';
 import * as S from './BalanceGameList.style';
 
 export interface ContentListProps {
   contents: GameContent[];
-  selectedValue: { field: string; order: 'asc' | 'desc' };
-  setSelectedValue: React.Dispatch<
-    React.SetStateAction<{ field: string; order: 'asc' | 'desc' }>
-  >;
+  selectedValue: ToggleGroupValue;
+  setSelectedValue: React.Dispatch<React.SetStateAction<ToggleGroupValue>>;
   activeTab: '인기' | '커플' | '취향' | '월드컵';
   setActiveTab: React.Dispatch<
     React.SetStateAction<'인기' | '커플' | '취향' | '월드컵'>
@@ -42,10 +41,7 @@ const BalanceGameList = ({
     setVisibleItems((prev) => Math.min(prev + 6, contents.length));
   };
 
-  const handleToggleChange = (value: {
-    field: string;
-    order: 'asc' | 'desc';
-  }) => {
+  const handleToggleChange = (value: ToggleGroupValue) => {
     setSelectedValue(value);
   };
 

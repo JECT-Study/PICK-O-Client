@@ -1,17 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
 import { getTalkPickResults } from '@/api/search';
 import { TalkPickResult } from '@/types/search';
-
-interface SortOption {
-  field: string;
-  order: 'asc' | 'desc';
-}
+import { ToggleGroupValue } from '@/types/toggle';
 
 export const useTalkPickResultQuery = (
   query: string,
   page: number,
   size: number,
-  sort: SortOption,
+  sort: ToggleGroupValue,
 ) => {
   const sortParam = `${sort.field},${sort.order}`;
 

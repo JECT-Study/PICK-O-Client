@@ -4,13 +4,11 @@ import BestTalkPick from '@/components/molecules/BestTalkPick/BestTalkPick';
 import TalkPickListSection from '@/components/organisms/TalkPickListSection/TalkPickListSection';
 import { useBestTalkPickListQuery } from '@/hooks/api/talk-pick/useBestTalkPickListQuery';
 import { useTalkPickListQuery } from '@/hooks/api/talk-pick/useTalkPickListQuery';
+import { ToggleGroupValue } from '@/types/toggle';
 import * as S from './TalkPickPlacePage.style';
 
 const TalkPickPlacePage = () => {
-  const [selectedValue, setSelectedValue] = useState<{
-    field: string;
-    order: 'asc' | 'desc';
-  }>({
+  const [selectedValue, setSelectedValue] = useState<ToggleGroupValue>({
     field: 'views',
     order: 'desc',
   });

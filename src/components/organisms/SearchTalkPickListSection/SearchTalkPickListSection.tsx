@@ -6,6 +6,7 @@ import Pagination from '@/components/atoms/Pagination/Pagination';
 import { generatePageNumbers } from '@/utils/pagination';
 import { NoResultsMessage } from '@/components/atoms/NoResultsMessage/NoResultsMessage';
 import SearchResultListSkeleton from '@/components/atoms/SearchResultListSkeleton/SearchResultListSkeleton';
+import { ToggleGroupValue } from '@/types/toggle';
 import * as S from './SearchTalkPickListSection.style';
 
 interface SearchTalkPickSectionProps {
@@ -13,9 +14,9 @@ interface SearchTalkPickSectionProps {
   keyword: string;
   selectedPage: number;
   totalPages: number;
-  sort: { field: string; order: 'asc' | 'desc' };
+  sort: ToggleGroupValue;
   onPageChange: (page: number) => void;
-  onSortChange: (sort: { field: string; order: 'asc' | 'desc' }) => void;
+  onSortChange: (sort: ToggleGroupValue) => void;
   isLoading: boolean;
 }
 

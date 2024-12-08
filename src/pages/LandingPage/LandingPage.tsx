@@ -8,15 +8,16 @@ import { useNavigate } from 'react-router-dom';
 import ToastModal from '@/components/atoms/ToastModal/ToastModal';
 import { useBestGameList } from '@/hooks/api/game/useBestGameListQuery';
 import { useLatestGameList } from '@/hooks/api/game/useLatestGameListQuery';
+import { ToggleGroupValue } from '@/types/toggle';
 import * as S from './LandingPage.style';
 
 const LandingPage = () => {
   const { todayTalkPick } = useTodayTalkPickQuery();
   const [isServicePreparing, setIsServicePreparing] = useState<boolean>(false);
-  const [selectedValue, setSelectedValue] = useState<{
-    field: string;
-    order: 'asc' | 'desc';
-  }>({ field: 'views', order: 'desc' });
+  const [selectedValue, setSelectedValue] = useState<ToggleGroupValue>({
+    field: 'views',
+    order: 'desc',
+  });
   const [activeTab, setActiveTab] = useState<
     '인기' | '커플' | '취향' | '월드컵'
   >('인기');
