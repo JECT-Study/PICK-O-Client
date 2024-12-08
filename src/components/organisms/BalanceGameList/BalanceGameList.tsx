@@ -5,6 +5,7 @@ import Button from '@/components/atoms/Button/Button';
 import CategoryBar from '@/components/molecules/CategoryBar/CategoryBar';
 import ContentsButton from '@/components/molecules/ContentsButton/ContentsButton';
 import { GameContent } from '@/types/game';
+import MobileToggleGroup from '@/components/mobile/MobileToggleGroup/MobileToggleGroup';
 import * as S from './BalanceGameList.style';
 
 export interface ContentListProps {
@@ -37,7 +38,12 @@ const BalanceGameList = ({
       <div css={S.titleWrapStyle}>
         <div>주제별 밸런스 게임</div>
 
-        {isMobile ? null : (
+        {isMobile ? (
+          <MobileToggleGroup
+            selectedValue={selectedValue}
+            onClick={setSelectedValue}
+          />
+        ) : (
           <ToggleGroup
             selectedValue={selectedValue}
             onClick={setSelectedValue}

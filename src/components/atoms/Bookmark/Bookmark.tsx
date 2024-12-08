@@ -1,5 +1,10 @@
 import React, { useState, useEffect, ComponentPropsWithRef } from 'react';
-import { BookmarkDF, BookmarkPR } from '@/assets';
+import {
+  BookmarkDF,
+  BookmarkDFSmall,
+  BookmarkPR,
+  BookmarkPRSmall,
+} from '@/assets';
 import * as S from './Bookmark.style';
 
 export interface BookmarkProps extends ComponentPropsWithRef<'button'> {
@@ -8,6 +13,7 @@ export interface BookmarkProps extends ComponentPropsWithRef<'button'> {
 
 const Bookmark = ({ bookmarked = false, ...attributes }: BookmarkProps) => {
   const [isPressed, setIsPressed] = useState(bookmarked);
+  const isMobile = true;
 
   useEffect(() => {
     setIsPressed(bookmarked);
@@ -17,6 +23,13 @@ const Bookmark = ({ bookmarked = false, ...attributes }: BookmarkProps) => {
     setIsPressed((prevState) => !prevState);
   };
 
+  const renderIcon = () => {
+    if (isPressed) {
+      return isMobile ? <BookmarkPRSmall /> : <BookmarkPR css={S.icon} />;
+    }
+    return isMobile ? <BookmarkDFSmall /> : <BookmarkDF css={S.icon} />;
+  };
+
   return (
     <button
       type="button"
@@ -24,7 +37,7 @@ const Bookmark = ({ bookmarked = false, ...attributes }: BookmarkProps) => {
       onClick={handleClick}
       {...attributes}
     >
-      {isPressed ? <BookmarkPR css={S.icon} /> : <BookmarkDF css={S.icon} />}
+      {renderIcon()}
     </button>
   );
 };

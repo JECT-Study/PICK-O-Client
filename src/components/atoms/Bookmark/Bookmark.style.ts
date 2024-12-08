@@ -11,6 +11,10 @@ export const bookmarkButton = css`
   border: none;
   cursor: pointer;
   padding: 0;
+  @media (max-width: 430px) {
+    width: 19px;
+    height: 19px;
+  }
 `;
 
 export const icon = css`

@@ -64,6 +64,9 @@ export const cardWrapper = (size: SizeType) => css`
       transform: scale(1.05);
     }
   }
+  @media (max-width: 430px) {
+    border-radius: 10px;
+  }
 `;
 
 export const imageContainer = (size: SizeType) => css`
@@ -104,12 +107,18 @@ export const infoContainer = (size: SizeType) => css`
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
+  @media (max-width: 430px) {
+    padding: 10px;
+  }
 `;
 
 export const label = (size: SizeType, highlighted?: boolean) => css`
   ${typo.Component.Medium};
   color: ${highlighted ? color.MAIN : color.BK};
   max-width: ${sizeStyles[size].labelMaxWidth};
+  @media (max-width: 430px) {
+    ${typo.Mobile.Text.SemiBold_10};
+  }
 `;
 
 export const bookmarkWrapper = css`
