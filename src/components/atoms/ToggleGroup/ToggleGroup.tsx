@@ -1,4 +1,5 @@
 import React from 'react';
+import { ToggleGroupItem, ToggleGroupProps } from '@/types/toggle';
 import {
   selectedStyling,
   firstItemRadius,
@@ -6,20 +7,6 @@ import {
   toggleButtonStyling,
   toggleButtonItemStyling,
 } from './ToggleGroup.style';
-
-export type ToggleGroupItem = {
-  label: string;
-  value: {
-    field: string;
-    order: 'asc' | 'desc';
-  };
-};
-
-export interface ToggleGroupProps {
-  items?: ToggleGroupItem[];
-  selectedValue?: { field: string; order: 'asc' | 'desc' };
-  onClick?: (value: { field: string; order: 'asc' | 'desc' }) => void;
-}
 
 const defaultItems: ToggleGroupItem[] = [
   { label: '인기순', value: { field: 'views', order: 'desc' } },

@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import ToggleGroup, {
-  ToggleGroupItem,
-  ToggleGroupProps,
-} from '@/components/atoms/ToggleGroup/ToggleGroup';
+import ToggleGroup from '@/components/atoms/ToggleGroup/ToggleGroup';
+import { ToggleGroupItem, ToggleGroupProps } from '@/types/toggle';
 import type { Meta, StoryObj } from '@storybook/react';
 import { storyContainer, storyInnerContainer } from '@/stories/story.styles';
 
