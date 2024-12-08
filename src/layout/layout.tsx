@@ -4,6 +4,7 @@ import { Outlet } from 'react-router-dom';
 import Header from '@/components/organisms/Header/Header';
 import Footer from '@/components/organisms/Footer/Footer';
 // import Sidebar from '../pages/MyPage/sections/Sidebar/Sidebar';
+const isMobile = true;
 
 export const Layout = () => {
   return (
@@ -12,11 +13,14 @@ export const Layout = () => {
       <main
         css={css({
           paddingTop: '100px',
+          '@media (max-width: 430px)': {
+            paddingTop: '55px',
+          },
         })}
       >
         <Outlet />
       </main>
-      <Footer />
+      {isMobile ? null : <Footer />}
     </>
   );
 };
@@ -32,6 +36,9 @@ export const LayoutNoSearch = () => {
           alignItems: 'center',
           height: '100vh',
           paddingTop: '100px',
+          '@media (max-width: 430px)': {
+            paddingTop: '55px',
+          },
         })}
       >
         <Outlet />
