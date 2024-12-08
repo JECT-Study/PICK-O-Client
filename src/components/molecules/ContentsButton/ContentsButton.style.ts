@@ -27,6 +27,13 @@ const sizeStyles = {
     labelMaxWidth: '315px',
     imageHeight: '183px',
   },
+  extraSmall: {
+    width: '162px',
+    height: '121px',
+    infoHeight: '40px',
+    labelMaxWidth: '141px',
+    imageHeight: '81px',
+  },
 };
 
 export const cardWrapper = (size: SizeType) => css`
