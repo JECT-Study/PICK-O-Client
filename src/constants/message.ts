@@ -65,6 +65,7 @@ export const SUCCESS = {
   COMMENT: {
     REPORT: '신고 완료되었습니다.',
   },
+  EDIT_PROFILE: '수정 완료 되었습니다!',
   POST: {
     CREATE: '등록 완료!',
     EDIT: '수정 완료!',
@@ -76,6 +77,9 @@ export const NOTICE = {
   REQUIRED: {
     LOGIN: '투표 결과와 댓글은 로그인 후 확인할 수 있습니다.',
     VOTE: '투표 후에 확인할 수 있습니다.',
+  },
+  STATUS: {
+    NOT_READY: '아직 준비 중인 서비스입니다!',
   },
 } as const;
 

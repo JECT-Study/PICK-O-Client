@@ -32,7 +32,7 @@ const SignUpPage = () => {
         </div>
       )}
       <span css={S.signUpHeadingStyling}>SIGN UP</span>
-      <InputProfileImage setProfilePhoto={setEach} />
+      <InputProfileImage setImageFileId={setEach} />
       <div css={S.inputContainer}>
         <InputEmail
           type="signup"

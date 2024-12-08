@@ -9,6 +9,7 @@ import ToastModal from '@/components/atoms/ToastModal/ToastModal';
 import { useBestGameList } from '@/hooks/api/game/useBestGameListQuery';
 import { useLatestGameList } from '@/hooks/api/game/useLatestGameListQuery';
 import { ToggleGroupValue } from '@/types/toggle';
+import { NOTICE } from '@/constants/message';
 import * as S from './LandingPage.style';
 
 const LandingPage = () => {
@@ -50,7 +51,7 @@ const LandingPage = () => {
     <div>
       {isServicePreparing && (
         <div css={S.toastModalStyling}>
-          <ToastModal bgColor="white">아직 준비 중인 서비스입니다!</ToastModal>
+          <ToastModal bgColor="white">{NOTICE.STATUS.NOT_READY}</ToastModal>
         </div>
       )}
       <TopBanner todayTalkPick={todayTalkPick} />

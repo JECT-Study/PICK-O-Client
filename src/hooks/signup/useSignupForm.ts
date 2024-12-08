@@ -14,7 +14,7 @@ const initialState: MemberForm = {
   nickname: '',
   password: '',
   passwordConfirm: '',
-  profileImgUrl: '',
+  profileImgId: null,
   role: 'USER',
 };
 

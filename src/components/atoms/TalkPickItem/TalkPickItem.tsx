@@ -1,4 +1,5 @@
 import React from 'react';
+import { PATH } from '@/constants/path';
 import { TalkPickListItem } from '@/types/talk-pick';
 import { formatDate, formatNumber } from '@/utils/formatData';
 import { useNavigate } from 'react-router-dom';
@@ -43,7 +44,7 @@ const TalkPickItem = ({
 
   const handleClick = () => {
     if (type !== 'header') {
-      navigate(`/talkpick/${talkPickItem?.id}`, {
+      navigate(`/${PATH.TALKPICK(talkPickItem?.id)}`, {
         state: { talkPickId: talkPickItem?.id, isTodayTalkPick: false },
       });
     }

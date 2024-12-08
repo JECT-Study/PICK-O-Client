@@ -21,12 +21,14 @@ export const END_POINT = {
   LOGOUT: '/members/logout',
   REFRESH: '/members/reissue',
   ALL_MEMBERS: '/members',
+  EDIT_MEMBERS: '/members',
   MEMBER: (id: number) => `/members/${id}`,
   MEMBER_PROFILE: (id: number) => `/members/${id}/profile`,
   MEMBER_IMAGE: '/members/image',
   MEMBER_NICKNAME: '/members/nickname',
   MEMBER_PASSWORD: '/members/password',
   NICKNAME_VERIFY: '/members/duplicate',
+  PASSWORD_VERIFY: '/members/verify-password',
 
   // email API
   EMAIL_SIGNUP_CODE: '/email/signup/code',
@@ -109,7 +111,7 @@ export const END_POINT = {
   CREATE_GAME: '/games',
   TEMP_GAME: '/games/temp',
   NEW_GAME: '/games/new',
-  BEST_GAME: '/games/best',
+  BEST_GAME: '/games/popular',
   LATEST_GAME: '/games/latest',
   GAME_SET: (gameSetId: Id) => `/games/${gameSetId}`,
   EDIT_GAME: (gameId: Id) => `/games/${gameId}`,
@@ -122,6 +124,10 @@ export const END_POINT = {
   // notification API
   NOTIFICATON: 'notifications',
   READ_NOTIFICATION: (msgId: Id) => `/notifications/${msgId}/read`,
+
+  // friends API
+  FRIENDS: '/friends',
+  FRIENDS_LIST: '/friends/images',
 };
 
 export const AXIOS = {
