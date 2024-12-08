@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useMemo } from 'react';
 import SideBar from '@/components/organisms/SideBar/SideBar';
 import OptionBar from '@/components/organisms/OptionBar/OptionBar';
 import MyContentList, {
@@ -8,7 +8,7 @@ import InfoList, { InfoItem } from '@/components/organisms/InfoList/InfoList';
 import MyBalanceGameList, {
   MyBalanceGameItem,
 } from '@/components/organisms/MyBalanceGameList/MyBalanceGameList';
-import { OptionKeys, optionSets } from '@/constants/optionSets';
+import { OptionKeys } from '@/constants/optionSets';
 import { useMyVotesQuery } from '@/hooks/api/mypages/useMyVotesQuery';
 import { useMyCommentsQuery } from '@/hooks/api/mypages/useMyCommentsQuery';
 import { useMyWrittensQuery } from '@/hooks/api/mypages/useMyWrittensQuery';
@@ -20,53 +20,22 @@ import { useMyInfoQuery } from '@/hooks/api/mypages/useMyInfoQuery';
 import { useObserver } from '@/hooks/api/mypages/useObserver';
 import { useNewSelector } from '@/store';
 import { selectAccessToken } from '@/store/auth';
-import { validateUrlParam } from '@/utils/validateUrlParam';
 import { useMemberQuery } from '@/hooks/api/member/useMemberQuery';
 import { useParseJwt } from '@/hooks/common/useParseJwt';
 import MypageListSkeleton from '@/components/atoms/MypageListSkeleton/MypageListSkeleton';
 import MypageCardSkeleton from '@/components/atoms/MypageCardSkeleton/MypageCardSkeleton';
-import { useSearchParams } from 'react-router-dom';
+import { useMyPageOptions } from '@/hooks/mypages/useMyPageOptions';
 import * as S from './MyPage.style';
 
 const MyPage = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const isValidOptionKey = (value: string): boolean => {
-    return Object.values(OptionKeys).includes(value as OptionKeys);
-  };
-  const initialGroup = validateUrlParam(
-    searchParams.get('group'),
-    OptionKeys.TALK_PICK,
-    isValidOptionKey,
-  );
-  const initialOption =
-    searchParams.get('option') ?? optionSets[initialGroup][0].value;
-  const [selectedGroup, setSelectedGroup] = useState<OptionKeys>(initialGroup);
-  const [selectedOption, setSelectedOption] = useState<string>(initialOption);
+  const {
+    selectedGroup,
+    selectedOption,
+    options,
+    handleGroupSelect,
+    handleOptionSelect,
+  } = useMyPageOptions();
 
-  const handleGroupSelect = (group: OptionKeys) => {
-    const firstOption = optionSets[group][0].value;
-    setSelectedGroup(group);
-    setSelectedOption(firstOption);
-    setSearchParams({ group });
-  };
-
-  const handleOptionSelect = (option: string) => {
-    setSelectedOption(option);
-    setSearchParams({ group: selectedGroup, option });
-  };
-
-  useEffect(() => {
-    const group = validateUrlParam(
-      searchParams.get('group'),
-      OptionKeys.TALK_PICK,
-      isValidOptionKey,
-    );
-    const option = searchParams.get('option') ?? optionSets[group][0].value;
-    setSelectedGroup(group);
-    setSelectedOption(option);
-  }, [searchParams]);
-
-  const options = optionSets[selectedGroup];
   const accessToken = useNewSelector(selectAccessToken);
   const { member } = useMemberQuery(useParseJwt(accessToken).memberId);
   const memberId: number = member!.id;
