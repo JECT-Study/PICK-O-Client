@@ -6,6 +6,7 @@ const color = {
     2: '#D9D9D9',
     3: '#F1F1F1',
     4: '#555555',
+    5: '#DEDEDE',
   },
   WT: '#FFFFFF',
   WT_VIOLET: '#F2F3FF',
