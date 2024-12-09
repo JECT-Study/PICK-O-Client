@@ -1,5 +1,4 @@
 import { keyframes } from '@emotion/react';
-import color from './color';
 
 export const pulsate = keyframes({
   '0%': {
@@ -10,18 +9,6 @@ export const pulsate = keyframes({
   },
   '100%': {
     transform: 'scale(1.1)',
-  },
-});
-
-export const loadingStyle = keyframes({
-  '0%': {
-    backgroundColor: color.Neutral[800],
-  },
-  '50%': {
-    backgroundColor: color.Neutral[700],
-  },
-  '100%': {
-    backgroundColor: color.Neutral[800],
   },
 });
 
