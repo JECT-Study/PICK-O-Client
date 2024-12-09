@@ -5,6 +5,7 @@ import {
   BookmarkPR,
   BookmarkPRSmall,
 } from '@/assets';
+import useIsMobile from '@/hooks/common/useIsMobile';
 import * as S from './Bookmark.style';
 
 export interface BookmarkProps extends ComponentPropsWithRef<'button'> {
@@ -13,7 +14,7 @@ export interface BookmarkProps extends ComponentPropsWithRef<'button'> {
 
 const Bookmark = ({ bookmarked = false, ...attributes }: BookmarkProps) => {
   const [isPressed, setIsPressed] = useState(bookmarked);
-  const isMobile = true;
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     setIsPressed(bookmarked);

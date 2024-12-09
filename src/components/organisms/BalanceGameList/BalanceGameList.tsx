@@ -25,7 +25,7 @@ const BalanceGameList = ({
   setSelectedValue,
   activeTab,
   setActiveTab,
-  isMobile = true,
+  isMobile = false,
 }: ContentListProps) => {
   const [visibleItems, setVisibleItems] = useState<number>(4);
 
@@ -73,7 +73,7 @@ const BalanceGameList = ({
           <div css={S.loadMoreWrapperStyle}>
             <Button
               variant="outlineShadow"
-              size="small"
+              size={isMobile ? 'small' : 'large'}
               onClick={handleLoadMore}
               iconRight={<AngleSmallDown />}
             >

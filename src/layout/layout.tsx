@@ -3,10 +3,11 @@ import { css } from '@emotion/react';
 import { Outlet } from 'react-router-dom';
 import Header from '@/components/organisms/Header/Header';
 import Footer from '@/components/organisms/Footer/Footer';
+import useIsMobile from '@/hooks/common/useIsMobile';
 // import Sidebar from '../pages/MyPage/sections/Sidebar/Sidebar';
-const isMobile = true;
 
 export const Layout = () => {
+  const isMobile = useIsMobile();
   return (
     <>
       <Header />

@@ -11,10 +11,11 @@ import { useBestGameList } from '@/hooks/api/game/useBestGameListQuery';
 import { useLatestGameList } from '@/hooks/api/game/useLatestGameListQuery';
 import { NOTICE } from '@/constants/message';
 import MobileCreateDropdown from '@/components/mobile/MobileCreateDropdown/MobileCreateDropdown';
+import useIsMobile from '@/hooks/common/useIsMobile';
 import * as S from './LandingPage.style';
 
 const LandingPage = () => {
-  const isMobile = true;
+  const isMobile = useIsMobile();
   const { todayTalkPick } = useTodayTalkPickQuery();
   const [isServicePreparing, setIsServicePreparing] = useState<boolean>(false);
   const [selectedValue, setSelectedValue] = useState<string>('views');

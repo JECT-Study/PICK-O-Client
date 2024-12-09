@@ -3,14 +3,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable no-console */
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useLogoutMutation } from '@/hooks/api/member/useLogoutMutation';
 import { useNewSelector } from '@/store';
 import { useParseJwt } from '@/hooks/common/useParseJwt';
 import { useMemberQuery } from '@/hooks/api/member/useMemberQuery';
 import { selectAccessToken } from '@/store/auth';
-import { Logo, DefaultProfile } from '@/assets';
+import { Logo, DefaultProfile, ListIcon, LogoSmall } from '@/assets';
 // import Button from '@/components/atoms/Button/Button';
 // import Notification from '@/components/molecules/Notification/Notification';
 import ProfileIcon from '@/components/atoms/ProfileIcon/ProfileIcon';
@@ -20,13 +20,22 @@ import ProfileIcon from '@/components/atoms/ProfileIcon/ProfileIcon';
 import { MenuItem } from '@/components/atoms/MenuTap/MenuTap';
 import CreateDropdown from '@/components/atoms/CreateDropdown/CreateDropdown';
 import { PATH } from '@/constants/path';
+import MobileSideMenu from '@/components/mobile/MobileSideMenu/MobileSideMenu';
+import useIsMobile from '@/hooks/common/useIsMobile';
 import * as S from './Header.style';
 
 const Header = () => {
   const navigate = useNavigate();
-  const accessToken = useNewSelector(selectAccessToken);
+  const isMobile = useIsMobile();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const accessToken = useNewSelector(selectAccessToken) as string;
   const logout = useLogoutMutation();
   const { member } = useMemberQuery(useParseJwt(accessToken)?.memberId);
+
+  const handleMenuToggle = () => {
+    setIsMenuOpen((prev) => !prev);
+  };
+
   // FIXME:Notification 관련 코드
   // const [isNew, setIsNew] = useState(false);
   // const [messages, setMessages] = useState([]);
@@ -82,8 +91,10 @@ const Header = () => {
   const handleLoginButton = () => {
     if (accessToken) {
       logout.mutate();
+      setIsMenuOpen(false);
     } else {
       navigate('/login');
+      setIsMenuOpen(false);
     }
   };
 
@@ -137,33 +148,57 @@ const Header = () => {
   return (
     <div css={S.containerStyle}>
       <div css={S.logoStyle}>
-        <Link to="/">
-          <Logo />
-        </Link>
+        <Link to="/">{isMobile ? <LogoSmall /> : <Logo />}</Link>
       </div>
       <div css={S.rightContainerStyle}>
-        <CreateDropdown optionData={optionData} />
-        <div css={S.rightContainerStyle}>
-          <button
-            type="button"
-            onClick={handleLoginButton}
-            css={S.LoginButtonStyle}
-          >
-            {accessToken ? '로그아웃' : '로그인'}
-          </button>
-          {/* <Notification isNew={isNew} notifications={notifications} /> */}
-          <div css={S.notificationStyle}>
-            {accessToken ? (
-              <ProfileIcon
-                interaction="custom"
-                imgUrl={member?.profileImageUrl ?? DefaultProfile}
-                onClick={handleProfileIcon}
+        {isMobile ? (
+          <>
+            <button
+              type="button"
+              aria-label="headerList"
+              onClick={handleMenuToggle}
+              css={S.listButtonStyle}
+            >
+              <ListIcon />
+            </button>
+            {isMenuOpen && (
+              <MobileSideMenu
+                isOpen={isMenuOpen}
+                setIsOpen={setIsMenuOpen}
+                accessToken={accessToken}
+                handleLoginButton={handleLoginButton}
               />
-            ) : (
-              <ProfileIcon interaction="default" onClick={handleProfileIcon} />
             )}
-          </div>
-        </div>
+          </>
+        ) : (
+          <>
+            <CreateDropdown optionData={optionData} />
+            <div css={S.rightContainerStyle}>
+              <button
+                type="button"
+                onClick={handleLoginButton}
+                css={S.LoginButtonStyle}
+              >
+                {accessToken ? '로그아웃' : '로그인'}
+              </button>
+              {/* <Notification isNew={isNew} notifications={notifications} /> */}
+              <div css={S.notificationStyle}>
+                {accessToken ? (
+                  <ProfileIcon
+                    interaction="custom"
+                    imgUrl={member?.profileImageUrl ?? DefaultProfile}
+                    onClick={handleProfileIcon}
+                  />
+                ) : (
+                  <ProfileIcon
+                    interaction="default"
+                    onClick={handleProfileIcon}
+                  />
+                )}
+              </div>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

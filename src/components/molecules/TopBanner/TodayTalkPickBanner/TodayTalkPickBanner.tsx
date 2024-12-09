@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TodayTalkPick } from '@/types/talk-pick';
 import { Check, CheckSmall } from '@/assets';
+import useIsMobile from '@/hooks/common/useIsMobile';
 import {
   bannerBtnStyling,
   bannerChipStyling,
@@ -15,7 +16,7 @@ interface TodayTalkPickBannerProps {
 
 const TodayTalkPickBanner = ({ talkPick }: TodayTalkPickBannerProps) => {
   const navigate = useNavigate();
-  const isMobile = true;
+  const isMobile = useIsMobile();
   const onClickBanner = () => {
     navigate('/todaytalkpick', {
       state: { talkPickId: talkPick?.id, isTodayTalkPick: true },
