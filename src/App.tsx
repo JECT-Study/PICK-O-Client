@@ -4,7 +4,7 @@ import SearchGamePage from '@/pages/SearchResultsPage/SearchGamePage';
 import SearchTalkPickPage from '@/pages/SearchResultsPage/SearchTalkPickPage';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import ProtectedRoutes from './components/Routes/ProtectedRoutes';
+import ProtectedRoutes from './routes/ProtectedRoutes';
 import { PATH } from './constants/path';
 import { useTokenRefresh } from './hooks/common/useTokenRefresh';
 import { Layout, LayoutNoFooter } from './layout/layout';
