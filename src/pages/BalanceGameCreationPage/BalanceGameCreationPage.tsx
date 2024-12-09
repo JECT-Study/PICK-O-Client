@@ -19,6 +19,7 @@ import { useSaveTempGameMutation } from '@/hooks/api/game/useSaveTempGameMutatio
 import { createInitialGameStages } from '@/utils/balanceGameUtils';
 import { resizeImage } from '@/utils/imageUtils';
 import { useLoadTempGameQuery } from '@/hooks/api/game/useLoadTempGameQuery';
+import { SUCCESS, ERROR } from '@/constants/message';
 import * as S from './BalanceGameCreationPage.style';
 
 const BalanceGameCreationPage = () => {
@@ -55,9 +56,9 @@ const BalanceGameCreationPage = () => {
 
       setTitle(tempGame.title);
       setLoadedGames(mappedGames);
-      showToastModal('임시 저장 데이터를 불러왔습니다!');
+      showToastModal(SUCCESS.TEMPGAME.LOAD);
     } else {
-      showToastModal('임시 저장 데이터를 불러오는 데 실패했습니다.');
+      showToastModal(ERROR.TEMPGAME.LOAD);
     }
   };
 
@@ -106,7 +107,7 @@ const BalanceGameCreationPage = () => {
         return updatedGames;
       });
     } catch (error) {
-      alert('이미지 업로드에 실패했습니다. 다시 시도해주세요.');
+      alert(ERROR.IMAGE.UPLOAD);
     }
   };
 
@@ -127,7 +128,7 @@ const BalanceGameCreationPage = () => {
         };
         return updatedGames;
       });
-      showToastModal('이미지가 삭제되었습니다.');
+      showToastModal(SUCCESS.IMAGE.DELETE);
     }
     setPopupData(null);
     setIsTextModalOpen(false);
@@ -147,7 +148,7 @@ const BalanceGameCreationPage = () => {
     selectedSubTag: string,
   ) => {
     if (!games.length) {
-      showToastModal('게임 데이터가 없습니다.');
+      showToastModal(ERROR.CREATEGAME.EMPTY_DATA);
       return;
     }
 
@@ -160,11 +161,11 @@ const BalanceGameCreationPage = () => {
 
     try {
       const gameId = await handleCreateBalanceGame(gameData);
-      showToastModal('등록되었습니다!', () => {
+      showToastModal(SUCCESS.CREATEGAME.CREATE, () => {
         navigate(`/balancegame/${gameId}`);
       });
     } catch (error) {
-      showToastModal('게임 생성에 실패했습니다.');
+      showToastModal(ERROR.CREATEGAME.FAIL);
     }
   };
 
@@ -190,10 +191,10 @@ const BalanceGameCreationPage = () => {
     };
     saveTempGame(tempGameData, {
       onSuccess: () => {
-        showToastModal('임시 저장이 완료되었습니다!');
+        showToastModal(SUCCESS.TEMPGAME.SAVE);
       },
       onError: () => {
-        showToastModal('임시 저장에 실패했습니다. 다시 시도해주세요.');
+        showToastModal(ERROR.TEMPGAME.SAVE);
       },
     });
   };

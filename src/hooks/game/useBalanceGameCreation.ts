@@ -4,6 +4,7 @@ import {
   createInitialGameStages,
   updateOptionInGameSets,
 } from '@/utils/balanceGameUtils';
+import { ERROR } from '@/constants/message';
 
 export const useBalanceGameCreation = (
   showToast: (message: string) => void,
@@ -79,7 +80,7 @@ export const useBalanceGameCreation = (
 
   const validateStage = (): true | string => {
     if (!currentOptions[0]?.name.trim() || !currentOptions[1]?.name.trim()) {
-      return '모든 옵션의 설명을 입력해주세요!';
+      return ERROR.VALIDATE.OPTION;
     }
 
     const hasBothImages =
@@ -88,7 +89,7 @@ export const useBalanceGameCreation = (
       !currentOptions[0]?.imgUrl.trim() && !currentOptions[1]?.imgUrl.trim();
 
     if (!(hasBothImages || hasNoImages)) {
-      return 'A와 B의 이미지가 모두 없거나 모두 있어야 합니다!';
+      return ERROR.VALIDATE.GAME_IMAGE;
     }
 
     return true;
