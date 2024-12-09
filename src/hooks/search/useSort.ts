@@ -1,9 +1,12 @@
 import { useState } from 'react';
+import { ToggleGroupValue } from '@/types/toggle';
 
-const useSort = (defaultSort = 'views') => {
-  const [sort, setSort] = useState(defaultSort);
+const useSort = (
+  defaultSort: ToggleGroupValue = { field: 'views', order: 'desc' },
+) => {
+  const [sort, setSort] = useState<ToggleGroupValue>(defaultSort);
 
-  const handleSortChange = (newSort: string) => {
+  const handleSortChange = (newSort: ToggleGroupValue) => {
     setSort(newSort);
   };
 

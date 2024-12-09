@@ -1,8 +1,9 @@
 import { css } from '@emotion/react';
 
-export const container = css`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-`;
+export const container = css({
+  display: 'flex',
+  flexDirection: 'column',
+  width: '912px',
+  alignItems: 'center',
+  gap: '20px',
+});

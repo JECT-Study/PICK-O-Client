@@ -30,6 +30,7 @@ const sizeStyles = {
 };
 
 export const cardWrapper = (size: SizeType) => css`
+  all: unset;
   width: ${sizeStyles[size].width};
   height: ${sizeStyles[size].height};
   border-radius: 20px;
@@ -56,6 +57,11 @@ export const cardWrapper = (size: SizeType) => css`
     & > div > div > img {
       transform: scale(1.05);
     }
+  }
+
+  &:focus-visible {
+    outline: 1px solid ${color.BK};
+    outline-offset: 1px;
   }
 `;
 

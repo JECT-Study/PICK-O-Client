@@ -10,12 +10,13 @@ import ToggleGroup from '@/components/atoms/ToggleGroup/ToggleGroup';
 import Button from '@/components/atoms/Button/Button';
 import Pagination from '@/components/atoms/Pagination/Pagination';
 import TalkPickList from '@/components/molecules/TalkPickList/TalkPickList';
+import { ToggleGroupValue } from '@/types/toggle';
 import * as S from './TalkPickListSection.style';
 
 export interface TalkPickListProps {
   talkPickList?: TalkPickListPagination;
-  selectedValue: string;
-  setToggleValue: React.Dispatch<React.SetStateAction<string>>;
+  selectedValue: ToggleGroupValue;
+  setToggleValue: React.Dispatch<React.SetStateAction<ToggleGroupValue>>;
   selectedPage: number;
   handlePageChange: (page: number) => void;
 }

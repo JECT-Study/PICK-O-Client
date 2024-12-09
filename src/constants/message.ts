@@ -42,6 +42,9 @@ export const ERROR = {
     MY_TALKPICK: '본인이 작성한 톡픽은 저장할 수 없습니다.',
     MY_GAME: '본인이 만든 밸런스게임은 저장할 수 없습니다.',
   },
+  GAME: {
+    NOT_EXIST: '유효하지 않은 게임입니다.',
+  },
 } as const;
 
 export const SUCCESS = {

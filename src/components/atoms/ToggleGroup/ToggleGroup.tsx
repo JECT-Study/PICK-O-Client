@@ -1,4 +1,5 @@
 import React from 'react';
+import { ToggleGroupItem, ToggleGroupProps } from '@/types/toggle';
 import {
   selectedStyling,
   firstItemRadius,
@@ -7,21 +8,20 @@ import {
   toggleButtonItemStyling,
 } from './ToggleGroup.style';
 
-export type ToggleGroupItem = {
-  label: string;
-  value: string;
-};
-
-export interface ToggleGroupProps {
-  items?: ToggleGroupItem[];
-  selectedValue?: string;
-  onClick?: (value: string) => void;
-}
-
 const defaultItems: ToggleGroupItem[] = [
-  { label: '인기순', value: 'views' },
-  { label: '최신순', value: 'createdAt' },
+  { label: '인기순', value: { field: 'views', order: 'desc' } },
+  { label: '최신순', value: { field: 'createdAt', order: 'desc' } },
 ];
+
+const isSelected = (
+  selectedValue: { field: string; order: 'asc' | 'desc' } | undefined,
+  value: { field: string; order: 'asc' | 'desc' },
+): boolean => {
+  if (!selectedValue) return false;
+  return (
+    selectedValue.field === value.field && selectedValue.order === value.order
+  );
+};
 
 const ToggleGroup = ({
   items = defaultItems,
@@ -31,18 +31,18 @@ const ToggleGroup = ({
   <div css={toggleButtonStyling}>
     {Array.isArray(items) &&
       items.length === 2 &&
-      items.map((item, idx) => (
+      items.map(({ label, value }, idx) => (
         <button
           type="button"
-          key={item.value}
+          key={`${value.field},${value.order}`}
           css={[
             toggleButtonItemStyling,
             idx === 0 ? firstItemRadius : secondItemRadius,
-            item.value === selectedValue && selectedStyling,
+            isSelected(selectedValue, value) && selectedStyling,
           ]}
-          onClick={() => onClick?.(item.value)}
+          onClick={() => onClick?.(value)}
         >
-          {item.label}
+          {label}
         </button>
       ))}
   </div>
