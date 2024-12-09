@@ -2,7 +2,7 @@ import React from 'react';
 import * as S from './GameTag.style';
 
 export interface GameTagProps {
-  tag?: string;
+  tag: string;
 }
 
 const GameTag = ({ tag }: GameTagProps) => (
