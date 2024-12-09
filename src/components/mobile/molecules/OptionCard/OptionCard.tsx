@@ -43,10 +43,10 @@ const OptionCard = ({
     setIsExpanded(!isExpanded);
   };
 
-  const isTitleOrSubTitleEmpty = !title || !subTitle;
+  const isContentEmpty = !title && !subTitle;
 
   return (
-    <div css={S.container(type, isTitleOrSubTitleEmpty, isExpanded)}>
+    <div css={S.container(type, isContentEmpty, isExpanded)}>
       <div css={S.contentWrapper}>
         <label css={S.photoLabel}>
           <PhotoBox imgUrl={imgUrl} alt={`${type} 선택지`} />
@@ -66,6 +66,16 @@ const OptionCard = ({
             css={S.titleInput}
           />
         </div>
+        {!isExpanded && (
+          <button
+            type="button"
+            onClick={toggleExpand}
+            css={S.expandButton}
+            aria-label="부가 설명 열기"
+          >
+            <ChoicePlus />
+          </button>
+        )}
       </div>
       {isExpanded && (
         <div css={S.additionalContainer}>
@@ -76,16 +86,16 @@ const OptionCard = ({
             placeholder="부가 설명 입력"
             css={S.subTitleInput}
           />
+          <button
+            type="button"
+            onClick={toggleExpand}
+            css={S.expandButton}
+            aria-label="부가 설명 닫기"
+          >
+            <ChoiceMinus />
+          </button>
         </div>
       )}
-      <button
-        type="button"
-        onClick={toggleExpand}
-        css={S.expandButton(isExpanded)}
-        aria-label={isExpanded ? '부가 설명 닫기' : '부가 설명 열기'}
-      >
-        {isExpanded ? <ChoiceMinus /> : <ChoicePlus />}
-      </button>
     </div>
   );
 };
