@@ -42,8 +42,7 @@ const BalanceGameCreation = ({
     handleNextStage,
     handlePrevStage,
     handleStageDescriptionChange,
-    handleOptionChange,
-    handleDescriptionChange,
+    handleOptionUpdate,
   } = useBalanceGameCreation(showToastModal, totalStage, loadedGames);
 
   useEffect(() => {
@@ -68,11 +67,12 @@ const BalanceGameCreation = ({
           onImageDelete={() => onImageDelete(currentStage, 0)}
           choiceInputProps={{
             value: currentOptions[0]?.name || '',
-            onChange: handleOptionChange('A'),
+            onChange: (e) => handleOptionUpdate('A', 'name', e.target.value),
           }}
           infoInputProps={{
             value: currentOptions[0]?.description || '',
-            onChange: (e) => handleDescriptionChange('A', e),
+            onChange: (e) =>
+              handleOptionUpdate('A', 'description', e.target.value),
           }}
           clearInput={clearInput}
         />
@@ -83,11 +83,12 @@ const BalanceGameCreation = ({
           onImageDelete={() => onImageDelete(currentStage, 1)}
           choiceInputProps={{
             value: currentOptions[1]?.name || '',
-            onChange: handleOptionChange('B'),
+            onChange: (e) => handleOptionUpdate('B', 'name', e.target.value),
           }}
           infoInputProps={{
             value: currentOptions[1]?.description || '',
-            onChange: (e) => handleDescriptionChange('B', e),
+            onChange: (e) =>
+              handleOptionUpdate('B', 'description', e.target.value),
           }}
           clearInput={clearInput}
         />

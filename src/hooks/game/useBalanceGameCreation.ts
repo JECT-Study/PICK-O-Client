@@ -123,17 +123,12 @@ export const useBalanceGameCreation = (
     );
   };
 
-  const handleOptionChange =
-    (optionType: 'A' | 'B') => (event: React.ChangeEvent<HTMLInputElement>) => {
-      updateOption(currentStage, optionType, { name: event.target.value });
-    };
-
-  const handleDescriptionChange = (
+  const handleOptionUpdate = (
     optionType: 'A' | 'B',
-    event: React.ChangeEvent<HTMLInputElement>,
+    field: 'name' | 'description',
+    value: string,
   ) => {
-    const { value } = event.target;
-    updateOption(currentStage, optionType, { description: value });
+    updateOption(currentStage, optionType, { [field]: value });
   };
 
   return {
@@ -145,8 +140,7 @@ export const useBalanceGameCreation = (
     handleNextStage,
     handlePrevStage,
     handleStageDescriptionChange,
-    handleOptionChange,
-    handleDescriptionChange,
+    handleOptionUpdate,
     validateStage,
   };
 };
