@@ -57,6 +57,7 @@ export const ERROR = {
   VALIDATE: {
     GAME_IMAGE: 'A와 B의 이미지가 모두 없거나 모두 있어야 합니다!',
     OPTION: '모든 옵션의 설명을 입력해주세요!',
+  },
   GAME: {
     NOT_EXIST: '유효하지 않은 게임입니다.',
   },
