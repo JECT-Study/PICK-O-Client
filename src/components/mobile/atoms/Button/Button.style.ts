@@ -15,12 +15,12 @@ export const getVariantStyling = (
     }),
     roundPrimary: css({
       borderRadius: '80px',
-      backgroundColor: color.MAIN,
+      backgroundColor: active ? color.MAIN : color.GY[2],
       color: color.WT,
     }),
   };
 
-  return style[variant as keyof typeof style];
+  return style[variant];
 };
 
 export const getSizeByVariantStyling = (
