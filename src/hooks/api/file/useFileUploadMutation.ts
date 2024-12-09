@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { postFile } from '@/api/file';
 import { UploadedImage, FileUploadType } from '@/types/file';
