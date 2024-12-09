@@ -2,7 +2,7 @@ import React from 'react';
 import store from '@/store';
 import type { Meta, StoryObj } from '@storybook/react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import MobileCreateDropdown from '@/components/mobile/MobileCreateDropdown/MobileCreateDropdown';
+import MobileCreateDropdown from '@/components/mobile/molecule/MobileCreateDropdown/MobileCreateDropdown';
 import ReactQueryProvider from '@/providers/ReactQueryProvider';
 import { Provider } from 'react-redux';
 

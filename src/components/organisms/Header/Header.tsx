@@ -20,7 +20,7 @@ import ProfileIcon from '@/components/atoms/ProfileIcon/ProfileIcon';
 import { MenuItem } from '@/components/atoms/MenuTap/MenuTap';
 import CreateDropdown from '@/components/atoms/CreateDropdown/CreateDropdown';
 import { PATH } from '@/constants/path';
-import MobileSideMenu from '@/components/mobile/MobileSideMenu/MobileSideMenu';
+import MobileSideMenu from '@/components/mobile/atom/MobileSideMenu/MobileSideMenu';
 import useIsMobile from '@/hooks/common/useIsMobile';
 import * as S from './Header.style';
 

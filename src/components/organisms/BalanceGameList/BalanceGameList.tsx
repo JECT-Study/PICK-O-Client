@@ -5,7 +5,7 @@ import Button from '@/components/atoms/Button/Button';
 import CategoryBar from '@/components/molecules/CategoryBar/CategoryBar';
 import ContentsButton from '@/components/molecules/ContentsButton/ContentsButton';
 import { GameContent } from '@/types/game';
-import MobileToggleGroup from '@/components/mobile/MobileToggleGroup/MobileToggleGroup';
+import MobileToggleGroup from '@/components/mobile/atom/MobileToggleGroup/MobileToggleGroup';
 import * as S from './BalanceGameList.style';
 
 export interface ContentListProps {

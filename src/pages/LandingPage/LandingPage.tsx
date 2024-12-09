@@ -10,7 +10,7 @@ import { GameContent } from '@/types/game';
 import { useBestGameList } from '@/hooks/api/game/useBestGameListQuery';
 import { useLatestGameList } from '@/hooks/api/game/useLatestGameListQuery';
 import { NOTICE } from '@/constants/message';
-import MobileCreateDropdown from '@/components/mobile/MobileCreateDropdown/MobileCreateDropdown';
+import MobileCreateDropdown from '@/components/mobile/molecule/MobileCreateDropdown/MobileCreateDropdown';
 import useIsMobile from '@/hooks/common/useIsMobile';
 import * as S from './LandingPage.style';
 
