@@ -1,12 +1,19 @@
 import React, { useState } from 'react';
 import ActionButton from '@/components/atoms/ActionButton/ActionButton';
+import { useNavigate } from 'react-router-dom';
+import { PATH } from '@/constants/path';
 import { actionBoxContainer } from './ActionBox.style';
 
 const ActionBox = () => {
+  const navigate = useNavigate();
   const [activeButton, setActiveButton] = useState('activity');
 
   const handleButtonClick = (buttonType: string) => {
     setActiveButton(buttonType);
+
+    if (buttonType === 'edit') {
+      navigate(PATH.CHANGE.PROFILE);
+    }
   };
 
   return (

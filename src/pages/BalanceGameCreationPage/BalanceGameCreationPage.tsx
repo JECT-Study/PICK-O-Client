@@ -202,10 +202,12 @@ const BalanceGameCreationPage = () => {
   return (
     <div css={S.PageContainer}>
       <div css={S.pageWrapper}>
-        <span css={S.subLabel}>
-          센스 가득한 질문들로 고민 500번 하게 만들어 볼까?
-        </span>
-        <span css={S.titleLabel}>나만의 밸런스게임 만들기</span>
+        <div css={S.textWrapper}>
+          <div css={S.subLabel}>
+            센스 가득한 질문들로 고민 500번 하게 만들어 볼까?
+          </div>
+          <div css={S.titleLabel}>나만의 밸런스게임 만들기</div>
+        </div>
         <Divider orientation="width" length={1175} />
         <BalanceGameCreation
           title={title}

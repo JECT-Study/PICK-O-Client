@@ -9,13 +9,13 @@ const meta: Meta<typeof MyContentBox> = {
   parameters: {
     layout: 'centered',
   },
-  tags: ['autodocs'],
   argTypes: {
     title: { control: { type: 'text' } },
     commentCount: { control: { type: 'number' } },
     bookmarks: { control: { type: 'number' } },
     showBookmark: { control: { type: 'boolean' } },
     bookmarked: { control: { type: 'boolean' } },
+    onClick: { action: '클릭 이벤트 발생' },
   },
   args: {
     title: '내가 작성한 게시글',
@@ -40,10 +40,11 @@ export const Default: Story = {
 };
 
 export const All: Story = {
-  render: () => (
+  render: (args) => (
     <div css={storyContainer}>
       <div css={storyInnerContainer}>
         <MyContentBox
+          {...args}
           title="내가 작성한 게시글 1"
           commentCount={172}
           bookmarks={85}
@@ -53,6 +54,7 @@ export const All: Story = {
       </div>
       <div css={storyInnerContainer}>
         <MyContentBox
+          {...args}
           title="내가 작성한 게시글 2"
           commentCount={256}
           bookmarks={90}
@@ -62,6 +64,7 @@ export const All: Story = {
       </div>
       <div css={storyInnerContainer}>
         <MyContentBox
+          {...args}
           title="내가 작성한 게시글 3"
           commentCount={151}
           bookmarks={60}

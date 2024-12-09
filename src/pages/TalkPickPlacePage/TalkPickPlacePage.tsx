@@ -4,12 +4,15 @@ import BestTalkPick from '@/components/molecules/BestTalkPick/BestTalkPick';
 import TalkPickListSection from '@/components/organisms/TalkPickListSection/TalkPickListSection';
 import { useBestTalkPickListQuery } from '@/hooks/api/talk-pick/useBestTalkPickListQuery';
 import { useTalkPickListQuery } from '@/hooks/api/talk-pick/useTalkPickListQuery';
+import { ToggleGroupValue } from '@/types/toggle';
 import * as S from './TalkPickPlacePage.style';
 
 const TalkPickPlacePage = () => {
+  const [selectedValue, setSelectedValue] = useState<ToggleGroupValue>({
+    field: 'views',
+    order: 'desc',
+  });
   const [searchParams, setSearchParams] = useSearchParams();
-  const [selectedValue, setSelectedValue] = useState<string>('views');
-
   const initialPage = parseInt(searchParams.get('page') ?? '1', 10) || 1;
   const [currentPage, setCurrentPage] = useState<number>(initialPage);
 
@@ -28,7 +31,7 @@ const TalkPickPlacePage = () => {
   const { talkPickList } = useTalkPickListQuery({
     page: currentPage - 1,
     size: 20,
-    sort: selectedValue,
+    sort: `${selectedValue.field},${selectedValue.order}`,
   });
 
   useEffect(() => {

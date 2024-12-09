@@ -1,54 +1,45 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import SelectGroup, {
   SelectGroupItem,
 } from '@/components/atoms/SelectGroup/SelectGroup';
 import OptionSelector from '@/components/molecules/OptionSelector/OptionSelector';
-import { optionSets, OptionKeys } from '@/constants/optionSets';
+import { OptionKeys } from '@/constants/optionSets';
 import * as S from './OptionBar.style';
 
 export interface OptionBarProps {
-  selectGroupItems: SelectGroupItem[];
-  initialSelectedGroupValue?: OptionKeys;
+  selectedGroup: OptionKeys;
   selectedOption: string;
   onGroupSelect: (value: OptionKeys) => void;
   onOptionSelect: (option: string) => void;
+  options: { label: string; value: string }[];
 }
+
 const OptionBar = ({
-  selectGroupItems,
-  initialSelectedGroupValue = OptionKeys.TALK_PICK,
+  selectedGroup,
   selectedOption,
   onGroupSelect,
   onOptionSelect,
+  options,
 }: OptionBarProps) => {
-  const [selectedGroup, setSelectedGroup] = useState<OptionKeys>(
-    initialSelectedGroupValue,
-  );
-  const [options, setOptions] = useState<string[]>(optionSets[selectedGroup]);
-
-  useEffect(() => {
-    setOptions(optionSets[selectedGroup]);
-  }, [selectedGroup]);
-
-  const handleGroupSelect = (value: string) => {
-    setSelectedGroup(value as OptionKeys);
-    onGroupSelect(value as OptionKeys);
-  };
-
-  const handleOptionSelect = (option: string) => {
-    onOptionSelect(option);
-  };
+  const selectGroupItems: [
+    SelectGroupItem<OptionKeys>,
+    SelectGroupItem<OptionKeys>,
+  ] = [
+    { label: '톡픽', value: OptionKeys.TALK_PICK },
+    { label: '밸런스 게임', value: OptionKeys.BALANCE_GAME },
+  ];
 
   return (
     <div css={S.container}>
       <SelectGroup
         items={selectGroupItems}
         selectedValue={selectedGroup}
-        onSelect={handleGroupSelect}
+        onSelect={onGroupSelect}
       />
       <OptionSelector
         options={options}
         selectedOption={selectedOption}
-        onSelect={handleOptionSelect}
+        onSelect={onOptionSelect}
       />
     </div>
   );
