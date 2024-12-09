@@ -7,7 +7,7 @@ export const overlay = css({
   left: 0,
   width: '100vw',
   height: '100vh',
-  backgroundColor: 'rgba(255, 255, 255, 0.8)',
+  backgroundColor: 'rgba(255, 255, 255, 0.5)',
   zIndex: 10,
 });
 
@@ -34,4 +34,7 @@ export const dropdownButtonStyling = css({
   zIndex: 20,
   width: '50px',
   height: '50px',
+  position: 'absolute',
+  bottom: '10px',
+  right: '20px',
 });

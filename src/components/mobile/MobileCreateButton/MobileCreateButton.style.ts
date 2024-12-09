@@ -17,6 +17,9 @@ export const categoryButtonBaseStyle = (imageType: 'talkpick' | 'game') =>
     transition: 'all 0.3s ease-in',
     width: imageType === 'talkpick' ? '102px' : '139px',
     marginLeft: imageType === 'talkpick' ? '37px' : 0,
+    '&:hover': {
+      boxShadow: '1px 2px 15px 0 rgba(119, 130, 255, 0.8)',
+    },
   });
 
 export const imgWrap = css({

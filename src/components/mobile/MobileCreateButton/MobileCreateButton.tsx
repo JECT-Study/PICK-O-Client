@@ -30,6 +30,7 @@ const MobileCreateButton = ({
     <button
       type="button"
       css={S.categoryButtonBaseStyle(imageType)}
+      onClick={onClick}
       {...attributes}
     >
       <span css={S.labelStyle}>{label}</span>
