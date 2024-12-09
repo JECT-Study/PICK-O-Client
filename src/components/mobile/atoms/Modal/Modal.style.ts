@@ -35,7 +35,7 @@ export const getModalSize = (action: Required<ModalProps>['action']) => {
     }),
   };
 
-  return style[action as keyof typeof style];
+  return style[action];
 };
 
 export const modalCloseStyling = css({
