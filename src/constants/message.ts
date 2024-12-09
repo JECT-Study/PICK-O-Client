@@ -42,6 +42,21 @@ export const ERROR = {
     MY_TALKPICK: '본인이 작성한 톡픽은 저장할 수 없습니다.',
     MY_GAME: '본인이 만든 밸런스게임은 저장할 수 없습니다.',
   },
+  TEMPGAME: {
+    LOAD: '임시 저장 데이터를 불러오는 데 실패했습니다.',
+    SAVE: '임시 저장에 실패했습니다. 다시 시도해주세요.',
+  },
+  IMAGE: {
+    UPLOAD: '이미지 업로드에 실패했습니다. 다시 시도해주세요.',
+    DELETE: '이미지가 삭제에 실패했습니다. 다시 시도해주세요.',
+  },
+  CREATEGAME: {
+    EMPTY_DATA: '게임 데이터가 없습니다.',
+    FAIL: '게임 생성에 실패했습니다.',
+  },
+  VALIDATE: {
+    GAME_IMAGE: 'A와 B의 이미지가 모두 없거나 모두 있어야 합니다!',
+    OPTION: '모든 옵션의 설명을 입력해주세요!',
   GAME: {
     NOT_EXIST: '유효하지 않은 게임입니다.',
   },
@@ -70,6 +85,17 @@ export const SUCCESS = {
     CREATE: '등록 완료!',
     EDIT: '수정 완료!',
     SAVE: '임시저장 완료!',
+  },
+  TEMPGAME: {
+    LOAD: '임시 저장 데이터를 불러왔습니다!',
+    SAVE: ' 임시 저장이 완료되었습니다!',
+  },
+  IMAGE: {
+    UPLOAD: '이미지가 업로드 되었습니다!',
+    DELETE: '이미지가 삭제되었습니다!',
+  },
+  CREATEGAME: {
+    CREATE: '등록되었습니다!',
   },
 } as const;
 

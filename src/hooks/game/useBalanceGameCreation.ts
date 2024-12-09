@@ -1,20 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { BalanceGameOption, BalanceGameSet } from '@/types/game';
 import {
   createInitialGameStages,
   updateOptionInGameSets,
 } from '@/utils/balanceGameUtils';
+import { ERROR } from '@/constants/message';
 
 export const useBalanceGameCreation = (
-  currentStage: number,
-  loadedGames?: BalanceGameSet[],
+  showToast: (message: string) => void,
   totalStage: number = 10,
+  loadedGames?: BalanceGameSet[],
 ) => {
   const [games, setGames] = useState<BalanceGameSet[]>(
     loadedGames || createInitialGameStages(totalStage),
   );
+  const [currentStage, setCurrentStage] = useState(0);
   const [currentOptions, setCurrentOptions] = useState<BalanceGameOption[]>([]);
   const [currentDescription, setCurrentDescription] = useState<string>('');
+  const [clearInput, setClearInput] = useState(false);
+
+  const timerRef = useRef<number | NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     if (loadedGames) {
@@ -27,6 +32,24 @@ export const useBalanceGameCreation = (
     setCurrentOptions(stage.gameOptions);
     setCurrentDescription(stage.description);
   }, [currentStage, games]);
+
+  useEffect(() => {
+    if (clearInput) {
+      if (timerRef.current !== null) {
+        clearTimeout(timerRef.current);
+      }
+
+      timerRef.current = setTimeout(() => {
+        setClearInput(false);
+      }, 500);
+    }
+
+    return () => {
+      if (timerRef.current !== null) {
+        clearTimeout(timerRef.current);
+      }
+    };
+  }, [clearInput]);
 
   const updateOption = (
     stageIndex: number,
@@ -42,6 +65,11 @@ export const useBalanceGameCreation = (
           optionType,
           newOption,
         );
+
+        if (idx === currentStage) {
+          setCurrentOptions(updatedOptions);
+        }
+
         return {
           ...game,
           gameOptions: updatedOptions,
@@ -50,17 +78,40 @@ export const useBalanceGameCreation = (
     );
   };
 
-  const handleOptionChange =
-    (optionType: 'A' | 'B') => (event: React.ChangeEvent<HTMLInputElement>) => {
-      updateOption(currentStage, optionType, { name: event.target.value });
-    };
+  const validateStage = (): true | string => {
+    if (!currentOptions[0]?.name.trim() || !currentOptions[1]?.name.trim()) {
+      return ERROR.VALIDATE.OPTION;
+    }
 
-  const handleDescriptionChange = (
-    optionType: 'A' | 'B',
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    const { value } = event.target;
-    updateOption(currentStage, optionType, { description: value });
+    const hasBothImages =
+      currentOptions[0]?.imgUrl.trim() && currentOptions[1]?.imgUrl.trim();
+    const hasNoImages =
+      !currentOptions[0]?.imgUrl.trim() && !currentOptions[1]?.imgUrl.trim();
+
+    if (!(hasBothImages || hasNoImages)) {
+      return ERROR.VALIDATE.GAME_IMAGE;
+    }
+
+    return true;
+  };
+
+  const handleNextStage = () => {
+    const validationResult = validateStage();
+    if (currentStage < totalStage - 1) {
+      if (validationResult === true) {
+        setClearInput(true);
+        setCurrentStage((prev) => prev + 1);
+      } else {
+        showToast(validationResult);
+      }
+    }
+  };
+
+  const handlePrevStage = () => {
+    if (currentStage > 0) {
+      setClearInput(true);
+      setCurrentStage((prev) => prev - 1);
+    }
   };
 
   const handleStageDescriptionChange = (newDescription: string) => {
@@ -73,12 +124,24 @@ export const useBalanceGameCreation = (
     );
   };
 
+  const handleOptionUpdate = (
+    optionType: 'A' | 'B',
+    field: 'name' | 'description',
+    value: string,
+  ) => {
+    updateOption(currentStage, optionType, { [field]: value });
+  };
+
   return {
     games,
+    currentStage,
     currentOptions,
     currentDescription,
-    handleOptionChange,
-    handleDescriptionChange,
+    clearInput,
+    handleNextStage,
+    handlePrevStage,
     handleStageDescriptionChange,
+    handleOptionUpdate,
+    validateStage,
   };
 };
