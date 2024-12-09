@@ -1,0 +1,93 @@
+import React, { useState } from 'react';
+import PhotoBox from '@/components/mobile/atoms/PhotoBox/PhotoBox';
+import { ChoiceMinus, ChoicePlus } from '@/assets';
+import * as S from './OptionCard.style';
+
+export interface OptionCardProps {
+  type: 'A' | 'B';
+  title: string;
+  subTitle?: string;
+  imgUrl?: string;
+  onFileSelect?: (file: File) => void;
+  onTitleChange?: (newTitle: string) => void;
+  onSubTitleChange?: (newSubTitle: string) => void;
+}
+
+const OptionCard = ({
+  type,
+  title,
+  subTitle,
+  imgUrl,
+  onFileSelect,
+  onTitleChange,
+  onSubTitleChange,
+}: OptionCardProps) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      onFileSelect?.(file);
+    }
+  };
+
+  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    onTitleChange?.(event.target.value);
+  };
+
+  const handleSubTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    onSubTitleChange?.(event.target.value);
+  };
+
+  const toggleExpand = () => {
+    setIsExpanded(!isExpanded);
+  };
+
+  const isTitleOrSubTitleEmpty = !title || !subTitle;
+
+  return (
+    <div css={S.container(type, isTitleOrSubTitleEmpty, isExpanded)}>
+      <div css={S.contentWrapper}>
+        <label css={S.photoLabel}>
+          <PhotoBox imgUrl={imgUrl} alt={`${type} 선택지`} />
+          <input
+            type="file"
+            accept="image/*"
+            css={S.fileInput}
+            onChange={handleFileSelect}
+          />
+        </label>
+        <div css={S.textContainer}>
+          <input
+            type="text"
+            value={title}
+            onChange={handleTitleChange}
+            placeholder="제목 입력"
+            css={S.titleInput}
+          />
+        </div>
+      </div>
+      {isExpanded && (
+        <div css={S.additionalContainer}>
+          <input
+            type="text"
+            value={subTitle}
+            onChange={handleSubTitleChange}
+            placeholder="부가 설명 입력"
+            css={S.subTitleInput}
+          />
+        </div>
+      )}
+      <button
+        type="button"
+        onClick={toggleExpand}
+        css={S.expandButton(isExpanded)}
+        aria-label={isExpanded ? '부가 설명 닫기' : '부가 설명 열기'}
+      >
+        {isExpanded ? <ChoiceMinus /> : <ChoicePlus />}
+      </button>
+    </div>
+  );
+};
+
+export default OptionCard;
