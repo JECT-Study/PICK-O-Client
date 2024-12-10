@@ -9,12 +9,11 @@ import Pagination from '@/components/atoms/Pagination/Pagination';
 import TextArea from '@/components/molecules/TextArea/TextArea';
 import Toggle from '@/components/atoms/Toggle/Toggle';
 import ToastModal from '@/components/atoms/ToastModal/ToastModal';
-import ToggleGroup, {
-  ToggleGroupItem,
-} from '@/components/atoms/ToggleGroup/ToggleGroup';
+import ToggleGroup from '@/components/atoms/ToggleGroup/ToggleGroup';
 import { NOTICE } from '@/constants/message';
 import CommentItem from '@/components/molecules/CommentItem/CommentItem';
 import { useCreateCommentMutation } from '@/hooks/api/comment/useCreateCommentMutation';
+import { ToggleGroupItem, ToggleGroupValue } from '@/types/toggle';
 import * as S from './CommentsSection.style';
 
 export interface CommentsSectionProps {
@@ -22,8 +21,8 @@ export interface CommentsSectionProps {
   talkPickWriter: string;
   commentList?: CommentsPagination;
   toggleItem: ToggleGroupItem[];
-  selectedValue: string;
-  setToggleValue: React.Dispatch<React.SetStateAction<string>>;
+  selectedValue: ToggleGroupValue;
+  setToggleValue: React.Dispatch<React.SetStateAction<ToggleGroupValue>>;
   selectedPage: number;
   handlePageChange: (page: number) => void;
   voted: boolean;
@@ -59,7 +58,9 @@ const CommentsSection = ({
       { content: commentValue },
       {
         onSuccess: () => {
-          if (selectedValue === 'trend') setToggleValue('recent');
+          if (selectedValue.field === 'views') {
+            setToggleValue({ field: 'createdAt', order: 'desc' });
+          }
           handlePageChange(1);
         },
       },

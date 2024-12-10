@@ -1,20 +1,19 @@
-import React from 'react';
-import ContentsButton, {
-  ContentsButtonProps,
-} from '@/components/molecules/ContentsButton/ContentsButton';
+import React, { useMemo } from 'react';
+import ContentsButton from '@/components/molecules/ContentsButton/ContentsButton';
+import { useNavigate } from 'react-router-dom';
 import * as S from './MyBalanceGameList.style';
 
 export interface MyBalanceGameItem {
-  id: number;
+  gameId: number;
   editedAt: string;
-  optionAImg: ContentsButtonProps['images'][0];
-  optionBImg: ContentsButtonProps['images'][1];
-  title: ContentsButtonProps['title'];
-  mainTag: ContentsButtonProps['mainTag'];
-  subTag: ContentsButtonProps['subTag'];
-  bookmarked?: ContentsButtonProps['bookmarked'];
-  showBookmark?: ContentsButtonProps['showBookmark'];
-  size?: ContentsButtonProps['size'];
+  optionAImg: string;
+  optionBImg: string;
+  title: string;
+  mainTagName: string;
+  subTag: string;
+  bookmarked?: boolean;
+  showBookmark?: boolean;
+  size?: 'large' | 'medium' | 'small';
 }
 
 export interface MyBalanceGameListProps {
@@ -22,16 +21,24 @@ export interface MyBalanceGameListProps {
 }
 
 const MyBalanceGameList = ({ items = [] }: MyBalanceGameListProps) => {
-  const groupedItems = items.reduce(
-    (acc, item) => {
-      if (!acc[item.editedAt]) {
-        acc[item.editedAt] = [];
-      }
-      acc[item.editedAt].push(item);
-      return acc;
-    },
-    {} as Record<string, MyBalanceGameItem[]>,
-  );
+  const navigate = useNavigate();
+
+  const groupedItems = useMemo(() => {
+    return items.reduce(
+      (acc, { editedAt, ...rest }) => {
+        if (!acc[editedAt]) {
+          acc[editedAt] = [];
+        }
+        acc[editedAt].push({ editedAt, ...rest });
+        return acc;
+      },
+      {} as Record<string, MyBalanceGameItem[]>,
+    );
+  }, [items]);
+
+  const handleItemClick = (gameId: number) => {
+    navigate(`/balancegame/${gameId}`);
+  };
 
   return (
     <div css={S.container}>
@@ -39,22 +46,31 @@ const MyBalanceGameList = ({ items = [] }: MyBalanceGameListProps) => {
         <div key={date} css={S.dateWrapper}>
           <span css={S.dateLabel}>{date}</span>
           <ul css={S.contentList}>
-            {groupedItems[date].map((balanceGameItem) => (
-              <li key={balanceGameItem.id} css={S.contentItem}>
-                <ContentsButton
-                  images={[
-                    balanceGameItem.optionAImg,
-                    balanceGameItem.optionBImg,
-                  ]}
-                  title={balanceGameItem.title}
-                  mainTag={balanceGameItem.mainTag}
-                  subTag={balanceGameItem.subTag}
-                  bookmarked={balanceGameItem.bookmarked}
-                  showBookmark={balanceGameItem.showBookmark}
-                  size="medium"
-                />
-              </li>
-            ))}
+            {groupedItems[date].map(
+              ({
+                gameId,
+                optionAImg,
+                optionBImg,
+                title,
+                mainTagName,
+                subTag,
+                bookmarked,
+                showBookmark,
+              }) => (
+                <li key={gameId} css={S.contentItem}>
+                  <ContentsButton
+                    images={[optionAImg, optionBImg]}
+                    title={title}
+                    mainTag={mainTagName}
+                    subTag={subTag}
+                    bookmarked={bookmarked}
+                    showBookmark={showBookmark}
+                    size="medium"
+                    onClick={() => handleItemClick(gameId)}
+                  />
+                </li>
+              ),
+            )}
           </ul>
         </div>
       ))}

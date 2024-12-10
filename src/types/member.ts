@@ -1,11 +1,11 @@
 export type Member = {
   id: number;
   nickname: string;
-  profileImageUrl: string;
+  email: string;
+  profileImgUrl: string;
   createdAt: string;
   postsCount: number;
-  totalPostLike: number;
-  level: 0 | 1 | 2;
+  bookmarkedPostsCount: number;
 };
 
 export interface MemberForm {
@@ -14,7 +14,7 @@ export interface MemberForm {
   nickname: string;
   password: string;
   passwordConfirm: string;
-  profileImgUrl: string;
+  profileImgId: number | null;
   role: 'USER';
 }
 
@@ -28,6 +28,15 @@ export interface MemberResetForm {
   password: string;
   passwordConfirm: string;
 }
+
+export type MemberEditForm = {
+  nickname: string;
+  profileImgId: number | null;
+};
+
+export type MemberEditNicknameForm = Pick<MemberEditForm, 'nickname'>;
+
+export type MemberEditProfileImgForm = Pick<MemberEditForm, 'profileImgId'>;
 
 export type MemberVerifyForm = Pick<
   MemberResetForm,

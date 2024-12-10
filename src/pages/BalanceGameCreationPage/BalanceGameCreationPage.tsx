@@ -17,8 +17,9 @@ import TextModal from '@/components/molecules/TextModal/TextModal';
 import { useNavigate } from 'react-router-dom';
 import { useSaveTempGameMutation } from '@/hooks/api/game/useSaveTempGameMutation';
 import { createInitialGameStages } from '@/utils/balanceGameUtils';
-import { useLoadTempGameQuery } from '@/hooks/api/game/useLoadTempGameQuery';
 import { resizeImage } from '@/utils/imageUtils';
+import { useLoadTempGameQuery } from '@/hooks/api/game/useLoadTempGameQuery';
+import { SUCCESS, ERROR } from '@/constants/message';
 import * as S from './BalanceGameCreationPage.style';
 
 const BalanceGameCreationPage = () => {
@@ -44,11 +45,7 @@ const BalanceGameCreationPage = () => {
 
   const handleDraftLoad = () => {
     if (isSuccess && tempGame) {
-      console.log('임시 저장 불러오기 시작');
-      console.log('불러온 임시 저장 데이터:', tempGame);
       const initialStages = createInitialGameStages(10);
-      console.log('생성된 초기 스테이지 데이터:', initialStages);
-
       const mappedGames: BalanceGameSet[] = initialStages.map((stage, idx) => ({
         description: tempGame.tempGames[idx]?.description || stage.description,
         gameOptions: stage.gameOptions.map((option, optionIdx) => ({
@@ -56,13 +53,12 @@ const BalanceGameCreationPage = () => {
           ...tempGame.tempGames[idx]?.tempGameOptions[optionIdx],
         })),
       }));
-      console.log('병합된 게임 데이터:', mappedGames);
 
       setTitle(tempGame.title);
       setLoadedGames(mappedGames);
-      showToastModal('임시 저장 데이터를 불러왔습니다!');
+      showToastModal(SUCCESS.TEMPGAME.LOAD);
     } else {
-      showToastModal('임시 저장 데이터를 불러오는 데 실패했습니다.');
+      showToastModal(ERROR.TEMPGAME.LOAD);
     }
   };
 
@@ -87,7 +83,6 @@ const BalanceGameCreationPage = () => {
       const { imgUrls, fileIds } = response;
       return { imgUrl: imgUrls[0], fileId: fileIds[0] };
     } catch (error) {
-      console.error('API 호출 에러:', error);
       throw new Error('이미지 업로드 실패');
     }
   };
@@ -112,8 +107,7 @@ const BalanceGameCreationPage = () => {
         return updatedGames;
       });
     } catch (error) {
-      console.error('onImageChange 에러:', error);
-      alert('이미지 업로드에 실패했습니다. 다시 시도해주세요.');
+      alert(ERROR.IMAGE.UPLOAD);
     }
   };
 
@@ -134,7 +128,7 @@ const BalanceGameCreationPage = () => {
         };
         return updatedGames;
       });
-      showToastModal('이미지가 삭제되었습니다.');
+      showToastModal(SUCCESS.IMAGE.DELETE);
     }
     setPopupData(null);
     setIsTextModalOpen(false);
@@ -154,7 +148,7 @@ const BalanceGameCreationPage = () => {
     selectedSubTag: string,
   ) => {
     if (!games.length) {
-      showToastModal('게임 데이터가 없습니다.');
+      showToastModal(ERROR.CREATEGAME.EMPTY_DATA);
       return;
     }
 
@@ -167,13 +161,11 @@ const BalanceGameCreationPage = () => {
 
     try {
       const gameId = await handleCreateBalanceGame(gameData);
-      console.log('게임 생성 완료, 게임 ID:', gameId);
-      showToastModal('등록되었습니다!', () => {
+      showToastModal(SUCCESS.CREATEGAME.CREATE, () => {
         navigate(`/balancegame/${gameId}`);
       });
     } catch (error) {
-      console.error('게임 생성 실패:', error);
-      showToastModal('게임 생성에 실패했습니다.');
+      showToastModal(ERROR.CREATEGAME.FAIL);
     }
   };
 
@@ -197,13 +189,12 @@ const BalanceGameCreationPage = () => {
       isLoaded: false,
       tempGames: convertToTempGameSets(games),
     };
-    console.log('임시 저장 실행 데이터:', tempGameData);
     saveTempGame(tempGameData, {
       onSuccess: () => {
-        showToastModal('임시 저장이 완료되었습니다!');
+        showToastModal(SUCCESS.TEMPGAME.SAVE);
       },
       onError: () => {
-        showToastModal('임시 저장에 실패했습니다. 다시 시도해주세요.');
+        showToastModal(ERROR.TEMPGAME.SAVE);
       },
     });
   };
@@ -211,10 +202,12 @@ const BalanceGameCreationPage = () => {
   return (
     <div css={S.PageContainer}>
       <div css={S.pageWrapper}>
-        <span css={S.subLabel}>
-          센스 가득한 질문들로 고민 500번 하게 만들어 볼까?
-        </span>
-        <span css={S.titleLabel}>나만의 밸런스게임 만들기</span>
+        <div css={S.textWrapper}>
+          <div css={S.subLabel}>
+            센스 가득한 질문들로 고민 500번 하게 만들어 볼까?
+          </div>
+          <div css={S.titleLabel}>나만의 밸런스게임 만들기</div>
+        </div>
         <Divider orientation="width" length={1175} />
         <BalanceGameCreation
           title={title}

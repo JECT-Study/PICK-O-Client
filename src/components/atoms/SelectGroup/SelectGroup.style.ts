@@ -7,7 +7,7 @@ export const selectGroupStyling = css({
   alignItems: 'center',
   backgroundColor: 'transparent',
   padding: '4px',
-  width: '100%',
+  width: '912px',
   justifyContent: 'space-between',
   position: 'relative',
 });

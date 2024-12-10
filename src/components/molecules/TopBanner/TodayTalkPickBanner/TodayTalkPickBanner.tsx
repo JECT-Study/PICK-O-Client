@@ -1,4 +1,5 @@
 import React from 'react';
+import { PATH } from '@/constants/path';
 import { useNavigate } from 'react-router-dom';
 import { TodayTalkPick } from '@/types/talk-pick';
 import { Check, CheckSmall } from '@/assets';
@@ -18,7 +19,7 @@ const TodayTalkPickBanner = ({ talkPick }: TodayTalkPickBannerProps) => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
   const onClickBanner = () => {
-    navigate('/todaytalkpick', {
+    navigate(`/${PATH.TODAY_TALKPICK}`, {
       state: { talkPickId: talkPick?.id, isTodayTalkPick: true },
     });
   };

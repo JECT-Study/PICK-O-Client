@@ -37,6 +37,7 @@ const sizeStyles = {
 };
 
 export const cardWrapper = (size: SizeType) => css`
+  all: unset;
   width: ${sizeStyles[size].width};
   height: ${sizeStyles[size].height};
   border-radius: 20px;
@@ -66,6 +67,10 @@ export const cardWrapper = (size: SizeType) => css`
   }
   @media (max-width: 430px) {
     border-radius: 10px;
+
+  &:focus-visible {
+    outline: 1px solid ${color.BK};
+    outline-offset: 1px;
   }
 `;
 

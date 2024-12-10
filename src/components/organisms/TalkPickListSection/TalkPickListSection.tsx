@@ -3,18 +3,20 @@ import { useNavigate } from 'react-router-dom';
 import { useNewSelector } from '@/store';
 import { selectAccessToken } from '@/store/auth';
 import { TalkPickBubble } from '@/assets';
+import { PATH } from '@/constants/path';
 import { generatePageNumbers } from '@/utils/pagination';
 import { TalkPickListPagination } from '@/types/talk-pick';
 import ToggleGroup from '@/components/atoms/ToggleGroup/ToggleGroup';
 import Button from '@/components/atoms/Button/Button';
 import Pagination from '@/components/atoms/Pagination/Pagination';
 import TalkPickList from '@/components/molecules/TalkPickList/TalkPickList';
+import { ToggleGroupValue } from '@/types/toggle';
 import * as S from './TalkPickListSection.style';
 
 export interface TalkPickListProps {
   talkPickList?: TalkPickListPagination;
-  selectedValue: string;
-  setToggleValue: React.Dispatch<React.SetStateAction<string>>;
+  selectedValue: ToggleGroupValue;
+  setToggleValue: React.Dispatch<React.SetStateAction<ToggleGroupValue>>;
   selectedPage: number;
   handlePageChange: (page: number) => void;
 }
@@ -34,9 +36,9 @@ const TalkPickListSection = ({
 
   const handleCreatePostButton = () => {
     if (accessToken) {
-      navigate('/post/create');
+      navigate(`/${PATH.CREATE.TALK_PICK}`);
     } else {
-      navigate('/login');
+      navigate(`/${PATH.LOGIN}`);
     }
   };
 

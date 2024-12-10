@@ -4,7 +4,7 @@ import { useInView } from 'react-intersection-observer';
 type InfiniteQueryType = {
   hasNextPage: boolean;
   isFetchingNextPage: boolean;
-  fetchNextPage: () => Promise<any>;
+  fetchNextPage: () => Promise<unknown>;
 };
 
 export const useObserver = (queries: Record<string, InfiniteQueryType>) => {
@@ -17,7 +17,7 @@ export const useObserver = (queries: Record<string, InfiniteQueryType>) => {
       Object.values(queries).forEach(
         ({ hasNextPage, isFetchingNextPage, fetchNextPage }) => {
           if (hasNextPage && !isFetchingNextPage) {
-            fetchNextPage();
+            void fetchNextPage();
           }
         },
       );

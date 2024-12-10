@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import TopBanner from '@/components/molecules/TopBanner/TopBanner';
 import SearchTagBar from '@/components/molecules/SearchTagBar/SearchTagBar';
 import CategoryBox from '@/components/molecules/CategoryBox/CategoryBox';
@@ -6,9 +6,9 @@ import BalanceGameList from '@/components/organisms/BalanceGameList/BalanceGameL
 import { useTodayTalkPickQuery } from '@/hooks/api/talk-pick/useTodayTalkPickQuery';
 import { useNavigate } from 'react-router-dom';
 import ToastModal from '@/components/atoms/ToastModal/ToastModal';
-import { GameContent } from '@/types/game';
 import { useBestGameList } from '@/hooks/api/game/useBestGameListQuery';
 import { useLatestGameList } from '@/hooks/api/game/useLatestGameListQuery';
+import { ToggleGroupValue } from '@/types/toggle';
 import { NOTICE } from '@/constants/message';
 import MobileCreateDropdown from '@/components/mobile/molecule/MobileCreateDropdown/MobileCreateDropdown';
 import useIsMobile from '@/hooks/common/useIsMobile';
@@ -18,31 +18,23 @@ const LandingPage = () => {
   const isMobile = useIsMobile();
   const { todayTalkPick } = useTodayTalkPickQuery();
   const [isServicePreparing, setIsServicePreparing] = useState<boolean>(false);
-  const [selectedValue, setSelectedValue] = useState<string>('views');
+  const [selectedValue, setSelectedValue] = useState<ToggleGroupValue>({
+    field: 'views',
+    order: 'desc',
+  });
   const [activeTab, setActiveTab] = useState<
     '인기' | '커플' | '취향' | '월드컵'
   >('인기');
 
-  const { bestGames, isLoading: isBestLoading } = useBestGameList(activeTab);
-  const { latestGames, isLoading: isLatestLoading } =
-    useLatestGameList(activeTab);
+  const { bestGames } = useBestGameList(activeTab);
+  const { latestGames } = useLatestGameList(activeTab);
 
-  const [contents, setContents] = useState<GameContent[]>([]);
-
-  useEffect(() => {
-    if (selectedValue === 'views') {
-      setContents(bestGames || []);
-    } else if (selectedValue === 'createdAt') {
-      setContents(latestGames || []);
+  const contents = useMemo(() => {
+    if (selectedValue.field === 'views') {
+      return bestGames || [];
     }
-  }, [
-    selectedValue,
-    activeTab,
-    bestGames,
-    latestGames,
-    isBestLoading,
-    isLatestLoading,
-  ]);
+    return latestGames || [];
+  }, [selectedValue, bestGames, latestGames]);
 
   const handleService = () => {
     setIsServicePreparing(true);
