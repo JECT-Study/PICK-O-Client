@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import MobileSideMenu from '@/components/mobile/atom/MobileSideMenu/MobileSideMenu';
+import MobileSideMenu from '@/components/mobile/atoms/MobileSideMenu/MobileSideMenu';
 import { BrowserRouter } from 'react-router-dom';
 
 const meta: Meta<typeof MobileSideMenu> = {

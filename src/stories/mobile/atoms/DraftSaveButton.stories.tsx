@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import DraftSaveButton from '@/components/mobile/atom/DraftSaveButton/DraftSaveButton';
+import DraftSaveButton from '@/components/mobile/atoms/DraftSaveButton/DraftSaveButton';
 import { BrowserRouter } from 'react-router-dom';
 
 const meta: Meta<typeof DraftSaveButton> = {

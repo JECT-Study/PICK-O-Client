@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import MobileToggleGroup from '@/components/mobile/atom/MobileToggleGroup/MobileToggleGroup';
+import MobileToggleGroup from '@/components/mobile/atoms/MobileToggleGroup/MobileToggleGroup';
 import { BrowserRouter } from 'react-router-dom';
 
 const meta = {

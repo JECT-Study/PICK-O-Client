@@ -1,3 +1,5 @@
+/* eslint-disable no-alert */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import React, { useCallback, useState } from 'react';
 import { AngleSmallDown } from '@/assets';
 import ToggleGroup from '@/components/atoms/ToggleGroup/ToggleGroup';
@@ -5,10 +7,10 @@ import Button from '@/components/atoms/Button/Button';
 import CategoryBar from '@/components/molecules/CategoryBar/CategoryBar';
 import ContentsButton from '@/components/molecules/ContentsButton/ContentsButton';
 import { GameContent } from '@/types/game';
-import MobileToggleGroup from '@/components/mobile/atom/MobileToggleGroup/MobileToggleGroup';
 import { ToggleGroupValue } from '@/types/toggle';
 import { useNavigate } from 'react-router-dom';
 import { ERROR } from '@/constants/message';
+import MobileToggleGroup from '@/components/mobile/atoms/MobileToggleGroup/MobileToggleGroup';
 import * as S from './BalanceGameList.style';
 
 export interface ContentListProps {
@@ -62,7 +64,7 @@ const BalanceGameList = ({
         {isMobile ? (
           <MobileToggleGroup
             selectedValue={selectedValue}
-            onClick={setSelectedValue}
+            onClick={handleToggleChange}
           />
         ) : (
           <ToggleGroup

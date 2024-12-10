@@ -1,11 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { TriangleDown, TriangleUp } from '@/assets';
+import { ToggleGroupItem, ToggleGroupValue } from '@/types/toggle';
 import * as S from './MobileToggleGroup.style';
 
 interface MobileToggleGroupProps {
-  selectedValue?: string;
-  onClick?: (value: string) => void;
+  selectedValue?: ToggleGroupValue;
+  onClick?: (value: ToggleGroupValue) => void;
 }
+
+const toggleItems: ToggleGroupItem[] = [
+  {
+    label: '인기순',
+    value: { field: 'views', order: 'desc' },
+  },
+  {
+    label: '최신순',
+    value: { field: 'createdAt', order: 'desc' },
+  },
+];
 
 const MobileToggleGroup = ({
   selectedValue,
@@ -22,9 +34,8 @@ const MobileToggleGroup = ({
     setIsOpen(false);
   };
 
-  const handleToggleClick = () => {
-    const newValue = selectedValue === 'views' ? 'createdAt' : 'views';
-    onClick?.(newValue);
+  const handleToggleClick = (value: ToggleGroupValue) => {
+    onClick?.(value);
     setIsOpen(false);
   };
 
@@ -35,6 +46,8 @@ const MobileToggleGroup = ({
     };
   }, []);
 
+  const isSelectedViews = selectedValue?.field === 'views';
+
   return (
     <div css={S.toggleGroupStyle}>
       <button
@@ -42,16 +55,20 @@ const MobileToggleGroup = ({
         type="button"
         onClick={handleMenuClick}
       >
-        {selectedValue === 'views' ? '인기순' : '최신순'}{' '}
+        {isSelectedViews ? '인기순' : '최신순'}{' '}
         {isOpen ? <TriangleUp /> : <TriangleDown />}
       </button>
       {isOpen && (
         <button
           css={S.unClickedToggleStyle}
           type="button"
-          onClick={handleToggleClick}
+          onClick={() =>
+            handleToggleClick(
+              isSelectedViews ? toggleItems[1].value : toggleItems[0].value,
+            )
+          }
         >
-          {selectedValue === 'views' ? '최신순' : '인기순'}
+          {isSelectedViews ? '최신순' : '인기순'}
         </button>
       )}
     </div>

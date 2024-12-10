@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import MobileCreateButton from '@/components/mobile/atom/MobileCreateButton/MobileCreateButton';
+import MobileCreateButton from '@/components/mobile/atoms/MobileCreateButton/MobileCreateButton';
 import { BrowserRouter } from 'react-router-dom';
 
 const meta: Meta<typeof MobileCreateButton> = {

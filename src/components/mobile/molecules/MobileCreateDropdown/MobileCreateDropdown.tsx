@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { CircleClose, CirclePencil } from '@/assets';
-import MobileCreateButton from '@/components/mobile/atom/MobileCreateButton/MobileCreateButton';
+import MobileCreateButton from '@/components/mobile/atoms/MobileCreateButton/MobileCreateButton';
 import { PATH } from '@/constants/path';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
