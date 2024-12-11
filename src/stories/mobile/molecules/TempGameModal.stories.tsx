@@ -12,14 +12,12 @@ const meta = {
   },
   args: {
     isOpen: true,
+    onGetGame: () => {},
+    onSaveGame: () => {},
   },
 } satisfies Meta<typeof TempGameModal>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
-  args: {
-    isOpen: true,
-  },
-};
+export const Default: Story = {};
