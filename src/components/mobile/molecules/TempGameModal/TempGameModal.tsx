@@ -6,8 +6,8 @@ import * as S from './TempGameModal.style';
 
 export interface TempGameModalProps {
   isOpen?: boolean;
-  onSaveGame?: () => void;
-  onGetGame?: () => void;
+  onSaveGame: () => void;
+  onGetGame: () => void;
   onClose?: () => void;
 }
 
