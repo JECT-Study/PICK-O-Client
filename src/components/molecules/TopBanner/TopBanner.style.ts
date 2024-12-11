@@ -35,15 +35,18 @@ export const dotWrapperStyling = css({
 });
 
 export const dotStyling = css({
+  all: 'unset',
   width: '10px',
   height: '10px',
   borderRadius: '50%',
   backgroundColor: color.GY[4],
   transition: '0.5s ease-in-out',
   cursor: 'pointer',
+  display: 'inline-block',
   '@media (max-width: 430px)': {
     width: '4px',
     height: '4px',
+    borderRadius: '50%',
   },
 });
 
@@ -54,5 +57,6 @@ export const activeDotStyling = css({
   '@media (max-width: 430px)': {
     width: '32px',
     height: '4px',
+    borderRadius: '5px',
   },
 });
