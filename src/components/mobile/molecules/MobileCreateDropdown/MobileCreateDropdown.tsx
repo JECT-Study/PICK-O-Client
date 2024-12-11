@@ -48,7 +48,9 @@ const MobileCreateDropdown = () => {
   }, []);
   return (
     <div css={S.dropdownStyling}>
-      {isOpen && <div css={S.overlay} onClick={handleOutsideClick} />}
+      {isOpen && (
+        <div css={S.overlay} onClick={handleOutsideClick} aria-hidden="true" />
+      )}
       {isOpen && (
         <div css={S.ButtonWrapper}>
           <MobileCreateButton
