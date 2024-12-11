@@ -15,19 +15,28 @@ export interface SearchBarProps extends ComponentPropsWithoutRef<'input'> {
 const SearchBar = (
   { onSearchClick, onInputChange, ...props }: SearchBarProps,
   ref: ForwardedRef<HTMLInputElement>,
-) => (
-  <div css={S.searchBarStyling}>
-    <input
-      ref={ref}
-      css={S.inputStyling}
-      placeholder="궁금한 키워드를 입력해주세요!"
-      onChange={onInputChange}
-      {...props}
-    />
-    <Button size="large" variant="circle" onClick={onSearchClick}>
-      <Search />
-    </Button>
-  </div>
-);
+) => {
+  const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      onSearchClick();
+    }
+  };
+
+  return (
+    <div css={S.searchBarStyling}>
+      <input
+        ref={ref}
+        css={S.inputStyling}
+        placeholder="궁금한 키워드를 입력해주세요!"
+        onChange={onInputChange}
+        onKeyDown={handleInputKeyDown}
+        {...props}
+      />
+      <Button size="large" variant="circle" onClick={onSearchClick}>
+        <Search />
+      </Button>
+    </div>
+  );
+};
 
 export default forwardRef(SearchBar);
