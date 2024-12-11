@@ -12,7 +12,7 @@ interface GameTagModalProps {
 }
 
 const GameTagModal = ({ isOpen, onClose, onTagSubmit }: GameTagModalProps) => {
-  const [mainTag, setMainTag] = useState<string | null>(null);
+  const [mainTag, setMainTag] = useState<'커플' | '취향' | '기타' | null>(null);
   const [subTag, setSubTag] = useState<string>('');
 
   const handleTagSubmit = () => {
