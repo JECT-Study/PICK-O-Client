@@ -37,12 +37,13 @@ export const dateStyle = css(typo.Number.Regular, {
 });
 
 export const contentWrapStyle = css({
-  display: 'flex',
+  display: 'inline',
+  height: '45px',
+  overflowY: 'hidden',
 });
+
 export const contentStyle = (highlighted: boolean) =>
   css(typo.Comment.Regular, {
-    overflowY: 'hidden',
-    height: '45px',
     color: highlighted ? color.MAIN : color.GY[1],
   });
 
