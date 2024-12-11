@@ -5,13 +5,12 @@ import React, {
 } from 'react';
 import * as S from './IconButton.style';
 
-interface InteractionMiniButtonProps
-  extends ComponentPropsWithoutRef<'button'> {
+interface IconButtonProps extends ComponentPropsWithoutRef<'button'> {
   icon: React.ReactNode;
 }
 
 const IconButton = (
-  { icon, onClick, ...props }: InteractionMiniButtonProps,
+  { icon, onClick, ...props }: IconButtonProps,
   ref: ForwardedRef<HTMLButtonElement>,
 ) => {
   return (
