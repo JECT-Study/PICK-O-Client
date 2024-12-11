@@ -192,7 +192,9 @@ const TalkPickSection = ({
           <SummaryBox summary={talkPick?.summary} />
           {isExpanded && (
             <div css={S.talkPickContent}>
-              <p>{talkPick?.baseFields.content}</p>
+              <div css={S.talkPickContentTextStyling}>
+                {talkPick?.baseFields.content}
+              </div>
               {talkPick?.imgUrls.length !== 0 && (
                 <div css={S.talkPickImageWrapper}>
                   {talkPick?.imgUrls.map((url, idx) => (
