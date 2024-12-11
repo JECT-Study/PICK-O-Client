@@ -145,6 +145,7 @@ const typo = {
       Medium_16: {
         fontFamily: 'Pretendard',
         fontSize: '16px',
+        fontWeight: 500,
         lineHeight: '1.6',
         letterSpacing: `${16 * -0.05}px`,
       },
@@ -193,12 +194,14 @@ const typo = {
       Medium_16: {
         fontFamily: 'Pretendard',
         fontSize: '16px',
+        fontWeight: 500,
         lineHeight: '1.6',
         letterSpacing: `${16 * -0.05}px`,
       },
       Medium_12: {
         fontFamily: 'Pretendard',
         fontSize: '12px',
+        fontWeight: 500,
         lineHeight: '1.3',
         letterSpacing: `${12 * -0.05}px`,
       },
