@@ -63,7 +63,7 @@ const MobileSideMenu = ({
           </button>
         )}
       </div>
-      <div css={S.fillerStyle} role="presentation" />
+      <div css={S.fillerStyle} />
     </div>
   );
 };
