@@ -6,7 +6,6 @@ const meta = {
   title: 'mobile/atoms/TitleDescriptionField',
   component: TitleDescriptionField,
   parameters: { layout: 'centered' },
-  tags: ['autodocs'],
   args: {
     title: '100억 부자 유병재 VS 무일푼 차은우',
     description: '',
