@@ -6,7 +6,7 @@ import MobileSideMenu from '@/components/mobile/atoms/MobileSideMenu/MobileSideM
 import { BrowserRouter } from 'react-router-dom';
 
 const meta: Meta<typeof MobileSideMenu> = {
-  title: 'mobile/MobileSideMenu',
+  title: 'mobile/atoms/MobileSideMenu',
   component: MobileSideMenu,
   parameters: {
     layout: 'centered',

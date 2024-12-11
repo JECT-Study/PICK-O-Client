@@ -7,7 +7,7 @@ import ReactQueryProvider from '@/providers/ReactQueryProvider';
 import { Provider } from 'react-redux';
 
 const meta = {
-  title: 'mobile/MobileCreateDropdown',
+  title: 'mobile/molecules/MobileCreateDropdown',
   component: MobileCreateDropdown,
   parameters: {
     layout: 'centered',

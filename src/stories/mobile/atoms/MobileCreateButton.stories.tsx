@@ -6,7 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { storyContainer, storyInnerContainer } from '@/stories/story.styles';
 
 const meta: Meta<typeof MobileCreateButton> = {
-  title: 'mobile/MobileCreateButton',
+  title: 'mobile/atoms/MobileCreateButton',
   component: MobileCreateButton,
   parameters: {
     layout: 'centered',

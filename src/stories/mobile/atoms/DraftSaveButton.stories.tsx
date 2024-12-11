@@ -5,7 +5,7 @@ import DraftSaveButton from '@/components/mobile/atoms/DraftSaveButton/DraftSave
 import { BrowserRouter } from 'react-router-dom';
 
 const meta: Meta<typeof DraftSaveButton> = {
-  title: 'mobile/DraftSaveButton',
+  title: 'mobile/atoms/DraftSaveButton',
   component: DraftSaveButton,
   parameters: {
     layout: 'centered',

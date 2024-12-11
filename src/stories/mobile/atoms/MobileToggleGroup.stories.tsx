@@ -6,14 +6,14 @@ import MobileToggleGroup from '@/components/mobile/atoms/MobileToggleGroup/Mobil
 import { BrowserRouter } from 'react-router-dom';
 
 const meta = {
-  title: 'mobile/MobileToggleGroup',
+  title: 'mobile/atoms/MobileToggleGroup',
   component: MobileToggleGroup,
   parameters: {
     layout: 'centered',
   },
   tags: ['autodocs'],
   args: {
-    selectedValue: 'views',
+    selectedValue: { field: 'views', order: 'desc' },
   },
   decorators: [
     (Story) => (
