@@ -1,6 +1,8 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import SideBar from '@/components/organisms/SideBar/SideBar';
+import SideBar, {
+  LoadedSideBarProps,
+} from '@/components/organisms/SideBar/SideBar';
 import { storyContainer, storyInnerContainer } from '@/stories/story.styles';
 import { ProfileInfoSample } from '@/assets';
 
@@ -32,7 +34,7 @@ export const Default: Story = {
     postsCount: 23,
     bookmarkedPostsCount: 21,
     isLoading: false,
-  },
+  } as LoadedSideBarProps,
 };
 
 export const All: Story = {
@@ -40,12 +42,20 @@ export const All: Story = {
     <ul css={storyContainer}>
       <li css={storyInnerContainer}>
         <h3>기본 SideBar</h3>
-        <SideBar {...args} />
-      </li>
-      <li css={storyInnerContainer}>
-        <h3>프로필 이미지 없는 경우(settings는 normal로 설정)</h3>
         <SideBar
           {...args}
+          isLoading={false}
+          nickname="Aycho"
+          postsCount={10}
+          bookmarkedPostsCount={5}
+          profileImageUrl=""
+        />
+      </li>
+      <li css={storyInnerContainer}>
+        <h3>프로필 이미지 없는 경우</h3>
+        <SideBar
+          {...args}
+          isLoading={false}
           nickname="Aycho"
           profileImageUrl=""
           postsCount={0}
@@ -56,30 +66,24 @@ export const All: Story = {
         <h3>게시글 카운트와 저장한 글 카운트 다른 경우</h3>
         <SideBar
           {...args}
+          isLoading={false}
           nickname="Aycho"
-          profileImageUrl={ProfileInfoSample}
           postsCount={45}
           bookmarkedPostsCount={15}
+          profileImageUrl={ProfileInfoSample}
         />
       </li>
       <li css={storyInnerContainer}>
         <h3>로딩중인 경우</h3>
-        <SideBar
-          {...args}
-          nickname="Aycho"
-          profileImageUrl={ProfileInfoSample}
-          postsCount={45}
-          bookmarkedPostsCount={15}
-          isLoading
-        />
+        <SideBar isLoading />
       </li>
     </ul>
   ),
   args: {
+    isLoading: false,
     nickname: 'Aycho',
     profileImageUrl: ProfileInfoSample,
     postsCount: 23,
     bookmarkedPostsCount: 21,
-    isLoading: false,
-  },
+  } as LoadedSideBarProps,
 };

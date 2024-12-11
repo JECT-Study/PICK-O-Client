@@ -76,6 +76,7 @@ export interface TempGameOption {
   name: string;
   description: string;
   fileId?: number | null;
+  imgUrl?: string;
   optionType: 'A' | 'B';
 }
 

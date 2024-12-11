@@ -1,6 +1,7 @@
 import { PaginationType } from '@/types/pagination';
 
 interface GameItem {
+  id: number;
   optionAImg: string;
   optionBImg: string;
   title: string;

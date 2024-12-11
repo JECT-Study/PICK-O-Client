@@ -1,12 +1,12 @@
 import React from 'react';
 import { ProfileSample } from '@/assets';
-import { ToggleGroupItem } from '@/components/atoms/ToggleGroup/ToggleGroup';
 import type { Meta, StoryObj } from '@storybook/react';
 import store from '@/store';
 import { Provider } from 'react-redux';
 import ReactQueryProvider from '@/providers/ReactQueryProvider';
 import { Comment, CommentsPagination } from '@/types/comment';
 import CommentsSection from '@/components/organisms/CommentsSection/CommentsSection';
+import { ToggleGroupItem } from '@/types/toggle';
 import { storyContainer, storyInnerContainer } from '@/stories/story.styles';
 
 const exampleCommentList: Comment[] = Array.from({ length: 7 }, (_, index) => ({
@@ -61,11 +61,11 @@ const exampleCommentPagination: CommentsPagination = {
 const toggleItem: ToggleGroupItem[] = [
   {
     label: '인기순',
-    value: 'trend',
+    value: { field: 'trend', order: 'desc' },
   },
   {
     label: '최신순',
-    value: 'recent',
+    value: { field: 'recent', order: 'desc' },
   },
 ];
 
@@ -75,12 +75,11 @@ const meta: Meta<typeof CommentsSection> = {
   parameters: {
     layout: 'centered',
   },
-  tags: ['autodocs'],
   args: {
     commentList: exampleCommentPagination,
     voted: true,
     toggleItem,
-    selectedValue: 'trend',
+    selectedValue: { field: 'trend', order: 'desc' },
     setToggleValue: () => {},
   },
   argTypes: {

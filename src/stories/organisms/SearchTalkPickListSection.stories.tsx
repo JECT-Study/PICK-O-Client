@@ -3,12 +3,17 @@ import type { Meta, StoryObj } from '@storybook/react';
 import SearchTalkPickListSection from '@/components/organisms/SearchTalkPickListSection/SearchTalkPickListSection';
 import { SampleWhole } from '@/assets';
 import { SearchTalkPickItemProps } from '@/components/atoms/SearchTalkPickItem/SearchTalkPickItem';
+import { ToggleGroupValue } from '@/types/toggle';
 
 const meta: Meta<typeof SearchTalkPickListSection> = {
   title: 'organisms/SearchTalkPickListSection',
   component: SearchTalkPickListSection,
   parameters: {
     layout: 'centered',
+  },
+  argTypes: {
+    onPageChange: { action: '페이지 변경' },
+    onSortChange: { action: '정렬 변경' },
   },
 };
 
@@ -33,19 +38,20 @@ export const Default: Story = {
     keyword: '예시 키워드',
     selectedPage: 1,
     totalPages: 2,
-    sort: 'views',
-    onPageChange: (page) => console.log(`페이지 변경: ${page}`),
-    onSortChange: (sort) => console.log(`정렬 변경: ${sort}`),
+    sort: { field: 'views', order: 'desc' },
   },
 };
 
 export const All: Story = {
   render: (args) => {
-    const [sort, setSort] = useState('views');
+    const [sort, setSort] = useState<ToggleGroupValue>({
+      field: 'views',
+      order: 'desc',
+    });
 
-    const handleSortChange = (newSort: string) => {
+    const handleSortChange = (newSort: ToggleGroupValue) => {
       setSort(newSort);
-      console.log(`정렬 변경: ${newSort}`);
+      args.onSortChange?.(newSort);
     };
 
     return (

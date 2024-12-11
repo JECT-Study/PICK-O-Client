@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteTalkPick } from '@/api/talk-pick';
+import { PATH } from '@/constants/path';
 import { Id } from '@/types/api';
 import { useNavigate } from 'react-router-dom';
 
@@ -14,7 +15,7 @@ export const useDeleteTalkPickMutation = (talkPickId: Id) => {
         queryKey: ['talkPick', talkPickId],
       });
 
-      navigate('/talkpickplace');
+      navigate(`/${PATH.TALKPICK_PLACE}`);
     },
   });
 };
