@@ -51,7 +51,7 @@ export const useLoginForm = (
       axiosInstance.defaults.headers.Authorization = `Bearer ${res}`;
 
       localStorage.setItem('accessToken', res);
-      localStorage.setItem('rtk', 'rtk');
+      localStorage.setItem('refreshToken', 'refreshToken');
       localStorage.setItem('savedEmail', form.email);
 
       showToastModal(SUCCESS.LOGIN, () => {

@@ -41,8 +41,8 @@ import BalanceGameCreationPage from './pages/BalanceGameCreationPage/BalanceGame
 // import SignUpPage from './pages/SignUpPage/SignUpPage';
 import { getCookie } from './utils/cookie';
 import { axiosInstance } from './api/interceptor';
-import { useNewDispatch, useNewSelector } from './store';
-import { selectAccessToken, tokenActions } from './store/auth';
+import { useNewDispatch } from './store';
+import { tokenActions } from './store/auth';
 
 const App: React.FC = () => {
   const dispatch = useNewDispatch();
@@ -51,7 +51,7 @@ const App: React.FC = () => {
     const token = getCookie('accessToken');
     if (token) {
       localStorage.setItem('accessToken', token);
-      localStorage.setItem('rtk', 'rtk');
+      localStorage.setItem('refreshToken', 'refreshToken');
 
       dispatch(tokenActions.setToken(token));
       axiosInstance.defaults.headers.Authorization = `Bearer ${token}`;

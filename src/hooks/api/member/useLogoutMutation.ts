@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable no-alert */
 import { AxiosErrorResponse, axiosInstance } from '@/api/interceptor';
 import { postLogout } from '@/api/member';
 import { PATH } from '@/constants/path';
@@ -15,7 +17,7 @@ export const useLogoutMutation = () => {
     onSuccess: () => {
       // TODO: 백엔드에서 리프레쉬 토큰 쿠키에 저장시키면, 해당 코드 제거
       localStorage.removeItem('accessToken');
-      localStorage.removeItem('rtk');
+      localStorage.removeItem('refreshToken');
       deleteCookie('accessToken');
       deleteCookie('refreshToken');
 
