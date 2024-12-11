@@ -10,6 +10,7 @@ interface GameItem {
 }
 
 interface SearchTalkPickItem {
+  id: number;
   title: string;
   createdAt: string;
   content: string;
