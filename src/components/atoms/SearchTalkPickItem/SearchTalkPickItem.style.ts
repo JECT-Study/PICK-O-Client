@@ -3,6 +3,7 @@ import color from '@/styles/color';
 import typo from '@/styles/typo';
 
 export const searchTalkPickItemStyle = css({
+  all: 'unset',
   display: 'flex',
   flexDirection: 'row',
   width: '1065px',

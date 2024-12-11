@@ -19,7 +19,7 @@ const SearchTalkPickItem = ({
   keyword,
 }: SearchTalkPickItemProps) => {
   return (
-    <div css={S.searchTalkPickItemStyle}>
+    <button type="button" css={S.searchTalkPickItemStyle}>
       <div css={S.leftContentStyle}>
         <div css={S.titleWrapStyle}>
           {highlightText(title, keyword).map((part) => (
@@ -37,15 +37,16 @@ const SearchTalkPickItem = ({
           ))}
         </div>
       </div>
-
-      <div css={S.imageContainerStyle}>
-        <img
-          css={S.imageContainerStyle}
-          src={firstImgUrl}
-          alt="representativeImage"
-        />
-      </div>
-    </div>
+      {firstImgUrl && (
+        <div css={S.imageContainerStyle}>
+          <img
+            css={S.imageContainerStyle}
+            src={firstImgUrl}
+            alt="representativeImage"
+          />
+        </div>
+      )}
+    </button>
   );
 };
 export default SearchTalkPickItem;
