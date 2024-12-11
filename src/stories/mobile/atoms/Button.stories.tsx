@@ -54,6 +54,14 @@ export const All: Story = {
         <Button size="large" variant="roundPrimary">
           large
         </Button>
+        <h1>roundPrimary2</h1>
+        <Button size="medium" variant="roundPrimary2">
+          medium
+        </Button>
+        <h1>outlineShadow</h1>
+        <Button size="medium" variant="outlineShadow">
+          medium
+        </Button>
       </li>
       <li css={storyInnerContainer}>
         <h1>disabled</h1>

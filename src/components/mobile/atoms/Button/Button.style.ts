@@ -18,6 +18,17 @@ export const getVariantStyling = (
       backgroundColor: active ? color.MAIN : color.GY[2],
       color: color.WT,
     }),
+    roundPrimary2: css({
+      borderRadius: '6px',
+      backgroundColor: color.MAIN,
+      color: color.WT,
+    }),
+    outlineShadow: css({
+      border: `1px solid ${color.GY[4]}`,
+      borderRadius: '6px',
+      backgroundColor: color.GY[5],
+      color: color.GY[1],
+    }),
   };
 
   return style[variant];
@@ -44,6 +55,20 @@ export const getSizeByVariantStyling = (
         height: '40px',
       }),
       medium: css({}),
+    },
+    roundPrimary2: {
+      large: css({}),
+      medium: css({
+        width: '64px',
+        height: '34px',
+      }),
+    },
+    outlineShadow: {
+      large: css({}),
+      medium: css({
+        width: '64px',
+        height: '34px',
+      }),
     },
   };
 

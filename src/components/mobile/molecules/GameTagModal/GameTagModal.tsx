@@ -34,27 +34,27 @@ const GameTagModal = ({ isOpen, onClose, onTagSubmit }: GameTagModalProps) => {
             <span css={S.markStyling}>*</span>
           </div>
           <div css={S.buttonWrapper}>
-            <button
+            <Button
               type="button"
-              css={S.getButtonStyling(mainTag === '커플')}
+              variant={mainTag === '커플' ? 'roundPrimary2' : 'outlineShadow'}
               onClick={() => setMainTag('커플')}
             >
               커플
-            </button>
-            <button
+            </Button>
+            <Button
               type="button"
-              css={S.getButtonStyling(mainTag === '취향')}
+              variant={mainTag === '취향' ? 'roundPrimary2' : 'outlineShadow'}
               onClick={() => setMainTag('취향')}
             >
               취향
-            </button>
-            <button
+            </Button>
+            <Button
               type="button"
-              css={S.getButtonStyling(mainTag === '기타')}
+              variant={mainTag === '기타' ? 'roundPrimary2' : 'outlineShadow'}
               onClick={() => setMainTag('기타')}
             >
               기타
-            </button>
+            </Button>
           </div>
         </div>
         <div css={S.tagWrapper}>
