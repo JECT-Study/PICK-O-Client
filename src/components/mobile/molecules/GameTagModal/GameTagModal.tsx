@@ -63,7 +63,7 @@ const GameTagModal = ({ isOpen, onClose, onTagSubmit }: GameTagModalProps) => {
           </div>
           <input
             css={S.inputStyling}
-            placeholder="ex) 아이돌, 연애..."
+            placeholder="ex. 너무어려운밸런스게임, 선택장애, 이상형"
             value={subTag}
             onChange={(e) => setSubTag(e.target.value)}
           />

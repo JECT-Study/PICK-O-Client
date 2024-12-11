@@ -38,7 +38,7 @@ const TitleDescriptionField = (
     <div css={S.fieldStyling}>
       <input
         type="text"
-        placeholder="제목"
+        placeholder="제목(필수) 극악난이도 밸런스게임"
         value={title}
         onChange={handleTitleChange}
         ref={ref}
@@ -48,7 +48,7 @@ const TitleDescriptionField = (
         <Divider orientation="width" length={335} />
       </div>
       <textarea
-        placeholder="상황 설명"
+        placeholder="ex) 둘 중 한 명과 반드시 연애해야만 한다면..."
         value={description}
         onChange={handleDescriptionChange}
         css={S.descriptionStyling}
