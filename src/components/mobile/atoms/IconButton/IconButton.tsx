@@ -3,14 +3,14 @@ import React, {
   ForwardedRef,
   forwardRef,
 } from 'react';
-import * as S from './InteractionMiniButton.style';
+import * as S from './IconButton.style';
 
 interface InteractionMiniButtonProps
   extends ComponentPropsWithoutRef<'button'> {
   icon: React.ReactNode;
 }
 
-const InteractionMiniButton = (
+const IconButton = (
   { icon, onClick, ...props }: InteractionMiniButtonProps,
   ref: ForwardedRef<HTMLButtonElement>,
 ) => {
@@ -21,4 +21,4 @@ const InteractionMiniButton = (
   );
 };
 
-export default forwardRef(InteractionMiniButton);
+export default forwardRef(IconButton);

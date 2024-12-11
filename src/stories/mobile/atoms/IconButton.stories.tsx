@@ -1,12 +1,12 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { MobileBookmarkDF, MobileShare } from '@/assets';
-import InteractionMiniButton from '@/components/mobile/atoms/InteractionMiniButton/InteractionMiniButton';
+import IconButton from '@/components/mobile/atoms/IconButton/IconButton';
 import { storyContainer, storyInnerContainer } from '@/stories/story.styles';
 
 const meta = {
-  title: 'mobile/atoms/InteractionMiniButton',
-  component: InteractionMiniButton,
+  title: 'mobile/atoms/IconButton',
+  component: IconButton,
   parameters: {
     layout: 'centered',
   },
@@ -24,7 +24,7 @@ const meta = {
   args: {
     icon: 'BookmarkDF',
   },
-} satisfies Meta<typeof InteractionMiniButton>;
+} satisfies Meta<typeof IconButton>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -40,11 +40,11 @@ export const All: Story = {
     <ul css={storyContainer}>
       <li css={storyInnerContainer}>
         <h3>북마크 버튼</h3>
-        <InteractionMiniButton {...args} />
+        <IconButton {...args} />
       </li>
       <li css={storyInnerContainer}>
         <h3>공유 버튼</h3>
-        <InteractionMiniButton icon={<MobileShare />} />
+        <IconButton icon={<MobileShare />} />
       </li>
     </ul>
   ),
