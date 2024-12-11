@@ -18,7 +18,7 @@ export const getVariantStyling = (
       backgroundColor: active ? color.MAIN : color.GY[2],
       color: color.WT,
     }),
-    roundPrimary2: css({
+    Primary2: css({
       borderRadius: '6px',
       backgroundColor: color.MAIN,
       color: color.WT,
@@ -56,7 +56,7 @@ export const getSizeByVariantStyling = (
       }),
       medium: css({}),
     },
-    roundPrimary2: {
+    Primary2: {
       large: css({}),
       medium: css({
         width: '64px',

@@ -15,7 +15,7 @@ const meta = {
       control: { type: 'radio' },
     },
     variant: {
-      options: ['primary', 'roundPrimary'],
+      options: ['primary', 'roundPrimary', 'Primary2', 'outlineShadow'],
       control: { type: 'radio' },
     },
     active: { control: 'boolean' },
@@ -53,8 +53,8 @@ export const All: Story = {
         <Button size="large" variant="roundPrimary">
           large
         </Button>
-        <h1>roundPrimary2</h1>
-        <Button size="medium" variant="roundPrimary2">
+        <h1>Primary2</h1>
+        <Button size="medium" variant="Primary2">
           medium
         </Button>
         <h1>outlineShadow</h1>

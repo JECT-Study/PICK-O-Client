@@ -36,21 +36,21 @@ const GameTagModal = ({ isOpen, onClose, onTagSubmit }: GameTagModalProps) => {
           <div css={S.buttonWrapper}>
             <Button
               type="button"
-              variant={mainTag === '커플' ? 'roundPrimary2' : 'outlineShadow'}
+              variant={mainTag === '커플' ? 'Primary2' : 'outlineShadow'}
               onClick={() => setMainTag('커플')}
             >
               커플
             </Button>
             <Button
               type="button"
-              variant={mainTag === '취향' ? 'roundPrimary2' : 'outlineShadow'}
+              variant={mainTag === '취향' ? 'Primary2' : 'outlineShadow'}
               onClick={() => setMainTag('취향')}
             >
               취향
             </Button>
             <Button
               type="button"
-              variant={mainTag === '기타' ? 'roundPrimary2' : 'outlineShadow'}
+              variant={mainTag === '기타' ? 'Primary2' : 'outlineShadow'}
               onClick={() => setMainTag('기타')}
             >
               기타
