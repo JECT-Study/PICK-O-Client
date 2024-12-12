@@ -90,12 +90,17 @@ const Header = () => {
 
   const handleLoginButton = () => {
     if (accessToken) {
+const handleLoginButton = () => {
+  const handleNavigation = () => {
+    setIsMenuOpen(false);
+    if (accessToken) {
       logout.mutate();
-      setIsMenuOpen(false);
     } else {
       navigate(`/${PATH.LOGIN}`);
-      setIsMenuOpen(false);
     }
+  };
+  handleNavigation();
+};
   };
 
   const handleProfileIcon = () => {
