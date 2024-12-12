@@ -13,7 +13,7 @@ import * as S from './MobileCreateDropdown.style';
 const MobileCreateDropdown = () => {
   const navigate = useNavigate();
   const accessToken = useNewSelector(selectAccessToken);
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleCreatePostButton = () => {
     if (accessToken) {
