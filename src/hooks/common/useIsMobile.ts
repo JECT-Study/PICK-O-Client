@@ -5,9 +5,9 @@ function useIsMobile() {
 
   useEffect(() => {
     const checkIsMobile = () => {
-      const mobile = window.matchMedia('(max-width: 480px)').matches;
+      const mobile = window.matchMedia('(max-width: 430px)').matches;
       setIsMobile(
-        mobile || ('ontouchstart' in window && window.innerWidth <= 768),
+        mobile || ('ontouchstart' in window && window.innerWidth <= 430),
       );
     };
 
