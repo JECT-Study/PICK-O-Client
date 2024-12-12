@@ -12,12 +12,11 @@ const meta: Meta<typeof MobileSideMenu> = {
     layout: 'centered',
   },
   tags: ['autodocs'],
-  args: {
-    isOpen: true,
-    accessToken: 'true',
-    handleLoginButton: () => console.log('로그인 버튼 클릭'),
-    setIsOpen: (isOpen: boolean) =>
-      console.log(`setIsOpen called with: ${isOpen}`),
+  argTypes: {
+    isOpen: { type: 'boolean' },
+    accessToken: { type: 'string' },
+    handleLoginButton: { action: 'button clicked' },
+    setIsOpen: { action: 'setIsOpen called' },
   },
   decorators: [
     (Story) => (
