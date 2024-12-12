@@ -5,12 +5,7 @@ function useIsMobile() {
 
   useEffect(() => {
     const checkIsMobile = () => {
-      const userAgent =
-        typeof window.navigator === 'undefined' ? '' : navigator.userAgent;
-      const mobile =
-        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-          userAgent,
-        );
+      const mobile = window.matchMedia('(max-width: 480px)').matches;
       setIsMobile(
         mobile || ('ontouchstart' in window && window.innerWidth <= 768),
       );
