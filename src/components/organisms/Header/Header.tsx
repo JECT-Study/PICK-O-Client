@@ -89,18 +89,12 @@ const Header = () => {
   // ];
 
   const handleLoginButton = () => {
-    if (accessToken) {
-const handleLoginButton = () => {
-  const handleNavigation = () => {
     setIsMenuOpen(false);
     if (accessToken) {
       logout.mutate();
     } else {
       navigate(`/${PATH.LOGIN}`);
     }
-  };
-  handleNavigation();
-};
   };
 
   const handleProfileIcon = () => {
@@ -191,7 +185,7 @@ const handleLoginButton = () => {
                 {accessToken ? (
                   <ProfileIcon
                     interaction="custom"
-                    imgUrl={member?.profileImageUrl ?? DefaultProfile}
+                    imgUrl={member?.profileImgUrl ?? DefaultProfile}
                     onClick={handleProfileIcon}
                   />
                 ) : (
@@ -208,5 +202,4 @@ const handleLoginButton = () => {
     </div>
   );
 };
-
 export default Header;
