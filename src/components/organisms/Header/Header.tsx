@@ -28,7 +28,7 @@ const Header = () => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const accessToken = useNewSelector(selectAccessToken) as string;
+  const accessToken = useNewSelector(selectAccessToken) ?? '';
   const logout = useLogoutMutation();
   const { member } = useMemberQuery(useParseJwt(accessToken)?.memberId);
 
