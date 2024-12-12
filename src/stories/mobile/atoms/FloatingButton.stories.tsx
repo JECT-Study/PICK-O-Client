@@ -1,13 +1,13 @@
 /* eslint-disable no-console */
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import MobileCreateButton from '@/components/mobile/atoms/MobileCreateButton/MobileCreateButton';
+import FloatingButton from '@/components/mobile/atoms/FloatingButton/FloatingButton';
 import { BrowserRouter } from 'react-router-dom';
 import { storyContainer, storyInnerContainer } from '@/stories/story.styles';
 
-const meta: Meta<typeof MobileCreateButton> = {
-  title: 'mobile/atoms/MobileCreateButton',
-  component: MobileCreateButton,
+const meta: Meta<typeof FloatingButton> = {
+  title: 'mobile/atoms/FloatingButton',
+  component: FloatingButton,
   parameters: {
     layout: 'centered',
   },
@@ -28,7 +28,7 @@ export const All: Story = {
     <ul css={storyContainer}>
       <li css={storyInnerContainer}>
         <h3>톡픽</h3>
-        <MobileCreateButton
+        <FloatingButton
           imageType="talkpick"
           label="톡픽"
           onClick={() => console.log('TalkPick button clicked')}
@@ -36,7 +36,7 @@ export const All: Story = {
       </li>
       <li css={storyInnerContainer}>
         <h3>밸런스 게임</h3>
-        <MobileCreateButton
+        <FloatingButton
           imageType="game"
           label="밸런스 게임"
           onClick={() => console.log('Game button clicked')}

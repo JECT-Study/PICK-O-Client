@@ -1,5 +1,4 @@
 import { css } from '@emotion/react';
-// import color from '@/styles/color';
 
 export const overlay = css({
   position: 'fixed',
@@ -21,7 +20,7 @@ export const dropdownStyling = css({
 export const ButtonWrapper = css({
   display: 'flex',
   flexDirection: 'column',
-  justifyItem: 'right',
+  justifyContent: 'flex-end',
   gap: '10px',
   position: 'absolute',
   bottom: '70px',

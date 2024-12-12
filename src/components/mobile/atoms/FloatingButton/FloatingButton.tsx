@@ -1,19 +1,19 @@
 import React, { ComponentPropsWithRef } from 'react';
 import { CircleGame, CircleTalkPick } from '@/assets';
-import * as S from './MobileCreateButton.style';
+import * as S from './FloatingButton.style';
 
-interface MobileCreateButtonProps extends ComponentPropsWithRef<'button'> {
+interface FloatingButtonProps extends ComponentPropsWithRef<'button'> {
   imageType: 'talkpick' | 'game';
   label: string;
   onClick?: () => void;
 }
 
-const MobileCreateButton = ({
+const FloatingButton = ({
   imageType,
   label,
   onClick,
   ...attributes
-}: MobileCreateButtonProps) => {
+}: FloatingButtonProps) => {
   let ImageComponent;
   switch (imageType) {
     case 'talkpick':
@@ -39,4 +39,4 @@ const MobileCreateButton = ({
   );
 };
 
-export default MobileCreateButton;
+export default FloatingButton;

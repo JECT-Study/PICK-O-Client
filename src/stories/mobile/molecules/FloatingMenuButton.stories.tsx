@@ -2,13 +2,13 @@ import React from 'react';
 import store from '@/store';
 import type { Meta, StoryObj } from '@storybook/react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import MobileCreateDropdown from '@/components/mobile/molecules/MobileCreateDropdown/MobileCreateDropdown';
+import FloatingMenuButton from '@/components/mobile/molecules/FloatingMenuButton/FloatingMenuButton';
 import ReactQueryProvider from '@/providers/ReactQueryProvider';
 import { Provider } from 'react-redux';
 
 const meta = {
-  title: 'mobile/molecules/MobileCreateDropdown',
-  component: MobileCreateDropdown,
+  title: 'mobile/molecules/FloatingMenuButton',
+  component: FloatingMenuButton,
   parameters: {
     layout: 'centered',
   },
@@ -23,7 +23,7 @@ const meta = {
       </Provider>
     ),
   ],
-} satisfies Meta<typeof MobileCreateDropdown>;
+} satisfies Meta<typeof FloatingMenuButton>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

@@ -2,15 +2,15 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { CircleClose, CirclePencil } from '@/assets';
-import MobileCreateButton from '@/components/mobile/atoms/MobileCreateButton/MobileCreateButton';
+import FloatingButton from '@/components/mobile/atoms/FloatingButton/FloatingButton';
 import { PATH } from '@/constants/path';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useNewSelector } from '@/store';
 import { selectAccessToken } from '@/store/auth';
-import * as S from './MobileCreateDropdown.style';
+import * as S from './FloatingMenuButton.style';
 
-const MobileCreateDropdown = () => {
+const FloatingMenuButton = () => {
   const navigate = useNavigate();
   const accessToken = useNewSelector(selectAccessToken);
   const [isOpen, setIsOpen] = useState(false);
@@ -53,12 +53,12 @@ const MobileCreateDropdown = () => {
       )}
       {isOpen && (
         <div css={S.ButtonWrapper}>
-          <MobileCreateButton
+          <FloatingButton
             imageType="talkpick"
             label="톡픽"
             onClick={handleCreatePostButton}
           />
-          <MobileCreateButton
+          <FloatingButton
             imageType="game"
             label="밸런스 게임"
             onClick={handleCreateGameButton}
@@ -75,4 +75,4 @@ const MobileCreateDropdown = () => {
     </div>
   );
 };
-export default MobileCreateDropdown;
+export default FloatingMenuButton;
