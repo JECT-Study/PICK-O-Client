@@ -10,7 +10,7 @@ import { useBestGameList } from '@/hooks/api/game/useBestGameListQuery';
 import { useLatestGameList } from '@/hooks/api/game/useLatestGameListQuery';
 import { ToggleGroupValue } from '@/types/toggle';
 import { NOTICE } from '@/constants/message';
-import MobileCreateDropdown from '@/components/mobile/molecules/MobileCreateDropdown/MobileCreateDropdown';
+import FloatingMenuButton from '@/components/mobile/molecules/FloatingMenuButton/FloatingMenuButton';
 import useIsMobile from '@/hooks/common/useIsMobile';
 import * as S from './LandingPage.style';
 
@@ -75,7 +75,7 @@ const LandingPage = () => {
             setActiveTab={setActiveTab}
           />
           <div css={S.floatingDropdownStyle}>
-            <MobileCreateDropdown />
+            <FloatingMenuButton />
           </div>
         </div>
       ) : (
