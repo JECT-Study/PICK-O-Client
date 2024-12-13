@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { TriangleDown, TriangleUp } from '@/assets';
-import { ToggleGroupItem, ToggleGroupValue } from '@/types/toggle';
+import {
+  ToggleGroupItem,
+  ToggleGroupProps,
+  ToggleGroupValue,
+} from '@/types/toggle';
 import * as S from './MobileToggleGroup.style';
 
-interface MobileToggleGroupProps {
-  selectedValue?: ToggleGroupValue;
-  onClick?: (value: ToggleGroupValue) => void;
-}
-
-const toggleItems: ToggleGroupItem[] = [
+const defaultItems: ToggleGroupItem[] = [
   {
     label: '인기순',
     value: { field: 'views', order: 'desc' },
@@ -20,9 +19,10 @@ const toggleItems: ToggleGroupItem[] = [
 ];
 
 const MobileToggleGroup = ({
+  items = defaultItems,
   selectedValue,
   onClick,
-}: MobileToggleGroupProps) => {
+}: ToggleGroupProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const handleMenuClick = (e: React.MouseEvent) => {
@@ -63,9 +63,7 @@ const MobileToggleGroup = ({
           css={S.unClickedToggleStyle}
           type="button"
           onClick={() =>
-            handleToggleClick(
-              isSelectedViews ? toggleItems[1].value : toggleItems[0].value,
-            )
+            handleToggleClick(isSelectedViews ? items[1].value : items[0].value)
           }
         >
           {isSelectedViews ? '최신순' : '인기순'}
