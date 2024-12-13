@@ -10,8 +10,8 @@ const meta: Meta<typeof DraftSaveButton> = {
   parameters: {
     layout: 'centered',
   },
-  args: {
-    onClick: () => console.log('clicked'),
+  argTypes: {
+    onClick: { action: '클릭 이벤트 발생' },
   },
   decorators: [
     (Story) => (

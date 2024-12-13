@@ -11,7 +11,6 @@ const meta: Meta<typeof MobileSideMenu> = {
   parameters: {
     layout: 'centered',
   },
-  tags: ['autodocs'],
   argTypes: {
     isOpen: { type: 'boolean' },
     accessToken: { type: 'string' },
