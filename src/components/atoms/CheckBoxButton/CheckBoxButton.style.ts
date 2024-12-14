@@ -48,6 +48,6 @@ export const checkBoxRadioStyling = css({
 
 export const checkBoxTextStyling = css(typo.Main.Medium, {
   marginLeft: '14px',
-  color: color.GY[4],
+  color: '#555555',
   cursor: 'pointer',
 });

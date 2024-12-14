@@ -43,6 +43,6 @@ export const reportTextAreaStyling = css(typo.Comment.Regular, {
   border: `1px solid ${color.GY[2]}`,
   backgroundColor: color.WT,
   boxShadow: '1px 2px 15px rgba(0, 0, 0, 0.05)',
-  color: color.GY[4],
+  color: '#555555',
   resize: 'none',
 });
