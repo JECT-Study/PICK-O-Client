@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
+import { BrowserRouter } from 'react-router-dom';
 import { SearchTalkPickListItem } from '@/types/search';
 import { storyContainer, storyInnerContainer } from '@/stories/story.styles';
 import SearchTalkPickList from '@/components/molecules/SearchTalkPickList/SearchTalkPickList';
@@ -24,6 +25,13 @@ const meta = {
   title: 'molecules/SearchTalkPickList',
   component: SearchTalkPickList,
   tags: ['autodocs'],
+  decorators: [
+    (Story) => (
+      <BrowserRouter>
+        <Story />
+      </BrowserRouter>
+    ),
+  ],
   argTypes: {
     searchTalkPickList: { control: { type: 'object' } },
   },
