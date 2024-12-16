@@ -83,6 +83,14 @@ export { default as GameEnding } from './gif/game-ending.gif';
 export { default as OptionError } from './svg/option-error.svg';
 export { default as MoreReply } from './svg/more-reply.svg';
 export { default as IcTrash } from './svg/trash.svg';
+export { default as MobileBookmarkDF } from './svg/mobile-bookmark-df.svg';
+export { default as MobileBookmarkPR } from './svg/mobile-bookmark-pr.svg';
+export { default as MobileShare } from './svg/mobile-share.svg';
+export { default as MobileModalClose } from './svg/mobile-modal-close.svg';
+export { default as MobileFolder } from './svg/mobile-folder.svg';
+export { default as MobileFolderCheck } from './svg/mobile-folder-check.svg';
+export { default as MobileCheckIcon } from './svg/mobile-check-icon.svg';
+export { default as MobileTempIcon } from './svg/mobile-temp-icon.svg';
 
 // TODO: 이전 SVG
 export { default as Email } from './svg/email.svg';
