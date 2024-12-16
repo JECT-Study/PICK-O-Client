@@ -22,9 +22,9 @@ const LandingPage = () => {
     field: 'views',
     order: 'desc',
   });
-  const [activeTab, setActiveTab] = useState<
-    '인기' | '커플' | '취향' | '월드컵'
-  >('인기');
+  const [activeTab, setActiveTab] = useState<'' | '커플' | '취향' | '월드컵'>(
+    '',
+  );
 
   const { bestGames } = useBestGameList(activeTab);
   const { latestGames } = useLatestGameList(activeTab);

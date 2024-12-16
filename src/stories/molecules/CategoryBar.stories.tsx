@@ -18,7 +18,7 @@ const meta: Meta<typeof CategoryBar> = {
     },
   },
   args: {
-    activeTab: '인기',
+    activeTab: '',
   },
 };
 
@@ -52,7 +52,7 @@ export const All: Story = {
       <ul css={storyContainer}>
         <li css={storyInnerContainer}>
           <h3>Popular Tab</h3>
-          <CategoryBar {...args} activeTab="인기" setActiveTab={setActiveTab} />
+          <CategoryBar {...args} activeTab="" setActiveTab={setActiveTab} />
         </li>
         <li css={storyInnerContainer}>
           <h3>Couple Tab</h3>

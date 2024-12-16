@@ -17,9 +17,9 @@ export interface ContentListProps {
   contents: GameContent[];
   selectedValue: ToggleGroupValue;
   setSelectedValue: React.Dispatch<React.SetStateAction<ToggleGroupValue>>;
-  activeTab: '인기' | '커플' | '취향' | '월드컵';
+  activeTab: '' | '커플' | '취향' | '월드컵';
   setActiveTab: React.Dispatch<
-    React.SetStateAction<'인기' | '커플' | '취향' | '월드컵'>
+    React.SetStateAction<'' | '커플' | '취향' | '월드컵'>
   >;
   isMobile?: boolean;
 }
