@@ -1,6 +1,5 @@
+/* eslint-disable react/no-unused-prop-types */
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { PATH } from '@/constants/path';
 import { highlightText } from '@/utils/highlightText';
 import { formatDateFromISO } from '@/utils/formatData';
 import * as S from './SearchTalkPickItem.style';
@@ -12,28 +11,19 @@ export interface SearchTalkPickItemProps {
   content: string;
   firstImgUrl: string;
   keyword: string;
+  onClick: () => void;
 }
 
 const SearchTalkPickItem = ({
-  id,
   title,
   createdAt,
   content,
   firstImgUrl,
   keyword,
+  onClick,
 }: SearchTalkPickItemProps) => {
-  const navigate = useNavigate();
-
-  const handleTalkPickClick = () => {
-    navigate(`/${PATH.TALKPICK(id)}`);
-  };
-
   return (
-    <button
-      type="button"
-      css={S.searchTalkPickItemStyle}
-      onClick={handleTalkPickClick}
-    >
+    <button type="button" css={S.searchTalkPickItemStyle} onClick={onClick}>
       <div css={S.leftContentStyle}>
         <div css={S.titleWrapStyle}>
           {highlightText(title, keyword).map((part) => (

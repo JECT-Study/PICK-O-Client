@@ -2,6 +2,7 @@ import React from 'react';
 import ContentsButton, {
   ContentsButtonProps,
 } from '@/components/molecules/ContentsButton/ContentsButton';
+import { PATH } from '@/constants/path';
 import { useNavigate } from 'react-router-dom';
 import * as S from './SearchGameList.style';
 
@@ -11,7 +12,7 @@ export type GameItem = Pick<
 > & {
   optionAImg?: string;
   optionBImg?: string;
-  id: number;
+  gameSetId: number;
 };
 
 export interface SearchGameListProps {
@@ -23,7 +24,7 @@ const SearchGameList = ({ gameList, keyword }: SearchGameListProps) => {
   const navigate = useNavigate();
 
   const handleItemClick = (gameId: number) => {
-    navigate(`/balancegame/${gameId}`);
+    navigate(`/${PATH.BALANCEGAME(gameId)}`);
   };
 
   return (
@@ -38,7 +39,7 @@ const SearchGameList = ({ gameList, keyword }: SearchGameListProps) => {
           showBookmark={false}
           size="small"
           keyword={keyword}
-          onClick={() => handleItemClick(game.id)}
+          onClick={() => handleItemClick(game.gameSetId)}
         />
       ))}
     </div>
