@@ -45,7 +45,7 @@ export const loggedOutContainerStyling = css({
   height: '260px',
   backdropFilter: 'blur(11px)',
   backgroundColor: 'rgba(255, 255, 255, 0.01)',
-  zIndex: 1,
+  zIndex: '1',
 });
 
 export const toastModalStyling = css({
