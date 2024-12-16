@@ -26,15 +26,17 @@ const LandingPage = () => {
     '',
   );
 
-  const { bestGames } = useBestGameList(activeTab);
-  const { latestGames } = useLatestGameList(activeTab);
+  const { bestGames } =
+    activeTab === '' || selectedValue.field === 'views'
+      ? useBestGameList(activeTab)
+      : { bestGames: undefined };
 
-  const contents = useMemo(() => {
-    if (selectedValue.field === 'views') {
-      return bestGames || [];
-    }
-    return latestGames || [];
-  }, [selectedValue, bestGames, latestGames]);
+  const { latestGames } =
+    activeTab !== '' && selectedValue.field !== 'views'
+      ? useLatestGameList(activeTab)
+      : { latestGames: undefined };
+
+  const contents = bestGames || latestGames || [];
 
   const handleService = () => {
     setIsServicePreparing(true);
