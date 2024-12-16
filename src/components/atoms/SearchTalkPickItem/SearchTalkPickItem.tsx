@@ -11,7 +11,7 @@ export interface SearchTalkPickItemProps {
   content: string;
   firstImgUrl: string;
   keyword: string;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 const SearchTalkPickItem = ({
