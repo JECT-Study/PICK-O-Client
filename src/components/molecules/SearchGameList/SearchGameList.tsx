@@ -1,22 +1,12 @@
 import React from 'react';
-import ContentsButton, {
-  ContentsButtonProps,
-} from '@/components/molecules/ContentsButton/ContentsButton';
+import { GameListItem } from '@/types/search';
+import ContentsButton from '@/components/molecules/ContentsButton/ContentsButton';
 import { PATH } from '@/constants/path';
 import { useNavigate } from 'react-router-dom';
 import * as S from './SearchGameList.style';
 
-export type GameItem = Pick<
-  ContentsButtonProps,
-  'title' | 'mainTag' | 'subTag'
-> & {
-  optionAImg?: string;
-  optionBImg?: string;
-  gameSetId: number;
-};
-
 export interface SearchGameListProps {
-  gameList: GameItem[];
+  gameList: GameListItem[];
   keyword: string;
 }
 

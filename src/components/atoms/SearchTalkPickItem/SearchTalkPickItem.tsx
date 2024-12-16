@@ -5,7 +5,6 @@ import { formatDateFromISO } from '@/utils/formatData';
 import * as S from './SearchTalkPickItem.style';
 
 export interface SearchTalkPickItemProps {
-  id: number;
   title: string;
   createdAt: string;
   content: string;

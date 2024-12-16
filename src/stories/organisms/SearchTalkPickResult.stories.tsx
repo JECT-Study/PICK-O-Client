@@ -1,13 +1,14 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
+import { SearchTalkPickListItem } from '@/types/search';
 import SearchTalkPickResult from '@/components/organisms/SearchTalkPickResult/SearchTalkPickResult';
 import { BrowserRouter } from 'react-router-dom';
 import { SampleWhole } from '@/assets';
-import type { SearchTalkPickItemProps } from '@/components/atoms/SearchTalkPickItem/SearchTalkPickItem';
 
-const SearchTalkPickItems: SearchTalkPickItemProps[] = Array.from(
+const SearchTalkPickItems: SearchTalkPickListItem[] = Array.from(
   { length: 4 },
   (_, index) => ({
+    id: 0,
     title: `톡픽 ${index + 1} - 월클 정국 VS 존잘 차은우`,
     createdAt: '2024.08.26',
     content: '우하하우하하 내용입니다.',

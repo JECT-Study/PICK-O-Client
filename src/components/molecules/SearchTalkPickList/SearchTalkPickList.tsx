@@ -1,14 +1,13 @@
 import React from 'react';
-import SearchTalkPickItem, {
-  SearchTalkPickItemProps,
-} from '@/components/atoms/SearchTalkPickItem/SearchTalkPickItem';
+import SearchTalkPickItem from '@/components/atoms/SearchTalkPickItem/SearchTalkPickItem';
+import { SearchTalkPickListItem } from '@/types/search';
 import { PATH } from '@/constants/path';
 import { useNavigate } from 'react-router-dom';
 import Divider from '@/components/atoms/Divider/Divider';
 import * as S from './SearchTalkPickList.style';
 
 export interface SearchTalkPickListProps {
-  searchTalkPickList: SearchTalkPickItemProps[];
+  searchTalkPickList: SearchTalkPickListItem[];
   keyword: string;
 }
 
@@ -28,7 +27,6 @@ const SearchTalkPickList = ({
         <div key={searchItem.title}>
           <SearchTalkPickItem
             key={searchItem.title}
-            id={searchItem.id}
             title={searchItem.title}
             createdAt={searchItem.createdAt}
             content={searchItem.content}

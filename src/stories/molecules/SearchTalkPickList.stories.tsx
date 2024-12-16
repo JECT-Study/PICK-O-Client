@@ -16,76 +16,97 @@ const meta = {
   args: {
     searchTalkPickList: [
       {
+        id: 0,
         title: '월클 정국 VS 존잘 차은우',
         createdAt: '2024.08.26',
         content:
           '우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하',
         firstImgUrl: SampleWhole,
+        keyword: '우하하',
       },
       {
+        id: 0,
         title: '월클 정국 VS 존잘 차은우',
         createdAt: '2024.08.26',
         content:
           '우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하',
         firstImgUrl: SampleWhole,
+        keyword: '우하하',
       },
       {
+        id: 0,
         title: '월클 정국 VS 존잘 차은우',
         createdAt: '2024.08.26',
         content:
           '우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하',
         firstImgUrl: SampleWhole,
+        keyword: '우하하',
       },
       {
+        id: 0,
         title: '월클 정국 VS 존잘 차은우',
         createdAt: '2024.08.26',
         content:
           '우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하',
         firstImgUrl: SampleWhole,
+        keyword: '우하하',
       },
       {
+        id: 0,
         title: '월클 정국 VS 존잘 차은우',
         createdAt: '2024.08.26',
         content:
           '우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하',
         firstImgUrl: SampleWhole,
+        keyword: '우하하',
       },
       {
+        id: 0,
         title: '월클 정국 VS 존잘 차은우',
         createdAt: '2024.08.26',
         content:
           '우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하',
         firstImgUrl: SampleWhole,
+        keyword: '우하하',
       },
       {
+        id: 0,
         title: '월클 정국 VS 존잘 차은우',
         createdAt: '2024.08.26',
         content:
           '우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하',
         firstImgUrl: SampleWhole,
+        keyword: '우하하',
       },
       {
+        id: 0,
         title: '월클 정국 VS 존잘 차은우',
         createdAt: '2024.08.26',
         content:
           '우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하',
         firstImgUrl: SampleWhole,
+        keyword: '우하하',
       },
       {
+        id: 0,
         title: '월클 정국 VS 존잘 차은우',
         createdAt: '2024.08.26',
         content:
           '우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하',
         firstImgUrl: SampleWhole,
+        keyword: '우하하',
       },
       {
+        id: 0,
         title: '월클 정국 VS 존잘 차은우',
         createdAt: '2024.08.26',
         content:
           '우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하',
         firstImgUrl: SampleWhole,
+        keyword: '우하하',
       },
     ],
+    keyword: '우하하',
   },
 } satisfies Meta<typeof SearchTalkPickList>;
 
@@ -103,13 +124,16 @@ export const Default: Story = {
   args: {
     searchTalkPickList: [
       {
+        id: 0,
         title: '월클 정국 VS 존잘 차은우',
         createdAt: '2024.08.26',
         content:
           '우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하',
         firstImgUrl: SampleWhole,
+        keyword: '우하하',
       },
     ],
+    keyword: '우하하',
   },
 };
 
@@ -119,7 +143,10 @@ export const All: Story = {
     <ul css={storyContainer}>
       <li css={storyInnerContainer}>
         <h3>Single SearchTalkPickList</h3>
-        <SearchTalkPickList searchTalkPickList={[args.searchTalkPickList[0]]} />
+        <SearchTalkPickList
+          {...args}
+          searchTalkPickList={[args.searchTalkPickList[0]]}
+        />
       </li>
 
       <li css={storyInnerContainer}>
@@ -129,7 +156,7 @@ export const All: Story = {
 
       <li css={storyInnerContainer}>
         <h3>None</h3>
-        <SearchTalkPickList searchTalkPickList={[]} />
+        <SearchTalkPickList {...args} searchTalkPickList={[]} />
       </li>
     </ul>
   ),

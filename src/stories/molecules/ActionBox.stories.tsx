@@ -1,5 +1,6 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
+import { BrowserRouter } from 'react-router-dom';
 import ActionBox from '@/components/molecules/ActionBox/ActionBox';
 import { storyContainer, storyInnerContainer } from '@/stories/story.styles';
 
@@ -10,6 +11,13 @@ const meta = {
     layout: 'centered',
   },
   tags: ['autodocs'],
+  decorators: [
+    (Story) => (
+      <BrowserRouter>
+        <Story />
+      </BrowserRouter>
+    ),
+  ],
 } satisfies Meta<typeof ActionBox>;
 
 export default meta;
