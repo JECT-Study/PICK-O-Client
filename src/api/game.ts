@@ -40,6 +40,17 @@ export const getGameBySetId = async (gameSetId: Id) => {
   return data;
 };
 
+export const updateGameBySetId = async (
+  gameSetId: Id,
+  gameData: BalanceGame,
+) => {
+  const { data } = await axiosInstance.put<BalanceGame>(
+    END_POINT.GAME_SET(gameSetId),
+    gameData,
+  );
+  return data;
+};
+
 export const putGame = async (gameId: Id, gameData: Game) => {
   const { data } = await axiosInstance.put<GameContent>(
     END_POINT.EDIT_GAME(gameId),
