@@ -17,7 +17,7 @@ import LoginModal from '@/components/molecules/LoginModal/LoginModal';
 import BalanceGameBox from '@/components/molecules/BalanceGameBox/BalanceGameBox';
 import useToastModal from '@/hooks/modal/useToastModal';
 import { useGameBookmark } from '@/hooks/game/useBalanceGameBookmark';
-import { useGuestGameVote } from '@/hooks/game/useGuestGameVote';
+import { useGuestGameVote } from '@/hooks/game/useBalanceGameVote';
 import * as S from './BalanceGameSection.style';
 
 export interface BalanceGameSectionProps {

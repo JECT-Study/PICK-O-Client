@@ -1,12 +1,10 @@
 import React from 'react';
 import { GameOption } from '@/types/game';
 import BalanceGameButton from '@/components/mobile/atoms/BalanceGameButton/BalanceGameButton';
-import { useCreateGameVoteMutation } from '@/hooks/api/vote/useCreateGameVoteMutation';
-import { useEditGameVoteMutation } from '@/hooks/api/vote/useEditGameVoteMutation';
-import { useDeleteGameVoteMutation } from '@/hooks/api/vote/useDeleteGameVoteMutation';
 import { useNewSelector } from '@/store';
 import { selectAccessToken } from '@/store/auth';
 import { MyVoteOption, VoteOption } from '@/types/vote';
+import { useUserGameVote } from '@/hooks/game/useBalanceGameVote';
 import * as S from './BalanceGameBox.style';
 
 export interface BalanceGameBoxProps {
@@ -33,36 +31,11 @@ const BalanceGameBox = ({
   const optionA = options[0];
   const optionB = options[1];
 
-  const { mutate: createGameVote } = useCreateGameVoteMutation(
+  const { handleUserGameVote } = useUserGameVote(
     gameSetId,
     gameId,
+    handleNextStage,
   );
-  const { mutate: editGameVote } = useEditGameVoteMutation(gameSetId, gameId);
-  const { mutate: deleteGameVote } = useDeleteGameVoteMutation(
-    gameSetId,
-    gameId,
-  );
-
-  const handleUserGameVote = (
-    selectedOption: MyVoteOption,
-    voteOption: VoteOption,
-  ) => {
-    if (!selectedOption) {
-      createGameVote(voteOption, {
-        onSuccess: () => {
-          const nextStageTimer = setTimeout(() => {
-            handleNextStage();
-          }, 500);
-
-          return () => clearTimeout(nextStageTimer);
-        },
-      });
-    } else if (selectedOption === voteOption) {
-      deleteGameVote();
-    } else {
-      editGameVote(voteOption);
-    }
-  };
 
   const handleButtonClick = (voteOption: VoteOption) => {
     if (accessToken) {

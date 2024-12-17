@@ -1,6 +1,9 @@
 import { SetStateAction, useEffect } from 'react';
 import { GameSet } from '@/types/game';
 import { MyVoteOption, VoteOption, VoteRecord } from '@/types/vote';
+import { useCreateGameVoteMutation } from '@/hooks/api/vote/useCreateGameVoteMutation';
+import { useEditGameVoteMutation } from '@/hooks/api/vote/useEditGameVoteMutation';
+import { useDeleteGameVoteMutation } from '@/hooks/api/vote/useDeleteGameVoteMutation';
 
 export const useGuestGameVote = (
   guestVotedList: VoteRecord[],
@@ -57,4 +60,43 @@ export const useGuestGameVote = (
   };
 
   return { handleGuestGameVote };
+};
+
+export const useUserGameVote = (
+  gameSetId: number,
+  gameId: number,
+  handleNextStage: () => void,
+) => {
+  const { mutate: createGameVote } = useCreateGameVoteMutation(
+    gameSetId,
+    gameId,
+  );
+  const { mutate: editGameVote } = useEditGameVoteMutation(gameSetId, gameId);
+  const { mutate: deleteGameVote } = useDeleteGameVoteMutation(
+    gameSetId,
+    gameId,
+  );
+
+  const handleUserGameVote = (
+    selectedOption: MyVoteOption,
+    voteOption: VoteOption,
+  ) => {
+    if (!selectedOption) {
+      createGameVote(voteOption, {
+        onSuccess: () => {
+          const nextStageTimer = setTimeout(() => {
+            handleNextStage();
+          }, 500);
+
+          return () => clearTimeout(nextStageTimer);
+        },
+      });
+    } else if (selectedOption === voteOption) {
+      deleteGameVote();
+    } else {
+      editGameVote(voteOption);
+    }
+  };
+
+  return { handleUserGameVote };
 };

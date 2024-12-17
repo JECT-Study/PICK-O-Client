@@ -13,7 +13,7 @@ import GameTagChip from '@/components/mobile//atoms/GameTagChip/GameTagChip';
 import GameStageLabel from '@/components/mobile//atoms/GameStageLabel/GameStageLabel';
 import ToastModal from '@/components/atoms/ToastModal/ToastModal';
 import BalanceGameBox from '@/components/mobile/molecules/BalanceGameBox/BalanceGameBox';
-import { useGuestGameVote } from '@/hooks/game/useGuestGameVote';
+import { useGuestGameVote } from '@/hooks/game/useBalanceGameVote';
 import { useGameBookmark } from '@/hooks/game/useBalanceGameBookmark';
 import ShareModal from '../../molecules/ShareModal/ShareModal';
 import * as S from './BalanceGameSection.style';
