@@ -20,6 +20,9 @@ export const PATH = {
   TODAY_TALKPICK: 'todaytalkpick',
   TALKPICK_PLACE: 'talkpickplace',
   BALANCEGAME: (setId: number | string = ':setId') => `balancegame/${setId}`,
+  BALANCEGAME_EDIT_ROUTE: 'balancegame/edit/:setId',
+  BALANCEGAME_EDIT_LINK: (setId: number | string = ':setId') =>
+    `balancegame/edit/${setId}`,
   TALKPICK: (talkPickId: number | string = ':talkPickId') =>
     `talkpick/${talkPickId}`,
 
