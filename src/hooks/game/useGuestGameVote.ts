@@ -1,14 +1,14 @@
-import { useEffect, useState } from 'react';
+import { SetStateAction, useEffect } from 'react';
 import { GameSet } from '@/types/game';
 import { MyVoteOption, VoteOption, VoteRecord } from '@/types/vote';
 
 export const useGuestGameVote = (
-  game: GameSet,
+  guestVotedList: VoteRecord[],
+  setGuestVotedList: (value: SetStateAction<VoteRecord[]>) => void,
   gameSetId: number,
   currentStage: number,
+  game?: GameSet,
 ) => {
-  const [guestVotedList, setGuestVotedList] = useState<VoteRecord[]>([]);
-
   useEffect(() => {
     const updateGuestVotedList = () => {
       const storedVotes = localStorage.getItem(`game_${gameSetId}`);
@@ -30,7 +30,7 @@ export const useGuestGameVote = (
     return () => {
       window.removeEventListener('storage', handleStorageChange);
     };
-  }, [gameSetId]);
+  }, [gameSetId, setGuestVotedList]);
 
   const handleGuestGameVote = (
     selectedOption: MyVoteOption,
@@ -43,7 +43,7 @@ export const useGuestGameVote = (
 
     if (!selectedOption) {
       updatedVotes.push({
-        gameId: game?.gameDetailResponses[currentStage]?.id,
+        gameId: game?.gameDetailResponses[currentStage]?.id as number,
         votedOption: voteOption,
       });
     } else if (selectedOption === voteOption) {

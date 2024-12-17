@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import React, { useEffect, useRef, useState } from 'react';
 import { BookmarkDF, BookmarkPR, NextArrow, PrevArrow, Share } from '@/assets';
+import { VoteRecord } from '@/types/vote';
 import { ERROR, SUCCESS } from '@/constants/message';
 import { GameDetail, GameSet } from '@/types/game';
 import { formatDateFromISO } from '@/utils/formatData';
@@ -15,9 +16,9 @@ import ShareModal from '@/components/molecules/ShareModal/ShareModal';
 import LoginModal from '@/components/molecules/LoginModal/LoginModal';
 import BalanceGameBox from '@/components/molecules/BalanceGameBox/BalanceGameBox';
 import useToastModal from '@/hooks/modal/useToastModal';
+import { useGuestGameVote } from '@/hooks/game/useGuestGameVote';
 import { useCreateGameBookmarkMutation } from '@/hooks/api/bookmark/useCreateGameBookmarkMutation';
 import { useDeleteGameBookmarkMutation } from '@/hooks/api/bookmark/useDeleteGameBookmarkMutation';
-import { MyVoteOption, VoteOption, VoteRecord } from '@/types/vote';
 import * as S from './BalanceGameSection.style';
 
 export interface BalanceGameSectionProps {
@@ -59,54 +60,14 @@ const BalanceGameSection = ({
 
   const [guestVotedList, setGuestVotedList] = useState<VoteRecord[]>([]);
 
-  useEffect(() => {
-    const updateGuestVotedList = () => {
-      const storedVotes = localStorage.getItem(`game_${gameSetId}`);
-      setGuestVotedList(
-        storedVotes ? (JSON.parse(storedVotes) as VoteRecord[]) : [],
-      );
-    };
-
-    updateGuestVotedList();
-
-    const handleStorageChange = (event: StorageEvent) => {
-      if (event.key === `game_${gameSetId}`) {
-        updateGuestVotedList();
-      }
-    };
-
-    window.addEventListener('storage', handleStorageChange);
-    updateGuestVotedList();
-    return () => {
-      window.removeEventListener('storage', handleStorageChange);
-    };
-  }, [gameSetId]);
-
-  const handleGuestGameVote = (
-    selectedOption: MyVoteOption,
-    voteOption: VoteOption,
-  ) => {
-    const updatedVotes = [...guestVotedList];
-    const currentVoteIndex = updatedVotes.findIndex(
-      (vote) => vote.gameId === game?.gameDetailResponses[currentStage]?.id,
-    );
-
-    if (!selectedOption) {
-      updatedVotes.push({
-        gameId: game?.gameDetailResponses[currentStage]?.id as number,
-        votedOption: voteOption,
-      });
-    } else if (selectedOption === voteOption) {
-      updatedVotes.splice(currentVoteIndex, 1);
-    } else {
-      updatedVotes[currentVoteIndex].votedOption = voteOption;
-    }
-
-    setGuestVotedList(updatedVotes);
-    localStorage.setItem(`game_${gameSetId}`, JSON.stringify(updatedVotes));
-  };
-
   const currentGame: GameDetail = gameStages[currentStage];
+  const { handleGuestGameVote } = useGuestGameVote(
+    guestVotedList,
+    setGuestVotedList,
+    gameSetId,
+    currentStage,
+    game,
+  );
 
   const [loginModalOpen, setLoginModalOpen] = useState<boolean>(false);
   const [shareModalOpen, setShareModalOpen] = useState<boolean>(false);
