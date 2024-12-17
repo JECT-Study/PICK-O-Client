@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { BookmarkDF, BookmarkPR, NextArrow, PrevArrow, Share } from '@/assets';
 import { VoteRecord } from '@/types/vote';
-import { ERROR, SUCCESS } from '@/constants/message';
+import { SUCCESS } from '@/constants/message';
 import { GameDetail, GameSet } from '@/types/game';
 import { formatDateFromISO } from '@/utils/formatData';
 import Chips from '@/components/atoms/Chips/Chips';
@@ -16,15 +16,14 @@ import ShareModal from '@/components/molecules/ShareModal/ShareModal';
 import LoginModal from '@/components/molecules/LoginModal/LoginModal';
 import BalanceGameBox from '@/components/molecules/BalanceGameBox/BalanceGameBox';
 import useToastModal from '@/hooks/modal/useToastModal';
+import { useGameBookmark } from '@/hooks/game/useBalanceGameBookmark';
 import { useGuestGameVote } from '@/hooks/game/useGuestGameVote';
-import { useCreateGameBookmarkMutation } from '@/hooks/api/bookmark/useCreateGameBookmarkMutation';
-import { useDeleteGameBookmarkMutation } from '@/hooks/api/bookmark/useDeleteGameBookmarkMutation';
 import * as S from './BalanceGameSection.style';
 
 export interface BalanceGameSectionProps {
   gameSetId: number;
   game?: GameSet;
-  isMyGame?: boolean;
+  isMyGame: boolean;
   currentStage: number;
   setCurrentStage: React.Dispatch<React.SetStateAction<number>>;
   handleNextGame: () => void;
@@ -121,35 +120,15 @@ const BalanceGameSection = ({
     setCurrentStage((stage) => stage + 1);
   };
 
-  const { mutate: createBookmark } = useCreateGameBookmarkMutation(
+  const { handleBookmarkClick } = useGameBookmark(
+    isGuest,
+    isMyGame,
+    currentGame.myBookmark,
     gameSetId,
     currentGame.id,
+    showToastModal,
+    game,
   );
-
-  const { mutate: deleteBookmark } = useDeleteGameBookmarkMutation(
-    gameSetId,
-    currentGame.id,
-  );
-
-  const handleBookmarkClick = () => {
-    if (!game) return;
-
-    if (isGuest) {
-      setLoginModalOpen(true);
-      return;
-    }
-
-    if (isMyGame) {
-      showToastModal(ERROR.BOOKMARK.MY_GAME);
-      return;
-    }
-
-    if (currentGame.myBookmark) {
-      deleteBookmark();
-    } else {
-      createBookmark();
-    }
-  };
 
   const myGameItem: MenuItem[] = [{ label: '수정' }, { label: '삭제' }];
   const otherGameItem: MenuItem[] = [{ label: '신고' }];
@@ -257,7 +236,7 @@ const BalanceGameSection = ({
           buttonLabel="이 게임 제법 폼이 좋아?"
           icon={currentGame.myBookmark ? <BookmarkPR /> : <BookmarkDF />}
           iconLabel="저장하기"
-          onClick={handleBookmarkClick}
+          onClick={() => handleBookmarkClick(() => setLoginModalOpen(true))}
         />
       </div>
     </div>

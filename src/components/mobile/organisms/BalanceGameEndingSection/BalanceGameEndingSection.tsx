@@ -6,10 +6,8 @@ import {
   MobileShare,
 } from '@/assets';
 import { PATH } from '@/constants/path';
-import { ERROR } from '@/constants/message';
 import { useNavigate } from 'react-router-dom';
-import { useCreateDoneGameBookmarkMutation } from '@/hooks/api/bookmark/useCreateDoneGameBookmark';
-import { useDeleteDoneGameBookmarkMutation } from '@/hooks/api/bookmark/useDeleteDoneGameBookmark';
+import { useGameEndBookmark } from '@/hooks/game/useBalanceGameBookmark';
 import useToastModal from '@/hooks/modal/useToastModal';
 import ToastModal from '@/components/atoms/ToastModal/ToastModal';
 import InteractionButton from '../../atoms/InteractionButton/InteractionButton';
@@ -36,29 +34,13 @@ const BalanceGameEndingSection = ({
   const [shareModalOpen, setShareModalOpen] = useState<boolean>(false);
   const { isVisible, modalText, showToastModal } = useToastModal();
 
-  const { mutate: createEndBookmark } =
-    useCreateDoneGameBookmarkMutation(gameSetId);
-
-  const { mutate: deleteEndBookmark } =
-    useDeleteDoneGameBookmarkMutation(gameSetId);
-
-  const handleEndBookmarkClick = () => {
-    if (isGuest) {
-      navigate(`/${PATH.LOGIN}`);
-      return;
-    }
-
-    if (isMyGame) {
-      showToastModal(ERROR.BOOKMARK.MY_GAME);
-      return;
-    }
-
-    if (isMyEndBookmark) {
-      deleteEndBookmark();
-    } else {
-      createEndBookmark();
-    }
-  };
+  const { handleEndBookmarkClick } = useGameEndBookmark(
+    isGuest,
+    isMyGame,
+    isMyEndBookmark,
+    gameSetId,
+    showToastModal,
+  );
 
   return (
     <div css={S.balanceGameEndingStyling}>
@@ -89,7 +71,9 @@ const BalanceGameEndingSection = ({
           buttonLabel="이 게임 제법 폼이 좋아?"
           icon={isMyEndBookmark ? <MobileBookmarkPR /> : <MobileBookmarkDF />}
           iconLabel="저장하기"
-          onClick={handleEndBookmarkClick}
+          onClick={() =>
+            handleEndBookmarkClick(() => navigate(`/${PATH.LOGIN}`))
+          }
         />
       </div>
       <div css={S.buttonStyling}>

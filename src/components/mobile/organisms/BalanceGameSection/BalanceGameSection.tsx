@@ -1,13 +1,11 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect, useRef } from 'react';
 import { MobileBookmarkDF, MobileBookmarkPR, MobileShare } from '@/assets';
 import { useNavigate } from 'react-router-dom';
 import { GameDetail, GameSet } from '@/types/game';
-import { ERROR } from '@/constants/message';
 import { PATH } from '@/constants/path';
 import MenuTap, { MenuItem } from '@/components/atoms/MenuTap/MenuTap';
 import useToastModal from '@/hooks/modal/useToastModal';
-import { MyVoteOption, VoteOption, VoteRecord } from '@/types/vote';
+import { VoteRecord } from '@/types/vote';
 import Button from '@/components/mobile//atoms/Button/Button';
 import IconButton from '@/components/mobile//atoms/IconButton/IconButton';
 import GameTag from '@/components/mobile//atoms/GameTag/GameTag';
@@ -16,15 +14,14 @@ import GameStageLabel from '@/components/mobile//atoms/GameStageLabel/GameStageL
 import ToastModal from '@/components/atoms/ToastModal/ToastModal';
 import BalanceGameBox from '@/components/mobile/molecules/BalanceGameBox/BalanceGameBox';
 import { useGuestGameVote } from '@/hooks/game/useGuestGameVote';
-import { useCreateGameBookmarkMutation } from '@/hooks/api/bookmark/useCreateGameBookmarkMutation';
-import { useDeleteGameBookmarkMutation } from '@/hooks/api/bookmark/useDeleteGameBookmarkMutation';
-import * as S from './BalanceGameSection.style';
+import { useGameBookmark } from '@/hooks/game/useBalanceGameBookmark';
 import ShareModal from '../../molecules/ShareModal/ShareModal';
+import * as S from './BalanceGameSection.style';
 
 export interface BalanceGameSectionProps {
   gameSetId: number;
   game?: GameSet;
-  isMyGame?: boolean;
+  isMyGame: boolean;
   currentStage: number;
   setCurrentStage: React.Dispatch<React.SetStateAction<number>>;
   handleNextGame: () => void;
@@ -98,35 +95,15 @@ const BalanceGameSection = ({
     setCurrentStage((stage) => stage + 1);
   };
 
-  const { mutate: createBookmark } = useCreateGameBookmarkMutation(
+  const { handleBookmarkClick } = useGameBookmark(
+    isGuest,
+    isMyGame,
+    currentGame.myBookmark,
     gameSetId,
     currentGame.id,
+    showToastModal,
+    game,
   );
-
-  const { mutate: deleteBookmark } = useDeleteGameBookmarkMutation(
-    gameSetId,
-    currentGame.id,
-  );
-
-  const handleBookmarkClick = () => {
-    if (!game) return;
-
-    if (isGuest) {
-      navigate(`/${PATH.LOGIN}`);
-      return;
-    }
-
-    if (isMyGame) {
-      showToastModal(ERROR.BOOKMARK.MY_GAME);
-      return;
-    }
-
-    if (currentGame.myBookmark) {
-      deleteBookmark();
-    } else {
-      createBookmark();
-    }
-  };
 
   const myGameItem: MenuItem[] = [{ label: '수정' }, { label: '삭제' }];
   const otherGameItem: MenuItem[] = [{ label: '신고' }];
@@ -160,7 +137,9 @@ const BalanceGameSection = ({
                 <MobileBookmarkDF />
               )
             }
-            onClick={handleBookmarkClick}
+            onClick={() =>
+              handleBookmarkClick(() => navigate(`/${PATH.LOGIN}`))
+            }
           />
         </div>
       </div>
