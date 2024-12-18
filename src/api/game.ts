@@ -4,6 +4,7 @@ import {
   BalanceGame,
   Game,
   GameContent,
+  GameParams,
   GameSet,
   TempGame,
 } from '@/types/game';
@@ -61,12 +62,12 @@ export const getNewGames = async () => {
 };
 
 export const getBestGames = async (tagName: string) => {
-  const params: Record<string, any> = {
+  const params: GameParams = {
     page: GAME_VALUE.PAGE,
     size: GAME_VALUE.SIZE,
   };
 
-  if (tagName) {
+  if (tagName !== '인기') {
     params.tagName = tagName;
   }
 
@@ -78,12 +79,12 @@ export const getBestGames = async (tagName: string) => {
 };
 
 export const getLatestGames = async (tagName: string) => {
-  const params: Record<string, any> = {
+  const params: GameParams = {
     page: GAME_VALUE.PAGE,
     size: GAME_VALUE.SIZE,
   };
 
-  if (tagName) {
+  if (tagName !== '인기') {
     params.tagName = tagName;
   }
 
