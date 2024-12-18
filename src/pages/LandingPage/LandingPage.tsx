@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import TopBanner from '@/components/molecules/TopBanner/TopBanner';
 import SearchTagBar from '@/components/molecules/SearchTagBar/SearchTagBar';
 import CategoryBox from '@/components/molecules/CategoryBox/CategoryBox';
@@ -22,17 +22,17 @@ const LandingPage = () => {
     field: 'views',
     order: 'desc',
   });
-  const [activeTab, setActiveTab] = useState<'' | '커플' | '취향' | '월드컵'>(
-    '',
-  );
+  const [activeTab, setActiveTab] = useState<
+    '인기' | '커플' | '취향' | '월드컵'
+  >('인기');
 
   const { bestGames } =
-    activeTab === '' || selectedValue.field === 'views'
+    activeTab === '인기' || selectedValue.field === 'views'
       ? useBestGameList(activeTab)
       : { bestGames: undefined };
 
   const { latestGames } =
-    activeTab !== '' && selectedValue.field !== 'views'
+    activeTab !== '인기' && selectedValue.field !== 'views'
       ? useLatestGameList(activeTab)
       : { latestGames: undefined };
 

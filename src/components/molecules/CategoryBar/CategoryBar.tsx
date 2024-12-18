@@ -13,9 +13,9 @@ import * as S from './CategoryBar.style';
 import BalanceGameCategoryButton from '../../atoms/BalanceGameCategoryButton/BalanceGameCategoryButton';
 
 export interface CategoryBarProps {
-  activeTab: '' | '커플' | '취향' | '월드컵';
+  activeTab: '인기' | '커플' | '취향' | '월드컵';
   setActiveTab: React.Dispatch<
-    React.SetStateAction<'' | '커플' | '취향' | '월드컵'>
+    React.SetStateAction<'인기' | '커플' | '취향' | '월드컵'>
   >;
   isMobile?: boolean;
 }
@@ -25,9 +25,9 @@ const CategoryBar = ({
   setActiveTab,
   isMobile = false,
 }: CategoryBarProps) => {
-  const getBadgeText = (tab: '' | '커플' | '취향' | '월드컵') => {
+  const getBadgeText = (tab: '인기' | '커플' | '취향' | '월드컵') => {
     switch (tab) {
-      case '':
+      case '인기':
         return '화제의 중심';
       case '커플':
         return '알아가 볼까';
@@ -45,9 +45,9 @@ const CategoryBar = ({
       <BalanceGameCategoryButton
         label="인기"
         icon={isMobile ? <PopularSmall /> : <Popular />}
-        active={activeTab === ''}
-        badgeText={getBadgeText('')}
-        onClick={() => setActiveTab('')}
+        active={activeTab === '인기'}
+        badgeText={getBadgeText('인기')}
+        onClick={() => setActiveTab('인기')}
       />
       <BalanceGameCategoryButton
         label="커플"
