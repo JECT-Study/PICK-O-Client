@@ -2,20 +2,25 @@ import { css } from '@emotion/react';
 import color from '@/styles/color';
 import typo from '@/styles/typo';
 
-export const buttonWrapStyle = (option: 'A' | 'B', isSelected: boolean) =>
-  css({
-    all: 'unset',
-    cursor: 'pointer',
-    display: 'flex',
-    flexDirection: 'column',
-    width: '305px',
-    backgroundColor: color.WT,
-    borderRadius: '10px',
-    overflow: 'hidden',
-    outline: isSelected
-      ? `2px solid ${option === 'A' ? color.RED : color.BLUE}`
-      : 'none',
+export const buttonWrapStyle = css({
+  all: 'unset',
+  cursor: 'pointer',
+  display: 'flex',
+  flexDirection: 'column',
+  width: '305px',
+  backgroundColor: color.WT,
+  borderRadius: '10px',
+  overflow: 'hidden',
+});
+
+export const getOutlineStyle = (option: 'A' | 'B', isSelected: boolean) => {
+  if (!isSelected) return css({});
+
+  return css({
+    outline:
+      option === 'A' ? `2px solid ${color.RED}` : `2px solid ${color.BLUE}`,
   });
+};
 
 export const nameWrapper = css({
   display: 'flex',

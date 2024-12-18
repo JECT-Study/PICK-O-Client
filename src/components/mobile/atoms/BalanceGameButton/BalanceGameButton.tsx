@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unused-prop-types */
 import React from 'react';
 import { RedCheckIcon, BlueCheckIcon } from '@/assets';
 import * as S from './BalanceGameButton.style';
@@ -34,7 +33,7 @@ const BalanceGameButton = ({
   return (
     <button
       type="button"
-      css={S.buttonWrapStyle(optionType, isSelected)}
+      css={[S.buttonWrapStyle, S.getOutlineStyle(optionType, isSelected)]}
       onClick={handleClick}
     >
       <div css={S.nameWrapper}>
