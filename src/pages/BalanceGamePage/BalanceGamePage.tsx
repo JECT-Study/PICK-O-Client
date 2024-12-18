@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useNewSelector } from '@/store';
 import { selectAccessToken } from '@/store/auth';
 import { useParseJwt } from '@/hooks/common/useParseJwt';
@@ -8,11 +8,21 @@ import { useGameBySetId } from '@/hooks/api/game/useGameBySetIdQuery';
 import Divider from '@/components/atoms/Divider/Divider';
 import BalanceGameSection from '@/components/organisms/BalanceGameSection/BalanceGameSection';
 import BalanceGameEndingSection from '@/components/organisms/BalanceGameEndingSection/BalanceGameEndingSection';
+import useModal from '@/hooks/modal/useModal';
+import { PATH } from '@/constants/path';
+import TextModal, {
+  TextModalProps,
+} from '@/components/molecules/TextModal/TextModal';
 import * as S from './BalanceGamePage.style';
 
 const BalanceGamePage = () => {
   const { setId } = useParams<{ setId: string }>();
   const gameSetId = Number(setId);
+  const navigate = useNavigate();
+  const { isOpen, openModal, closeModal } = useModal();
+  const [modalProps, setModalProps] = useState<Omit<TextModalProps, 'isOpen'>>({
+    text: '',
+  });
 
   const { gameSet } = useGameBySetId(gameSetId);
   const [currentStage, setCurrentStage] = useState<number>(0);
@@ -28,6 +38,32 @@ const BalanceGamePage = () => {
 
   const handlePrevGame = () => {
     setCurrentStage((stage) => (stage > 0 ? stage - 1 : stage));
+  };
+
+  const handleEditClick = () => {
+    navigate(`/${PATH.BALANCEGAME_EDIT_LINK(gameSetId)}`);
+  };
+
+  const handleDeleteClick = () => {
+    setModalProps({
+      text: '정말 삭제하시겠습니까?',
+      onConfirm: () => {
+        closeModal();
+      },
+      onClose: closeModal,
+    });
+    openModal();
+  };
+
+  const handleReportClick = () => {
+    setModalProps({
+      text: '정말 신고하시겠습니까?',
+      onConfirm: () => {
+        closeModal();
+      },
+      onClose: closeModal,
+    });
+    openModal();
   };
 
   return (
@@ -57,8 +93,14 @@ const BalanceGamePage = () => {
           setCurrentStage={setCurrentStage}
           handleNextGame={handleNextGame}
           handlePrevGame={handlePrevGame}
+          onEdit={handleEditClick}
+          onDelete={handleDeleteClick}
+          onReport={handleReportClick}
         />
       )}
+      <div css={S.centerStyling}>
+        <TextModal {...modalProps} isOpen={isOpen} />
+      </div>
     </div>
   );
 };
