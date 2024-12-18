@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import { css } from '@emotion/react';
 import color from '@/styles/color';
 import typo from '@/styles/typo';
@@ -14,9 +13,7 @@ export const buttonWrapStyle = (option: 'A' | 'B', isSelected: boolean) =>
     borderRadius: '10px',
     overflow: 'hidden',
     outline: isSelected
-      ? option === 'A'
-        ? `2px solid ${color.RED}`
-        : `2px solid ${color.BLUE}`
+      ? `2px solid ${option === 'A' ? color.RED : color.BLUE}`
       : 'none',
   });
 
