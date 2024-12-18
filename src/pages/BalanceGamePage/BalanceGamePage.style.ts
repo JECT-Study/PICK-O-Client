@@ -32,3 +32,11 @@ export const titleStyling = css(typo.Title, {
   display: 'flex',
   color: color.BK,
 });
+
+export const centerStyling = css({
+  position: 'fixed',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  zIndex: '1000',
+});
