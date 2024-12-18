@@ -28,6 +28,9 @@ export interface BalanceGameSectionProps {
   setCurrentStage: React.Dispatch<React.SetStateAction<number>>;
   handleNextGame: () => void;
   handlePrevGame: () => void;
+  onEdit?: () => void;
+  onDelete?: () => void;
+  onReport?: () => void;
 }
 
 const gameDefaultDetail: GameDetail[] = Array.from({ length: 10 }, () => ({
@@ -49,6 +52,9 @@ const BalanceGameSection = ({
   setCurrentStage,
   handleNextGame,
   handlePrevGame,
+  onEdit,
+  onDelete,
+  onReport,
 }: BalanceGameSectionProps) => {
   const initialRender = useRef(true);
   const currentURL: string = window.location.href;
@@ -190,8 +196,11 @@ const BalanceGameSection = ({
     }
   };
 
-  const myGameItem: MenuItem[] = [{ label: '수정' }, { label: '삭제' }];
-  const otherGameItem: MenuItem[] = [{ label: '신고' }];
+  const myGameItem: MenuItem[] = [
+    { label: '수정', onClick: onEdit },
+    { label: '삭제', onClick: onDelete },
+  ];
+  const otherGameItem: MenuItem[] = [{ label: '신고', onClick: onReport }];
 
   return (
     <div css={S.balanceGameStyling}>
