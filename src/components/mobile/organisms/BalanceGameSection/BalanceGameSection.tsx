@@ -143,40 +143,37 @@ const BalanceGameSection = ({
           />
         </div>
       </div>
-
-      {/* 스크롤 영역 */}
-      <div css={S.balanceGameScrollStyling}>
-        {/* 연보라배경 */}
-        <div css={S.balanceGameSectionStyling}>
-          <div css={S.stageWrapper}>
-            <div css={S.stageStyling}>
-              <GameStageLabel color="main" stage={currentStage} />
+      {game && (
+        <div css={S.balanceGameScrollStyling}>
+          <div css={S.balanceGameSectionStyling}>
+            <div css={S.stageWrapper}>
+              <div css={S.stageStyling}>
+                <GameStageLabel color="main" stage={currentStage} />
+              </div>
+              <div css={S.menuStyling}>
+                <MenuTap menuData={isMyGame ? myGameItem : otherGameItem} />
+              </div>
             </div>
-            <div css={S.menuStyling}>
-              <MenuTap menuData={isMyGame ? myGameItem : otherGameItem} />
-            </div>
+            <div css={S.titleStyling}>{game.title}</div>
+            <div css={S.descriptionStyling}>{currentGame.description}</div>
+            <BalanceGameBox
+              gameSetId={gameSetId}
+              gameId={currentGame.id}
+              options={currentGame.gameOptions}
+              selectedVote={
+                isGuest
+                  ? guestVotedList[currentStage]?.votedOption
+                  : currentGame.votedOption
+              }
+              handleNextStage={handleNextStage}
+              handleGuestGameVote={handleGuestGameVote}
+            />
           </div>
-          <div css={S.titleStyling}>{game?.title}</div>
-          <div css={S.descriptionStyling}>{currentGame.description}</div>
-          <BalanceGameBox
-            gameSetId={gameSetId}
-            gameId={currentGame.id}
-            options={currentGame.gameOptions}
-            selectedVote={
-              isGuest
-                ? guestVotedList[currentStage]?.votedOption
-                : currentGame.votedOption
-            }
-            handleNextStage={handleNextStage}
-            handleGuestGameVote={handleGuestGameVote}
-          />
+          <div css={S.subTagWrapper}>
+            <GameTagChip tag={game.subTag} />
+          </div>
         </div>
-
-        <div css={S.subTagWrapper}>
-          <GameTagChip tag={game?.subTag ?? ''} />
-        </div>
-      </div>
-
+      )}
       <div css={S.stageButtonWrapper}>
         <Button
           variant="primary"
