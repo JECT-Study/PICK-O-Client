@@ -4,7 +4,6 @@ import { RedCheckIcon, BlueCheckIcon } from '@/assets';
 import * as S from './BalanceGameButton.style';
 
 export interface BalanceGameButtonProps {
-  id?: number;
   name: string;
   imgUrl: string | null;
   description: string;

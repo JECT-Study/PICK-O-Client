@@ -1,5 +1,6 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
+import { BrowserRouter } from 'react-router-dom';
 import SideBar, {
   LoadedSideBarProps,
 } from '@/components/organisms/SideBar/SideBar';
@@ -12,6 +13,13 @@ const meta = {
   parameters: {
     layout: 'centered',
   },
+  decorators: [
+    (Story) => (
+      <BrowserRouter>
+        <Story />
+      </BrowserRouter>
+    ),
+  ],
   argTypes: {
     nickname: { control: { type: 'text' }, defaultValue: 'Aycho' },
     profileImageUrl: {
