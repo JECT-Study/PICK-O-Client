@@ -4,5 +4,5 @@ export const pageStyle = css({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  paddingTop: '10px',
+  padding: '10px 0',
 });

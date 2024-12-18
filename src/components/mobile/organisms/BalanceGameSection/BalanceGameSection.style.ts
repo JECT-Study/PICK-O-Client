@@ -7,7 +7,8 @@ export const balanceGameStyling = css({
   flexDirection: 'column',
   alignItems: 'center',
   width: '335px',
-  height: '680px',
+  height: `calc(100vh - 80px)`,
+  maxHeight: '800px',
   gap: '12px',
   position: 'relative',
 });
@@ -107,7 +108,7 @@ export const getButtonVisibility = (gameStage: number) => {
 
 export const toastModalStyling = css({
   position: 'fixed',
-  top: '110px',
+  top: '65px',
   left: '50%',
   transform: 'translate(-50%)',
   zIndex: '1000',
