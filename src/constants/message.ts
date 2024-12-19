@@ -98,6 +98,9 @@ export const SUCCESS = {
   CREATEGAME: {
     CREATE: '등록되었습니다!',
   },
+  TAG: {
+    EDIT: '태그 수정이 완료되었습니다!',
+  },
 } as const;
 
 export const NOTICE = {
