@@ -135,7 +135,7 @@ const BalanceGameCreationPage = () => {
         updatedGames[stageIndex].gameOptions[optionIndex] = {
           ...updatedGames[stageIndex].gameOptions[optionIndex],
           imgUrl: '',
-          fileId: 0,
+          fileId: null,
         };
         return updatedGames;
       });
