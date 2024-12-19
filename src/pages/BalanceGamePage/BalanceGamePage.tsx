@@ -13,6 +13,10 @@ import { PATH } from '@/constants/path';
 import TextModal, {
   TextModalProps,
 } from '@/components/molecules/TextModal/TextModal';
+import { useDeleteGameSetMutation } from '@/hooks/api/game/useDeleteGameSetMutation';
+import useToastModal from '@/hooks/modal/useToastModal';
+import { ERROR, SUCCESS } from '@/constants/message';
+import ToastModal from '@/components/atoms/ToastModal/ToastModal';
 import * as S from './BalanceGamePage.style';
 
 const BalanceGamePage = () => {
@@ -29,8 +33,11 @@ const BalanceGamePage = () => {
 
   const accessToken = useNewSelector(selectAccessToken);
   const { member } = useMemberQuery(useParseJwt(accessToken).memberId);
+  const { isVisible, modalText, showToastModal } = useToastModal();
 
   const isMyGame: boolean = member?.nickname === gameSet?.member;
+
+  const { mutate: deleteGameSet } = useDeleteGameSetMutation();
 
   const handleNextGame = () => {
     setCurrentStage((stage) => (stage < 10 ? stage + 1 : stage));
@@ -48,7 +55,20 @@ const BalanceGamePage = () => {
     setModalProps({
       text: '정말 삭제하시겠습니까?',
       onConfirm: () => {
-        closeModal();
+        deleteGameSet(
+          { gameSetId },
+          {
+            onSuccess: () => {
+              closeModal();
+              showToastModal(SUCCESS.GAME.DELETE);
+              navigate('/');
+            },
+            onError: () => {
+              closeModal();
+              showToastModal(ERROR.DELETEGAME.FAIL);
+            },
+          },
+        );
       },
       onClose: closeModal,
     });
@@ -100,6 +120,9 @@ const BalanceGamePage = () => {
       )}
       <div css={S.centerStyling}>
         <TextModal {...modalProps} isOpen={isOpen} />
+      </div>
+      <div css={S.toastModalStyling}>
+        {isVisible && <ToastModal bgColor="black">{modalText}</ToastModal>}
       </div>
     </div>
   );
