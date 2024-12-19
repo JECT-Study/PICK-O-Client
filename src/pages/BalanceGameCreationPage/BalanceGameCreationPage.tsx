@@ -200,7 +200,7 @@ const BalanceGameCreationPage = () => {
   };
 
   return (
-    <div css={S.PageContainer}>
+    <div css={S.pageContainer}>
       <div css={S.pageWrapper}>
         <div css={S.textWrapper}>
           <div css={S.subLabel}>
