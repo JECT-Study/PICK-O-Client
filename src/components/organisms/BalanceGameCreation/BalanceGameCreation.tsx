@@ -7,6 +7,7 @@ import { useBalanceGameCreation } from '@/hooks/game/useBalanceGameCreation';
 import GameNavigationSection from '@/components/molecules/GameNavigationSection/GameNavigationSection';
 import useToastModal from '@/hooks/modal/useToastModal';
 import ToastModal from '@/components/atoms/ToastModal/ToastModal';
+import Button from '@/components/atoms/Button/Button';
 import * as S from './BalanceGameCreation.style';
 
 export interface BalanceGameCreationProps {
@@ -17,6 +18,7 @@ export interface BalanceGameCreationProps {
   onGamesUpdate: (games: BalanceGameSet[]) => void;
   onImageChange: (stageIndex: number, optionIndex: number, file: File) => void;
   onImageDelete: (stageIndex: number, optionIndex: number) => void;
+  handleTagEditClick?: () => void;
   loadedGames?: BalanceGameSet[];
 }
 
@@ -28,6 +30,7 @@ const BalanceGameCreation = ({
   onGamesUpdate,
   onImageChange,
   onImageDelete,
+  handleTagEditClick,
   loadedGames,
 }: BalanceGameCreationProps) => {
   const totalStage = 10;
@@ -51,14 +54,27 @@ const BalanceGameCreation = ({
 
   return (
     <div css={S.pageContainer}>
-      <TitleDescriptionField
-        title={title}
-        description={currentDescription}
-        onTitleChange={onTitleChange}
-        onDescriptionChange={(e) =>
-          handleStageDescriptionChange(e.target.value)
-        }
-      />
+      <div css={S.titleDescriptionFieldContainer}>
+        <TitleDescriptionField
+          title={title}
+          description={currentDescription}
+          onTitleChange={onTitleChange}
+          onDescriptionChange={(e) =>
+            handleStageDescriptionChange(e.target.value)
+          }
+        />
+        {handleTagEditClick && (
+          <div css={S.tagEditButtonContainer}>
+            <Button
+              size="large"
+              variant="outlinePrimary"
+              onClick={handleTagEditClick}
+            >
+              태그 수정
+            </Button>
+          </div>
+        )}
+      </div>
       <div css={S.optionsContainer}>
         <BalanceGameOptionCard
           option="A"
