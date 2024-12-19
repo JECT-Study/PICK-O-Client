@@ -150,7 +150,7 @@ const BalanceGameCreation = ({
           option="A"
           imgUrl={currentOptions[0]?.imgUrl || ''}
           onImageChange={(file) => {
-            void onImageChange(currentStage, 0, file);
+            onImageChange(currentStage, 0, file);
           }}
           onImageDelete={() => onImageDelete(currentStage, 0)}
           choiceInputProps={{
@@ -168,7 +168,7 @@ const BalanceGameCreation = ({
           option="B"
           imgUrl={currentOptions[1]?.imgUrl || ''}
           onImageChange={(file) => {
-            void onImageChange(currentStage, 1, file);
+            onImageChange(currentStage, 1, file);
           }}
           onImageDelete={() => onImageDelete(currentStage, 1)}
           choiceInputProps={{
