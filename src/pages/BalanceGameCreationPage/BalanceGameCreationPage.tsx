@@ -23,16 +23,19 @@ import { SUCCESS, ERROR } from '@/constants/message';
 import { useImageHandlers } from '@/hooks/game/useImageHandlers';
 import * as S from './BalanceGameCreationPage.style';
 
+const TOTAL_STAGE = 10;
+
 const BalanceGameCreationPage = () => {
   const [title, setTitle] = useState('');
-  const [games, setGames] = useState<BalanceGameSet[]>([]);
+  const [games, setGames] = useState<BalanceGameSet[]>(() =>
+    createInitialGameStages(TOTAL_STAGE),
+  );
   const navigate = useNavigate();
   const { handleCreateBalanceGame } = useCreateBalanceGameMutation();
   const { mutateAsync: uploadImage } = useFileUploadMutation();
   const { mutate: saveTempGame } = useSaveTempGameMutation();
   const { data: tempGame, isSuccess } = useLoadTempGameQuery();
   const { isVisible, modalText, showToastModal } = useToastModal();
-  const [loadedGames, setLoadedGames] = useState<BalanceGameSet[] | null>(null);
 
   const {
     isOpen: isTagModalOpen,
@@ -58,7 +61,7 @@ const BalanceGameCreationPage = () => {
 
   const handleDraftLoad = () => {
     if (isSuccess && tempGame) {
-      const initialStages = createInitialGameStages(10);
+      const initialStages = createInitialGameStages(TOTAL_STAGE);
       const mappedGames: BalanceGameSet[] = initialStages.map((stage, idx) => ({
         description: tempGame.tempGames[idx]?.description || stage.description,
         gameOptions: stage.gameOptions.map((option, optionIdx) => ({
@@ -68,21 +71,18 @@ const BalanceGameCreationPage = () => {
       }));
 
       setTitle(tempGame.title);
-      setLoadedGames(mappedGames);
+      setGames(mappedGames);
       showToastModal(SUCCESS.TEMPGAME.LOAD);
     } else {
       showToastModal(ERROR.TEMPGAME.LOAD);
     }
   };
 
-  const handleImageDelete = (stageIndex: number, optionIndex: number) => {
-    setPopupData({ stageIndex, optionIndex });
-    openTextModal();
-  };
-
   const handleConfirmDeleteImage = () => {
     if (popupData) {
-      deleteImage(popupData.stageIndex, popupData.optionIndex, setGames);
+      deleteImage(popupData.stageIndex, popupData.optionIndex, (updater) => {
+        setGames(updater);
+      });
       showToastModal(SUCCESS.IMAGE.DELETE);
     }
     setPopupData(null);
@@ -154,6 +154,30 @@ const BalanceGameCreationPage = () => {
     });
   };
 
+  /**
+   * 상태 변경 요청을 처리하는 콜백
+   * 자식이 상태를 갱신하고자 할 때 이 함수를 호출하면
+   * 부모에서 setGames를 통해 상태를 갱신
+   */
+  const handleGamesChange = (updatedGames: BalanceGameSet[]) => {
+    setGames(updatedGames);
+  };
+
+  const handleImageDeleteClick = (stageIndex: number, optionIndex: number) => {
+    setPopupData({ stageIndex, optionIndex });
+    openTextModal();
+  };
+
+  const handleImageChange = async (
+    stageIndex: number,
+    optionIndex: number,
+    file: File,
+  ) => {
+    return onImageChange(stageIndex, optionIndex, file, (updater) => {
+      setGames(updater);
+    });
+  };
+
   return (
     <div css={S.pageContainer}>
       <div css={S.pageWrapper}>
@@ -169,12 +193,10 @@ const BalanceGameCreationPage = () => {
           onTitleChange={handleTitleChange}
           handleCompleteClick={handleCompleteClick}
           onDraftLoad={handleDraftLoad}
-          onGamesUpdate={(updatedGames) => setGames(updatedGames)}
-          onImageChange={(stageIndex, optionIndex, imageFile) =>
-            onImageChange(stageIndex, optionIndex, imageFile, setGames)
-          }
-          onImageDelete={handleImageDelete}
-          loadedGames={loadedGames || undefined}
+          games={games}
+          onGamesChange={handleGamesChange}
+          onImageChange={handleImageChange}
+          onImageDelete={handleImageDeleteClick}
         />
         <div css={S.buttonContainer}>
           <Button
