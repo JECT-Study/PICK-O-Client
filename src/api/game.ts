@@ -51,6 +51,10 @@ export const updateGameBySetId = async (
   return data;
 };
 
+export const deleteBySetId = async (gameSetId: Id) => {
+  return axiosInstance.delete(END_POINT.GAME_SET(gameSetId));
+};
+
 export const putGame = async (gameId: Id, gameData: Game) => {
   const { data } = await axiosInstance.put<GameContent>(
     END_POINT.EDIT_GAME(gameId),
