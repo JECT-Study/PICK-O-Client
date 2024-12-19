@@ -17,10 +17,10 @@ import TextModal from '@/components/molecules/TextModal/TextModal';
 import { useNavigate } from 'react-router-dom';
 import { useSaveTempGameMutation } from '@/hooks/api/game/useSaveTempGameMutation';
 import { createInitialGameStages } from '@/utils/balanceGameUtils';
-import { resizeImage } from '@/utils/imageUtils';
 import { useLoadTempGameQuery } from '@/hooks/api/game/useLoadTempGameQuery';
 import useModal from '@/hooks/modal/useModal';
 import { SUCCESS, ERROR } from '@/constants/message';
+import { useImageHandlers } from '@/hooks/game/useImageHandlers';
 import * as S from './BalanceGameCreationPage.style';
 
 const BalanceGameCreationPage = () => {
@@ -50,6 +50,8 @@ const BalanceGameCreationPage = () => {
     optionIndex: number;
   } | null>(null);
 
+  const { onImageChange, deleteImage } = useImageHandlers({ uploadImage });
+
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
@@ -73,79 +75,21 @@ const BalanceGameCreationPage = () => {
     }
   };
 
-  const handleImageUpload = async (
-    imageFile: File,
-    type: 'GAME_OPTION',
-  ): Promise<{ imgUrl: string; fileId: number }> => {
-    const resizedBlob = await resizeImage(imageFile, 577, 359);
-    const resizedFile = new File([resizedBlob], imageFile.name, {
-      type: imageFile.type,
-    });
-
-    const formData = new FormData();
-    formData.append('file', resizedFile);
-
-    try {
-      const response = await uploadImage({
-        formData,
-        params: { type },
-      });
-
-      const { imgUrls, fileIds } = response;
-      return { imgUrl: imgUrls[0], fileId: fileIds[0] };
-    } catch (error) {
-      throw new Error('이미지 업로드 실패');
-    }
-  };
-
-  const onImageChange = async (
-    stageIndex: number,
-    optionIndex: number,
-    imageFile: File,
-  ) => {
-    try {
-      const { imgUrl, fileId } = await handleImageUpload(
-        imageFile,
-        'GAME_OPTION',
-      );
-      setGames((prevGames) => {
-        const updatedGames = [...prevGames];
-        updatedGames[stageIndex].gameOptions[optionIndex] = {
-          ...updatedGames[stageIndex].gameOptions[optionIndex],
-          imgUrl,
-          fileId,
-        };
-        return updatedGames;
-      });
-    } catch (error) {
-      alert(ERROR.IMAGE.UPLOAD);
-    }
-  };
-
-  const onImageDelete = (stageIndex: number, optionIndex: number) => {
+  const handleImageDelete = (stageIndex: number, optionIndex: number) => {
     setPopupData({ stageIndex, optionIndex });
     openTextModal();
   };
 
-  const cancelDeleteImage = () => {
+  const handleConfirmDeleteImage = () => {
+    if (popupData) {
+      deleteImage(popupData.stageIndex, popupData.optionIndex, setGames);
+      showToastModal(SUCCESS.IMAGE.DELETE);
+    }
     setPopupData(null);
     closeTextModal();
   };
 
-  const confirmDeleteImage = () => {
-    if (popupData) {
-      const { stageIndex, optionIndex } = popupData;
-      setGames((prevGames) => {
-        const updatedGames = [...prevGames];
-        updatedGames[stageIndex].gameOptions[optionIndex] = {
-          ...updatedGames[stageIndex].gameOptions[optionIndex],
-          imgUrl: '',
-          fileId: null,
-        };
-        return updatedGames;
-      });
-      showToastModal(SUCCESS.IMAGE.DELETE);
-    }
+  const cancelDeleteImage = () => {
     setPopupData(null);
     closeTextModal();
   };
@@ -226,8 +170,10 @@ const BalanceGameCreationPage = () => {
           handleCompleteClick={handleCompleteClick}
           onDraftLoad={handleDraftLoad}
           onGamesUpdate={(updatedGames) => setGames(updatedGames)}
-          onImageChange={onImageChange}
-          onImageDelete={onImageDelete}
+          onImageChange={(stageIndex, optionIndex, imageFile) =>
+            onImageChange(stageIndex, optionIndex, imageFile, setGames)
+          }
+          onImageDelete={handleImageDelete}
           loadedGames={loadedGames || undefined}
         />
         <div css={S.buttonContainer}>
@@ -259,7 +205,7 @@ const BalanceGameCreationPage = () => {
               <TextModal
                 text="이미지를 삭제하시겠습니까?"
                 isOpen={isTextModalOpen}
-                onConfirm={confirmDeleteImage}
+                onConfirm={handleConfirmDeleteImage}
                 onClose={cancelDeleteImage}
               />
             </div>
