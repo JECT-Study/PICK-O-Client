@@ -19,18 +19,13 @@ import { useSaveTempGameMutation } from '@/hooks/api/game/useSaveTempGameMutatio
 import { createInitialGameStages } from '@/utils/balanceGameUtils';
 import { resizeImage } from '@/utils/imageUtils';
 import { useLoadTempGameQuery } from '@/hooks/api/game/useLoadTempGameQuery';
+import useModal from '@/hooks/modal/useModal';
 import { SUCCESS, ERROR } from '@/constants/message';
 import * as S from './BalanceGameCreationPage.style';
 
 const BalanceGameCreationPage = () => {
   const [title, setTitle] = useState('');
   const [games, setGames] = useState<BalanceGameSet[]>([]);
-  const [isTagModalOpen, setIsTagModalOpen] = useState(false);
-  const [isTextModalOpen, setIsTextModalOpen] = useState(false);
-  const [popupData, setPopupData] = useState<{
-    stageIndex: number;
-    optionIndex: number;
-  } | null>(null);
   const navigate = useNavigate();
   const { handleCreateBalanceGame } = useCreateBalanceGameMutation();
   const { mutateAsync: uploadImage } = useFileUploadMutation();
@@ -38,6 +33,22 @@ const BalanceGameCreationPage = () => {
   const { data: tempGame, isSuccess } = useLoadTempGameQuery();
   const { isVisible, modalText, showToastModal } = useToastModal();
   const [loadedGames, setLoadedGames] = useState<BalanceGameSet[] | null>(null);
+
+  const {
+    isOpen: isTagModalOpen,
+    openModal: openTagModal,
+    closeModal: closeTagModal,
+  } = useModal();
+  const {
+    isOpen: isTextModalOpen,
+    openModal: openTextModal,
+    closeModal: closeTextModal,
+  } = useModal();
+
+  const [popupData, setPopupData] = useState<{
+    stageIndex: number;
+    optionIndex: number;
+  } | null>(null);
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
@@ -113,7 +124,7 @@ const BalanceGameCreationPage = () => {
 
   const onImageDelete = (stageIndex: number, optionIndex: number) => {
     setPopupData({ stageIndex, optionIndex });
-    setIsTextModalOpen(true);
+    openTextModal();
   };
 
   const confirmDeleteImage = () => {
@@ -131,16 +142,11 @@ const BalanceGameCreationPage = () => {
       showToastModal(SUCCESS.IMAGE.DELETE);
     }
     setPopupData(null);
-    setIsTextModalOpen(false);
-  };
-
-  const cancelDeleteImage = () => {
-    setPopupData(null);
-    setIsTextModalOpen(false);
+    closeTextModal();
   };
 
   const handleCompleteClick = () => {
-    setIsTagModalOpen(true);
+    openTagModal();
   };
 
   const handleTagSubmit = async (
@@ -235,7 +241,7 @@ const BalanceGameCreationPage = () => {
             <div css={S.centerStyling}>
               <TagModal
                 isOpen={isTagModalOpen}
-                onClose={() => setIsTagModalOpen(false)}
+                onClose={closeTagModal}
                 onTagSubmit={handleTagSubmit}
               />
             </div>
@@ -249,7 +255,7 @@ const BalanceGameCreationPage = () => {
                 text="이미지를 삭제하시겠습니까?"
                 isOpen={isTextModalOpen}
                 onConfirm={confirmDeleteImage}
-                onClose={cancelDeleteImage}
+                onClose={closeTextModal}
               />
             </div>
           </>
