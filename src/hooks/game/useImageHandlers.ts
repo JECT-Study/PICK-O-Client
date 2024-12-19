@@ -65,10 +65,13 @@ export const useImageHandlers = ({ uploadImage }: UseImageHandlersProps) => {
   ) => {
     updateGames((prevGames) => {
       const updatedGames = [...prevGames];
-      updatedGames[stageIndex].gameOptions[optionIndex] = {
-        ...updatedGames[stageIndex].gameOptions[optionIndex],
-        imgUrl: '',
-        fileId: null,
+      updatedGames[stageIndex] = {
+        ...updatedGames[stageIndex],
+        gameOptions: updatedGames[stageIndex].gameOptions.map((option, idx) =>
+          idx === optionIndex
+            ? { ...option, imgUrl: '', fileId: null }
+            : option,
+        ),
       };
       return updatedGames;
     });
