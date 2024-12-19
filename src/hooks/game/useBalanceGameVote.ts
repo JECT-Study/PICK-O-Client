@@ -40,13 +40,15 @@ export const useGuestGameVote = (
     voteOption: VoteOption,
   ) => {
     const updatedVotes = [...guestVotedList];
+    const gameStageId = game?.gameDetailResponses[currentStage]?.id;
+
     const currentVoteIndex = updatedVotes.findIndex(
-      (vote) => vote.gameId === game?.gameDetailResponses[currentStage]?.id,
+      (vote) => vote.gameId === gameStageId,
     );
 
     if (!selectedOption) {
       updatedVotes.push({
-        gameId: game?.gameDetailResponses[currentStage]?.id as number,
+        gameId: gameStageId as number,
         votedOption: voteOption,
       });
     } else if (selectedOption === voteOption) {
