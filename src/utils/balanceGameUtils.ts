@@ -1,4 +1,4 @@
-import { BalanceGameOption, BalanceGameSet } from '@/types/game';
+import { BalanceGameOption, BalanceGameSet, GameSet } from '@/types/game';
 
 export const createInitialGameStages = (totalStage: number): BalanceGameSet[] =>
   Array.from({ length: totalStage }, (_, idx) => ({
@@ -30,5 +30,30 @@ export const updateOptionInGameSets = (
 ): BalanceGameOption[] => {
   return options.map((option) =>
     option.optionType === optionType ? { ...option, ...newOption } : option,
+  );
+};
+
+/**
+ * GameSet 데이터를 BalanceGameSet 형식으로 변환하는 함수
+ * @param gameSet GameSet API에서 받은 원본 데이터
+ * @returns BalanceGameSet[]로 가공된 데이터
+ */
+export const transformGameSetToBalanceGame = (
+  gameSet: GameSet,
+): BalanceGameSet[] => {
+  return gameSet.gameDetailResponses.map(
+    ({ description = '', gameOptions }) => ({
+      description,
+      gameOptions: gameOptions.map(
+        ({ id, name, description: optionDescription, optionType }) => ({
+          id,
+          name,
+          description: optionDescription,
+          optionType,
+          imgUrl: '', // 이미지 URL 초기화
+          fileId: null, // 파일 ID 초기화
+        }),
+      ),
+    }),
   );
 };
