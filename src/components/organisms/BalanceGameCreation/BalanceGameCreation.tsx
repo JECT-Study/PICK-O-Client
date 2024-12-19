@@ -13,7 +13,7 @@ export interface BalanceGameCreationProps {
   title: string;
   onTitleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleCompleteClick: () => void;
-  onDraftLoad: () => void;
+  onDraftLoad?: () => void;
   onGamesUpdate: (games: BalanceGameSet[]) => void;
   onImageChange: (stageIndex: number, optionIndex: number, file: File) => void;
   onImageDelete: (stageIndex: number, optionIndex: number) => void;
@@ -93,9 +93,11 @@ const BalanceGameCreation = ({
           clearInput={clearInput}
         />
       </div>
-      <div css={S.draftPostButtonContainer}>
-        <DraftPostButton onClick={onDraftLoad} />
-      </div>
+      {onDraftLoad && (
+        <div css={S.draftPostButtonContainer}>
+          <DraftPostButton onClick={onDraftLoad} />
+        </div>
+      )}
       <div css={S.navigationContainer}>
         <GameNavigationSection
           currentStage={currentStage}
