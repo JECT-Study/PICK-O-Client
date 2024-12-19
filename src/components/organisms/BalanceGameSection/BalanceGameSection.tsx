@@ -26,8 +26,7 @@ export interface BalanceGameSectionProps {
   isMyGame: boolean;
   currentStage: number;
   setCurrentStage: React.Dispatch<React.SetStateAction<number>>;
-  handleNextGame: () => void;
-  handlePrevGame: () => void;
+  changeStage: (step: number) => void;
 }
 
 const gameDefaultDetail: GameDetail[] = Array.from({ length: 10 }, () => ({
@@ -47,8 +46,7 @@ const BalanceGameSection = ({
   isMyGame,
   currentStage,
   setCurrentStage,
-  handleNextGame,
-  handlePrevGame,
+  changeStage,
 }: BalanceGameSectionProps) => {
   const initialRender = useRef(true);
   const currentURL: string = window.location.href;
@@ -113,11 +111,7 @@ const BalanceGameSection = ({
       (!isGuest && !currentGame.votedOption)
     )
       return;
-    handleNextGame();
-  };
-
-  const handleNextStage = () => {
-    setCurrentStage((stage) => stage + 1);
+    changeStage(1);
   };
 
   const { handleBookmarkClick } = useGameBookmark(
@@ -191,7 +185,7 @@ const BalanceGameSection = ({
               ? guestVotedList[currentStage]?.votedOption
               : currentGame.votedOption
           }
-          handleNextStage={handleNextStage}
+          handleNextStage={() => changeStage(1)}
           handleGuestGameVote={handleGuestGameVote}
         />
         <div css={S.stageBarBtnWrapper}>
@@ -202,7 +196,7 @@ const BalanceGameSection = ({
               S.activeButtonStyling(true),
               S.getButtonVisibility(currentStage),
             ]}
-            onClick={handlePrevGame}
+            onClick={() => changeStage(-1)}
           >
             <PrevArrow />
             이전 질문

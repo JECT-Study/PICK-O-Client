@@ -21,12 +21,8 @@ const BalanceGameMobilePage = () => {
 
   const isMyGame: boolean = member?.nickname === gameSet?.member;
 
-  const handleNextGame = () => {
-    setCurrentStage((stage) => (stage < 10 ? stage + 1 : stage));
-  };
-
-  const handlePrevGame = () => {
-    setCurrentStage((stage) => (stage > 0 ? stage - 1 : stage));
+  const changeStage = (step: number) => {
+    setCurrentStage((stage) => Math.min(10, Math.max(0, stage + step)));
   };
 
   return (
@@ -45,8 +41,7 @@ const BalanceGameMobilePage = () => {
           isMyGame={isMyGame}
           currentStage={currentStage}
           setCurrentStage={setCurrentStage}
-          handleNextGame={handleNextGame}
-          handlePrevGame={handlePrevGame}
+          changeStage={changeStage}
         />
       )}
     </div>
