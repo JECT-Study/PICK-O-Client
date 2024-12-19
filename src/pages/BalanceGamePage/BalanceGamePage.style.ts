@@ -40,3 +40,11 @@ export const centerStyling = css({
   transform: 'translate(-50%, -50%)',
   zIndex: '1000',
 });
+
+export const toastModalStyling = css({
+  position: 'fixed',
+  top: '110px',
+  left: '50%',
+  transform: 'translate(-50%)',
+  zIndex: '1000',
+});
