@@ -116,9 +116,8 @@ const BalanceGameCreationPage = () => {
 
     try {
       const gameId = await handleCreateBalanceGame(gameData);
-      showToastModal(SUCCESS.CREATEGAME.CREATE, () => {
-        navigate(`/balancegame/${gameId}`);
-      });
+      showToastModal(SUCCESS.CREATEGAME.CREATE);
+      navigate(`/balancegame/${gameId}`);
     } catch (error) {
       showToastModal(ERROR.CREATEGAME.FAIL);
     }
