@@ -127,6 +127,11 @@ const BalanceGameCreationPage = () => {
     openTextModal();
   };
 
+  const cancelDeleteImage = () => {
+    setPopupData(null);
+    closeTextModal();
+  };
+
   const confirmDeleteImage = () => {
     if (popupData) {
       const { stageIndex, optionIndex } = popupData;
@@ -255,7 +260,7 @@ const BalanceGameCreationPage = () => {
                 text="이미지를 삭제하시겠습니까?"
                 isOpen={isTextModalOpen}
                 onConfirm={confirmDeleteImage}
-                onClose={closeTextModal}
+                onClose={cancelDeleteImage}
               />
             </div>
           </>
