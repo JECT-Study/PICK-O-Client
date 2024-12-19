@@ -57,7 +57,7 @@ export const transformGameSetToBalanceGame = (
           name,
           description: optionDescription,
           optionType,
-          imgUrl: imgUrl || '',
+          imgUrl: imgUrl ?? '',
           fileId: fileId ?? null,
         }),
       ),
