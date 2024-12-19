@@ -45,13 +45,20 @@ export const transformGameSetToBalanceGame = (
     ({ description = '', gameOptions }) => ({
       description,
       gameOptions: gameOptions.map(
-        ({ id, name, description: optionDescription, optionType }) => ({
+        ({
           id,
           name,
           description: optionDescription,
           optionType,
-          imgUrl: '', // 이미지 URL 초기화
-          fileId: null, // 파일 ID 초기화
+          imgUrl,
+          fileId,
+        }) => ({
+          id,
+          name,
+          description: optionDescription,
+          optionType,
+          imgUrl: imgUrl || '',
+          fileId: fileId ?? null,
         }),
       ),
     }),
