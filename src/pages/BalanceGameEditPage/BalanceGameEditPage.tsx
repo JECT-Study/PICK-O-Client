@@ -14,6 +14,7 @@ import useModal from '@/hooks/modal/useModal';
 import { useFileUploadMutation } from '@/hooks/api/file/useFileUploadMutation';
 import { ERROR, SUCCESS } from '@/constants/message';
 import useToastModal from '@/hooks/modal/useToastModal';
+import { useUpdateGameMutation } from '@/hooks/api/game/useUpdateGameMutation';
 import * as S from '../BalanceGameCreationPage/BalanceGameCreationPage.style';
 
 const BalanceGameEditPage = () => {
@@ -28,6 +29,7 @@ const BalanceGameEditPage = () => {
   const [subTag, setSubTag] = useState('');
 
   const { mutateAsync: uploadImage } = useFileUploadMutation();
+  const { mutate } = useUpdateGameMutation();
 
   const {
     isOpen: isTagModalOpen,
@@ -67,8 +69,25 @@ const BalanceGameEditPage = () => {
   };
 
   const handleSaveEdit = () => {
-    console.log('수정된 게임 데이터 저장:', { title, games });
-    navigate(`/balancegame/${currentGameSetId}`);
+    const data = {
+      title,
+      mainTag,
+      subTag,
+      games,
+    };
+
+    mutate(
+      { gameSetId: currentGameSetId, data },
+      {
+        onSuccess: () => {
+          showToastModal(SUCCESS.GAME.EDIT);
+          navigate(`/balancegame/${currentGameSetId}`);
+        },
+        onError: () => {
+          showToastModal(ERROR.EDITGAME.FAIL);
+        },
+      },
+    );
   };
 
   const handleTagEditClick = () => {
