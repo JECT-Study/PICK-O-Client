@@ -10,6 +10,7 @@ import {
 } from '@/assets';
 import { useNavigate } from 'react-router-dom';
 import { TalkPickDetail } from '@/types/talk-pick';
+import { PATH } from '@/constants/path';
 import { ERROR, SUCCESS } from '@/constants/message';
 import { formatDate, formatNumber } from '@/utils/formatData';
 import Button from '@/components/atoms/Button/Button';
@@ -93,7 +94,7 @@ const TalkPickSection = ({
     {
       label: '수정',
       onClick: () => {
-        navigate('/post/create', { state: { talkPick } });
+        navigate(`/${PATH.CREATE.TALK_PICK}`, { state: { talkPick } });
       },
     },
     {
