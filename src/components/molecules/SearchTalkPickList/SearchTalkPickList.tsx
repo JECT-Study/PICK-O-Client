@@ -26,7 +26,6 @@ const SearchTalkPickList = ({
       {searchTalkPickList.map((searchItem, idx) => (
         <div key={searchItem.title}>
           <SearchTalkPickItem
-            key={searchItem.title}
             title={searchItem.title}
             createdAt={searchItem.createdAt}
             content={searchItem.content}
