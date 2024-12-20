@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unused-prop-types */
 import React from 'react';
 import { highlightText } from '@/utils/highlightText';
 import { formatDateFromISO } from '@/utils/formatData';
@@ -10,7 +9,7 @@ export interface SearchTalkPickItemProps {
   content: string;
   firstImgUrl: string;
   keyword: string;
-  onClick?: () => void;
+  onClick: () => void;
 }
 
 const SearchTalkPickItem = ({
