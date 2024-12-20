@@ -26,15 +26,13 @@ const LandingPage = () => {
     '인기' | '커플' | '취향' | '월드컵'
   >('인기');
 
-  const { bestGames } =
-    activeTab === '인기' || selectedValue.field === 'views'
-      ? useBestGameList(activeTab)
-      : { bestGames: undefined };
+  const isBestGamesEnabled =
+    activeTab === '인기' || selectedValue.field === 'views';
+  const isLatestGamesEnabled =
+    activeTab !== '인기' && selectedValue.field !== 'views';
 
-  const { latestGames } =
-    activeTab !== '인기' && selectedValue.field !== 'views'
-      ? useLatestGameList(activeTab)
-      : { latestGames: undefined };
+  const { bestGames } = useBestGameList(activeTab, isBestGamesEnabled);
+  const { latestGames } = useLatestGameList(activeTab, isLatestGamesEnabled);
 
   const contents = bestGames || latestGames || [];
 
