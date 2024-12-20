@@ -39,7 +39,7 @@ export const dotStyling = css({
   width: '10px',
   height: '10px',
   borderRadius: '50%',
-  backgroundColor: color.GY[4],
+  backgroundColor: '#555555',
   transition: '0.5s ease-in-out',
   cursor: 'pointer',
   display: 'inline-block',
