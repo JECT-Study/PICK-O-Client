@@ -11,7 +11,7 @@ export interface ContentsButtonProps extends ComponentPropsWithRef<'button'> {
   images: string[];
   bookmarked?: BookmarkProps['bookmarked'];
   showBookmark?: boolean;
-  size?: 'large' | 'medium' | 'small';
+  size?: 'large' | 'medium' | 'small' | 'extraSmall';
   keyword?: string;
   onClick: () => void;
 }
