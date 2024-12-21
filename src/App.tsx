@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import 'dayjs/locale/ko';
@@ -39,10 +39,25 @@ import BalanceGameCreationPage from './pages/BalanceGameCreationPage/BalanceGame
 // import PostPage from './pages/PostPage/PostPage';
 // import SearchResultPage from './pages/SearchResultPage/SearchResultPage';
 // import SignUpPage from './pages/SignUpPage/SignUpPage';
-// import { useNewSelector } from './store';
-// import { selectAccessToken } from './store/auth';
+import { getCookie } from './utils/cookie';
+import { axiosInstance } from './api/interceptor';
+import { useNewDispatch } from './store';
+import { tokenActions } from './store/auth';
 
 const App: React.FC = () => {
+  const dispatch = useNewDispatch();
+
+  useEffect(() => {
+    const token = getCookie('accessToken');
+    if (token) {
+      localStorage.setItem('accessToken', token);
+      localStorage.setItem('refreshToken', 'refreshToken');
+
+      dispatch(tokenActions.setToken(token));
+      axiosInstance.defaults.headers.Authorization = `Bearer ${token}`;
+    }
+  }, [dispatch]);
+
   // const accessToken = useNewSelector(selectAccessToken);
   // const { member } = useMemberQuery(useParseJwt(accessToken).memberId);
   const isLoggedIn = !!localStorage.getItem('accessToken');

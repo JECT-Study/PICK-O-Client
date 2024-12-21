@@ -46,4 +46,7 @@ export const toastModalStyling = css({
   left: '50%',
   transform: 'translate(-50%)',
   zIndex: '1000',
+  '@media (max-width: 430px)': {
+    top: '65px',
+  },
 });

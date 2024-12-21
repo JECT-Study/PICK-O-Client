@@ -100,6 +100,14 @@ export { default as CirclePencil } from './svg/circle-pencil.svg';
 export { default as CircleClose } from './svg/circle-close.svg';
 export { default as CircleGame } from './svg/circle-game.svg';
 export { default as CircleTalkPick } from './svg/circle-talkpick.svg';
+export { default as MobileBookmarkDF } from './svg/mobile-bookmark-df.svg';
+export { default as MobileBookmarkPR } from './svg/mobile-bookmark-pr.svg';
+export { default as MobileShare } from './svg/mobile-share.svg';
+export { default as MobileModalClose } from './svg/mobile-modal-close.svg';
+export { default as MobileFolder } from './svg/mobile-folder.svg';
+export { default as MobileFolderCheck } from './svg/mobile-folder-check.svg';
+export { default as MobileCheckIcon } from './svg/mobile-check-icon.svg';
+export { default as MobileTempIcon } from './svg/mobile-temp-icon.svg';
 
 // TODO: 이전 SVG
 export { default as Email } from './svg/email.svg';
