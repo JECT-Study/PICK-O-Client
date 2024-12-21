@@ -3,7 +3,7 @@ import TopBanner from '@/components/molecules/TopBanner/TopBanner';
 import SearchTagBar from '@/components/molecules/SearchTagBar/SearchTagBar';
 import CategoryBox from '@/components/molecules/CategoryBox/CategoryBox';
 import BalanceGameList from '@/components/organisms/BalanceGameList/BalanceGameList';
-import { useTodayTalkPickQuery } from '@/hooks/api/talk-pick/useTodayTalkPickQuery';
+// import { useTodayTalkPickQuery } from '@/hooks/api/talk-pick/useTodayTalkPickQuery';
 import { useNavigate } from 'react-router-dom';
 import ToastModal from '@/components/atoms/ToastModal/ToastModal';
 import { useBestGameList } from '@/hooks/api/game/useBestGameListQuery';
@@ -12,11 +12,15 @@ import { ToggleGroupValue } from '@/types/toggle';
 import { NOTICE } from '@/constants/message';
 import FloatingMenuButton from '@/components/mobile/molecules/FloatingMenuButton/FloatingMenuButton';
 import useIsMobile from '@/hooks/common/useIsMobile';
+import { useTodayBalanceGameList } from '@/hooks/game/useTodayBalanceGameList';
+import { todayTalkPickDummyData } from '@/mocks/data/banner';
 import * as S from './LandingPage.style';
 
 const LandingPage = () => {
   const isMobile = useIsMobile();
-  const { todayTalkPick } = useTodayTalkPickQuery();
+  // const { todayTalkPickList = todayTalkPickDummyData } =
+  //   useTodayTalkPickQuery();
+  const { todayBalanceGameList } = useTodayBalanceGameList();
   const [isServicePreparing, setIsServicePreparing] = useState<boolean>(false);
   const [selectedValue, setSelectedValue] = useState<ToggleGroupValue>({
     field: 'views',
@@ -26,8 +30,13 @@ const LandingPage = () => {
     '인기' | '커플' | '취향' | '월드컵'
   >('인기');
 
-  const { bestGames } = useBestGameList(activeTab);
-  const { latestGames } = useLatestGameList(activeTab);
+  const isBestGamesEnabled =
+    activeTab === '인기' || selectedValue.field === 'views';
+  const isLatestGamesEnabled =
+    activeTab !== '인기' && selectedValue.field !== 'views';
+
+  const { bestGames } = useBestGameList(activeTab, isBestGamesEnabled);
+  const { latestGames } = useLatestGameList(activeTab, isLatestGamesEnabled);
 
   const contents = useMemo(() => {
     if (selectedValue.field === 'views') {
@@ -57,7 +66,10 @@ const LandingPage = () => {
           <ToastModal bgColor="white">{NOTICE.STATUS.NOT_READY}</ToastModal>
         </div>
       )}
-      <TopBanner todayTalkPick={todayTalkPick} />
+      <TopBanner
+        todayTalkPickList={todayTalkPickDummyData}
+        todayBalanceGameList={todayBalanceGameList}
+      />
 
       {isMobile ? (
         <div css={S.contentWrapStyle}>
