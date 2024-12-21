@@ -50,6 +50,12 @@ export interface GamesPagination extends PaginationType {
   content: GameContent[];
 }
 
+export interface GameParams {
+  page: number;
+  size: number;
+  tagName?: string;
+}
+
 export interface BalanceGameOption {
   id: number;
   name: string;

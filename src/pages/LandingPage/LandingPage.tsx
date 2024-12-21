@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import TopBanner from '@/components/molecules/TopBanner/TopBanner';
 import SearchTagBar from '@/components/molecules/SearchTagBar/SearchTagBar';
 import CategoryBox from '@/components/molecules/CategoryBox/CategoryBox';
@@ -26,15 +26,15 @@ const LandingPage = () => {
     '인기' | '커플' | '취향' | '월드컵'
   >('인기');
 
-  const { bestGames } = useBestGameList(activeTab);
-  const { latestGames } = useLatestGameList(activeTab);
+  const isBestGamesEnabled =
+    activeTab === '인기' || selectedValue.field === 'views';
+  const isLatestGamesEnabled =
+    activeTab !== '인기' && selectedValue.field !== 'views';
 
-  const contents = useMemo(() => {
-    if (selectedValue.field === 'views') {
-      return bestGames || [];
-    }
-    return latestGames || [];
-  }, [selectedValue, bestGames, latestGames]);
+  const { bestGames } = useBestGameList(activeTab, isBestGamesEnabled);
+  const { latestGames } = useLatestGameList(activeTab, isLatestGamesEnabled);
+
+  const contents = bestGames || latestGames || [];
 
   const handleService = () => {
     setIsServicePreparing(true);
