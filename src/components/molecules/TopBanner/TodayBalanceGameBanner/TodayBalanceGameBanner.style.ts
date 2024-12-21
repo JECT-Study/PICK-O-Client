@@ -68,6 +68,7 @@ export const bannerBtnStyling = (index: number) =>
       ...typo.Mobile.Text.SemiBold_7,
       width: '128px',
       height: '25px',
+      padding: '6.3px 36px',
       borderRadius: '4px',
     },
   });
@@ -82,6 +83,6 @@ export const balanceGameTextStyling = (index: number) =>
     '@media (max-width: 430px)': {
       ...typo.Mobile.Text.Bold_16,
       marginTop: '32px',
-      marginBottom: '35px',
+      marginBottom: '59px',
     },
   });
