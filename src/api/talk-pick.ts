@@ -67,7 +67,7 @@ export const getBestTalkPickList = async () => {
 };
 
 export const getTodayTalkPick = async () => {
-  const { data } = await axiosInstance.get<TodayTalkPick>(
+  const { data } = await axiosInstance.get<TodayTalkPick[]>(
     END_POINT.TODAY_TALKPICK,
   );
   return data;
