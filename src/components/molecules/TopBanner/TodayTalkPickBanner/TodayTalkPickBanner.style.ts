@@ -70,6 +70,7 @@ export const bannerBtnStyling = (index: number) =>
       ...typo.Mobile.Text.SemiBold_7,
       width: '128px',
       height: '25px',
+      padding: '6.3px 36px',
       borderRadius: '4px',
     },
   });
