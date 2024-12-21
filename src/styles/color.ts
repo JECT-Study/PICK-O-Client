@@ -17,6 +17,8 @@ const color = {
   PINK: '#FFAFBF',
   SKYBLUE: '#9DB7FF',
   BLUE_LIGHT: `#D2D6FF`,
+  HOTPINK: '#F96EE3',
+  ORANGE: '#FF9412',
 
   // TODO: 이전 색상 타입 정리
   Common: {
