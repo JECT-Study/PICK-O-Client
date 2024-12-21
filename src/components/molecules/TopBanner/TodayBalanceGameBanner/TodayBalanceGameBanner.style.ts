@@ -76,12 +76,12 @@ export const balanceGameTextStyling = (index: number) =>
   css({
     ...typo.Title,
     textAlign: 'center',
-    marginTop: '99px',
-    marginBottom: '63px',
+    marginTop: '40px',
+    marginBottom: '120px',
     color: index === 0 ? color.WT : color.BK,
     '@media (max-width: 430px)': {
       ...typo.Mobile.Text.Bold_16,
-      marginTop: '56.5px',
+      marginTop: '32px',
       marginBottom: '35px',
     },
   });
