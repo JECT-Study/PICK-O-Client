@@ -26,34 +26,35 @@ const SearchBar = (
   return (
     <div css={S.searchBarStyling}>
       {isMobile ? (
-      <>
-        <Button size="medium" variant="circle" onClick={onSearchClick}>
-          <Search />
-        </Button>
-        <input
-          ref={ref}
-          css={S.mobileInputStyling}
-          placeholder="궁금한 키워드를 입력해주세요!"
-          onChange={onInputChange}
-          {...props}
-        />
-      </>
-    ) : (
-      <>
-        <input
+        <>
+          <Button size="medium" variant="circle" onClick={onSearchClick}>
+            <Search />
+          </Button>
+          <input
+            ref={ref}
+            css={S.mobileInputStyling}
+            placeholder="궁금한 키워드를 입력해주세요!"
+            onChange={onInputChange}
+            onKeyDown={handleInputKeyDown}
+            {...props}
+          />
+        </>
+      ) : (
+        <>
+          <input
             ref={ref}
             css={S.inputStyling}
             placeholder="궁금한 키워드를 입력해주세요!"
             onChange={onInputChange}
-        onKeyDown={handleInputKeyDown}
+            onKeyDown={handleInputKeyDown}
             {...props}
           />
           <Button size="large" variant="circle" onClick={onSearchClick}>
             <Search />
           </Button>
         </>
-    )}
-  </div>
+      )}
+    </div>
   );
 };
 
