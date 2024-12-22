@@ -1,6 +1,6 @@
 import React from 'react';
 import MoreButton from '@/components/atoms/MoreButton/MoreButton';
-import { SearchTalkPickItemProps } from '@/components/atoms/SearchTalkPickItem/SearchTalkPickItem';
+import { SearchTalkPickListItem } from '@/types/search';
 import SearchTalkPickList from '@/components/molecules/SearchTalkPickList/SearchTalkPickList';
 import { NoResultsMessage } from '@/components/atoms/NoResultsMessage/NoResultsMessage';
 import { useNavigate, useSearchParams } from 'react-router-dom';
@@ -9,7 +9,7 @@ import SearchResultListSkeleton from '@/components/atoms/SearchResultListSkeleto
 import * as S from './SearchTalkPickResult.style';
 
 interface SearchTalkPickResultProps {
-  searchTalkPickList: SearchTalkPickItemProps[];
+  searchTalkPickList: SearchTalkPickListItem[];
   keyword: string;
   isLoading: boolean;
 }

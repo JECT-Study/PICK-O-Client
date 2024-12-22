@@ -67,6 +67,7 @@ export const cardWrapper = (size: SizeType) => css`
   }
   @media (max-width: 430px) {
     border-radius: 10px;
+  }
 
   &:focus-visible {
     outline: 1px solid ${color.BK};
@@ -79,8 +80,6 @@ export const imageContainer = (size: SizeType) => css`
   width: 100%;
   height: ${sizeStyles[size].imageHeight};
   overflow: hidden;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
 `;
 
 export const imageWrapper = css`
