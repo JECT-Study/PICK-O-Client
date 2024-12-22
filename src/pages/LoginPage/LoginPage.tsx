@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { ERROR } from '@/constants/message';
 import { LogoLarge } from '@/assets';
 import LoginForm from '@/components/molecules/LoginForm/LoginForm';
 import { useLocation } from 'react-router-dom';
@@ -20,7 +21,7 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (state?.status === 'already_registered' && modalVisible) {
-      showToastModal('이미 가입한 이메일입니다.');
+      showToastModal(ERROR.EMAIL.EXIST);
       setModalVisible(false);
     }
   }, [modalVisible, showToastModal, state?.status]);
