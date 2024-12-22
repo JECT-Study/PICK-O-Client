@@ -10,10 +10,10 @@ import { useNavigate } from 'react-router-dom';
 import { PATH } from '@/constants/path';
 import { ERROR, SUCCESS } from '../../constants/message';
 import useInputs from '../common/useInputs';
-import useToastModal from '../modal/useToastModal';
 import { validateLoginForm } from './validateLoginForm';
 
 export const useLoginForm = (
+  showToastModal?: (message: string, callback?: () => void) => void,
   pathTalkPickId?: number,
   onModalLoginSuccess?: () => void,
 ) => {
@@ -25,7 +25,6 @@ export const useLoginForm = (
   const { form, onChange } =
     useInputs<Pick<MemberForm, 'email' | 'password'>>(initialState);
 
-  const { isVisible, modalText, showToastModal } = useToastModal();
   const [isError, setIsError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
     undefined,
@@ -54,7 +53,7 @@ export const useLoginForm = (
       localStorage.setItem('refreshToken', 'refreshToken');
       localStorage.setItem('savedEmail', form.email);
 
-      showToastModal(SUCCESS.LOGIN, () => {
+      showToastModal?.(SUCCESS.LOGIN, () => {
         if (pathTalkPickId) {
           navigate(`/${PATH.TALKPICK(pathTalkPickId)}`);
         } else {
@@ -88,7 +87,5 @@ export const useLoginForm = (
     isError,
     errorMessage,
     handleSubmit,
-    isVisible,
-    modalText,
   };
 };

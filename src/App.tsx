@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import 'dayjs/locale/ko';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import MyPage from '@/pages/MyPage/MyPage';
 import SearchGamePage from '@/pages/SearchResultsPage/SearchGamePage';
 import SearchTalkPickPage from '@/pages/SearchResultsPage/SearchTalkPickPage';
@@ -45,22 +45,28 @@ import { useNewDispatch } from './store';
 import { tokenActions } from './store/auth';
 
 const App: React.FC = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const dispatch = useNewDispatch();
+  const isLoggedIn = !!localStorage.getItem('accessToken');
 
   useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const status = searchParams.get('status');
+
     const token = getCookie('accessToken');
-    if (token) {
+
+    if (status === 'already_registered') {
+      navigate(`/${PATH.LOGIN}`, { state: { status } });
+    } else if (token) {
       localStorage.setItem('accessToken', token);
       localStorage.setItem('refreshToken', 'refreshToken');
 
       dispatch(tokenActions.setToken(token));
       axiosInstance.defaults.headers.Authorization = `Bearer ${token}`;
     }
-  }, [dispatch]);
-
-  // const accessToken = useNewSelector(selectAccessToken);
-  // const { member } = useMemberQuery(useParseJwt(accessToken).memberId);
-  const isLoggedIn = !!localStorage.getItem('accessToken');
+  }, [dispatch, isLoggedIn, location.search, navigate]);
   useTokenRefresh();
 
   return (
