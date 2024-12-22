@@ -1,5 +1,14 @@
 import React from 'react';
-import { Popular, Couple, Taste, Worldcup } from '@/assets';
+import {
+  Popular,
+  Couple,
+  Taste,
+  Worldcup,
+  PopularSmall,
+  CoupleSmall,
+  TasteSmall,
+  WorldcupSmall,
+} from '@/assets';
 import * as S from './CategoryBar.style';
 import BalanceGameCategoryButton from '../../atoms/BalanceGameCategoryButton/BalanceGameCategoryButton';
 
@@ -8,9 +17,14 @@ export interface CategoryBarProps {
   setActiveTab: React.Dispatch<
     React.SetStateAction<'인기' | '커플' | '취향' | '월드컵'>
   >;
+  isMobile?: boolean;
 }
 
-const CategoryBar = ({ activeTab, setActiveTab }: CategoryBarProps) => {
+const CategoryBar = ({
+  activeTab,
+  setActiveTab,
+  isMobile = false,
+}: CategoryBarProps) => {
   const getBadgeText = (tab: '인기' | '커플' | '취향' | '월드컵') => {
     switch (tab) {
       case '인기':
@@ -30,28 +44,28 @@ const CategoryBar = ({ activeTab, setActiveTab }: CategoryBarProps) => {
     <div css={S.containerStyle}>
       <BalanceGameCategoryButton
         label="인기"
-        icon={<Popular />}
+        icon={isMobile ? <PopularSmall /> : <Popular />}
         active={activeTab === '인기'}
         badgeText={getBadgeText('인기')}
         onClick={() => setActiveTab('인기')}
       />
       <BalanceGameCategoryButton
         label="커플"
-        icon={<Couple />}
+        icon={isMobile ? <CoupleSmall /> : <Couple />}
         active={activeTab === '커플'}
         badgeText={getBadgeText('커플')}
         onClick={() => setActiveTab('커플')}
       />
       <BalanceGameCategoryButton
         label="취향"
-        icon={<Taste />}
+        icon={isMobile ? <TasteSmall /> : <Taste />}
         active={activeTab === '취향'}
         badgeText={getBadgeText('취향')}
         onClick={() => setActiveTab('취향')}
       />
       <BalanceGameCategoryButton
         label="월드컵"
-        icon={<Worldcup />}
+        icon={isMobile ? <WorldcupSmall /> : <Worldcup />}
         active={activeTab === '월드컵'}
         badgeText={getBadgeText('월드컵')}
         onClick={() => setActiveTab('월드컵')}

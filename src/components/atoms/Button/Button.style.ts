@@ -107,12 +107,14 @@ export const getSizeByVariantStyling = (
         padding: '8px 16px',
       }),
       medium: css({}),
+      small: css({}),
     },
     primarySquare: {
       large: css(typo.Main.SemiBold, {
         padding: '15.5px 120px',
       }),
       medium: css({}),
+      small: css({}),
     },
     roundPrimary: {
       large: css(typo.SubTitle, {
@@ -124,6 +126,7 @@ export const getSizeByVariantStyling = (
         padding: '10px 25px',
         borderRadius: '25px',
       }),
+      small: css({}),
     },
     roundPrimary2: {
       large: css(typo.Main.SemiBold, {
@@ -131,18 +134,21 @@ export const getSizeByVariantStyling = (
         borderRadius: '25px',
       }),
       medium: css({}),
+      small: css({}),
     },
     outlinePrimary: {
       large: css(typo.Main.SemiBold, {
         padding: '10px 25px',
       }),
       medium: css({}),
+      small: css({}),
     },
     outlineSecondary: {
       large: css(typo.Main.SemiBold, {
         padding: '10px 25px',
       }),
       medium: css({}),
+      small: css({}),
     },
     outlinePrimarySquare: {
       large: css(typo.Main.SemiBold, {
@@ -151,6 +157,7 @@ export const getSizeByVariantStyling = (
       medium: css(typo.Main.SemiBold_16, {
         padding: '8px 16px',
       }),
+      small: css({}),
     },
     outlineShadow: {
       large: css(typo.Main.SemiBold, {
@@ -163,6 +170,15 @@ export const getSizeByVariantStyling = (
         color: color.MAIN,
         boxShadow: '1px 2px 7px rgba(0, 0, 0, 0.15)',
       }),
+      small: css(typo.Mobile.Text.SemiBold_10, {
+        padding: '7.2px 14.4px',
+        color: color.BK,
+        boxShadow: '1px 2px 7px rgba(0, 0, 0, 0.15)',
+        '& svg': {
+          width: '10.5px',
+          height: '10.5px',
+        },
+      }),
     },
     outlineHighlightR: {
       large: css(typo.Component.Bold, {
@@ -170,6 +186,7 @@ export const getSizeByVariantStyling = (
         padding: '22px 50px',
       }),
       medium: css({}),
+      small: css({}),
     },
     outlineHighlightB: {
       large: css(typo.Component.Bold, {
@@ -177,6 +194,7 @@ export const getSizeByVariantStyling = (
         padding: '22px 50px',
       }),
       medium: css({}),
+      small: css({}),
     },
     circle: {
       large: css({
@@ -186,7 +204,14 @@ export const getSizeByVariantStyling = (
           height: '22px',
         },
       }),
-      medium: css({}),
+      medium: css({
+        padding: '8.5px',
+        '& svg': {
+          width: '10.5px',
+          height: '10.5px',
+        },
+      }),
+      small: css({}),
     },
   };
 

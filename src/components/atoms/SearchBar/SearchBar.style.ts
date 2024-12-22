@@ -12,6 +12,11 @@ export const searchBarStyling = css({
   outline: `1px solid ${color.GY[2]}`,
   borderRadius: '50px',
   boxShadow: '1px 2px 15px rgba(0, 0, 0, 0.05)',
+  '@media (max-width: 430px)': {
+    width: '335px',
+    height: '36px',
+    padding: '0 5px',
+  },
 });
 
 export const inputStyling = css(typo.SubTitle, {
@@ -19,4 +24,10 @@ export const inputStyling = css(typo.SubTitle, {
   color: color.BK,
   outline: 'none',
   padding: '0 35px',
+});
+
+export const mobileInputStyling = css(typo.Mobile.Text.Medium_12, {
+  width: '100%',
+  height: '36px',
+  padding: '0 5px',
 });
