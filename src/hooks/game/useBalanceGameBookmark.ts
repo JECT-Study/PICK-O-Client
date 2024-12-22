@@ -17,11 +17,13 @@ export const useGameBookmark = (
   const { mutate: createBookmark } = useCreateGameBookmarkMutation(
     gameSetId,
     gameId,
+    showToastModal,
   );
 
   const { mutate: deleteBookmark } = useDeleteGameBookmarkMutation(
     gameSetId,
     gameId,
+    showToastModal,
   );
 
   const handleBookmarkClick = (callback: () => void) => {
@@ -54,11 +56,15 @@ export const useGameEndBookmark = (
   gameSetId: number,
   showToastModal: (message: string, callback?: () => void) => void,
 ) => {
-  const { mutate: createEndBookmark } =
-    useCreateDoneGameBookmarkMutation(gameSetId);
+  const { mutate: createEndBookmark } = useCreateDoneGameBookmarkMutation(
+    gameSetId,
+    showToastModal,
+  );
 
-  const { mutate: deleteEndBookmark } =
-    useDeleteDoneGameBookmarkMutation(gameSetId);
+  const { mutate: deleteEndBookmark } = useDeleteDoneGameBookmarkMutation(
+    gameSetId,
+    showToastModal,
+  );
 
   const handleEndBookmarkClick = (callback: () => void) => {
     if (isGuest) {
