@@ -20,7 +20,7 @@ const SearchTalkPickPage = () => {
     content: talkPickResults,
     totalPages: talkPickTotalPages,
     isLoading,
-  } = useTalkPickResultQuery(query, page, size, sort);
+  } = useTalkPickResultQuery(query, page - 1, size, sort);
 
   return (
     <div css={S.container}>
@@ -36,7 +36,7 @@ const SearchTalkPickPage = () => {
         <SearchTalkPickListSection
           searchTalkPickList={isLoading ? [] : talkPickResults}
           keyword={query}
-          selectedPage={page + 1}
+          selectedPage={page}
           totalPages={talkPickTotalPages}
           onPageChange={handlePageChange}
           sort={sort}

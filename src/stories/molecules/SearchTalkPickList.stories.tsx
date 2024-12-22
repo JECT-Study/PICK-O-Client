@@ -2,90 +2,42 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
+import { BrowserRouter } from 'react-router-dom';
+import { SearchTalkPickListItem } from '@/types/search';
 import { storyContainer, storyInnerContainer } from '@/stories/story.styles';
 import SearchTalkPickList from '@/components/molecules/SearchTalkPickList/SearchTalkPickList';
 import { SampleWhole } from '@/assets';
+
+const searchTalkPickSample: SearchTalkPickListItem[] = Array.from(
+  { length: 10 },
+  (_, index) => ({
+    id: 0,
+    title: `톡픽 ${index + 1} - 인기 순위`,
+    createdAt: '2024.08.26',
+    content:
+      '우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하',
+    firstImgUrl: SampleWhole,
+    keyword: '인기',
+  }),
+);
 
 const meta = {
   title: 'molecules/SearchTalkPickList',
   component: SearchTalkPickList,
   tags: ['autodocs'],
+  decorators: [
+    (Story) => (
+      <BrowserRouter>
+        <Story />
+      </BrowserRouter>
+    ),
+  ],
   argTypes: {
     searchTalkPickList: { control: { type: 'object' } },
   },
   args: {
-    searchTalkPickList: [
-      {
-        title: '월클 정국 VS 존잘 차은우',
-        createdAt: '2024.08.26',
-        content:
-          '우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하',
-        firstImgUrl: SampleWhole,
-      },
-      {
-        title: '월클 정국 VS 존잘 차은우',
-        createdAt: '2024.08.26',
-        content:
-          '우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하',
-        firstImgUrl: SampleWhole,
-      },
-      {
-        title: '월클 정국 VS 존잘 차은우',
-        createdAt: '2024.08.26',
-        content:
-          '우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하',
-        firstImgUrl: SampleWhole,
-      },
-      {
-        title: '월클 정국 VS 존잘 차은우',
-        createdAt: '2024.08.26',
-        content:
-          '우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하',
-        firstImgUrl: SampleWhole,
-      },
-      {
-        title: '월클 정국 VS 존잘 차은우',
-        createdAt: '2024.08.26',
-        content:
-          '우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하',
-        firstImgUrl: SampleWhole,
-      },
-      {
-        title: '월클 정국 VS 존잘 차은우',
-        createdAt: '2024.08.26',
-        content:
-          '우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하',
-        firstImgUrl: SampleWhole,
-      },
-      {
-        title: '월클 정국 VS 존잘 차은우',
-        createdAt: '2024.08.26',
-        content:
-          '우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하',
-        firstImgUrl: SampleWhole,
-      },
-      {
-        title: '월클 정국 VS 존잘 차은우',
-        createdAt: '2024.08.26',
-        content:
-          '우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하',
-        firstImgUrl: SampleWhole,
-      },
-      {
-        title: '월클 정국 VS 존잘 차은우',
-        createdAt: '2024.08.26',
-        content:
-          '우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하',
-        firstImgUrl: SampleWhole,
-      },
-      {
-        title: '월클 정국 VS 존잘 차은우',
-        createdAt: '2024.08.26',
-        content:
-          '우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하',
-        firstImgUrl: SampleWhole,
-      },
-    ],
+    searchTalkPickList: searchTalkPickSample,
+    keyword: '우하하',
   },
 } satisfies Meta<typeof SearchTalkPickList>;
 
@@ -103,13 +55,16 @@ export const Default: Story = {
   args: {
     searchTalkPickList: [
       {
+        id: 0,
         title: '월클 정국 VS 존잘 차은우',
         createdAt: '2024.08.26',
         content:
           '우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하우하하',
         firstImgUrl: SampleWhole,
+        keyword: '우하하',
       },
     ],
+    keyword: '우하하',
   },
 };
 
@@ -119,7 +74,10 @@ export const All: Story = {
     <ul css={storyContainer}>
       <li css={storyInnerContainer}>
         <h3>Single SearchTalkPickList</h3>
-        <SearchTalkPickList searchTalkPickList={[args.searchTalkPickList[0]]} />
+        <SearchTalkPickList
+          {...args}
+          searchTalkPickList={[args.searchTalkPickList[0]]}
+        />
       </li>
 
       <li css={storyInnerContainer}>
@@ -129,7 +87,7 @@ export const All: Story = {
 
       <li css={storyInnerContainer}>
         <h3>None</h3>
-        <SearchTalkPickList searchTalkPickList={[]} />
+        <SearchTalkPickList {...args} searchTalkPickList={[]} />
       </li>
     </ul>
   ),

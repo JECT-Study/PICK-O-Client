@@ -6,9 +6,10 @@ import * as S from './SearchTagBar.style';
 
 interface SearchTagBarProps {
   onSearch: (query: string) => void;
+  isMobile?: boolean;
 }
 
-const SearchTagBar = ({ onSearch }: SearchTagBarProps) => {
+const SearchTagBar = ({ onSearch, isMobile = false }: SearchTagBarProps) => {
   const [inputValue, setInputValue] = useState('');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,7 +20,14 @@ const SearchTagBar = ({ onSearch }: SearchTagBarProps) => {
     onSearch(inputValue);
   };
 
-  return (
+  return isMobile ? (
+    <SearchBar
+      isMobile
+      onInputChange={handleInputChange}
+      onSearchClick={handleSearchClick}
+      value={inputValue}
+    />
+  ) : (
     <div css={S.searchBarContainerStyling}>
       <SearchBar
         onInputChange={handleInputChange}

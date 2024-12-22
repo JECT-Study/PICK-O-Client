@@ -37,6 +37,9 @@ export const LayoutNoSearch = () => {
           alignItems: 'center',
           height: '100vh',
           paddingTop: '100px',
+          '@media (max-width: 430px)': {
+            paddingTop: '55px',
+          },
         })}
       >
         <Outlet />
