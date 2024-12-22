@@ -7,7 +7,7 @@ import useIsMobile from '@/hooks/common/useIsMobile';
 import * as S from './TodayTalkPickBanner.style';
 
 interface TodayTalkPickBannerProps {
-  index?: number;
+  index: number;
   talkPick?: TodayTalkPick;
 }
 
@@ -24,18 +24,18 @@ const TodayTalkPickBanner = ({ index, talkPick }: TodayTalkPickBannerProps) => {
     <button
       type="button"
       key={talkPick?.id}
-      css={S.talkPickStyling(index as number)}
+      css={S.talkPickStyling(index)}
       onClick={onClickBanner}
     >
       <div css={S.bannerChipStyling}>
         {isMobile ? <CheckSmall /> : <Check />}
         오늘의 톡픽
       </div>
-      <div css={S.talkPickTextStyling(index as number)}>
+      <div css={S.talkPickTextStyling(index)}>
         {talkPick?.title} <br />
         {talkPick?.optionA} VS {talkPick?.optionB}
       </div>
-      <div css={S.bannerBtnStyling(index as number)}>투표결과 보러 가기</div>
+      <div css={S.bannerBtnStyling(index)}>투표결과 보러 가기</div>
     </button>
   );
 };

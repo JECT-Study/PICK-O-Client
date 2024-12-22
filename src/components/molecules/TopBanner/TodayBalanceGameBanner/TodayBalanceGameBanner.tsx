@@ -7,7 +7,7 @@ import { GameContent } from '@/types/game';
 import * as S from './TodayBalanceGameBanner.style';
 
 interface TodayBalanaceGameBannerProps {
-  index?: number;
+  index: number;
   game?: GameContent;
 }
 
@@ -27,15 +27,15 @@ const TodayBalanceGameBanner = ({
     <button
       type="button"
       key={game?.id}
-      css={S.balanceGameStyling(index as number)}
+      css={S.balanceGameStyling(index)}
       onClick={onClickBanner}
     >
       <div css={S.bannerChipStyling}>
         {isMobile ? <CheckSmall /> : <Check />}
         오늘의 밸런스게임
       </div>
-      <div css={S.balanceGameTextStyling(index as number)}>{game?.title}</div>
-      <div css={S.bannerBtnStyling(index as number)}>지금 바로 골라보기</div>
+      <div css={S.balanceGameTextStyling(index)}>{game?.title}</div>
+      <div css={S.bannerBtnStyling(index)}>지금 바로 골라보기</div>
     </button>
   );
 };
