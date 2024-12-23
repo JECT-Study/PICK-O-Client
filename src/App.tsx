@@ -2,7 +2,7 @@
 import MyPage from '@/pages/MyPage/MyPage';
 import SearchGamePage from '@/pages/SearchResultsPage/SearchGamePage';
 import SearchTalkPickPage from '@/pages/SearchResultsPage/SearchTalkPickPage';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import ProtectedRoutes from './routes/ProtectedRoutes';
 import { PATH } from './constants/path';
@@ -19,8 +19,25 @@ import SearchResultsPage from './pages/SearchResultsPage/SearchResultsPage';
 import SignUpPage from './pages/SignUpPage/SignUpPage';
 import TalkPickPage from './pages/TalkPickPage/TalkPickPage';
 import TalkPickPlacePage from './pages/TalkPickPlacePage/TalkPickPlacePage';
+import { getCookie } from './utils/cookie';
+import { axiosInstance } from './api/interceptor';
+import { useNewDispatch } from './store';
+import { tokenActions } from './store/auth';
 
 const App: React.FC = () => {
+  const dispatch = useNewDispatch();
+
+  useEffect(() => {
+    const token = getCookie('accessToken');
+    if (token) {
+      localStorage.setItem('accessToken', token);
+      localStorage.setItem('refreshToken', 'refreshToken');
+
+      dispatch(tokenActions.setToken(token));
+      axiosInstance.defaults.headers.Authorization = `Bearer ${token}`;
+    }
+  }, [dispatch]);
+
   const isLoggedIn = !!localStorage.getItem('accessToken');
   useTokenRefresh();
 

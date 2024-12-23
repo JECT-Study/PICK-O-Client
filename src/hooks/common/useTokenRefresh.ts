@@ -9,7 +9,7 @@ import { useParseJwt } from './useParseJwt';
 export const useTokenRefresh = () => {
   const accessToken = useNewSelector(selectAccessToken);
   // TODO
-  const refreshToken = localStorage.getItem('rtk');
+  const refreshToken = localStorage.getItem('refreshToken');
   const localstorageAccessToken = localStorage.getItem('accessToken');
   const dispatch = useNewDispatch();
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ export const useTokenRefresh = () => {
       if (!accessToken && refreshToken) {
         if (isTimeLimit(useParseJwt(localstorageAccessToken).exp)) {
           localStorage.removeItem('accessToken');
-          localStorage.removeItem('rtk');
+          localStorage.removeItem('refreshToken');
           delete axiosInstance.defaults.headers.Authorization;
           dispatch(tokenActions.deleteToken());
           alert('로그인 시간이 만료되었습니다. 다시 로그인해주세요.');

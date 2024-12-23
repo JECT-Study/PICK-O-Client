@@ -130,6 +130,112 @@ const typo = {
       letterSpacing: `${16 * -0.05}px`,
     },
   },
+
+  Mobile: {
+    Title: {
+      SemiBold_24: {
+        fontFamily: 'Pretendard',
+        fontSize: '24px',
+        fontWeight: 600,
+        lineHeight: '1.6',
+        letterSpacing: `${24 * -0.05}px`,
+      },
+    },
+    Main: {
+      Medium_16: {
+        fontFamily: 'Pretendard',
+        fontSize: '16px',
+        fontWeight: 500,
+        lineHeight: '1.6',
+        letterSpacing: `${16 * -0.05}px`,
+      },
+      Regular_12: {
+        fontFamily: 'Pretendard',
+        fontSize: '12px',
+        fontWeight: 400,
+        lineHeight: '1.6',
+        letterSpacing: `${12 * -0.05}px`,
+      },
+    },
+    Text: {
+      Bold_20: {
+        fontFamily: 'Pretendard',
+        fontSize: '20px',
+        fontWeight: 700,
+        letterSpacing: `${20 * -0.05}px`,
+      },
+      Bold_16: {
+        fontFamily: 'Pretendard',
+        fontSize: '16px',
+        fontWeight: 700,
+        lineHeight: '1.6',
+        letterSpacing: `${16 * -0.05}px`,
+      },
+      Bold_12: {
+        fontFamily: 'Pretendard',
+        fontSize: '12px',
+        fontWeight: 700,
+        lineHeight: '1.6',
+        letterSpacing: `${12 * -0.05}px`,
+      },
+      SemiBold_20: {
+        fontFamily: 'Pretendard',
+        fontSize: '20px',
+        fontWeight: 600,
+        lineHeight: '1.6',
+        letterSpacing: `${20 * -0.05}px`,
+      },
+      SemiBold_14: {
+        fontFamily: 'Pretendard',
+        fontSize: '14px',
+        fontWeight: 600,
+        lineHeight: '1.6',
+        letterSpacing: `${14 * -0.05}px`,
+      },
+      SemiBold_12: {
+        fontFamily: 'Pretendard',
+        fontSize: '12px',
+        fontWeight: 600,
+        lineHeight: '1.3',
+        letterSpacing: `${12 * -0.05}px`,
+      },
+      SemiBold_10: {
+        fontFamily: 'Pretendard',
+        fontSize: '10px',
+        fontWeight: 600,
+        lineHeight: '1.6',
+        letterSpacing: `${10 * -0.05}px`,
+      },
+      SemiBold_7: {
+        fontFamily: 'Pretendard',
+        fontSize: '7.2px',
+        fontWeight: 600,
+        lineHeight: '1.6',
+        letterSpacing: `${7 * -0.05}px`,
+      },
+      Medium_16: {
+        fontFamily: 'Pretendard',
+        fontSize: '16px',
+        fontWeight: 500,
+        lineHeight: '1.6',
+        letterSpacing: `${16 * -0.05}px`,
+      },
+      Medium_12: {
+        fontFamily: 'Pretendard',
+        fontSize: '12px',
+        fontWeight: 500,
+        lineHeight: '1.3',
+        letterSpacing: `${12 * -0.05}px`,
+      },
+      Medium_8: {
+        fontFamily: 'Pretendard',
+        fontSize: '8.5px',
+        fontWeight: 500,
+        lineHeight: '1.3',
+        letterSpacing: `${8 * -0.05}px`,
+      },
+    },
+  },
 } as const;
 
 export default typo;

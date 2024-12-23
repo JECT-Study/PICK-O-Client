@@ -15,7 +15,7 @@ export const PATH = {
   },
   CHANGE: {
     PASSWORD: 'change/password',
-    PROFILE: '/change/profile',
+    PROFILE: 'change/profile',
   },
   TODAY_TALKPICK: 'todaytalkpick',
   TALKPICK_PLACE: 'talkpickplace',

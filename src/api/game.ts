@@ -4,6 +4,7 @@ import {
   BalanceGame,
   Game,
   GameContent,
+  GameParams,
   GameSet,
   TempGame,
 } from '@/types/game';
@@ -61,21 +62,35 @@ export const getNewGames = async () => {
 };
 
 export const getBestGames = async (tagName: string) => {
+  const params: GameParams = {
+    page: GAME_VALUE.PAGE,
+    size: GAME_VALUE.SIZE,
+  };
+
+  if (tagName !== '인기') {
+    params.tagName = tagName;
+  }
+
   const { data } = await axiosInstance.get<GameContent[]>(
     `${END_POINT.BEST_GAME}`,
-    {
-      params: { tagName, page: GAME_VALUE.PAGE, size: GAME_VALUE.SIZE },
-    },
+    { params },
   );
   return data;
 };
 
 export const getLatestGames = async (tagName: string) => {
+  const params: GameParams = {
+    page: GAME_VALUE.PAGE,
+    size: GAME_VALUE.SIZE,
+  };
+
+  if (tagName !== '인기') {
+    params.tagName = tagName;
+  }
+
   const { data } = await axiosInstance.get<GameContent[]>(
     `${END_POINT.LATEST_GAME}`,
-    {
-      params: { tagName, page: GAME_VALUE.PAGE, size: GAME_VALUE.SIZE },
-    },
+    { params },
   );
   return data;
 };

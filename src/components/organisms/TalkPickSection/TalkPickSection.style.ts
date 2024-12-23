@@ -73,12 +73,17 @@ export const talkPickView = css(typo.Number.Medium, {
   color: color.MAIN,
 });
 
-export const talkPickContent = css(typo.Main.Medium, {
+export const talkPickContent = css({
   width: '100%',
   paddingTop: '40px',
   paddingLeft: '173px',
   paddingRight: '173px',
   borderTop: '1px solid #F4F4F4',
+});
+
+export const talkPickContentTextStyling = css(typo.Main.Medium, {
+  width: '100%',
+  whiteSpace: 'pre-wrap',
   color: color.BK,
 });
 
