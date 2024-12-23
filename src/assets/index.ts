@@ -111,7 +111,7 @@ export { default as MobileTempIcon } from './svg/mobile-temp-icon.svg';
 export { default as TalkPickBannerFirst } from './images/talk-pick-banner-first.png';
 export { default as TalkPickBannerSecond } from './images/talk-pick-banner-second.png';
 export { default as GameBannerFirst } from './images/game-banner-first.png';
-export { default as GameBannerSecound } from './images/game-banner-second.png';
+export { default as GameBannerSecond } from './images/game-banner-second.png';
 export { default as MobileTalkPickBannerFirst } from './images/mo-talk-pick-banner-first.png';
 export { default as MobileTalkPickBannerSecond } from './images/mo-talk-pick-banner-second.png';
 export { default as MobileGameBannerFirst } from './images/mo-game-banner-first.png';

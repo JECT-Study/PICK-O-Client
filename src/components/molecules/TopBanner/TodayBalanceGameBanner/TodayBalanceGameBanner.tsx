@@ -6,7 +6,7 @@ import useIsMobile from '@/hooks/common/useIsMobile';
 import { GameContent } from '@/types/game';
 import * as S from './TodayBalanceGameBanner.style';
 
-interface TodayBalanaceGameBannerProps {
+interface TodayBalanceGameBannerProps {
   index: number;
   game: GameContent;
 }
@@ -14,7 +14,7 @@ interface TodayBalanaceGameBannerProps {
 const TodayBalanceGameBanner = ({
   index,
   game,
-}: TodayBalanaceGameBannerProps) => {
+}: TodayBalanceGameBannerProps) => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
   const onClickBanner = () => {

@@ -3,7 +3,7 @@ import typo from '@/styles/typo';
 import color from '@/styles/color';
 import {
   GameBannerFirst,
-  GameBannerSecound,
+  GameBannerSecond,
   MobileGameBannerFirst,
   MobileGameBannerSecond,
 } from '@/assets';
@@ -18,7 +18,7 @@ export const balanceGameStyling = (index: number) =>
     paddingTop: '69px',
     paddingBottom: '110px',
     backgroundImage:
-      index === 0 ? `url(${GameBannerFirst})` : `url(${GameBannerSecound})`,
+      index === 0 ? `url(${GameBannerFirst})` : `url(${GameBannerSecond})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
