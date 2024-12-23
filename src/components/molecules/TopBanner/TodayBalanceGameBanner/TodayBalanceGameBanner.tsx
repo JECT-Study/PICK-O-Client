@@ -34,7 +34,7 @@ const TodayBalanceGameBanner = ({
         {isMobile ? <CheckSmall /> : <Check />}
         오늘의 밸런스게임
       </div>
-      <div css={S.balanceGameTextStyling(index)}>{game?.title}</div>
+      <div css={S.balanceGameStyling(index)}>{game?.title}</div>
       <div css={S.bannerBtnStyling(index)}>지금 바로 골라보기</div>
     </button>
   );

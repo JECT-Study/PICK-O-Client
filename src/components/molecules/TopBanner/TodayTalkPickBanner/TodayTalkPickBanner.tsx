@@ -31,7 +31,7 @@ const TodayTalkPickBanner = ({ index, talkPick }: TodayTalkPickBannerProps) => {
         {isMobile ? <CheckSmall /> : <Check />}
         오늘의 톡픽
       </div>
-      <div css={S.talkPickTextStyling(index)}>
+      <div css={S.talkPickStyling(index)}>
         {talkPick?.title} <br />
         {talkPick?.optionA} VS {talkPick?.optionB}
       </div>
