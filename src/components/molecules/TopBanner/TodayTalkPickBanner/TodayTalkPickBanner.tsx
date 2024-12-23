@@ -8,7 +8,7 @@ import * as S from './TodayTalkPickBanner.style';
 
 interface TodayTalkPickBannerProps {
   index: number;
-  talkPick?: TodayTalkPick;
+  talkPick: TodayTalkPick;
 }
 
 const TodayTalkPickBanner = ({ index, talkPick }: TodayTalkPickBannerProps) => {

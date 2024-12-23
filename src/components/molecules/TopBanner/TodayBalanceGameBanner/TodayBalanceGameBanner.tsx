@@ -8,7 +8,7 @@ import * as S from './TodayBalanceGameBanner.style';
 
 interface TodayBalanaceGameBannerProps {
   index: number;
-  game?: GameContent;
+  game: GameContent;
 }
 
 const TodayBalanceGameBanner = ({
