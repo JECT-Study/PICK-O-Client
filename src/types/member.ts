@@ -6,7 +6,7 @@ export type Member = {
   createdAt: string;
   postsCount: number;
   bookmarkedPostsCount: number;
-  signupType: 'SOCIAL' | null;
+  signupType: 'SOCIAL' | 'STANDARD';
 };
 
 export interface MemberForm {
