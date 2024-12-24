@@ -4,10 +4,10 @@ import * as S from './PhotoBox.style';
 
 export interface PhotoBoxProps {
   imgUrl?: string;
-  alt?: string;
+  alt: string;
 }
 
-const PhotoBox = ({ imgUrl, alt = '사진 업로드' }: PhotoBoxProps) => {
+const PhotoBox = ({ imgUrl, alt }: PhotoBoxProps) => {
   return (
     <div css={S.container}>
       {imgUrl ? (
