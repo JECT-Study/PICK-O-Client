@@ -20,7 +20,7 @@ const SelectGroup = <T,>({
   <div css={S.selectGroupStyling} aria-label="옵션 선택">
     {items.map(({ label, value }, index) => (
       <button
-        key={String(value)}
+        key={`${label}-${String(value)}`}
         type="button"
         css={[
           S.selectGroupItemStyling,
