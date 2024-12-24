@@ -5,7 +5,8 @@ import typo from '@/styles/typo';
 export const selectGroupStyling = css({
   backgroundColor: color.WT_VIOLET,
   display: 'flex',
-  width: '335px',
+  width: '100%',
+  maxWidth: '335px',
   height: '42px',
   borderRadius: '8px',
   flexShrink: 0,
