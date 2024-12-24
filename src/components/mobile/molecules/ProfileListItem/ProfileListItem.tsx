@@ -10,7 +10,11 @@ export interface ProfileListItemProps {
 const ProfileListItem = ({ title, imgUrl }: ProfileListItemProps) => (
   <div css={S.containerStyle}>
     <span css={S.titleStyle}>{title}</span>
-    <MobileProfileImage imgUrl={imgUrl} alt="image" size="sm" />
+    <MobileProfileImage
+      imgUrl={imgUrl}
+      alt={`${title}님의 프로필 이미지`}
+      size="sm"
+    />
   </div>
 );
 
