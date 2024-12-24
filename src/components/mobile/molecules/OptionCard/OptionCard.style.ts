@@ -2,6 +2,14 @@ import { css } from '@emotion/react';
 import color from '@/styles/color';
 import typo from '@/styles/typo';
 
+const getBorderColor = (type: 'A' | 'B', isContentEmpty: boolean) =>
+  isContentEmpty
+    ? color.GY[1]
+    : {
+        A: color.RED,
+        B: color.BLUE,
+      }[type];
+
 export const container = (
   type: 'A' | 'B',
   isContentEmpty: boolean,
@@ -13,9 +21,7 @@ export const container = (
     width: '335px',
     padding: '4px 14px 4px 4px',
     borderRadius: '10px',
-    border: `1px solid ${
-      isContentEmpty ? color.GY[1] : type === 'A' ? color.RED : color.BLUE
-    }`,
+    border: `1px solid ${getBorderColor(type, isContentEmpty)}`,
     backgroundColor: color.WT,
     transition: 'all 0.3s ease',
     height: isExpanded ? '120px' : '60px',
