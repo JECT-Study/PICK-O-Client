@@ -18,6 +18,7 @@ const IconButton = ({
   onClick,
 }: IconButtonProps) => (
   <button
+    type="button"
     css={[S.iconButtonStyle, isActive && S.activeStyle]}
     onClick={onClick}
   >
