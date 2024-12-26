@@ -17,7 +17,7 @@ const TodayBalanceGameBanner = ({
 }: TodayBalanceGameBannerProps) => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
-  const onClickBanner = () => {
+  const onBannerClick = () => {
     navigate(`/${PATH.TODAY_BALANCEGAME}`, {
       state: { setId: game?.id, isTodayBalanceGame: true },
     });
