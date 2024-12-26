@@ -2,9 +2,15 @@ import React from 'react';
 import ProfileListItem from '@/components/mobile/molecules/ProfileListItem/ProfileListItem';
 import * as S from './DateGroupedList.style';
 
+export interface DateGroupedListItem {
+  id: string;
+  title: string;
+  imgUrl: string;
+}
+
 export interface DateGroupedListProps {
   date: string;
-  items: { title: string; imgUrl: string }[];
+  items: DateGroupedListItem[];
 }
 
 const DateGroupedList = ({ date, items }: DateGroupedListProps) => (
