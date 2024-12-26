@@ -1,4 +1,5 @@
 import { useBestGameList } from '@/hooks/api/game/useBestGameListQuery';
+import { getRandomNumbers } from '@/utils/calculator';
 import { useMemo } from 'react';
 
 export const useTodayBalanceGameList = () => {
@@ -6,8 +7,8 @@ export const useTodayBalanceGameList = () => {
 
   const todayBalanceGameList = useMemo(() => {
     if (!bestGames || bestGames.length < 2) return [];
-    const shuffledGames = [...bestGames].sort(() => 0.5 - Math.random());
-    return shuffledGames.slice(0, 2);
+    const randomIndexes = getRandomNumbers(bestGames.length);
+    return randomIndexes.map((index) => bestGames[index]);
   }, [bestGames]);
 
   return { todayBalanceGameList };
