@@ -9,9 +9,9 @@ import {
 } from '@/assets';
 import {
   commonBannerStyling,
-  commonButtonStyling,
   commonChipStyling,
-} from '@/components/molecules/TopBanner/banner.style';
+  commonButtonStyling,
+} from '../Banner.style';
 
 export const talkPickStyling = (index: number) =>
   css([
@@ -62,3 +62,17 @@ export const bannerBtnStyling = (index: number) =>
       },
     },
   ]);
+
+export const talkPickTextStyling = (index: number) =>
+  css({
+    ...typo.Title,
+    textAlign: 'center',
+    marginTop: '40px',
+    marginBottom: '70px',
+    color: index === 0 ? color.BK : color.WT,
+    '@media (max-width: 430px)': {
+      ...typo.Mobile.Text.Bold_16,
+      marginTop: '32px',
+      marginBottom: '35px',
+    },
+  });
