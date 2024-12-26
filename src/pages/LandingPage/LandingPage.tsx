@@ -3,7 +3,6 @@ import TopBanner from '@/components/molecules/TopBanner/TopBanner';
 import SearchTagBar from '@/components/molecules/SearchTagBar/SearchTagBar';
 import CategoryBox from '@/components/molecules/CategoryBox/CategoryBox';
 import BalanceGameList from '@/components/organisms/BalanceGameList/BalanceGameList';
-// import { useTodayTalkPickQuery } from '@/hooks/api/talk-pick/useTodayTalkPickQuery';
 import { useNavigate } from 'react-router-dom';
 import ToastModal from '@/components/atoms/ToastModal/ToastModal';
 import { useBestGameList } from '@/hooks/api/game/useBestGameListQuery';
@@ -14,12 +13,13 @@ import FloatingMenuButton from '@/components/mobile/molecules/FloatingMenuButton
 import useIsMobile from '@/hooks/common/useIsMobile';
 import { useTodayBalanceGameList } from '@/hooks/game/useTodayBalanceGameList';
 import { todayTalkPickDummyData } from '@/mocks/data/banner';
+import { useTodayTalkPickQuery } from '@/hooks/api/talk-pick/useTodayTalkPickQuery';
 import * as S from './LandingPage.style';
 
 const LandingPage = () => {
   const isMobile = useIsMobile();
-  // const { todayTalkPickList = todayTalkPickDummyData } =
-  //   useTodayTalkPickQuery();
+  const { todayTalkPickList = todayTalkPickDummyData } =
+    useTodayTalkPickQuery();
   const { todayBalanceGameList } = useTodayBalanceGameList();
   const [isServicePreparing, setIsServicePreparing] = useState<boolean>(false);
   const [selectedValue, setSelectedValue] = useState<ToggleGroupValue>({
@@ -62,7 +62,7 @@ const LandingPage = () => {
         </div>
       )}
       <TopBanner
-        todayTalkPickList={todayTalkPickDummyData}
+        todayTalkPickList={todayTalkPickList}
         todayBalanceGameList={todayBalanceGameList}
       />
 
