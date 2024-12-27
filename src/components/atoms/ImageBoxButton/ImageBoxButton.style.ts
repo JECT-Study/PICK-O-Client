@@ -52,7 +52,6 @@ export const iconStyle = css({
   height: '36px',
   flexShrink: 0,
   color: color.GY[1],
-  boxShadow: '1px 2px 30px 0 rgba(0, 0, 0, 0.15)',
 });
 
 export const trashImageBox = css({
