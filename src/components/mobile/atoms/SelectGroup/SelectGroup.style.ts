@@ -21,7 +21,7 @@ export const selectGroupItemStyling = css(typo.Mobile.Text.SemiBold_14, {
   display: 'flex',
   width: '165px',
   height: '34px',
-  flexshrink: 0,
+  flexShrink: 0,
   cursor: 'pointer',
   justifyContent: 'center',
   alignItems: 'center',
