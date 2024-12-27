@@ -17,9 +17,9 @@ const DateGroupedList = ({ date, items }: DateGroupedListProps) => (
   <div css={S.containerStyle}>
     <span css={S.dateStyle}>{date}</span>
     <ul css={S.listStyle}>
-      {items.map((item, index) => (
-        <li key={`${item.title}-${index}`} css={S.listItemStyle}>
-          <ProfileListItem title={item.title} imgUrl={item.imgUrl} />
+      {items.map(({ id, title, imgUrl }) => (
+        <li key={id} css={S.listItemStyle}>
+          <ProfileListItem title={title} imgUrl={imgUrl} />
         </li>
       ))}
     </ul>
