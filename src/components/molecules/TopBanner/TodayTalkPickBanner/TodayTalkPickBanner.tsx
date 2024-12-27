@@ -14,7 +14,7 @@ interface TodayTalkPickBannerProps {
 const TodayTalkPickBanner = ({ index, talkPick }: TodayTalkPickBannerProps) => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
-  const onClickBanner = () => {
+  const onBannerClick = () => {
     navigate(`/${PATH.TODAY_TALKPICK}`, {
       state: { talkPickId: talkPick?.id, isTodayTalkPick: true },
     });
@@ -25,7 +25,7 @@ const TodayTalkPickBanner = ({ index, talkPick }: TodayTalkPickBannerProps) => {
       type="button"
       key={talkPick?.id}
       css={S.talkPickStyling(index)}
-      onClick={onClickBanner}
+      onClick={onBannerClick}
     >
       <div css={S.bannerChipStyling}>
         {isMobile ? <CheckSmall /> : <Check />}

@@ -28,7 +28,7 @@ const TodayBalanceGameBanner = ({
       type="button"
       key={game?.id}
       css={S.balanceGameStyling(index)}
-      onClick={onClickBanner}
+      onClick={onBannerClick}
     >
       <div css={S.bannerChipStyling}>
         {isMobile ? <CheckSmall /> : <Check />}
