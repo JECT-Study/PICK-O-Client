@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { Camera } from '@/assets';
 import { useFileUploadMutation } from '@/hooks/api/file/useFileUploadMutation';
 import * as S from './ImageUploadButton.style';
+import { iconStyle } from './ImageUploadButton.style';
 
 interface ImageUploadButtonProps {
   imageCount: number;
@@ -67,7 +68,7 @@ const ImageUploadButton = ({
       onClick={handleButtonClick}
     >
       <div css={S.contentStyle}>
-        <Camera />
+        <Camera css={S.iconStyle} />
         <div css={S.countWrapStyle}>{imageCount}/10</div>
       </div>
       <input
