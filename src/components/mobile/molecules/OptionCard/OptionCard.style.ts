@@ -61,8 +61,8 @@ export const titleInput = css(typo.Mobile.Main.Medium_16, {
 });
 
 export const additionalContainer = css({
-  marginTop: '8px',
-  padding: '8px 0',
+  marginTop: '6px',
+  height: '56px',
   borderTop: `1px solid ${color.GY[2]}`,
   display: 'flex',
   flexDirection: 'row',
