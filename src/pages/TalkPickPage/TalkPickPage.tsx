@@ -6,10 +6,10 @@ import { useParseJwt } from '@/hooks/common/useParseJwt';
 import { useMemberQuery } from '@/hooks/api/member/useMemberQuery';
 import { useCommentsQuery } from '@/hooks/api/comment/useCommentsQuery';
 import { useBestCommentsQuery } from '@/hooks/api/comment/useBestCommentsQuery';
-import { ToggleGroupItem } from '@/components/atoms/ToggleGroup/ToggleGroup';
 import TalkPickSection from '@/components/organisms/TalkPickSection/TalkPickSection';
 import CommentsSection from '@/components/organisms/CommentsSection/CommentsSection';
 import { useTalkPickDetailQuery } from '@/hooks/api/talk-pick/useTalkPickDetailQuery';
+import { ToggleGroupItem, ToggleGroupValue } from '@/types/toggle';
 import * as S from './TalkPickPage.style';
 
 interface State {
@@ -19,7 +19,10 @@ interface State {
 
 const TalkPickPage = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [selectedValue, setSelectedValue] = useState<string>('trend');
+  const [selectedValue, setSelectedValue] = useState<ToggleGroupValue>({
+    field: 'views',
+    order: 'desc',
+  });
 
   const accessToken = useNewSelector(selectAccessToken);
   const { member } = useMemberQuery(useParseJwt(accessToken).memberId);
@@ -36,11 +39,11 @@ const TalkPickPage = () => {
   const toggleItem: ToggleGroupItem[] = [
     {
       label: '인기순',
-      value: 'trend',
+      value: { field: 'views', order: 'desc' },
     },
     {
       label: '최신순',
-      value: 'recent',
+      value: { field: 'createdAt', order: 'desc' },
     },
   ];
 
@@ -77,7 +80,9 @@ const TalkPickPage = () => {
         <CommentsSection
           talkPickId={id}
           talkPickWriter={talkPick?.writer ?? ''}
-          commentList={selectedValue === 'trend' ? bestComments : comments}
+          commentList={
+            selectedValue.field === 'views' ? bestComments : comments
+          }
           toggleItem={toggleItem}
           selectedValue={selectedValue}
           setToggleValue={setSelectedValue}

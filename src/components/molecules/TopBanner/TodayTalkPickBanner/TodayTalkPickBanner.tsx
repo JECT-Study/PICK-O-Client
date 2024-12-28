@@ -2,7 +2,8 @@ import React from 'react';
 import { PATH } from '@/constants/path';
 import { useNavigate } from 'react-router-dom';
 import { TodayTalkPick } from '@/types/talk-pick';
-import { Check } from '@/assets';
+import { Check, CheckSmall } from '@/assets';
+import useIsMobile from '@/hooks/common/useIsMobile';
 import {
   bannerBtnStyling,
   bannerChipStyling,
@@ -16,7 +17,7 @@ interface TodayTalkPickBannerProps {
 
 const TodayTalkPickBanner = ({ talkPick }: TodayTalkPickBannerProps) => {
   const navigate = useNavigate();
-
+  const isMobile = useIsMobile();
   const onClickBanner = () => {
     navigate(`/${PATH.TODAY_TALKPICK}`, {
       state: { talkPickId: talkPick?.id, isTodayTalkPick: true },
@@ -31,8 +32,8 @@ const TodayTalkPickBanner = ({ talkPick }: TodayTalkPickBannerProps) => {
       onClick={onClickBanner}
     >
       <div css={bannerChipStyling}>
-        <Check />
-        오늘의 톡 픽
+        {isMobile ? <CheckSmall /> : <Check />}
+        오늘의 톡픽
       </div>
       <div css={talkPickTextStyling}>
         {talkPick?.title} <br />

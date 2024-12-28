@@ -5,7 +5,8 @@ import DraftPostButton from '@/components/atoms/DraftPostButton/DraftPostButton'
 import { BalanceGameSet } from '@/types/game';
 import { useBalanceGameCreation } from '@/hooks/game/useBalanceGameCreation';
 import GameNavigationSection from '@/components/molecules/GameNavigationSection/GameNavigationSection';
-import { useStageNavigation } from '@/hooks/game/useStageNavigation';
+import useToastModal from '@/hooks/modal/useToastModal';
+import ToastModal from '@/components/atoms/ToastModal/ToastModal';
 import * as S from './BalanceGameCreation.style';
 
 export interface BalanceGameCreationProps {
@@ -30,24 +31,23 @@ const BalanceGameCreation = ({
   loadedGames,
 }: BalanceGameCreationProps) => {
   const totalStage = 10;
-
-  const { currentStage, clearInput, handleNextStage, handlePrevStage } =
-    useStageNavigation(totalStage);
+  const { isVisible, modalText, showToastModal } = useToastModal();
 
   const {
     games,
+    currentStage,
     currentOptions,
     currentDescription,
-    handleOptionChange,
-    handleDescriptionChange,
+    clearInput,
+    handleNextStage,
+    handlePrevStage,
     handleStageDescriptionChange,
-  } = useBalanceGameCreation(currentStage, loadedGames, totalStage);
+    handleOptionUpdate,
+  } = useBalanceGameCreation(showToastModal, totalStage, loadedGames);
 
   useEffect(() => {
-    if (currentOptions.length > 0) {
-      onGamesUpdate(games);
-    }
-  }, [currentOptions, games, onGamesUpdate]);
+    onGamesUpdate(games);
+  }, [games, onGamesUpdate]);
 
   return (
     <div css={S.pageContainer}>
@@ -67,11 +67,12 @@ const BalanceGameCreation = ({
           onImageDelete={() => onImageDelete(currentStage, 0)}
           choiceInputProps={{
             value: currentOptions[0]?.name || '',
-            onChange: handleOptionChange('A'),
+            onChange: (e) => handleOptionUpdate('A', 'name', e.target.value),
           }}
           infoInputProps={{
             value: currentOptions[0]?.description || '',
-            onChange: (e) => handleDescriptionChange('A', e),
+            onChange: (e) =>
+              handleOptionUpdate('A', 'description', e.target.value),
           }}
           clearInput={clearInput}
         />
@@ -82,11 +83,12 @@ const BalanceGameCreation = ({
           onImageDelete={() => onImageDelete(currentStage, 1)}
           choiceInputProps={{
             value: currentOptions[1]?.name || '',
-            onChange: handleOptionChange('B'),
+            onChange: (e) => handleOptionUpdate('B', 'name', e.target.value),
           }}
           infoInputProps={{
             value: currentOptions[1]?.description || '',
-            onChange: (e) => handleDescriptionChange('B', e),
+            onChange: (e) =>
+              handleOptionUpdate('B', 'description', e.target.value),
           }}
           clearInput={clearInput}
         />
@@ -102,6 +104,9 @@ const BalanceGameCreation = ({
           handlePrevClick={handlePrevStage}
           handleCompleteClick={handleCompleteClick}
         />
+      </div>
+      <div css={S.toastModalStyling}>
+        {isVisible && <ToastModal>{modalText}</ToastModal>}
       </div>
     </div>
   );

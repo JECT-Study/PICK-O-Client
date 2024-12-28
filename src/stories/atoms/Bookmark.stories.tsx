@@ -11,10 +11,10 @@ const meta: Meta<typeof Bookmark> = {
   },
   tags: ['autodocs'],
   argTypes: {
-    bookmarkState: { control: 'boolean' },
+    bookmarked: { control: 'boolean' },
   },
   args: {
-    bookmarkState: false,
+    bookmarked: false,
   },
 };
 
@@ -23,7 +23,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    bookmarkState: false,
+    bookmarked: false,
   },
 };
 
@@ -32,10 +32,10 @@ export const All: Story = {
     <div css={storyContainer}>
       <div css={storyInnerContainer}>
         <h3>Default State</h3>
-        <Bookmark {...args} bookmarkState={false} />
+        <Bookmark {...args} bookmarked={false} />
 
         <h3>Pressed State</h3>
-        <Bookmark {...args} bookmarkState />
+        <Bookmark {...args} bookmarked />
       </div>
     </div>
   ),

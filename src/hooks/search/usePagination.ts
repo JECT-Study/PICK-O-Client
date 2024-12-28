@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-const usePagination = (defaultPage = 0) => {
+const usePagination = (defaultPage = 1) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const initialPage =
-    parseInt(searchParams.get('page') || `${defaultPage}`, 10) || 0;
+    parseInt(searchParams.get('page') || `${defaultPage}`, 10) || 1;
   const [page, setPage] = useState(initialPage);
 
   useEffect(() => {
@@ -16,7 +16,7 @@ const usePagination = (defaultPage = 0) => {
   }, [page, setSearchParams]);
 
   const handlePageChange = (newPage: number) => {
-    setPage(newPage - 1);
+    setPage(newPage);
   };
 
   return { page, handlePageChange };

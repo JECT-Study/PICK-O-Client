@@ -4,15 +4,16 @@ import Bookmark, { BookmarkProps } from '@/components/atoms/Bookmark/Bookmark';
 import { highlightText } from '@/utils/highlightText';
 import * as S from './ContentsButton.style';
 
-export interface ContentsButtonProps extends ComponentPropsWithRef<'div'> {
+export interface ContentsButtonProps extends ComponentPropsWithRef<'button'> {
   title: string;
   mainTag: string;
   subTag: string;
   images: string[];
   bookmarked?: BookmarkProps['bookmarked'];
   showBookmark?: boolean;
-  size?: 'large' | 'medium' | 'small';
+  size?: 'large' | 'medium' | 'small' | 'extraSmall';
   keyword?: string;
+  onClick: () => void;
 }
 
 const ContentsButton = ({
@@ -24,10 +25,16 @@ const ContentsButton = ({
   keyword,
   bookmarked = false,
   showBookmark = true,
+  onClick,
   ...attributes
 }: ContentsButtonProps) => {
   return (
-    <div css={S.cardWrapper(size)} {...attributes}>
+    <button
+      type="button"
+      css={S.cardWrapper(size)}
+      onClick={onClick}
+      {...attributes}
+    >
       <div css={S.imageContainer(size)}>
         <div css={S.imageWrapper}>
           <img src={images[0]} alt="option A" css={S.image} />
@@ -50,7 +57,7 @@ const ContentsButton = ({
           <Bookmark bookmarked={bookmarked} css={S.bookmarkWrapper} />
         )}
       </div>
-    </div>
+    </button>
   );
 };
 

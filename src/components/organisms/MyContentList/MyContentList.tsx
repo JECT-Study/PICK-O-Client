@@ -1,17 +1,16 @@
-import React from 'react';
-import MyContentBox, {
-  MyContentBoxProps,
-} from '@/components/molecules/MyContentBox/MyContentBox';
+import React, { useMemo } from 'react';
+import MyContentBox from '@/components/molecules/MyContentBox/MyContentBox';
+import { useNavigate } from 'react-router-dom';
 import * as S from './MyContentList.style';
 
 export interface MyContentItem {
   id: number;
   editedAt: string;
-  title: MyContentBoxProps['title'];
-  commentCount: MyContentBoxProps['commentCount'];
-  bookmarks: MyContentBoxProps['bookmarks'];
-  showBookmark?: MyContentBoxProps['showBookmark'];
-  bookmarked?: MyContentBoxProps['bookmarked'];
+  title: string;
+  commentCount: number;
+  bookmarks: number;
+  showBookmark?: boolean;
+  bookmarked?: boolean;
 }
 
 export interface MyContentListProps {
@@ -19,38 +18,56 @@ export interface MyContentListProps {
 }
 
 const MyContentList = ({ items = [] }: MyContentListProps) => {
-  const groupedItems = items.reduce(
-    (acc, item) => {
-      if (!acc[item.editedAt]) {
-        acc[item.editedAt] = [];
-      }
-      acc[item.editedAt].push(item);
-      return acc;
-    },
-    {} as Record<string, MyContentItem[]>,
-  );
+  const navigate = useNavigate();
+
+  const groupedItems = useMemo(() => {
+    return items.reduce<Record<string, MyContentItem[]>>(
+      (acc, { editedAt, ...rest }) => {
+        if (!acc[editedAt]) {
+          acc[editedAt] = [];
+        }
+        acc[editedAt].push({ editedAt, ...rest });
+        return acc;
+      },
+      {},
+    );
+  }, [items]);
+
+  const handleItemClick = (id: number) => {
+    navigate(`/talkpick/${id}`);
+  };
 
   return (
-    <div css={S.container}>
-      {Object.keys(groupedItems).map((date) => (
-        <div key={date} css={S.dateWrapper}>
+    <section aria-label="내 콘텐츠 목록" css={S.container}>
+      {Object.entries(groupedItems).map(([date, contentItems]) => (
+        <section key={date} css={S.dateWrapper}>
           <span css={S.dateLabel}>{date}</span>
           <ul css={S.contentList}>
-            {groupedItems[date].map((contentItem) => (
-              <li key={contentItem.id} css={S.contentItem}>
-                <MyContentBox
-                  title={contentItem.title}
-                  commentCount={contentItem.commentCount}
-                  bookmarks={contentItem.bookmarks}
-                  showBookmark={contentItem.showBookmark}
-                  bookmarked={contentItem.bookmarked}
-                />
-              </li>
-            ))}
+            {contentItems.map(
+              ({
+                id,
+                title,
+                commentCount,
+                bookmarks,
+                showBookmark,
+                bookmarked,
+              }) => (
+                <li key={id} css={S.contentItem}>
+                  <MyContentBox
+                    title={title}
+                    commentCount={commentCount}
+                    bookmarks={bookmarks}
+                    showBookmark={showBookmark}
+                    bookmarked={bookmarked}
+                    onClick={() => handleItemClick(id)}
+                  />
+                </li>
+              ),
+            )}
           </ul>
-        </div>
+        </section>
       ))}
-    </div>
+    </section>
   );
 };
 

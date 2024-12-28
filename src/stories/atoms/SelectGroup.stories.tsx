@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import SelectGroup from '@/components/atoms/SelectGroup/SelectGroup';
+import SelectGroup, {
+  SelectGroupItem,
+} from '@/components/atoms/SelectGroup/SelectGroup';
 import { storyContainer, storyInnerContainer } from '@/stories/story.styles';
 
 const meta = {
@@ -9,7 +11,6 @@ const meta = {
   parameters: {
     layout: 'centered',
   },
-  tags: ['autodocs'],
   argTypes: {
     selectedValue: { control: 'text' },
     onSelect: { action: 'selected' },
@@ -24,7 +25,7 @@ export const Default: Story = {
     items: [
       { label: '톡픽', value: 'talkpick' },
       { label: '밸런스 게임', value: 'balance' },
-    ],
+    ] as [SelectGroupItem, SelectGroupItem],
     selectedValue: 'talkpick',
   },
 };
@@ -34,7 +35,7 @@ export const All: Story = {
     items: [
       { label: '톡픽', value: 'talkpick' },
       { label: '밸런스 게임', value: 'balance' },
-    ],
+    ] as [SelectGroupItem, SelectGroupItem],
     selectedValue: 'talkpick',
   },
   render: (args) => {

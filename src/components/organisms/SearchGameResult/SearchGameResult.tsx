@@ -1,8 +1,7 @@
 import React from 'react';
+import { GameListItem } from '@/types/search';
 import MoreButton from '@/components/atoms/MoreButton/MoreButton';
-import SearchGameList, {
-  GameItem,
-} from '@/components/molecules/SearchGameList/SearchGameList';
+import SearchGameList from '@/components/molecules/SearchGameList/SearchGameList';
 import { NoResultsMessage } from '@/components/atoms/NoResultsMessage/NoResultsMessage';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { PATH } from '@/constants/path';
@@ -10,7 +9,7 @@ import SearchResultCardSkeleton from '@/components/atoms/SearchResultCardSkeleto
 import * as S from './SearchGameResult.style';
 
 interface SearchGameResultProps {
-  gameList: GameItem[];
+  gameList: GameListItem[];
   keyword: string;
   isLoading: boolean;
 }

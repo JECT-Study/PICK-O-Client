@@ -1,22 +1,22 @@
 import React from 'react';
+import { GameListItem } from '@/types/search';
 import ToggleGroup from '@/components/atoms/ToggleGroup/ToggleGroup';
 import Pagination from '@/components/atoms/Pagination/Pagination';
-import SearchGameList, {
-  GameItem,
-} from '@/components/molecules/SearchGameList/SearchGameList';
+import SearchGameList from '@/components/molecules/SearchGameList/SearchGameList';
 import { generatePageNumbers } from '@/utils/pagination';
 import { NoResultsMessage } from '@/components/atoms/NoResultsMessage/NoResultsMessage';
 import SearchResultCardSkeleton from '@/components/atoms/SearchResultCardSkeleton/SearchResultCardSkeleton';
+import { ToggleGroupValue } from '@/types/toggle';
 import * as S from './SearchGameListSection.style';
 
 interface SearchGameListSectionProps {
-  gameList: GameItem[];
+  gameList: GameListItem[];
   keyword: string;
   selectedPage: number;
   totalPages: number;
-  sort: string;
+  sort: ToggleGroupValue;
   onPageChange: (page: number) => void;
-  onSortChange: (sort: string) => void;
+  onSortChange: (sort: ToggleGroupValue) => void;
   isLoading: boolean;
 }
 

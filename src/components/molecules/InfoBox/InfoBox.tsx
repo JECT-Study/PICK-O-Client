@@ -8,6 +8,7 @@ export interface InfoBoxProps {
   commentContent: string;
   commentCount: number;
   bookmarks: number;
+  onClick: () => void;
 }
 const InfoBox = ({
   title,
@@ -15,9 +16,10 @@ const InfoBox = ({
   commentContent,
   commentCount,
   bookmarks,
+  onClick,
 }: InfoBoxProps) => {
   return (
-    <div css={S.infoContainer}>
+    <button type="button" css={S.infoContainer} onClick={onClick}>
       <div css={S.textContainer}>
         <p css={S.titleLabel}>{title}</p>
         <p css={S.subtitleWrapper}>
@@ -27,7 +29,7 @@ const InfoBox = ({
       </div>
       <InfoLabel label="톡댓톡" count={commentCount} />
       <InfoLabel label="저장" count={bookmarks} />
-    </div>
+    </button>
   );
 };
 

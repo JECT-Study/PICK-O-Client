@@ -13,14 +13,14 @@ const SearchGamePage = () => {
   const { query, handleSearch } = useSearchQuery();
   const { selectedTag, handleTagClick } = useTagFilter('game');
   const { page, handlePageChange } = usePagination();
-  const { sort, handleSortChange } = useSort();
+  const { sort, handleSortChange } = useSort({ field: 'views', order: 'desc' });
   const size = 9;
 
   const {
     content: gameResults,
     totalPages: gameTotalPages,
     isLoading,
-  } = useGameResultQuery(query, page, size, sort);
+  } = useGameResultQuery(query, page - 1, size, sort);
 
   return (
     <div css={S.container}>
@@ -36,7 +36,7 @@ const SearchGamePage = () => {
         <SearchGameListSection
           gameList={isLoading ? [] : gameResults}
           keyword={query}
-          selectedPage={page + 1}
+          selectedPage={page}
           totalPages={gameTotalPages}
           sort={sort}
           onPageChange={handlePageChange}

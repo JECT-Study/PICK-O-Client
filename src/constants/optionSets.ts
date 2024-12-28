@@ -3,12 +3,19 @@ export enum OptionKeys {
   BALANCE_GAME = 'balanceGame',
 }
 
-export const optionSets: Record<OptionKeys, string[]> = {
+export const optionSets: Record<
+  OptionKeys,
+  { label: string; value: string }[]
+> = {
   [OptionKeys.TALK_PICK]: [
-    '내가 저장한',
-    '내가 투표한',
-    '내가 댓글단',
-    '내가 작성한',
+    { label: '내가 저장한', value: 'bookmarks' },
+    { label: '내가 투표한', value: 'votes' },
+    { label: '내가 댓글단', value: 'comments' },
+    { label: '내가 작성한', value: 'written' },
   ],
-  [OptionKeys.BALANCE_GAME]: ['내가 저장한', '내가 투표한', '내가 만든'],
+  [OptionKeys.BALANCE_GAME]: [
+    { label: '내가 저장한', value: 'bookmarks' },
+    { label: '내가 투표한', value: 'votes' },
+    { label: '내가 만든', value: 'written' },
+  ],
 };

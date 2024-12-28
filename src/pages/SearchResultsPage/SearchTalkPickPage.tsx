@@ -13,14 +13,14 @@ const SearchTalkPickPage = () => {
   const { query, handleSearch } = useSearchQuery();
   const { selectedTag, handleTagClick } = useTagFilter('talkpick');
   const { page, handlePageChange } = usePagination();
-  const { sort, handleSortChange } = useSort();
+  const { sort, handleSortChange } = useSort({ field: 'views', order: 'desc' });
   const size = 10;
 
   const {
     content: talkPickResults,
     totalPages: talkPickTotalPages,
     isLoading,
-  } = useTalkPickResultQuery(query, page, size, sort);
+  } = useTalkPickResultQuery(query, page - 1, size, sort);
 
   return (
     <div css={S.container}>
@@ -36,7 +36,7 @@ const SearchTalkPickPage = () => {
         <SearchTalkPickListSection
           searchTalkPickList={isLoading ? [] : talkPickResults}
           keyword={query}
-          selectedPage={page + 1}
+          selectedPage={page}
           totalPages={talkPickTotalPages}
           onPageChange={handlePageChange}
           sort={sort}

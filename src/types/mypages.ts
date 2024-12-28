@@ -1,4 +1,3 @@
-import { SideBarProps } from '@/components/organisms/SideBar/SideBar';
 import { InfoItem } from '@/components/organisms/InfoList/InfoList';
 import { MyContentItem } from '@/components/organisms/MyContentList/MyContentList';
 import { MyBalanceGameItem } from '@/components/organisms/MyBalanceGameList/MyBalanceGameList';
@@ -31,4 +30,11 @@ export interface GameBookmark extends PaginationType {
   content: MyBalanceGameItem[];
 }
 
-export interface SideBar extends SideBarProps {}
+export interface SideBar {
+  id: number;
+  nickname: string;
+  profileImageUrl: string;
+  createdAt: string;
+  postsCount: number;
+  bookmarkedPostsCount: number;
+}
