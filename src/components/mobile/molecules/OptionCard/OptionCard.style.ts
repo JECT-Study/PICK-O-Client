@@ -58,6 +58,11 @@ export const titleInput = css(typo.Mobile.Main.Medium_16, {
   color: color.BK,
   width: '220px',
   outline: 'none',
+
+  '&::placeholder': {
+    color: color.GY[1],
+    opacity: 1,
+  },
 });
 
 export const additionalContainer = css({
@@ -71,10 +76,15 @@ export const additionalContainer = css({
 });
 
 export const subTitleInput = css(typo.Mobile.Main.Medium_16, {
-  fontWeight: 600,
+  width: '100%',
   color: color.BK,
   padding: '4px 8px',
   outline: 'none',
+
+  '&::placeholder': {
+    color: color.GY[1],
+    opacity: 1,
+  },
 });
 
 export const expandButton = css({
