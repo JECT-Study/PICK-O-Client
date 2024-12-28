@@ -83,7 +83,7 @@ const OptionCard = ({
             type="text"
             value={subTitle}
             onChange={handleSubTitleChange}
-            placeholder="해당 선택지에 대해 추가로 설명을 입력할 수 있어요!"
+            placeholder="해당 선택지에 대해 추가로 설명을 입력"
             css={S.subTitleInput}
           />
           <button
