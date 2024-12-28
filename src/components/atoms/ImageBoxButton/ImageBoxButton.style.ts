@@ -16,7 +16,7 @@ export const imageContainer = css({
   overflow: 'hidden',
   position: 'relative',
 
-  "[data-has-img='true']:hover::after": {
+  "&[data-has-img='true']:hover::after": {
     content: "''",
     position: 'absolute',
     top: 0,
@@ -27,7 +27,7 @@ export const imageContainer = css({
     zIndex: 1,
   },
 
-  "[data-has-img='true']:hover .trashIcon": {
+  "&[data-has-img='true']:hover .trashIcon": {
     opacity: 1,
     visibility: 'visible',
   },
@@ -68,6 +68,7 @@ export const trashImageBox = css({
   transition: 'opacity 0.3s ease, visibility 0.3s ease',
   position: 'absolute',
   zIndex: 2,
+  cursor: 'pointer',
 });
 
 export const trashImage = css({
