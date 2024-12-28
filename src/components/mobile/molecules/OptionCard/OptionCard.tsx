@@ -62,7 +62,7 @@ const OptionCard = ({
             type="text"
             value={title}
             onChange={handleTitleChange}
-            placeholder="제목 입력"
+            placeholder={`${type} 선택지를 입력하세요.`}
             css={S.titleInput}
           />
         </div>
@@ -83,7 +83,7 @@ const OptionCard = ({
             type="text"
             value={subTitle}
             onChange={handleSubTitleChange}
-            placeholder="부가 설명 입력"
+            placeholder="해당 선택지에 대해 추가로 설명을 입력할 수 있어요!"
             css={S.subTitleInput}
           />
           <button
