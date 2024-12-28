@@ -20,9 +20,9 @@ const meta: Meta<typeof DateGroupedList> = {
       control: 'object',
       description: '리스트 항목 배열. title과 imgUrl 속성을 포함합니다.',
       defaultValue: [
-        { title: '제목제목제목제목', imgUrl: ProfileInfoSample },
-        { title: '제목제목제목제목제목', imgUrl: ProfileInfoSample },
-        { title: '제목제목제목제목제목제목', imgUrl: ProfileInfoSample },
+        { id: 1, title: '제목제목제목제목', imgUrl: ProfileInfoSample },
+        { id: 2, title: '제목제목제목제목제목', imgUrl: ProfileInfoSample },
+        { id: 3, title: '제목제목제목제목제목제목', imgUrl: ProfileInfoSample },
       ],
     },
   },
@@ -35,9 +35,9 @@ export const Default: Story = {
   args: {
     date: '2024.08.06',
     items: [
-      { title: '제목제목제목제목', imgUrl: ProfileInfoSample },
-      { title: '제목제목제목제목제목', imgUrl: ProfileInfoSample },
-      { title: '제목제목제목제목제목제목', imgUrl: ProfileInfoSample },
+      { id: 1, title: '제목제목제목제목', imgUrl: ProfileInfoSample },
+      { id: 2, title: '제목제목제목제목제목', imgUrl: ProfileInfoSample },
+      { id: 3, title: '제목제목제목제목제목제목', imgUrl: ProfileInfoSample },
     ],
   },
 };
@@ -49,16 +49,16 @@ export const All: Story = {
         <DateGroupedList
           date="2024.08.06"
           items={[
-            { title: '제목 1', imgUrl: ProfileInfoSample },
-            { title: '제목 2', imgUrl: ProfileInfoSample },
+            { id: 1, title: '제목 1', imgUrl: ProfileInfoSample },
+            { id: 2, title: '제목 2', imgUrl: ProfileInfoSample },
           ]}
         />
         <DateGroupedList
           date="2024.08.07"
           items={[
-            { title: '다른 제목 1', imgUrl: ProfileInfoSample },
-            { title: '다른 제목 2', imgUrl: ProfileInfoSample },
-            { title: '다른 제목 3', imgUrl: ProfileInfoSample },
+            { id: 1, title: '다른 제목 1', imgUrl: ProfileInfoSample },
+            { id: 2, title: '다른 제목 2', imgUrl: ProfileInfoSample },
+            { id: 3, title: '다른 제목 3', imgUrl: ProfileInfoSample },
           ]}
         />
       </li>

@@ -3,7 +3,7 @@ import ProfileListItem from '@/components/mobile/molecules/ProfileListItem/Profi
 import * as S from './DateGroupedList.style';
 
 export interface DateGroupedListItem {
-  id: string;
+  id: number;
   title: string;
   imgUrl: string;
 }
