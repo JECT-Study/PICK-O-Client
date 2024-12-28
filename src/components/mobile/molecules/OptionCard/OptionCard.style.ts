@@ -4,7 +4,7 @@ import typo from '@/styles/typo';
 
 const getBorderColor = (type: 'A' | 'B', isContentEmpty: boolean) =>
   isContentEmpty
-    ? color.GY[1]
+    ? color.GY[2]
     : {
         A: color.RED,
         B: color.BLUE,
@@ -22,7 +22,7 @@ export const container = (
     padding: '4px 14px 4px 4px',
     borderRadius: '10px',
     border: `1px solid ${getBorderColor(type, isContentEmpty)}`,
-    backgroundColor: color.WT,
+    backgroundColor: isContentEmpty ? color.GY[3] : color.WT,
     transition: 'all 0.3s ease',
     height: isExpanded ? '120px' : '60px',
   });
