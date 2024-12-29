@@ -21,9 +21,8 @@ import { useLoadTempGameQuery } from '@/hooks/api/game/useLoadTempGameQuery';
 import useModal from '@/hooks/modal/useModal';
 import { SUCCESS, ERROR } from '@/constants/message';
 import { useImageHandlers } from '@/hooks/game/useImageHandlers';
+import { TOTAL_STAGE } from '@/constants/game';
 import * as S from './BalanceGameCreationPage.style';
-
-const TOTAL_STAGE = 10;
 
 const BalanceGameCreationPage = () => {
   const [title, setTitle] = useState('');
