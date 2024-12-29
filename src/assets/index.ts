@@ -108,6 +108,8 @@ export { default as MobileFolder } from './svg/mobile-folder.svg';
 export { default as MobileFolderCheck } from './svg/mobile-folder-check.svg';
 export { default as MobileCheckIcon } from './svg/mobile-check-icon.svg';
 export { default as MobileTempIcon } from './svg/mobile-temp-icon.svg';
+export { default as RedCheckIcon } from './svg/red-check-icon.svg';
+export { default as BlueCheckIcon } from './svg/blue-check-icon.svg';
 
 // TODO: 이전 SVG
 export { default as Email } from './svg/email.svg';

@@ -1,15 +1,14 @@
 /* eslint-disable no-console */
 import React, { useState } from 'react';
 import { BookmarkDF, BookmarkPR, GameEnding, Share } from '@/assets';
-import { ERROR, SUCCESS } from '@/constants/message';
+import { SUCCESS } from '@/constants/message';
 import Divider from '@/components/atoms/Divider/Divider';
 import InteractionButton from '@/components/atoms/InteractionButton/InteractionButton';
 import ToastModal from '@/components/atoms/ToastModal/ToastModal';
 import ShareModal from '@/components/molecules/ShareModal/ShareModal';
 import LoginModal from '@/components/molecules/LoginModal/LoginModal';
-import { useCreateDoneGameBookmarkMutation } from '@/hooks/api/bookmark/useCreateDoneGameBookmark';
-import { useDeleteDoneGameBookmarkMutation } from '@/hooks/api/bookmark/useDeleteDoneGameBookmark';
 import useToastModal from '@/hooks/modal/useToastModal';
+import { useGameEndBookmark } from '@/hooks/game/useBalanceGameBookmark';
 import * as S from './BalanceGameEndingBox.style';
 
 export interface BalanceGameEndingBoxProps {
@@ -54,29 +53,13 @@ const BalanceGameEndingBox = ({
     showToastModal(SUCCESS.COPY.LINK);
   };
 
-  const { mutate: createEndBookmark } =
-    useCreateDoneGameBookmarkMutation(gameSetId);
-
-  const { mutate: deleteEndBookmark } =
-    useDeleteDoneGameBookmarkMutation(gameSetId);
-
-  const handleEndBookmarkClick = () => {
-    if (isGuest) {
-      setLoginModalOpen(true);
-      return;
-    }
-
-    if (isMyGame) {
-      showToastModal(ERROR.BOOKMARK.MY_GAME);
-      return;
-    }
-
-    if (isMyEndBookmark) {
-      deleteEndBookmark();
-    } else {
-      createEndBookmark();
-    }
-  };
+  const { handleEndBookmarkClick } = useGameEndBookmark(
+    isGuest,
+    isMyGame,
+    isMyEndBookmark,
+    gameSetId,
+    showToastModal,
+  );
 
   return (
     <div css={S.balanceGameContainer}>
@@ -116,7 +99,11 @@ const BalanceGameEndingBox = ({
           buttonLabel="이 게임 제법 폼이 좋아?"
           icon={isMyEndBookmark ? <BookmarkPR /> : <BookmarkDF />}
           iconLabel="저장하기"
-          onClick={handleEndBookmarkClick}
+          onClick={() =>
+            handleEndBookmarkClick(() => {
+              setLoginModalOpen(true);
+            })
+          }
         />
       </div>
     </div>
