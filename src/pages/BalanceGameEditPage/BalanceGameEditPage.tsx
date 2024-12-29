@@ -14,7 +14,7 @@ import useModal from '@/hooks/modal/useModal';
 import { useFileUploadMutation } from '@/hooks/api/file/useFileUploadMutation';
 import { ERROR, SUCCESS } from '@/constants/message';
 import useToastModal from '@/hooks/modal/useToastModal';
-import { useUpdateGameMutation } from '@/hooks/api/game/useUpdateGameMutation';
+import { useEditGamesMutation } from '@/hooks/api/game/useEditGamesMutation';
 import * as S from '../BalanceGameCreationPage/BalanceGameCreationPage.style';
 
 const BalanceGameEditPage = () => {
@@ -29,7 +29,7 @@ const BalanceGameEditPage = () => {
   const [subTag, setSubTag] = useState('');
 
   const { mutateAsync: uploadImage } = useFileUploadMutation();
-  const { mutate } = useUpdateGameMutation();
+  const { mutate } = useEditGamesMutation();
 
   const {
     isOpen: isTagModalOpen,

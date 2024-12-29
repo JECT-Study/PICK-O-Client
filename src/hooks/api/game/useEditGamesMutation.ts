@@ -8,7 +8,7 @@ interface UpdateGameParams {
   data: BalanceGame;
 }
 
-export const useUpdateGameMutation = () => {
+export const useEditGamesMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation<BalanceGame, Error, UpdateGameParams>({
