@@ -3,25 +3,44 @@ import typo from '@/styles/typo';
 
 export const containerStyle = css({
   width: '1158px',
+  '@media (max-width: 430px)': {
+    maxWidth: '335px',
+    alignItems: 'center',
+    justifyContent: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+  },
 });
 
-export const titleWrapStyle = css(typo.Title, {
+export const titleWrapStyle = css({
+  ...typo.Title,
   display: 'flex',
   justifyContent: 'space-between',
-  alignItems: 'center',
   marginBottom: '20px',
+  '@media (max-width: 430px)': {
+    ...typo.Mobile.Text.Bold_16,
+    marginBottom: 0,
+    height: '50px',
+    width: '100%',
+  },
 });
 
 export const barStyle = css({
   margin: '48px 0',
   display: 'flex',
   justifyContent: 'center',
+  '@media (max-width: 430px)': {
+    margin: '0 0 18px 0',
+  },
 });
 
 export const contentStyle = css({
   display: 'grid',
   gridTemplateColumns: 'repeat(2, 1fr)',
   gap: '20px',
+  '@media (max-width: 430px)': {
+    gap: '9px',
+  },
 });
 
 export const loadMoreWrapperStyle = css({
@@ -29,4 +48,7 @@ export const loadMoreWrapperStyle = css({
   display: 'flex',
   justifyContent: 'center',
   padding: '62px 0 95px 0',
+  '@media (max-width: 430px)': {
+    padding: '16px 0',
+  },
 });

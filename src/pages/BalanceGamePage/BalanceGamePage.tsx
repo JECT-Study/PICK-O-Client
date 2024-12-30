@@ -39,14 +39,6 @@ const BalanceGamePage = () => {
 
   const { mutate: deleteGameSet } = useDeleteGameSetMutation();
 
-  const handleNextGame = () => {
-    setCurrentStage((stage) => (stage < 10 ? stage + 1 : stage));
-  };
-
-  const handlePrevGame = () => {
-    setCurrentStage((stage) => (stage > 0 ? stage - 1 : stage));
-  };
-
   const handleEditClick = () => {
     navigate(`/${PATH.BALANCEGAME.EDIT(gameSetId)}`);
   };
@@ -85,6 +77,10 @@ const BalanceGamePage = () => {
     });
     openModal();
   };
+    
+  const changeStage = (step: number) => {
+    setCurrentStage((stage) => Math.min(10, Math.max(0, stage + step)));
+  };
 
   return (
     <div css={S.pageStyle}>
@@ -111,8 +107,7 @@ const BalanceGamePage = () => {
           isMyGame={isMyGame}
           currentStage={currentStage}
           setCurrentStage={setCurrentStage}
-          handleNextGame={handleNextGame}
-          handlePrevGame={handlePrevGame}
+          changeStage={changeStage}
           onEdit={handleEditClick}
           onDelete={handleDeleteClick}
           onReport={handleReportClick}

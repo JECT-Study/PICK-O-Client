@@ -16,9 +16,15 @@ export const talkPickStyling = css({
   backgroundPosition: 'center',
   backgroundRepeat: 'no-repeat',
   cursor: 'pointer',
+  '@media (max-width: 430px)': {
+    height: '227px',
+    paddingTop: '31px',
+    paddingBottom: '48px',
+  },
 });
 
-export const bannerChipStyling = css(typo.Main.SemiBold, {
+export const bannerChipStyling = css({
+  ...typo.Main.SemiBold,
   display: 'flex',
   width: '142px',
   height: '38px',
@@ -28,9 +34,16 @@ export const bannerChipStyling = css(typo.Main.SemiBold, {
   borderRadius: '24px',
   backgroundColor: color.WT,
   color: color.BK,
+  '@media (max-width: 430px)': {
+    ...typo.Mobile.Text.SemiBold_7,
+    width: '53px',
+    height: '15px',
+    gap: '2px',
+  },
 });
 
-export const bannerBtnStyling = css(typo.Main.Medium, {
+export const bannerBtnStyling = css({
+  ...typo.Main.Medium,
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
@@ -39,11 +52,23 @@ export const bannerBtnStyling = css(typo.Main.Medium, {
   borderRadius: '10px',
   backgroundColor: color.MAIN,
   color: color.WT,
+  '@media (max-width: 430px)': {
+    ...typo.Mobile.Text.SemiBold_7,
+    width: '128px',
+    height: '25px',
+    borderRadius: '4px',
+  },
 });
 
-export const talkPickTextStyling = css(typo.Title, {
+export const talkPickTextStyling = css({
+  ...typo.Title,
   textAlign: 'center',
   marginTop: '40px',
   marginBottom: '70px',
   color: color.WT,
+  '@media (max-width: 430px)': {
+    ...typo.Mobile.Text.Bold_16,
+    marginTop: '32px',
+    marginBottom: '35px',
+  },
 });

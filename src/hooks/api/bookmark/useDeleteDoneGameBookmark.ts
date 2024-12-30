@@ -1,9 +1,13 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Id } from '@/types/api';
+import { ERROR } from '@/constants/message';
 import { deleteDoneGameBookmark } from '@/api/bookmarks';
 import { GameSet } from '@/types/game';
 
-export const useDeleteDoneGameBookmarkMutation = (gameSetId: Id) => {
+export const useDeleteDoneGameBookmarkMutation = (
+  gameSetId: Id,
+  showToastModal: (message: string, callback?: () => void) => void,
+) => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -25,6 +29,7 @@ export const useDeleteDoneGameBookmarkMutation = (gameSetId: Id) => {
     },
     onError: (err, id, context) => {
       queryClient.setQueryData(['gameSet', gameSetId], context?.prevGame);
+      showToastModal(ERROR.BOOKMARK.GAME_DELETE_FAIL);
     },
     onSuccess: () =>
       queryClient.invalidateQueries({

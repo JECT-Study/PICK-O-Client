@@ -47,16 +47,15 @@ const ImageBoxButton = ({
       {imgUrl ? (
         <>
           <img src={imgUrl} alt="Uploaded from server" css={S.uploadedImage} />
-          <div
+          <button
+            type="button"
             css={S.trashImageBox}
             className="trashIcon"
-            onClick={(e) => {
-              e.stopPropagation();
-              onDelete?.();
-            }}
+            onClick={onDelete}
+            aria-label="Delete image"
           >
             <IcTrash css={S.trashImage} />
-          </div>
+          </button>
         </>
       ) : (
         <div css={S.defaultImageBox}>

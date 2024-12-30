@@ -1,3 +1,5 @@
+/* eslint-disable no-alert */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import React, { useCallback, useState } from 'react';
 import { AngleSmallDown } from '@/assets';
 import ToggleGroup from '@/components/atoms/ToggleGroup/ToggleGroup';
@@ -9,6 +11,7 @@ import { ToggleGroupValue } from '@/types/toggle';
 import { useNavigate } from 'react-router-dom';
 import { ERROR } from '@/constants/message';
 import { PATH } from '@/constants/path';
+import MobileToggleGroup from '@/components/mobile/atoms/MobileToggleGroup/MobileToggleGroup';
 import * as S from './BalanceGameList.style';
 
 export interface ContentListProps {
@@ -19,6 +22,7 @@ export interface ContentListProps {
   setActiveTab: React.Dispatch<
     React.SetStateAction<'인기' | '커플' | '취향' | '월드컵'>
   >;
+  isMobile?: boolean;
 }
 
 const BalanceGameList = ({
@@ -27,6 +31,7 @@ const BalanceGameList = ({
   setSelectedValue,
   activeTab,
   setActiveTab,
+  isMobile = false,
 }: ContentListProps) => {
   const [visibleItems, setVisibleItems] = useState<number>(4);
   const navigate = useNavigate();
@@ -57,17 +62,29 @@ const BalanceGameList = ({
     <div css={S.containerStyle}>
       <div css={S.titleWrapStyle}>
         <div>주제별 밸런스 게임</div>
-        <ToggleGroup
-          selectedValue={selectedValue}
-          onClick={handleToggleChange}
-        />
+        {isMobile ? (
+          <MobileToggleGroup
+            selectedValue={selectedValue}
+            onClick={handleToggleChange}
+          />
+        ) : (
+          <ToggleGroup
+            selectedValue={selectedValue}
+            onClick={setSelectedValue}
+          />
+        )}
       </div>
       <div css={S.barStyle}>
-        <CategoryBar activeTab={activeTab} setActiveTab={setActiveTab} />
+        <CategoryBar
+          isMobile={isMobile}
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+        />
       </div>
       <div css={S.contentStyle}>
         {contents.slice(0, visibleItems).map((content) => (
           <ContentsButton
+            size={isMobile ? 'extraSmall' : 'large'}
             key={content.id}
             images={content.images}
             title={content.title}
@@ -81,7 +98,7 @@ const BalanceGameList = ({
           <div css={S.loadMoreWrapperStyle}>
             <Button
               variant="outlineShadow"
-              size="large"
+              size={isMobile ? 'small' : 'large'}
               onClick={handleLoadMore}
               iconRight={<AngleSmallDown />}
             >

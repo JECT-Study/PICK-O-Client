@@ -8,18 +8,20 @@ const meta: Meta<typeof CategoryButton> = {
   component: CategoryButton,
   parameters: {
     layout: 'centered',
+    viewport: { defaultViewport: 'tablet' },
   },
-  tags: ['autodocs'],
   argTypes: {
     imageType: {
       options: ['PickVote', 'RandomGame', 'TodayPick'],
       control: { type: 'radio' },
     },
     label: { control: { type: 'text' } },
+    isMobile: { control: { type: 'boolean' } },
   },
   args: {
     imageType: 'PickVote',
     label: 'Category Label',
+    isMobile: false,
   },
 };
 
@@ -42,6 +44,30 @@ export const All: Story = {
       <li css={storyInnerContainer}>
         <h3>랜덤 밸런스 게임</h3>
         <CategoryButton imageType="RandomGame" label="랜덤 밸런스 게임" />
+      </li>
+    </ul>
+  ),
+};
+
+export const Mobile: Story = {
+  parameters: {
+    viewport: {
+      defaultViewport: 'mobile',
+    },
+  },
+  render: () => (
+    <ul css={storyContainer}>
+      <li css={storyInnerContainer}>
+        <h3>모바일 톡&픽 플레이스</h3>
+        <CategoryButton imageType="PickVote" label="톡&픽 플레이스" isMobile />
+      </li>
+      <li css={storyInnerContainer}>
+        <h3>모바일 랜덤 밸런스 게임</h3>
+        <CategoryButton
+          imageType="RandomGame"
+          label="랜덤 밸런스 게임"
+          isMobile
+        />
       </li>
     </ul>
   ),

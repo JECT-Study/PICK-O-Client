@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import TopBanner from '@/components/molecules/TopBanner/TopBanner';
 import SearchTagBar from '@/components/molecules/SearchTagBar/SearchTagBar';
 import CategoryBox from '@/components/molecules/CategoryBox/CategoryBox';
@@ -10,9 +10,12 @@ import { useBestGameList } from '@/hooks/api/game/useBestGameListQuery';
 import { useLatestGameList } from '@/hooks/api/game/useLatestGameListQuery';
 import { ToggleGroupValue } from '@/types/toggle';
 import { NOTICE } from '@/constants/message';
+import FloatingMenuButton from '@/components/mobile/molecules/FloatingMenuButton/FloatingMenuButton';
+import useIsMobile from '@/hooks/common/useIsMobile';
 import * as S from './LandingPage.style';
 
 const LandingPage = () => {
+  const isMobile = useIsMobile();
   const { todayTalkPick } = useTodayTalkPickQuery();
   const [isServicePreparing, setIsServicePreparing] = useState<boolean>(false);
   const [selectedValue, setSelectedValue] = useState<ToggleGroupValue>({
@@ -23,15 +26,15 @@ const LandingPage = () => {
     '인기' | '커플' | '취향' | '월드컵'
   >('인기');
 
-  const { bestGames } = useBestGameList(activeTab);
-  const { latestGames } = useLatestGameList(activeTab);
+  const isBestGamesEnabled =
+    activeTab === '인기' || selectedValue.field === 'views';
+  const isLatestGamesEnabled =
+    activeTab !== '인기' && selectedValue.field !== 'views';
 
-  const contents = useMemo(() => {
-    if (selectedValue.field === 'views') {
-      return bestGames || [];
-    }
-    return latestGames || [];
-  }, [selectedValue, bestGames, latestGames]);
+  const { bestGames } = useBestGameList(activeTab, isBestGamesEnabled);
+  const { latestGames } = useLatestGameList(activeTab, isLatestGamesEnabled);
+
+  const contents = bestGames || latestGames || [];
 
   const handleService = () => {
     setIsServicePreparing(true);
@@ -48,27 +51,48 @@ const LandingPage = () => {
   };
 
   return (
-    <div>
+    <div css={S.pageWrapperStyle}>
       {isServicePreparing && (
         <div css={S.toastModalStyling}>
           <ToastModal bgColor="white">{NOTICE.STATUS.NOT_READY}</ToastModal>
         </div>
       )}
       <TopBanner todayTalkPick={todayTalkPick} />
-      <div css={S.contentWrapStyle}>
-        <SearchTagBar onSearch={handleSearch} />
-        <div css={S.categoryBoxStyle}>
-          <CategoryBox handleService={handleService} />
-        </div>
 
-        <BalanceGameList
-          contents={contents}
-          selectedValue={selectedValue}
-          setSelectedValue={setSelectedValue}
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
-        />
-      </div>
+      {isMobile ? (
+        <div css={S.contentWrapStyle}>
+          <CategoryBox isMobile={isMobile} handleService={handleService} />
+          <div css={S.searchBoxStyle}>
+            <p css={S.searchBoxTitleStyle}>어떤 콘텐츠를 찾아볼까요?</p>
+            <SearchTagBar isMobile onSearch={handleSearch} />
+          </div>
+          <BalanceGameList
+            isMobile
+            contents={contents}
+            selectedValue={selectedValue}
+            setSelectedValue={setSelectedValue}
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+          />
+          <div css={S.floatingDropdownStyle}>
+            <FloatingMenuButton />
+          </div>
+        </div>
+      ) : (
+        <div css={S.contentWrapStyle}>
+          <SearchTagBar onSearch={handleSearch} />
+          <div css={S.categoryBoxStyle}>
+            <CategoryBox handleService={handleService} />
+          </div>
+          <BalanceGameList
+            contents={contents}
+            selectedValue={selectedValue}
+            setSelectedValue={setSelectedValue}
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+          />
+        </div>
+      )}
     </div>
   );
 };

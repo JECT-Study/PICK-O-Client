@@ -45,7 +45,7 @@ export const getSizeByVariantStyling = (
         height: '50px',
       }),
       medium: css(typo.Main.SemiBold, {
-        width: '130px',
+        width: '160px',
         height: '50px',
       }),
     },
