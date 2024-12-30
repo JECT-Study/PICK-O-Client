@@ -48,7 +48,7 @@ const BalanceGamePage = () => {
   };
 
   const handleEditClick = () => {
-    navigate(`/${PATH.BALANCEGAME_EDIT_LINK(gameSetId)}`);
+    navigate(`/${PATH.BALANCEGAME.EDIT(gameSetId)}`);
   };
 
   const handleDeleteClick = () => {
