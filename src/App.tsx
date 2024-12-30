@@ -75,7 +75,7 @@ const App: React.FC = () => {
           <Route path={PATH.TODAY_TALKPICK} element={<TalkPickPage />} />
           <Route path={PATH.TALKPICK_PLACE} element={<TalkPickPlacePage />} />
           <Route path={PATH.TALKPICK()} element={<TalkPickPage />} />
-          <Route path={PATH.BALANCEGAME()} element={<BalanceGamePage />} />
+          <Route path={PATH.BALANCEGAME.VIEW()} element={<BalanceGamePage />} />
           {/* <Route path="/search" element={<SearchResultsPage />} /> */}
           {/* <Route path="posts" element={<PostList />} />
           <Route path="posts/:id" element={<PostPage />} />
@@ -103,7 +103,7 @@ const App: React.FC = () => {
               element={<BalanceGameCreationPage />}
             />
             <Route
-              path={PATH.BALANCEGAME_EDIT_ROUTE}
+              path={PATH.BALANCEGAME.EDIT()}
               element={<BalanceGameEditPage />}
             />
             <Route
