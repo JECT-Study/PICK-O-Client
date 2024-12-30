@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { BookmarkDF, BookmarkPR, NextArrow, PrevArrow, Share } from '@/assets';
-import { ERROR, SUCCESS } from '@/constants/message';
+import { SUCCESS } from '@/constants/message';
 import { GameDetail, GameSet } from '@/types/game';
 import { formatDateFromISO } from '@/utils/formatData';
 import Chips from '@/components/atoms/Chips/Chips';
@@ -14,11 +14,9 @@ import ShareModal from '@/components/molecules/ShareModal/ShareModal';
 import LoginModal from '@/components/molecules/LoginModal/LoginModal';
 import BalanceGameBox from '@/components/molecules/BalanceGameBox/BalanceGameBox';
 import useToastModal from '@/hooks/modal/useToastModal';
-import { useCreateGameBookmarkMutation } from '@/hooks/api/bookmark/useCreateGameBookmarkMutation';
-import { useDeleteGameBookmarkMutation } from '@/hooks/api/bookmark/useDeleteGameBookmarkMutation';
 import { useGameBookmark } from '@/hooks/game/useBalanceGameBookmark';
 import { useGuestGameVote } from '@/hooks/game/useBalanceGameVote';
-import { MyVoteOption, VoteOption, VoteRecord } from '@/types/vote';
+import { VoteRecord } from '@/types/vote';
 import * as S from './BalanceGameSection.style';
 
 export interface BalanceGameSectionProps {
@@ -63,12 +61,9 @@ const BalanceGameSection = ({
   const isGuest = !localStorage.getItem('accessToken');
 
   const [guestVotedList, setGuestVotedList] = useState<VoteRecord[]>([]);
-    
+
   const currentGame: GameDetail = gameStages[currentStage];
-  const { 
-  
-  
-  } = useGuestGameVote(
+  const { handleGuestGameVote } = useGuestGameVote(
     guestVotedList,
     setGuestVotedList,
     gameSetId,
@@ -124,7 +119,7 @@ const BalanceGameSection = ({
     changeStage(1);
   };
 
-    const { handleBookmarkClick } = useGameBookmark(
+  const { handleBookmarkClick } = useGameBookmark(
     isGuest,
     isMyGame,
     currentGame.myBookmark,
@@ -243,7 +238,7 @@ const BalanceGameSection = ({
           buttonLabel="이 게임 제법 폼이 좋아?"
           icon={currentGame.myBookmark ? <BookmarkPR /> : <BookmarkDF />}
           iconLabel="저장하기"
-           onClick={() => handleBookmarkClick(() => setLoginModalOpen(true))}
+          onClick={() => handleBookmarkClick(() => setLoginModalOpen(true))}
         />
       </div>
     </div>

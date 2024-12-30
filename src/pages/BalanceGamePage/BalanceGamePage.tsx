@@ -77,7 +77,7 @@ const BalanceGamePage = () => {
     });
     openModal();
   };
-    
+
   const changeStage = (step: number) => {
     setCurrentStage((stage) => Math.min(10, Math.max(0, stage + step)));
   };
