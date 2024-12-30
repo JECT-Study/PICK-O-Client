@@ -15,21 +15,51 @@ import { useFileUploadMutation } from '@/hooks/api/file/useFileUploadMutation';
 import { ERROR, SUCCESS } from '@/constants/message';
 import useToastModal from '@/hooks/modal/useToastModal';
 import { useEditGamesMutation } from '@/hooks/api/game/useEditGamesMutation';
+import { useNewSelector } from '@/store';
+import { selectAccessToken } from '@/store/auth';
+import { useMemberQuery } from '@/hooks/api/member/useMemberQuery';
+import { useParseJwt } from '@/hooks/common/useParseJwt';
 import * as S from '../BalanceGameCreationPage/BalanceGameCreationPage.style';
 
 const BalanceGameEditPage = () => {
   const { gameSetId } = useParams<{ gameSetId: string }>();
   const navigate = useNavigate();
   const currentGameSetId = Number(gameSetId);
-  const { gameSet } = useGameBySetId(currentGameSetId);
+
   const { isVisible, modalText, showToastModal } = useToastModal();
   const [title, setTitle] = useState('');
   const [games, setGames] = useState<BalanceGameSet[]>([]);
   const [mainTag, setMainTag] = useState('');
   const [subTag, setSubTag] = useState('');
 
+  const accessToken = useNewSelector(selectAccessToken);
+  const memberId = useParseJwt(accessToken)?.memberId;
+
+  const { member } = useMemberQuery(memberId);
+  const { gameSet } = useGameBySetId(currentGameSetId);
+
   const { mutateAsync: uploadImage } = useFileUploadMutation();
   const { mutate } = useEditGamesMutation();
+
+  useEffect(() => {
+    if (!gameSet || !member) {
+      return;
+    }
+
+    if (gameSet.member !== member.nickname) {
+      alert('권한이 없습니다.');
+      navigate('/');
+    }
+  }, [gameSet, member, navigate]);
+
+  useEffect(() => {
+    if (gameSet) {
+      setTitle(gameSet.title);
+      setGames(transformGameSetToBalanceGame(gameSet));
+      setMainTag(gameSet.mainTag || '');
+      setSubTag(gameSet.subTag || '');
+    }
+  }, [gameSet]);
 
   const {
     isOpen: isTagModalOpen,
@@ -50,15 +80,6 @@ const BalanceGameEditPage = () => {
 
   const { onImageChange: handleOptionImageChange, deleteImage } =
     useImageHandlers({ uploadImage });
-
-  useEffect(() => {
-    if (gameSet) {
-      setTitle(gameSet.title);
-      setGames(transformGameSetToBalanceGame(gameSet));
-      setMainTag(gameSet.mainTag || '');
-      setSubTag(gameSet.subTag || '');
-    }
-  }, [gameSet]);
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
