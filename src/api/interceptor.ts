@@ -18,8 +18,16 @@ const baseURL =
   process.env.NODE_ENV === 'production' ? process.env.API_URL : '/api';
 
 export const axiosInstance = axios.create({
-  // baseURL: process.env.API_URL,
-  // baseURL: '/api',
+  baseURL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  withCredentials: true,
+  timeout: AXIOS.TIMEOUT,
+});
+
+// 재발급 함수 실행 이후 response.use 실행 방지를 위한 선언언
+export const axiosRefreshInstance = axios.create({
   baseURL,
   headers: {
     'Content-Type': 'application/json',
@@ -30,7 +38,7 @@ export const axiosInstance = axios.create({
 
 // 만료된 토큰을 사용한 새 토큰 재발급 함수 (순환 참조 방지)
 export const getRefreshToken = async () => {
-  const { data } = await axiosInstance.get<ServerResponse>(
+  const { data } = await axiosRefreshInstance.get<ServerResponse>(
     `${END_POINT.REFRESH}`,
   );
   return data;
