@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-console */
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
-// import { PATH } from '@/constants/path';
+import { PATH } from '@/constants/path';
 import { ServerResponse } from '@/types/api';
 import store from '@/store';
 import { tokenActions } from '@/store/auth';
@@ -98,7 +98,7 @@ axiosInstance.interceptors.response.use(
 
         // 로그아웃 후 로그인 페이지로 이동
         console.log('인터셉터에서 표시!!');
-        // window.location.href = `/${PATH.LOGIN}`;
+        window.location.href = `/${PATH.LOGIN}`;
 
         return Promise.reject(err);
       }
