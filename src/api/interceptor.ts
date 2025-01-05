@@ -26,7 +26,7 @@ export const axiosInstance = axios.create({
   timeout: AXIOS.TIMEOUT,
 });
 
-// 재발급 함수 실행 이후 response.use 실행 방지를 위한 선언언
+// 재발급 함수 실행 이후 response.use 실행 방지를 위한 선언
 export const axiosRefreshInstance = axios.create({
   baseURL,
   headers: {
@@ -36,7 +36,7 @@ export const axiosRefreshInstance = axios.create({
   timeout: AXIOS.TIMEOUT,
 });
 
-// 만료된 토큰을 사용한 새 토큰 재발급 함수 (순환 참조 방지)
+// 쿠키의 리프레시 토큰을 사용한 새 토큰 재발급 함수 (순환 참조 방지)
 export const getRefreshToken = async () => {
   const { data } = await axiosRefreshInstance.get<ServerResponse>(
     `${END_POINT.REFRESH}`,
