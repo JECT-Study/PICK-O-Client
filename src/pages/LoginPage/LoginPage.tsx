@@ -24,6 +24,11 @@ const LoginPage = () => {
       showToastModal(ERROR.EMAIL.EXIST);
       setModalVisible(false);
     }
+
+    if (state?.status === 'logout' && modalVisible) {
+      showToastModal('로그아웃되었습니다.');
+      setModalVisible(false);
+    }
   }, [modalVisible, showToastModal, state?.status]);
 
   return (

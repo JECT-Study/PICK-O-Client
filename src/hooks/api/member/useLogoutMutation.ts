@@ -21,8 +21,7 @@ export const useLogoutMutation = () => {
       delete axiosInstance.defaults.headers.Authorization;
       dispatch(tokenActions.deleteToken());
 
-      navigate(`/${PATH.LOGIN}`);
-      alert('로그아웃되었습니다🙂');
+      navigate(`/${PATH.LOGIN}`, { state: { status: 'logout' } });
     },
     onError: (err: AxiosErrorResponse) => {
       console.log('로그아웃 에러: ', err);
