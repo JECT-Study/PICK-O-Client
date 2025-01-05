@@ -2,8 +2,8 @@
 /* eslint-disable no-console */
 import { axiosInstance, getRefreshToken } from '@/api/interceptor';
 import { PATH } from '@/constants/path';
-import store, { useNewDispatch } from '@/store';
-import { tokenActions } from '@/store/auth';
+import store, { useNewDispatch, useNewSelector } from '@/store';
+import { selectAccessToken, tokenActions } from '@/store/auth';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -13,13 +13,15 @@ export const useTokenRefresh = () => {
 
   // 로그인 된 상태였는지 여부 확인
   const isLoggedIn = !!localStorage.getItem('isLoggedIn');
+  const accessToken = useNewSelector(selectAccessToken);
 
   // 페이지 새로 고침이나 소셜 로그인 시
   // 리프레시 토큰을 사용한 액세스 토큰 발급으로 로그인 유지
   useEffect(() => {
     const tokenRefresh = async () => {
       // 로그인이 안된 비회원 상태이면 리턴
-      if (!isLoggedIn) return;
+      // 이미 리덕스에 토큰이 담겨있으면 재발급 없이 리턴
+      if (!isLoggedIn || accessToken) return;
 
       try {
         // 쿠키에 담긴 리프레시 토큰으로 액세스 토큰 재발급
@@ -50,5 +52,5 @@ export const useTokenRefresh = () => {
     tokenRefresh().catch((error) => {
       console.error('토큰 에러: ', error);
     });
-  }, [dispatch, isLoggedIn, navigate]);
+  }, [accessToken, dispatch, isLoggedIn, navigate]);
 };
