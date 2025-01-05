@@ -3,6 +3,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { BookmarkDF, BookmarkPR, NextArrow, PrevArrow, Share } from '@/assets';
 import { ERROR, SUCCESS } from '@/constants/message';
 import { GameDetail, GameSet } from '@/types/game';
+import { useNewSelector } from '@/store';
+import { selectAccessToken } from '@/store/auth';
 import { formatDateFromISO } from '@/utils/formatData';
 import Chips from '@/components/atoms/Chips/Chips';
 import Divider from '@/components/atoms/Divider/Divider';
@@ -55,7 +57,7 @@ const BalanceGameSection = ({
 
   const gameStages: GameDetail[] =
     game?.gameDetailResponses ?? gameDefaultDetail;
-  const isGuest = !localStorage.getItem('accessToken');
+  const isGuest = !!useNewSelector(selectAccessToken);
 
   const [guestVotedList, setGuestVotedList] = useState<VoteRecord[]>([]);
 

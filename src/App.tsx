@@ -22,6 +22,8 @@ import TalkPickPlacePage from './pages/TalkPickPlacePage/TalkPickPlacePage';
 import SignUpPage from './pages/SignUpPage/SignUpPage';
 import BalanceGamePage from './pages/BalanceGamePage/BalanceGamePage';
 import BalanceGameCreationPage from './pages/BalanceGameCreationPage/BalanceGameCreationPage';
+import { useNewSelector } from './store';
+import { selectAccessToken } from './store/auth';
 // import NotAuthRoutes from './components/Routes/NotAuthRoutes';
 // import { useMemberQuery } from './hooks/api/member/useMemberQuery';
 // import { useParseJwt } from './hooks/common/useParseJwt';
@@ -39,34 +41,22 @@ import BalanceGameCreationPage from './pages/BalanceGameCreationPage/BalanceGame
 // import PostPage from './pages/PostPage/PostPage';
 // import SearchResultPage from './pages/SearchResultPage/SearchResultPage';
 // import SignUpPage from './pages/SignUpPage/SignUpPage';
-import { getCookie } from './utils/cookie';
-import { axiosInstance } from './api/interceptor';
-import { useNewDispatch } from './store';
-import { tokenActions } from './store/auth';
 
 const App: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const dispatch = useNewDispatch();
-  const isLoggedIn = !!localStorage.getItem('accessToken');
+  // 리덕스 내 토큰 유무 여부로 로그인 상태 판단
+  const isLoggedIn = !!useNewSelector(selectAccessToken);
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
     const status = searchParams.get('status');
 
-    const token = getCookie('accessToken');
-
     if (status === 'already_registered') {
       navigate(`/${PATH.LOGIN}`, { state: { status } });
-    } else if (token) {
-      localStorage.setItem('accessToken', token);
-      localStorage.setItem('refreshToken', 'refreshToken');
-
-      dispatch(tokenActions.setToken(token));
-      axiosInstance.defaults.headers.Authorization = `Bearer ${token}`;
     }
-  }, [dispatch, isLoggedIn, location.search, navigate]);
+  }, [location.search, navigate]);
   useTokenRefresh();
 
   return (

@@ -1,46 +1,54 @@
-import { axiosInstance } from '@/api/interceptor';
-import { useNewDispatch, useNewSelector } from '@/store';
-import { selectAccessToken, tokenActions } from '@/store/auth';
-import { isTimeLimit } from '@/utils/validator';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable no-console */
+import { axiosInstance, getRefreshToken } from '@/api/interceptor';
+import { PATH } from '@/constants/path';
+import store, { useNewDispatch } from '@/store';
+import { tokenActions } from '@/store/auth';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useParseJwt } from './useParseJwt';
 
 export const useTokenRefresh = () => {
-  const accessToken = useNewSelector(selectAccessToken);
-  // TODO
-  const refreshToken = localStorage.getItem('refreshToken');
-  const localstorageAccessToken = localStorage.getItem('accessToken');
   const dispatch = useNewDispatch();
   const navigate = useNavigate();
 
+  // 로그인 된 상태였는지 여부 확인
+  const isLoggedIn = !!localStorage.getItem('isLoggedIn');
+
+  // 페이지 새로 고침이나 소셜 로그인 시
+  // 리프레시 토큰을 사용한 액세스 토큰 발급으로 로그인 유지
   useEffect(() => {
-    const tokenRefresh = () => {
-      if (!accessToken && refreshToken) {
-        if (isTimeLimit(useParseJwt(localstorageAccessToken).exp)) {
-          localStorage.removeItem('accessToken');
-          localStorage.removeItem('refreshToken');
-          delete axiosInstance.defaults.headers.Authorization;
-          dispatch(tokenActions.deleteToken());
-          alert('로그인 시간이 만료되었습니다. 다시 로그인해주세요.');
-          navigate('/login');
-          // getRefreshToken()
-          //   .then((res) => {
-          //     console.log('재발급 성공');
-          //     console.log(res);
-          //     dispatch(tokenActions.setToken(res));
-          //     axiosInstance.defaults.headers.Authorization = `Bearer ${res}`;
-          //     localStorage.setItem('accessToken', res);
-          //   })
-          //   .catch((err) => {
-          //     console.error(err);
-          //   });
-        } else {
-          dispatch(tokenActions.setToken(localstorageAccessToken));
-          axiosInstance.defaults.headers.Authorization = `Bearer ${localstorageAccessToken}`;
-        }
+    const tokenRefresh = async () => {
+      // 로그인이 안된 비회원 상태이면 리턴
+      if (!isLoggedIn) return;
+
+      try {
+        // 쿠키에 담긴 리프레시 토큰으로 액세스 토큰 재발급
+        const newAccessToken = await getRefreshToken();
+        console.log('useTokenRefresh', newAccessToken);
+
+        // 해더와 리덕스에 새 토큰 넣음
+        dispatch(tokenActions.setToken(newAccessToken));
+        axiosInstance.defaults.headers.Authorization = `Bearer ${newAccessToken}`;
+
+        // 로컬 스토리지에 로그인 상태 업데이트 (첫 소셜 로그인 시)
+        localStorage.setItem('isLoggedIn', 'true');
+      } catch (error) {
+        // 로그인 상태에서 액세스 토큰 재발급 실패
+        // = 리프레시 토큰 유효성 검사 실패
+        // 토큰 재발급 실패 시 헤더와 리덕스에서 토큰 제거
+        store.dispatch(tokenActions.deleteToken());
+        delete axiosInstance.defaults.headers.Authorization;
+
+        // 로컬 스토리지에 로그인 여부 제거
+        localStorage.removeItem('isLoggedIn');
+
+        // 로그인 페이지로 이동
+        console.log('토큰리프레시 훅에서 표시!!');
+        navigate(`/${PATH.LOGIN}`);
       }
     };
-    tokenRefresh();
-  }, [accessToken, refreshToken, dispatch]);
+    tokenRefresh().catch((error) => {
+      console.error('토큰 에러: ', error);
+    });
+  }, [dispatch, isLoggedIn, navigate]);
 };
