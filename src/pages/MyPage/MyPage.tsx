@@ -18,10 +18,6 @@ import { useGameWrittensQuery } from '@/hooks/api/mypages/useGameWrittensQuery';
 import { useGameVotesQuery } from '@/hooks/api/mypages/useGameVotesQuery';
 import { useMyInfoQuery } from '@/hooks/api/mypages/useMyInfoQuery';
 import { useObserver } from '@/hooks/api/mypages/useObserver';
-import { useNewSelector } from '@/store';
-import { selectAccessToken } from '@/store/auth';
-import { useMemberQuery } from '@/hooks/api/member/useMemberQuery';
-import { useParseJwt } from '@/hooks/common/useParseJwt';
 import MypageListSkeleton from '@/components/atoms/MypageListSkeleton/MypageListSkeleton';
 import MypageCardSkeleton from '@/components/atoms/MypageCardSkeleton/MypageCardSkeleton';
 import { useMyPageOptions } from '@/hooks/mypages/useMyPageOptions';
@@ -36,10 +32,7 @@ const MyPage = () => {
     handleOptionSelect,
   } = useMyPageOptions();
 
-  const accessToken = useNewSelector(selectAccessToken);
-  const { member } = useMemberQuery(useParseJwt(accessToken).memberId);
-  const memberId: number = member!.id;
-  const { memberInfo, isLoading } = useMyInfoQuery(memberId);
+  const { memberInfo, isLoading } = useMyInfoQuery();
   const myBookmarksQuery = useMyBookmarksQuery();
   const myVotesQuery = useMyVotesQuery();
   const myCommentsQuery = useMyCommentsQuery();
