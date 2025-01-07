@@ -44,7 +44,7 @@ export const All: Story = {
     return (
       <ul css={storyContainer}>
         <li css={storyInnerContainer}>
-          <h3>기본 상태</h3>
+          <h3>기본 상태 - 핸들러 제외</h3>
           <ImageBoxButton
             imgUrl=""
             onFileSelect={() => {}}
@@ -52,8 +52,12 @@ export const All: Story = {
           />
         </li>
         <li css={storyInnerContainer}>
-          <h3>업로드된 이미지</h3>
-          <ImageBoxButton imgUrl={imgUrl} onFileSelect={handleImageUpload} />
+          <h3>이미지 업로드 및 삭제 테스트</h3>
+          <ImageBoxButton
+            imgUrl={imgUrl}
+            onFileSelect={handleImageUpload}
+            onDelete={handleImageDelete}
+          />
         </li>
       </ul>
     );

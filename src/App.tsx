@@ -21,6 +21,7 @@ import TalkPickPage from './pages/TalkPickPage/TalkPickPage';
 import TalkPickPlacePage from './pages/TalkPickPlacePage/TalkPickPlacePage';
 import SignUpPage from './pages/SignUpPage/SignUpPage';
 import BalanceGamePage from './pages/BalanceGamePage/BalanceGamePage';
+import BalanceGameMobilePage from './pages/mobile/BalanceGameMobilePage/BalanceGameMobilePage';
 import BalanceGameCreationPage from './pages/BalanceGameCreationPage/BalanceGameCreationPage';
 // import NotAuthRoutes from './components/Routes/NotAuthRoutes';
 // import { useMemberQuery } from './hooks/api/member/useMemberQuery';
@@ -43,9 +44,11 @@ import { getCookie } from './utils/cookie';
 import { axiosInstance } from './api/interceptor';
 import { useNewDispatch } from './store';
 import { tokenActions } from './store/auth';
+import useIsMobile from './hooks/common/useIsMobile';
 
 const App: React.FC = () => {
   const dispatch = useNewDispatch();
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const token = getCookie('accessToken');
@@ -74,7 +77,10 @@ const App: React.FC = () => {
           <Route path={PATH.TODAY_TALKPICK} element={<TalkPickPage />} />
           <Route path={PATH.TALKPICK_PLACE} element={<TalkPickPlacePage />} />
           <Route path={PATH.TALKPICK()} element={<TalkPickPage />} />
-          <Route path={PATH.BALANCEGAME()} element={<BalanceGamePage />} />
+          <Route
+            path={PATH.BALANCEGAME()}
+            element={isMobile ? <BalanceGameMobilePage /> : <BalanceGamePage />}
+          />
 
           {/* <Route path="/search" element={<SearchResultsPage />} /> */}
           {/* <Route path="posts" element={<PostList />} />

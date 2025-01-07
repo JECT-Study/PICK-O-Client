@@ -1,6 +1,6 @@
 import React from 'react';
 import ToggleGroup from '@/components/atoms/ToggleGroup/ToggleGroup';
-import { SearchTalkPickItemProps } from '@/components/atoms/SearchTalkPickItem/SearchTalkPickItem';
+import { SearchTalkPickListItem } from '@/types/search';
 import SearchTalkPickList from '@/components/molecules/SearchTalkPickList/SearchTalkPickList';
 import Pagination from '@/components/atoms/Pagination/Pagination';
 import { generatePageNumbers } from '@/utils/pagination';
@@ -10,7 +10,7 @@ import { ToggleGroupValue } from '@/types/toggle';
 import * as S from './SearchTalkPickListSection.style';
 
 interface SearchTalkPickSectionProps {
-  searchTalkPickList: SearchTalkPickItemProps[];
+  searchTalkPickList: SearchTalkPickListItem[];
   keyword: string;
   selectedPage: number;
   totalPages: number;

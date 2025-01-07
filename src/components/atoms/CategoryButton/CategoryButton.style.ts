@@ -19,7 +19,7 @@ export const categoryButtonBaseStyle = css({
   '@media (max-width: 430px)': {
     width: '164px',
     height: '70px',
-    padding: '5px 50px 14px',
+    padding: '5px 45px 14px 45px',
     borderRadius: '7px',
     border: '0.35px solid #dedede',
   },

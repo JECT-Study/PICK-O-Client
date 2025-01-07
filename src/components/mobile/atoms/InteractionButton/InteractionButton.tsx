@@ -1,11 +1,7 @@
-import React, {
-  ComponentPropsWithoutRef,
-  ForwardedRef,
-  forwardRef,
-} from 'react';
+import React, { ComponentPropsWithRef, ForwardedRef, forwardRef } from 'react';
 import * as S from './InteractionButton.style';
 
-interface InteractionButtonProps extends ComponentPropsWithoutRef<'button'> {
+interface InteractionButtonProps extends ComponentPropsWithRef<'button'> {
   buttonLabel: string;
   icon: React.ReactNode;
   iconLabel: string;
