@@ -72,7 +72,6 @@ const App: React.FC = () => {
           <Route path={PATH.LOGIN} element={<LoginPage />} />
           <Route path={PATH.CHANGE.PASSWORD} element={<ChangePasswordPage />} />
           <Route path={PATH.TODAY_TALKPICK} element={<TalkPickPage />} />
-          <Route path={PATH.TODAY_BALANCEGAME} element={<BalanceGamePage />} />
           <Route path={PATH.TALKPICK_PLACE} element={<TalkPickPlacePage />} />
           <Route path={PATH.TALKPICK()} element={<TalkPickPage />} />
           <Route path={PATH.BALANCEGAME()} element={<BalanceGamePage />} />

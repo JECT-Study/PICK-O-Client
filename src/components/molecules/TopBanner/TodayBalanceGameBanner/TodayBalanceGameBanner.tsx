@@ -1,5 +1,4 @@
 import React from 'react';
-import { PATH } from '@/constants/path';
 import { useNavigate } from 'react-router-dom';
 import { Check, CheckSmall } from '@/assets';
 import useIsMobile from '@/hooks/common/useIsMobile';
@@ -18,9 +17,7 @@ const TodayBalanceGameBanner = ({
   const navigate = useNavigate();
   const isMobile = useIsMobile();
   const onBannerClick = () => {
-    navigate(`/${PATH.TODAY_BALANCEGAME}`, {
-      state: { setId: game?.id, isTodayBalanceGame: true },
-    });
+    navigate(`/balancegame/${game?.id}`);
   };
 
   return (
