@@ -61,7 +61,7 @@ export const getGameBookmark = async (page: number, size: number) => {
   return data;
 };
 
-export const getMyInfo = async (memberId: Id): Promise<SideBar> => {
-  const { data } = await axiosInstance.get<SideBar>(`/members/${memberId}`);
+export const getMyInfo = async (): Promise<SideBar> => {
+  const { data } = await axiosInstance.get<SideBar>(`/members/info`);
   return data;
 };
