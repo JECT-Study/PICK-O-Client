@@ -1,6 +1,5 @@
 import { getMyComment } from '@/api/mypages';
-import { MyComment } from '@/types/mypages';
-import { InfoItem } from '@/components/organisms/InfoList/InfoList';
+import { MyComment, CommentInfoItemResponse } from '@/types/mypages';
 import { useInfiniteScroll } from '@/hooks/api/mypages/useInfiniteScroll';
 
 export const useMyCommentsQuery = () => {
@@ -17,8 +16,9 @@ export const useMyCommentsQuery = () => {
       const firstPage = data.pages[0];
       return {
         content: data.pages.flatMap((page) =>
-          page.content.map((item: InfoItem) => ({
+          page.content.map((item: CommentInfoItemResponse) => ({
             ...item,
+            content: item.commentContent,
             prefix: '내 댓글',
           })),
         ),
