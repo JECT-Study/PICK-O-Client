@@ -1,7 +1,5 @@
-/* eslint-disable no-console */
 import React, { useEffect, useRef, useState } from 'react';
 import { BookmarkDF, BookmarkPR, NextArrow, PrevArrow, Share } from '@/assets';
-import { VoteRecord } from '@/types/vote';
 import { SUCCESS } from '@/constants/message';
 import { GameDetail, GameSet } from '@/types/game';
 import { formatDateFromISO } from '@/utils/formatData';
@@ -18,6 +16,7 @@ import BalanceGameBox from '@/components/molecules/BalanceGameBox/BalanceGameBox
 import useToastModal from '@/hooks/modal/useToastModal';
 import { useGameBookmark } from '@/hooks/game/useBalanceGameBookmark';
 import { useGuestGameVote } from '@/hooks/game/useBalanceGameVote';
+import { VoteRecord } from '@/types/vote';
 import * as S from './BalanceGameSection.style';
 
 export interface BalanceGameSectionProps {
@@ -27,6 +26,9 @@ export interface BalanceGameSectionProps {
   currentStage: number;
   setCurrentStage: React.Dispatch<React.SetStateAction<number>>;
   changeStage: (step: number) => void;
+  onEdit?: () => void;
+  onDelete?: () => void;
+  onReport?: () => void;
 }
 
 const gameDefaultDetail: GameDetail[] = Array.from({ length: 10 }, () => ({
@@ -47,6 +49,9 @@ const BalanceGameSection = ({
   currentStage,
   setCurrentStage,
   changeStage,
+  onEdit,
+  onDelete,
+  onReport,
 }: BalanceGameSectionProps) => {
   const initialRender = useRef(true);
   const currentURL: string = window.location.href;
@@ -124,8 +129,11 @@ const BalanceGameSection = ({
     game,
   );
 
-  const myGameItem: MenuItem[] = [{ label: '수정' }, { label: '삭제' }];
-  const otherGameItem: MenuItem[] = [{ label: '신고' }];
+  const myGameItem: MenuItem[] = [
+    { label: '수정', onClick: onEdit },
+    { label: '삭제', onClick: onDelete },
+  ];
+  const otherGameItem: MenuItem[] = [{ label: '신고', onClick: onReport }];
 
   return (
     <div css={S.balanceGameStyling}>

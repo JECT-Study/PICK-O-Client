@@ -37,3 +37,17 @@ export const toastModalStyling = css({
   transform: 'translate(-50%)',
   zIndex: '1000',
 });
+
+export const titleDescriptionFieldContainer = css({
+  position: 'relative',
+});
+
+export const tagEditButtonContainer = css({
+  position: 'absolute',
+  top: '16px',
+  right: '21px',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  zIndex: '50',
+});

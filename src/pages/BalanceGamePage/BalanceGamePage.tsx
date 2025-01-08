@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useNewSelector } from '@/store';
 import { selectAccessToken } from '@/store/auth';
 import { useParseJwt } from '@/hooks/common/useParseJwt';
@@ -8,19 +8,75 @@ import { useGameBySetId } from '@/hooks/api/game/useGameBySetIdQuery';
 import Divider from '@/components/atoms/Divider/Divider';
 import BalanceGameSection from '@/components/organisms/BalanceGameSection/BalanceGameSection';
 import BalanceGameEndingSection from '@/components/organisms/BalanceGameEndingSection/BalanceGameEndingSection';
+import useModal from '@/hooks/modal/useModal';
+import { PATH } from '@/constants/path';
+import TextModal, {
+  TextModalProps,
+} from '@/components/molecules/TextModal/TextModal';
+import { useDeleteGameSetMutation } from '@/hooks/api/game/useDeleteGameSetMutation';
+import useToastModal from '@/hooks/modal/useToastModal';
+import { ERROR, SUCCESS } from '@/constants/message';
+import ToastModal from '@/components/atoms/ToastModal/ToastModal';
 import * as S from './BalanceGamePage.style';
 
 const BalanceGamePage = () => {
   const { setId } = useParams<{ setId: string }>();
   const gameSetId = Number(setId);
+  const navigate = useNavigate();
+  const { isOpen, openModal, closeModal } = useModal();
+  const [modalProps, setModalProps] = useState<Omit<TextModalProps, 'isOpen'>>({
+    text: '',
+  });
 
   const { gameSet } = useGameBySetId(gameSetId);
   const [currentStage, setCurrentStage] = useState<number>(0);
 
   const accessToken = useNewSelector(selectAccessToken);
   const { member } = useMemberQuery(useParseJwt(accessToken).memberId);
+  const { isVisible, modalText, showToastModal } = useToastModal();
 
   const isMyGame: boolean = member?.nickname === gameSet?.member;
+
+  const { mutate: deleteGameSet } = useDeleteGameSetMutation();
+
+  const handleEditClick = () => {
+    navigate(`/${PATH.BALANCEGAME.EDIT(gameSetId)}`);
+  };
+
+  const handleDeleteClick = () => {
+    setModalProps({
+      text: '정말 삭제하시겠습니까?',
+      onConfirm: () => {
+        deleteGameSet(
+          { gameSetId },
+          {
+            onSuccess: () => {
+              closeModal();
+              showToastModal(SUCCESS.GAME.DELETE);
+              navigate('/');
+            },
+            onError: () => {
+              closeModal();
+              showToastModal(ERROR.DELETEGAME.FAIL);
+            },
+          },
+        );
+      },
+      onClose: closeModal,
+    });
+    openModal();
+  };
+
+  const handleReportClick = () => {
+    setModalProps({
+      text: '정말 신고하시겠습니까?',
+      onConfirm: () => {
+        closeModal();
+      },
+      onClose: closeModal,
+    });
+    openModal();
+  };
 
   const changeStage = (step: number) => {
     setCurrentStage((stage) => Math.min(10, Math.max(0, stage + step)));
@@ -52,8 +108,17 @@ const BalanceGamePage = () => {
           currentStage={currentStage}
           setCurrentStage={setCurrentStage}
           changeStage={changeStage}
+          onEdit={handleEditClick}
+          onDelete={handleDeleteClick}
+          onReport={handleReportClick}
         />
       )}
+      <div css={S.centerStyling}>
+        <TextModal {...modalProps} isOpen={isOpen} />
+      </div>
+      <div css={S.toastModalStyling}>
+        {isVisible && <ToastModal bgColor="black">{modalText}</ToastModal>}
+      </div>
     </div>
   );
 };
