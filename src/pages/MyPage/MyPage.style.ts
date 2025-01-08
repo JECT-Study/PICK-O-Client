@@ -3,20 +3,22 @@ import color from '@/styles/color';
 
 export const pageContainer = css`
   display: flex;
+  flex-direction: row;
   width: 100%;
   height: 100%;
-  padding: 60px 362px 0 361px;
+  padding: 60px 0 20px 0;
   background-color: ${color.WT}
   overflow: hidden;
   margin-top: 100px;
+  justify-content: center;
 `;
 
 export const contentWrapper = css`
   display: flex;
   flex-direction: column;
-  width: calc(100% - 258px);
-  padding-left: 20px;
-  align-content: center;
+  width: 100%;
+  max-width: 904px;
+  margin-left: 20px;
 `;
 
 export const contentList = css`
