@@ -116,6 +116,14 @@ export { default as MobileFolder } from './svg/mobile-folder.svg';
 export { default as MobileFolderCheck } from './svg/mobile-folder-check.svg';
 export { default as MobileCheckIcon } from './svg/mobile-check-icon.svg';
 export { default as MobileTempIcon } from './svg/mobile-temp-icon.svg';
+export { default as TalkPickBannerFirst } from './images/talk-pick-banner-first.png';
+export { default as TalkPickBannerSecond } from './images/talk-pick-banner-second.png';
+export { default as GameBannerFirst } from './images/game-banner-first.png';
+export { default as GameBannerSecond } from './images/game-banner-second.png';
+export { default as MobileTalkPickBannerFirst } from './images/mo-talk-pick-banner-first.png';
+export { default as MobileTalkPickBannerSecond } from './images/mo-talk-pick-banner-second.png';
+export { default as MobileGameBannerFirst } from './images/mo-game-banner-first.png';
+export { default as MobileGameBannerSecond } from './images/mo-game-banner-second.png';
 export { default as RedCheckIcon } from './svg/red-check-icon.svg';
 export { default as BlueCheckIcon } from './svg/blue-check-icon.svg';
 
