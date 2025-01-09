@@ -23,6 +23,7 @@ export interface ContentsButtonProps extends ComponentPropsWithRef<'button'> {
   size?: 'large' | 'medium' | 'small' | 'extraSmall';
   keyword?: string;
   onClick: () => void;
+  onBookmarkClick?: () => void;
 }
 
 const randomImages = [
@@ -49,6 +50,7 @@ const ContentsButton = ({
   bookmarked = false,
   showBookmark = true,
   onClick,
+  onBookmarkClick,
   ...attributes
 }: ContentsButtonProps) => {
   const displayImages = images.length > 0 ? images : getRandomImagePair();
@@ -79,7 +81,16 @@ const ContentsButton = ({
           </span>
         ))}
         {showBookmark && (
-          <Bookmark bookmarked={bookmarked} css={S.bookmarkWrapper} />
+          <Bookmark
+            bookmarked={bookmarked}
+            css={S.bookmarkWrapper}
+            onClick={(e) => {
+              e.stopPropagation();
+              if (onBookmarkClick) {
+                onBookmarkClick();
+              }
+            }}
+          />
         )}
       </div>
     </button>
