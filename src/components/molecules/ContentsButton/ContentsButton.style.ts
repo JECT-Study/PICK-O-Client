@@ -82,6 +82,7 @@ export const imageWrapper = css({
   flex: 1,
   overflow: 'hidden',
   position: 'relative',
+  border: `none`,
 });
 
 export const image = css({
@@ -90,6 +91,7 @@ export const image = css({
   objectFit: 'cover',
   objectPosition: 'center',
   transition: 'transform 0.2s ease-in-out',
+  border: `none`,
 });
 
 export const chipsContainer = css({
