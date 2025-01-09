@@ -118,6 +118,12 @@ export { default as MobileCheckIcon } from './svg/mobile-check-icon.svg';
 export { default as MobileTempIcon } from './svg/mobile-temp-icon.svg';
 export { default as RedCheckIcon } from './svg/red-check-icon.svg';
 export { default as BlueCheckIcon } from './svg/blue-check-icon.svg';
+export { default as RandomBlackFrame } from './images/random-black-frame.png';
+export { default as RandomBlueFrame } from './images/random-blue-frame.png';
+export { default as RandomGreenFrame } from './images/random-green-frame.png';
+export { default as RandomPinkFrame } from './images/random-pink-frame.png';
+export { default as RandomPurpleFrame } from './images/random-purple-frame.png';
+export { default as RandomTealFrame } from './images/random-teal-frame.png';
 
 // TODO: 이전 SVG
 export { default as Email } from './svg/email.svg';
