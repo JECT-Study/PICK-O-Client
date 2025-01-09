@@ -2,6 +2,15 @@ import React, { ComponentPropsWithRef } from 'react';
 import Chips from '@/components/atoms/Chips/Chips';
 import Bookmark, { BookmarkProps } from '@/components/atoms/Bookmark/Bookmark';
 import { highlightText } from '@/utils/highlightText';
+import {
+  RandomBlackFrame,
+  RandomBlueFrame,
+  RandomGreenFrame,
+  RandomPinkFrame,
+  RandomPurpleFrame,
+  RandomTealFrame,
+} from '@/assets';
+import { getRandomNumbers } from '@/utils/calculator';
 import * as S from './ContentsButton.style';
 
 export interface ContentsButtonProps extends ComponentPropsWithRef<'button'> {
@@ -16,6 +25,20 @@ export interface ContentsButtonProps extends ComponentPropsWithRef<'button'> {
   onClick: () => void;
 }
 
+const randomImages = [
+  RandomBlackFrame,
+  RandomBlueFrame,
+  RandomGreenFrame,
+  RandomPinkFrame,
+  RandomPurpleFrame,
+  RandomTealFrame,
+];
+
+const getRandomImagePair = (): string[] => {
+  const randomIndexes = getRandomNumbers(randomImages.length);
+  return [randomImages[randomIndexes[0]], randomImages[randomIndexes[1]]];
+};
+
 const ContentsButton = ({
   title,
   mainTag,
@@ -28,6 +51,8 @@ const ContentsButton = ({
   onClick,
   ...attributes
 }: ContentsButtonProps) => {
+  const displayImages = images.length > 0 ? images : getRandomImagePair();
+
   return (
     <button
       type="button"
@@ -37,10 +62,10 @@ const ContentsButton = ({
     >
       <div css={S.imageContainer(size)}>
         <div css={S.imageWrapper}>
-          <img src={images[0]} alt="option A" css={S.image} />
+          <img src={displayImages[0]} alt="option A" css={S.image} />
         </div>
         <div css={S.imageWrapper}>
-          <img src={images[1]} alt="option B" css={S.image} />
+          <img src={displayImages[1]} alt="option B" css={S.image} />
         </div>
         <div css={S.chipsContainer}>
           <Chips>{subTag}</Chips>
