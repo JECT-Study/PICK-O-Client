@@ -1,4 +1,9 @@
-import { BalanceGameOption, BalanceGameSet } from '@/types/game';
+import {
+  BalanceGameOption,
+  BalanceGameSet,
+  BalanceGame,
+  TempGame,
+} from '@/types/game';
 
 export const createInitialGameStages = (totalStage: number): BalanceGameSet[] =>
   Array.from({ length: totalStage }, (_, idx) => ({
@@ -32,3 +37,42 @@ export const updateOptionInGameSets = (
     option.optionType === optionType ? { ...option, ...newOption } : option,
   );
 };
+
+export const transformBalanceGameToTempGame = (
+  balanceGame: BalanceGame,
+  isTempLoaded: boolean,
+): TempGame => ({
+  title: balanceGame.title,
+  isLoaded: isTempLoaded,
+  tempGames: balanceGame.games.map((gameSet) => ({
+    description: gameSet.description,
+    tempGameOptions: gameSet.gameOptions.map((option) => ({
+      name: option.name,
+      description: option.description,
+      fileId: option.fileId || null,
+      imgUrl: option.imgUrl || '',
+      optionType: option.optionType,
+    })),
+  })),
+});
+
+export const transformTempGameToBalanceGame = (
+  tempGame: TempGame,
+  gameMainTag: string,
+  gameSubTag: string,
+): BalanceGame => ({
+  title: tempGame.title,
+  mainTag: gameMainTag,
+  subTag: gameSubTag,
+  games: tempGame.tempGames.map((tempGameSet) => ({
+    description: tempGameSet.description,
+    gameOptions: tempGameSet.tempGameOptions.map((tempOption, index) => ({
+      id: index,
+      name: tempOption.name,
+      imgUrl: tempOption.imgUrl || '',
+      fileId: tempOption.fileId || null,
+      description: tempOption.description,
+      optionType: tempOption.optionType,
+    })),
+  })),
+});
