@@ -1,22 +1,23 @@
 import { css } from '@emotion/react';
 import color from '@/styles/color';
 
-export const container = css({
-  width: '50px',
-  height: '50px',
-  borderRadius: '8px',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  backgroundColor: color.GY[3],
-  flexShrink: 0,
-  overflow: 'hidden',
-});
+export const container = (imgUrl: boolean) =>
+  css({
+    width: '50px',
+    height: '50px',
+    borderRadius: '8px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: imgUrl ? color.BK : color.GY[3],
+    flexShrink: 0,
+    overflow: 'hidden',
+  });
 
 export const image = css({
-  width: '100%',
-  height: '100%',
-  objectFit: 'cover',
+  maxWidth: '100%',
+  maxHeight: '100%',
+  objectFit: 'contain',
 });
 
 export const placeholder = css({

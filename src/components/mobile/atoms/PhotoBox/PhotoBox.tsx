@@ -9,7 +9,7 @@ export interface PhotoBoxProps {
 
 const PhotoBox = ({ imgUrl, alt }: PhotoBoxProps) => {
   return (
-    <div css={S.container}>
+    <div css={S.container(!!imgUrl)}>
       {imgUrl ? (
         <img src={imgUrl} alt={alt} css={S.image} />
       ) : (
