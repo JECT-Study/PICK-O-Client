@@ -1,7 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useNewSelector } from '@/store';
-import { selectAccessToken } from '@/store/auth';
-import { useParseJwt } from '@/hooks/common/useParseJwt';
 import { useMemberQuery } from '@/hooks/api/member/useMemberQuery';
 import Button from '@/components/atoms/Button/Button';
 import ToastModal from '@/components/atoms/ToastModal/ToastModal';
@@ -14,8 +11,7 @@ import { useChangeUserInfoForm } from '@/hooks/changeUserInfo/useChangeUserInfoF
 import * as S from './ChangeUserInfoPage.style';
 
 const ChangeUserInfoPage = () => {
-  const accessToken = useNewSelector(selectAccessToken);
-  const { member } = useMemberQuery(useParseJwt(accessToken).memberId);
+  const { member } = useMemberQuery();
 
   const [passwordInput, setPasswordInput] = useState<string>('');
   const [verifySuccess, setVerifySuccess] = useState<boolean>(false);

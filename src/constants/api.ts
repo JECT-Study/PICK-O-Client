@@ -22,7 +22,7 @@ export const END_POINT = {
   REFRESH: '/members/reissue',
   ALL_MEMBERS: '/members',
   EDIT_MEMBERS: '/members',
-  MEMBER: (id: number) => `/members/${id}`,
+  MEMBER: '/members/info',
   MEMBER_PROFILE: (id: number) => `/members/${id}/profile`,
   MEMBER_IMAGE: '/members/image',
   MEMBER_NICKNAME: '/members/nickname',
