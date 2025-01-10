@@ -10,21 +10,15 @@ const getBorderColor = (type: 'A' | 'B', isContentEmpty: boolean) =>
         B: color.BLUE,
       }[type];
 
-export const container = (
-  type: 'A' | 'B',
-  isContentEmpty: boolean,
-  isExpanded: boolean,
-) =>
+export const container = (type: 'A' | 'B', isContentEmpty: boolean) =>
   css({
     display: 'flex',
     flexDirection: 'column',
     width: '335px',
-    padding: '4px 14px 4px 4px',
+    padding: '5px',
     borderRadius: '10px',
     border: `1px solid ${getBorderColor(type, isContentEmpty)}`,
     backgroundColor: isContentEmpty ? color.GY[3] : color.WT,
-    transition: 'all 0.3s ease',
-    height: isExpanded ? '120px' : '60px',
   });
 
 export const contentWrapper = css({
@@ -33,6 +27,7 @@ export const contentWrapper = css({
   alignItems: 'center',
   justifyContent: 'space-between',
   width: '100%',
+  height: '50px',
 });
 
 export const photoLabel = css({
@@ -47,17 +42,17 @@ export const fileInput = css({
 });
 
 export const textContainer = css({
-  flex: 1,
   display: 'flex',
-  flexDirection: 'column',
-  gap: '4px',
-  marginLeft: '12px',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  width: '100%',
 });
 
 export const titleInput = css(typo.Mobile.Main.Medium_16, {
   color: color.BK,
-  width: '220px',
   outline: 'none',
+  paddingLeft: '10px',
+  width: '240px',
 
   '&::placeholder': {
     color: color.GY[1],
@@ -66,19 +61,19 @@ export const titleInput = css(typo.Mobile.Main.Medium_16, {
 });
 
 export const additionalContainer = css({
-  marginTop: '6px',
-  height: '56px',
   borderTop: `1px solid ${color.GY[2]}`,
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'center',
   justifyContent: 'space-between',
+  height: '50px',
+  marginTop: '5px',
+  padding: '5px 0 0 9px',
 });
 
 export const subTitleInput = css(typo.Mobile.Main.Medium_16, {
   width: '100%',
   color: color.BK,
-  padding: '4px 8px',
   outline: 'none',
 
   '&::placeholder': {
