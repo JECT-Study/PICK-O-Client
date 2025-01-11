@@ -4,7 +4,7 @@ import { HTTP_STATUS_CODE } from '@/constants/api';
 import { useNewDispatch } from '@/store';
 import { tokenActions } from '@/store/auth';
 import { MemberForm } from '@/types/member';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ChangeEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PATH } from '@/constants/path';
@@ -17,6 +17,7 @@ export const useLoginForm = (
   pathTalkPickId?: number,
   onModalLoginSuccess?: () => void,
 ) => {
+  const queryClient = useQueryClient();
   const initialState: Pick<MemberForm, 'email' | 'password'> = {
     email: localStorage.getItem('savedEmail') ?? '',
     password: '',
@@ -41,7 +42,7 @@ export const useLoginForm = (
 
   const login = useMutation({
     mutationFn: postLogin,
-    onSuccess: (res: string) => {
+    onSuccess: async (res: string) => {
       setIsError(false);
       setErrorMessage(undefined);
       onModalLoginSuccess?.();
@@ -53,6 +54,10 @@ export const useLoginForm = (
       // 로컬 스토리지에 로그인 상태 업데이트
       localStorage.setItem('isLoggedIn', 'true');
       localStorage.setItem('savedEmail', form.email);
+
+      await queryClient.invalidateQueries({
+        queryKey: ['members'],
+      });
 
       showToastModal?.(SUCCESS.LOGIN, () => {
         if (pathTalkPickId) {
