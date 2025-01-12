@@ -126,6 +126,9 @@ export { default as MobileGameBannerFirst } from './images/mo-game-banner-first.
 export { default as MobileGameBannerSecond } from './images/mo-game-banner-second.png';
 export { default as RedCheckIcon } from './svg/red-check-icon.svg';
 export { default as BlueCheckIcon } from './svg/blue-check-icon.svg';
+export { default as StatusNotRequired } from './svg/status-not-required.svg';
+export { default as StatusFail } from './svg/status-fail.svg';
+export { default as SadEmoji } from './svg/sad-emoji.svg';
 
 // TODO: 이전 SVG
 export { default as Email } from './svg/email.svg';
