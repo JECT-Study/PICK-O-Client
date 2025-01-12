@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable no-console */
 import React, { useState } from 'react';
@@ -190,7 +191,10 @@ const TalkPickSection = ({
           </div>
         </div>
         <div css={S.talkPickContentWrapper}>
-          <SummaryBox summary={talkPick?.summary} />
+          <SummaryBox
+            summary={talkPick?.summary}
+            summaryStatus={talkPick?.summaryStatus}
+          />
           {isExpanded && (
             <div css={S.talkPickContent}>
               <div css={S.talkPickContentTextStyling}>
