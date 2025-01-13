@@ -9,7 +9,7 @@ export const container = (imgUrl: boolean) =>
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: imgUrl ? color.BK : color.GY[3],
+    backgroundColor: imgUrl ? color.GY[2] : color.GY[3],
     flexShrink: 0,
     overflow: 'hidden',
   });
