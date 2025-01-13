@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
+import { BrowserRouter } from 'react-router-dom';
 import SearchTalkPickListSection from '@/components/organisms/SearchTalkPickListSection/SearchTalkPickListSection';
 import { SampleWhole } from '@/assets';
-import { SearchTalkPickItemProps } from '@/components/atoms/SearchTalkPickItem/SearchTalkPickItem';
+import { SearchTalkPickListItem } from '@/types/search';
 import { ToggleGroupValue } from '@/types/toggle';
 
 const meta: Meta<typeof SearchTalkPickListSection> = {
@@ -11,6 +12,13 @@ const meta: Meta<typeof SearchTalkPickListSection> = {
   parameters: {
     layout: 'centered',
   },
+  decorators: [
+    (Story) => (
+      <BrowserRouter>
+        <Story />
+      </BrowserRouter>
+    ),
+  ],
   argTypes: {
     onPageChange: { action: '페이지 변경' },
     onSortChange: { action: '정렬 변경' },
@@ -20,9 +28,10 @@ const meta: Meta<typeof SearchTalkPickListSection> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const searchTalkPickSample: SearchTalkPickItemProps[] = Array.from(
+const searchTalkPickSample: SearchTalkPickListItem[] = Array.from(
   { length: 20 },
   (_, index) => ({
+    id: 0,
     title: `톡픽 ${index + 1} - 인기 순위`,
     createdAt: '2024.08.26',
     content:
@@ -35,7 +44,7 @@ const searchTalkPickSample: SearchTalkPickItemProps[] = Array.from(
 export const Default: Story = {
   args: {
     searchTalkPickList: searchTalkPickSample.slice(0, 10),
-    keyword: '예시 키워드',
+    keyword: '인기',
     selectedPage: 1,
     totalPages: 2,
     sort: { field: 'views', order: 'desc' },

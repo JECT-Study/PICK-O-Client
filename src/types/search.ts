@@ -1,7 +1,7 @@
 import { PaginationType } from '@/types/pagination';
 
-interface GameItem {
-  id: number;
+export interface GameListItem {
+  gameSetId: number;
   optionAImg: string;
   optionBImg: string;
   title: string;
@@ -9,7 +9,8 @@ interface GameItem {
   subTag: string;
 }
 
-interface SearchTalkPickItem {
+export interface SearchTalkPickListItem {
+  id: number;
   title: string;
   createdAt: string;
   content: string;
@@ -18,11 +19,11 @@ interface SearchTalkPickItem {
 }
 
 export interface TalkPickResult extends PaginationType {
-  content: SearchTalkPickItem[];
+  content: SearchTalkPickListItem[];
   query: string;
 }
 
 export interface GameResult extends PaginationType {
-  content: GameItem[];
+  content: GameListItem[];
   query: string;
 }

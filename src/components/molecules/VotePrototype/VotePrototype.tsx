@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { NOTICE } from '@/constants/message';
+import { PATH } from '@/constants/path';
 import { VoteOption, MyVoteOption } from '@/types/vote';
 import Button from '@/components/atoms/Button/Button';
 import VoteBar from '@/components/atoms/VoteBar/VoteBar';
@@ -71,7 +72,7 @@ const VotePrototype: React.FC<VotePrototypeProps> = ({
       localStorage.setItem(`talkpick_${talkPickId}`, voteOption);
 
       showToastModal(NOTICE.REQUIRED.LOGIN, () => {
-        navigate('/login', { state: { talkPickId } });
+        navigate(`/${PATH.LOGIN}`, { state: { talkPickId } });
       });
     }
   };

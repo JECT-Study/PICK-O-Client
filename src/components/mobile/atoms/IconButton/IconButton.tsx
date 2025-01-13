@@ -1,16 +1,12 @@
-import React, {
-  ComponentPropsWithoutRef,
-  ForwardedRef,
-  forwardRef,
-} from 'react';
+import React, { ComponentPropsWithRef, ForwardedRef, forwardRef } from 'react';
 import * as S from './IconButton.style';
 
-interface IconButtonProps extends ComponentPropsWithoutRef<'button'> {
+interface IconButtonProps extends ComponentPropsWithRef<'button'> {
   icon: React.ReactNode;
 }
 
 const IconButton = (
-  { icon, onClick, ...props }: IconButtonProps,
+  { icon, ...props }: IconButtonProps,
   ref: ForwardedRef<HTMLButtonElement>,
 ) => {
   return (

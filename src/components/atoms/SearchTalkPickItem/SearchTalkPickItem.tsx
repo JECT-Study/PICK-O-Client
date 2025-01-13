@@ -9,6 +9,7 @@ export interface SearchTalkPickItemProps {
   content: string;
   firstImgUrl: string;
   keyword: string;
+  onClick: () => void;
 }
 
 const SearchTalkPickItem = ({
@@ -17,9 +18,10 @@ const SearchTalkPickItem = ({
   content,
   firstImgUrl,
   keyword,
+  onClick,
 }: SearchTalkPickItemProps) => {
   return (
-    <div css={S.searchTalkPickItemStyle}>
+    <button type="button" css={S.searchTalkPickItemStyle} onClick={onClick}>
       <div css={S.leftContentStyle}>
         <div css={S.titleWrapStyle}>
           {highlightText(title, keyword).map((part) => (
@@ -37,15 +39,16 @@ const SearchTalkPickItem = ({
           ))}
         </div>
       </div>
-
-      <div css={S.imageContainerStyle}>
-        <img
-          css={S.imageContainerStyle}
-          src={firstImgUrl}
-          alt="representativeImage"
-        />
-      </div>
-    </div>
+      {firstImgUrl && (
+        <div css={S.imageContainerStyle}>
+          <img
+            css={S.imageContainerStyle}
+            src={firstImgUrl}
+            alt="representativeImage"
+          />
+        </div>
+      )}
+    </button>
   );
 };
 export default SearchTalkPickItem;

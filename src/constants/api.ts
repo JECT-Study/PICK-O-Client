@@ -62,7 +62,7 @@ export const END_POINT = {
 
   // search API
   SEARCH_GAME: (query: string, page: number, size: number, sort: string) =>
-    `/search/game?query=${query}&page=${page}&size=${size}&sort=${sort}`,
+    `/search/game-sets?query=${query}&page=${page}&size=${size}&sort=${sort}`,
   SEARCH_TALKPICK: (query: string, page: number, size: number, sort: string) =>
     `/talks/search?query=${query}&page=${page}&size=${size}&sort=${sort}`,
 

@@ -21,6 +21,7 @@ import TalkPickPage from './pages/TalkPickPage/TalkPickPage';
 import TalkPickPlacePage from './pages/TalkPickPlacePage/TalkPickPlacePage';
 import SignUpPage from './pages/SignUpPage/SignUpPage';
 import BalanceGamePage from './pages/BalanceGamePage/BalanceGamePage';
+import BalanceGameMobilePage from './pages/mobile/BalanceGameMobilePage/BalanceGameMobilePage';
 import BalanceGameCreationPage from './pages/BalanceGameCreationPage/BalanceGameCreationPage';
 import { useNewSelector } from './store';
 import { selectAccessToken } from './store/auth';
@@ -41,11 +42,13 @@ import { selectAccessToken } from './store/auth';
 // import PostPage from './pages/PostPage/PostPage';
 // import SearchResultPage from './pages/SearchResultPage/SearchResultPage';
 // import SignUpPage from './pages/SignUpPage/SignUpPage';
+import useIsMobile from './hooks/common/useIsMobile';
 
 const App: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const isMobile = useIsMobile();
   const isLoggedIn = !!useNewSelector(selectAccessToken);
 
   useEffect(() => {
@@ -69,7 +72,10 @@ const App: React.FC = () => {
           <Route path={PATH.TODAY_TALKPICK} element={<TalkPickPage />} />
           <Route path={PATH.TALKPICK_PLACE} element={<TalkPickPlacePage />} />
           <Route path={PATH.TALKPICK()} element={<TalkPickPage />} />
-          <Route path={PATH.BALANCEGAME()} element={<BalanceGamePage />} />
+          <Route
+            path={PATH.BALANCEGAME()}
+            element={isMobile ? <BalanceGameMobilePage /> : <BalanceGamePage />}
+          />
 
           {/* <Route path="/search" element={<SearchResultsPage />} /> */}
           {/* <Route path="posts" element={<PostList />} />

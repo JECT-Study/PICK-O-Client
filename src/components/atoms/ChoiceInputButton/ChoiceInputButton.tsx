@@ -60,7 +60,7 @@ const ChoiceInputButton = ({
           <div css={S.choiceInputWrapper}>
             <input
               type="text"
-              placeholder="해당 선택지에 대해 추가로 설명을 입력할 수 있어요!"
+              placeholder="해당 선택지에 대해 추가 설명을 입력할 수 있어요!"
               maxLength={50}
               value={infoValue}
               onChange={(e) => setInternalInfoValue(e.target.value)}

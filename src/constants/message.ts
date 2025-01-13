@@ -41,6 +41,8 @@ export const ERROR = {
   BOOKMARK: {
     MY_TALKPICK: '본인이 작성한 톡픽은 저장할 수 없습니다.',
     MY_GAME: '본인이 만든 밸런스게임은 저장할 수 없습니다.',
+    GAME_FAIL: '게임 북마크에 실패했습니다.',
+    GAME_DELETE_FAIL: '게임 북마크 삭제에 실패했습니다.',
   },
   TEMPGAME: {
     LOAD: '임시 저장 데이터를 불러오는 데 실패했습니다.',

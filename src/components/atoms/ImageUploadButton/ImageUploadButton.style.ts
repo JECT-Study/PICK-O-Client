@@ -27,3 +27,8 @@ export const countWrapStyle = css(typo.Number.Medium, {
   color: color.GY[1],
   marginTop: '2px',
 });
+
+export const iconStyle = css({
+  width: '40px',
+  height: '36px',
+});

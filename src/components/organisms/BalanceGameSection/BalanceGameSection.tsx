@@ -1,7 +1,8 @@
 /* eslint-disable no-console */
 import React, { useEffect, useRef, useState } from 'react';
 import { BookmarkDF, BookmarkPR, NextArrow, PrevArrow, Share } from '@/assets';
-import { ERROR, SUCCESS } from '@/constants/message';
+import { VoteRecord } from '@/types/vote';
+import { SUCCESS } from '@/constants/message';
 import { GameDetail, GameSet } from '@/types/game';
 import { useNewSelector } from '@/store';
 import { selectAccessToken } from '@/store/auth';
@@ -17,19 +18,17 @@ import ShareModal from '@/components/molecules/ShareModal/ShareModal';
 import LoginModal from '@/components/molecules/LoginModal/LoginModal';
 import BalanceGameBox from '@/components/molecules/BalanceGameBox/BalanceGameBox';
 import useToastModal from '@/hooks/modal/useToastModal';
-import { useCreateGameBookmarkMutation } from '@/hooks/api/bookmark/useCreateGameBookmarkMutation';
-import { useDeleteGameBookmarkMutation } from '@/hooks/api/bookmark/useDeleteGameBookmarkMutation';
-import { MyVoteOption, VoteOption, VoteRecord } from '@/types/vote';
+import { useGameBookmark } from '@/hooks/game/useBalanceGameBookmark';
+import { useGuestGameVote } from '@/hooks/game/useBalanceGameVote';
 import * as S from './BalanceGameSection.style';
 
 export interface BalanceGameSectionProps {
   gameSetId: number;
   game?: GameSet;
-  isMyGame?: boolean;
+  isMyGame: boolean;
   currentStage: number;
   setCurrentStage: React.Dispatch<React.SetStateAction<number>>;
-  handleNextGame: () => void;
-  handlePrevGame: () => void;
+  changeStage: (step: number) => void;
 }
 
 const gameDefaultDetail: GameDetail[] = Array.from({ length: 10 }, () => ({
@@ -49,8 +48,7 @@ const BalanceGameSection = ({
   isMyGame,
   currentStage,
   setCurrentStage,
-  handleNextGame,
-  handlePrevGame,
+  changeStage,
 }: BalanceGameSectionProps) => {
   const initialRender = useRef(true);
   const currentURL: string = window.location.href;
@@ -61,54 +59,14 @@ const BalanceGameSection = ({
 
   const [guestVotedList, setGuestVotedList] = useState<VoteRecord[]>([]);
 
-  useEffect(() => {
-    const updateGuestVotedList = () => {
-      const storedVotes = localStorage.getItem(`game_${gameSetId}`);
-      setGuestVotedList(
-        storedVotes ? (JSON.parse(storedVotes) as VoteRecord[]) : [],
-      );
-    };
-
-    updateGuestVotedList();
-
-    const handleStorageChange = (event: StorageEvent) => {
-      if (event.key === `game_${gameSetId}`) {
-        updateGuestVotedList();
-      }
-    };
-
-    window.addEventListener('storage', handleStorageChange);
-    updateGuestVotedList();
-    return () => {
-      window.removeEventListener('storage', handleStorageChange);
-    };
-  }, [gameSetId]);
-
-  const handleGuestGameVote = (
-    selectedOption: MyVoteOption,
-    voteOption: VoteOption,
-  ) => {
-    const updatedVotes = [...guestVotedList];
-    const currentVoteIndex = updatedVotes.findIndex(
-      (vote) => vote.gameId === game?.gameDetailResponses[currentStage]?.id,
-    );
-
-    if (!selectedOption) {
-      updatedVotes.push({
-        gameId: game?.gameDetailResponses[currentStage]?.id as number,
-        votedOption: voteOption,
-      });
-    } else if (selectedOption === voteOption) {
-      updatedVotes.splice(currentVoteIndex, 1);
-    } else {
-      updatedVotes[currentVoteIndex].votedOption = voteOption;
-    }
-
-    setGuestVotedList(updatedVotes);
-    localStorage.setItem(`game_${gameSetId}`, JSON.stringify(updatedVotes));
-  };
-
   const currentGame: GameDetail = gameStages[currentStage];
+  const { handleGuestGameVote } = useGuestGameVote(
+    guestVotedList,
+    setGuestVotedList,
+    gameSetId,
+    currentStage,
+    game,
+  );
 
   const [loginModalOpen, setLoginModalOpen] = useState<boolean>(false);
   const [shareModalOpen, setShareModalOpen] = useState<boolean>(false);
@@ -155,42 +113,18 @@ const BalanceGameSection = ({
       (!isGuest && !currentGame.votedOption)
     )
       return;
-    handleNextGame();
+    changeStage(1);
   };
 
-  const handleNextStage = () => {
-    setCurrentStage((stage) => stage + 1);
-  };
-
-  const { mutate: createBookmark } = useCreateGameBookmarkMutation(
+  const { handleBookmarkClick } = useGameBookmark(
+    isGuest,
+    isMyGame,
+    currentGame.myBookmark,
     gameSetId,
     currentGame.id,
+    showToastModal,
+    game,
   );
-
-  const { mutate: deleteBookmark } = useDeleteGameBookmarkMutation(
-    gameSetId,
-    currentGame.id,
-  );
-
-  const handleBookmarkClick = () => {
-    if (!game) return;
-
-    if (isGuest) {
-      setLoginModalOpen(true);
-      return;
-    }
-
-    if (isMyGame) {
-      showToastModal(ERROR.BOOKMARK.MY_GAME);
-      return;
-    }
-
-    if (currentGame.myBookmark) {
-      deleteBookmark();
-    } else {
-      createBookmark();
-    }
-  };
 
   const myGameItem: MenuItem[] = [{ label: '수정' }, { label: '삭제' }];
   const otherGameItem: MenuItem[] = [{ label: '신고' }];
@@ -253,7 +187,7 @@ const BalanceGameSection = ({
               ? guestVotedList[currentStage]?.votedOption
               : currentGame.votedOption
           }
-          handleNextStage={handleNextStage}
+          handleNextStage={() => changeStage(1)}
           handleGuestGameVote={handleGuestGameVote}
         />
         <div css={S.stageBarBtnWrapper}>
@@ -264,7 +198,7 @@ const BalanceGameSection = ({
               S.activeButtonStyling(true),
               S.getButtonVisibility(currentStage),
             ]}
-            onClick={handlePrevGame}
+            onClick={() => changeStage(-1)}
           >
             <PrevArrow />
             이전 질문
@@ -298,7 +232,7 @@ const BalanceGameSection = ({
           buttonLabel="이 게임 제법 폼이 좋아?"
           icon={currentGame.myBookmark ? <BookmarkPR /> : <BookmarkDF />}
           iconLabel="저장하기"
-          onClick={handleBookmarkClick}
+          onClick={() => handleBookmarkClick(() => setLoginModalOpen(true))}
         />
       </div>
     </div>
