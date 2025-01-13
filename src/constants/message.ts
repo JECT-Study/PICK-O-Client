@@ -112,7 +112,7 @@ export const NOTICE = {
     NOT_READY: '아직 준비 중인 서비스입니다!',
   },
   LOGIN: {
-    EXPIRED: '로그인 시간이 만료되었습니다. 다시 로그인인해주세요.',
+    EXPIRED: '로그인 시간이 만료되었습니다. 다시 로그인해주세요.',
   },
 } as const;
 
