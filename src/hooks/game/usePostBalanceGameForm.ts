@@ -11,6 +11,8 @@ import useToastModal from '@/hooks/modal/useToastModal';
 import { useCreateGameMutation } from '@/hooks/api/game/useCreateGameMutation';
 import { useLoadTempGameQuery } from '@/hooks/api/game/useLoadTempGameQuery';
 import { useSaveTempGameMutation } from '@/hooks/api/game/useSaveTempGameMutation';
+import { useFileUploadMutation } from '../api/file/useFileUploadMutation';
+import { useDeleteFileMutation } from '../api/file/useDeleteFileMutation';
 import {
   validateBalanceGameForm,
   validateGameTag,
@@ -34,12 +36,14 @@ export const usePostBalanceGameForm = (
 
   const { mutate: createBalanceGame } = useCreateGameMutation(showToastModal);
 
+  const { mutate: uploadFiles } = useFileUploadMutation();
+  const { mutate: deleteFiles } = useDeleteFileMutation();
+
   const { data: tempGame } = useLoadTempGameQuery();
   const { mutate: saveTempGame } = useSaveTempGameMutation();
 
   const [isTempGameLoaded, setIsTempGameLoaded] = useState<boolean>(false);
 
-  // 게임 생성
   const handleBalanceGame = () => {
     const gameValidation = validateGameTag(form);
 
@@ -49,7 +53,6 @@ export const usePostBalanceGameForm = (
     createBalanceGame(form);
   };
 
-  // 임시저장하기
   const handleTempBalanceGame = () => {
     const tempBalanceGame: TempGame = transformBalanceGameToTempGame(
       form,
@@ -59,7 +62,6 @@ export const usePostBalanceGameForm = (
     setIsTempGameLoaded(true);
   };
 
-  // 임시저장 불러오기
   const handleDraftButton = () => {
     if (tempGame) {
       const savedBalanceGame: BalanceGame = transformTempGameToBalanceGame(
@@ -72,12 +74,39 @@ export const usePostBalanceGameForm = (
     }
   };
 
-  const handleFileId = (name: string, fileId: number, gameOptionId: number) => {
-    setEach(name, fileId, gameStage, gameOptionId);
+  const handleImgChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    optionId: number,
+  ) => {
+    if (event.target.files) {
+      const imgFile = event.target.files[0];
+      const imageFormData = new FormData();
+      imageFormData.append('file', imgFile);
+
+      uploadFiles(
+        {
+          formData: imageFormData,
+          params: { type: 'GAME_OPTION' },
+        },
+        {
+          onSuccess: (res) => {
+            setEach('fileId', res.fileIds[0], gameStage, optionId);
+            setEach('imgUrl', res.imgUrls[0], gameStage, optionId);
+          },
+        },
+      );
+    }
   };
 
-  const handleImgUrl = (name: string, imgUrl: string, gameOptionId: number) => {
-    setEach(name, imgUrl, gameStage, gameOptionId);
+  const handleDeleteImg = (fileId: number | null, optionId: number) => {
+    if (fileId) {
+      deleteFiles(fileId, {
+        onSuccess: () => {
+          setEach('fileId', null, gameStage, optionId);
+          setEach('imgUrl', '', gameStage, optionId);
+        },
+      });
+    }
   };
 
   const handlePrevGame = () => {
@@ -106,8 +135,8 @@ export const usePostBalanceGameForm = (
     setEach,
     isVisible,
     modalText,
-    handleFileId,
-    handleImgUrl,
+    handleImgChange,
+    handleDeleteImg,
     handlePrevGame,
     handleNextGame,
     handleBalanceGame,

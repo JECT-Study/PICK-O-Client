@@ -1,7 +1,12 @@
-import React, { ComponentPropsWithoutRef, useState } from 'react';
-import PhotoBox from '@/components/mobile/atoms/PhotoBox/PhotoBox';
-import { ChoiceMinus, ChoicePlus } from '@/assets';
-import { useFileUploadMutation } from '@/hooks/api/file/useFileUploadMutation';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import React, { ComponentPropsWithoutRef, useRef, useState } from 'react';
+import {
+  Camera,
+  MobileChoiceMinus,
+  MobileChoicePlus,
+  MobileTrashCan,
+} from '@/assets';
+import useOutsideClick from '@/hooks/common/useOutsideClick';
 import * as S from './OptionCard.style';
 
 export interface OptionCardProps {
@@ -9,8 +14,11 @@ export interface OptionCardProps {
   nameProps: ComponentPropsWithoutRef<'input'>;
   descriptionProps: ComponentPropsWithoutRef<'input'>;
   imgUrl?: string;
-  setFileId: (name: string, fileId: number, gameOptionId: number) => void;
-  setImgUrl: (name: string, imgUrl: string, gameOptionId: number) => void;
+  handleImgChange: (
+    event: React.ChangeEvent<HTMLInputElement>,
+    optionId: number,
+  ) => void;
+  handleDeleteImg: () => void;
 }
 
 const OptionCard = ({
@@ -18,52 +26,73 @@ const OptionCard = ({
   nameProps,
   descriptionProps,
   imgUrl,
-  setFileId,
-  setImgUrl,
+  handleImgChange,
+  handleDeleteImg,
 }: OptionCardProps) => {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const imgBoxRef = useRef<HTMLDivElement>(null);
+
+  const [isExpanded, setIsExpanded] = useState<boolean>(false);
+  const [imgClicked, setImgClicked] = useState<boolean>(false);
+  useOutsideClick(imgBoxRef, () => setImgClicked(false));
+
   const isContentEmpty = !nameProps.value && !descriptionProps.value;
   const gameOptionId: number = type === 'A' ? 0 : 1;
-
-  const { mutate: uploadFiles } = useFileUploadMutation();
 
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);
   };
 
-  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files) {
-      const imgFile = event.target.files[0];
-      const imageFormData = new FormData();
-      imageFormData.append('file', imgFile);
+  const handleImageClick = () => {
+    if (imgUrl) {
+      if (imgClicked) {
+        handleDeleteImg();
+      } else {
+        setImgClicked(true);
+      }
+    }
+  };
 
-      uploadFiles(
-        {
-          formData: imageFormData,
-          params: { type: 'GAME_OPTION' },
-        },
-        {
-          onSuccess: (res) => {
-            setFileId('fileId', res.fileIds[0], gameOptionId);
-            setImgUrl('imgUrl', res.imgUrls[0], gameOptionId);
-          },
-        },
-      );
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleButtonClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
     }
   };
 
   return (
     <div css={S.container(type, isContentEmpty)}>
       <div css={S.contentWrapper}>
-        <label css={S.photoLabel}>
-          <PhotoBox imgUrl={imgUrl} alt={`${type} 선택지`} />
-          <input
-            type="file"
-            accept="image/*"
-            css={S.fileInput}
-            onChange={handleImageChange}
-          />
-        </label>
+        <button
+          type="button"
+          css={S.imgContainer(!!imgUrl)}
+          onClick={imgUrl ? handleImageClick : handleButtonClick}
+        >
+          {imgUrl ? (
+            <div css={S.imageWrapper} ref={imgBoxRef}>
+              {imgClicked && (
+                <>
+                  <div css={S.overlay} />
+                  <div css={S.trashCanIcon}>
+                    <MobileTrashCan />
+                  </div>
+                </>
+              )}
+              <img src={imgUrl} alt={`${type} 선택지`} css={S.image} />
+            </div>
+          ) : (
+            <>
+              <Camera css={S.icon} />
+              <input
+                type="file"
+                accept="image/*"
+                css={S.fileInput}
+                ref={fileInputRef}
+                onChange={(e) => handleImgChange(e, gameOptionId)}
+              />
+            </>
+          )}
+        </button>
         <div css={S.textContainer}>
           <input
             type="text"
@@ -78,7 +107,7 @@ const OptionCard = ({
               css={S.expandButton}
               aria-label="부가 설명 열기"
             >
-              <ChoicePlus />
+              <MobileChoicePlus />
             </button>
           )}
         </div>
@@ -97,7 +126,7 @@ const OptionCard = ({
             css={S.expandButton}
             aria-label="부가 설명 닫기"
           >
-            <ChoiceMinus />
+            <MobileChoiceMinus />
           </button>
         </div>
       )}

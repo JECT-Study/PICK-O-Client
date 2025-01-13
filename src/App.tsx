@@ -23,6 +23,7 @@ import SignUpPage from './pages/SignUpPage/SignUpPage';
 import BalanceGamePage from './pages/BalanceGamePage/BalanceGamePage';
 import BalanceGameMobilePage from './pages/mobile/BalanceGameMobilePage/BalanceGameMobilePage';
 import BalanceGameCreationPage from './pages/BalanceGameCreationPage/BalanceGameCreationPage';
+import BalanceGameCreationMobilePage from './pages/mobile/BalanceGameCreationMobilePage/BalanceGameCreationMobilePage';
 // import NotAuthRoutes from './components/Routes/NotAuthRoutes';
 // import { useMemberQuery } from './hooks/api/member/useMemberQuery';
 // import { useParseJwt } from './hooks/common/useParseJwt';
@@ -81,7 +82,6 @@ const App: React.FC = () => {
             path={PATH.BALANCEGAME()}
             element={isMobile ? <BalanceGameMobilePage /> : <BalanceGamePage />}
           />
-
           {/* <Route path="/search" element={<SearchResultsPage />} /> */}
           {/* <Route path="posts" element={<PostList />} />
           <Route path="posts/:id" element={<PostPage />} />

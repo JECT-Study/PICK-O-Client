@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from 'react';
@@ -11,6 +12,7 @@ import OptionCard from '../../molecules/OptionCard/OptionCard';
 import GameTagModal from '../../molecules/GameTagModal/GameTagModal';
 import TempGameModal from '../../molecules/TempGameModal/TempGameModal';
 import * as S from './BalanceGameCreateSection.style';
+import TextModal from '../../molecules/TextModal/TextModal';
 
 const BalanceGameCreateSection = () => {
   const [gameStage, setGameStage] = useState<number>(0);
@@ -18,14 +20,17 @@ const BalanceGameCreateSection = () => {
   const [tagModalOpen, setTagModalOpen] = useState<boolean>(false);
   const [tempModalOpen, setTempModalOpen] = useState<boolean>(false);
 
+  const [imgDeleteModalOpen, setImgDeleteModalOpen] = useState<boolean>(false);
+  const [selectedOptionId, setSelectedOptionId] = useState<number>(0);
+
   const {
     form,
     onChange,
     setEach,
     isVisible,
     modalText,
-    handleFileId,
-    handleImgUrl,
+    handleImgChange,
+    handleDeleteImg,
     handlePrevGame,
     handleNextGame,
     handleBalanceGame,
@@ -44,8 +49,8 @@ const BalanceGameCreateSection = () => {
           <ToastModal bgColor="black">{modalText}</ToastModal>
         </div>
       )}
-      {tagModalOpen && (
-        <div css={S.centerStyling}>
+      <div css={S.centerStyling}>
+        {tagModalOpen && (
           <GameTagModal
             form={form}
             isOpen={tagModalOpen}
@@ -54,10 +59,8 @@ const BalanceGameCreateSection = () => {
             setSubTagValue={onChange}
             submitGame={handleBalanceGame}
           />
-        </div>
-      )}
-      {tempModalOpen && (
-        <div css={S.centerStyling}>
+        )}
+        {tempModalOpen && (
           <TempGameModal
             isOpen={tempModalOpen}
             onClose={() => {
@@ -72,8 +75,24 @@ const BalanceGameCreateSection = () => {
               setTempModalOpen(false);
             }}
           />
-        </div>
-      )}
+        )}
+        {imgDeleteModalOpen && (
+          <TextModal
+            text="이미지를 삭제하시겠습니까?"
+            isOpen={imgDeleteModalOpen}
+            onClose={() => {
+              setImgDeleteModalOpen(false);
+            }}
+            onConfirm={() => {
+              handleDeleteImg(
+                form.games[gameStage].gameOptions[selectedOptionId].fileId,
+                selectedOptionId,
+              );
+              setImgDeleteModalOpen(false);
+            }}
+          />
+        )}
+      </div>
       <div css={S.balanceGameTopWrapper}>
         <div css={S.balanceGameTextWrapper}>
           <p css={S.balanceGameTextStyle}>밸런스게임 작성하기</p>
@@ -115,8 +134,11 @@ const BalanceGameCreateSection = () => {
             onChange: (e) => onChange(e, gameStage, 0),
           }}
           imgUrl={form.games[gameStage].gameOptions[0].imgUrl}
-          setFileId={handleFileId}
-          setImgUrl={handleImgUrl}
+          handleImgChange={handleImgChange}
+          handleDeleteImg={() => {
+            setSelectedOptionId(0);
+            setImgDeleteModalOpen(true);
+          }}
         />
         <OptionCard
           type="B"
@@ -131,8 +153,11 @@ const BalanceGameCreateSection = () => {
             onChange: (e) => onChange(e, gameStage, 1),
           }}
           imgUrl={form.games[gameStage].gameOptions[1].imgUrl}
-          setFileId={handleFileId}
-          setImgUrl={handleImgUrl}
+          handleImgChange={handleImgChange}
+          handleDeleteImg={() => {
+            setSelectedOptionId(1);
+            setImgDeleteModalOpen(true);
+          }}
         />
         <div css={S.buttonWrapper}>
           <Button
