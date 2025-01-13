@@ -46,7 +46,6 @@ const App: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // 리덕스 내 토큰 유무 여부로 로그인 상태 판단
   const isLoggedIn = !!useNewSelector(selectAccessToken);
 
   useEffect(() => {
