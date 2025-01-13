@@ -25,6 +25,7 @@ import BalanceGameMobilePage from './pages/mobile/BalanceGameMobilePage/BalanceG
 import BalanceGameCreationPage from './pages/BalanceGameCreationPage/BalanceGameCreationPage';
 import { useNewSelector } from './store';
 import { selectAccessToken } from './store/auth';
+import useIsMobile from './hooks/common/useIsMobile';
 // import NotAuthRoutes from './components/Routes/NotAuthRoutes';
 // import { useMemberQuery } from './hooks/api/member/useMemberQuery';
 // import { useParseJwt } from './hooks/common/useParseJwt';
@@ -42,7 +43,6 @@ import { selectAccessToken } from './store/auth';
 // import PostPage from './pages/PostPage/PostPage';
 // import SearchResultPage from './pages/SearchResultPage/SearchResultPage';
 // import SignUpPage from './pages/SignUpPage/SignUpPage';
-import useIsMobile from './hooks/common/useIsMobile';
 
 const App: React.FC = () => {
   const location = useLocation();
