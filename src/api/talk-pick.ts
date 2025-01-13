@@ -82,10 +82,3 @@ export const getTalkPickList = async (pageable: Pageable) => {
   );
   return data;
 };
-
-export const postTalkPickSummary = async (talkPickId: Id) => {
-  const response = await axiosInstance.post(
-    END_POINT.TALKPICK_SUMMARY(talkPickId),
-  );
-  return response;
-};
