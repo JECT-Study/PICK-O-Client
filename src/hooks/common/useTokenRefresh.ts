@@ -1,6 +1,7 @@
 /* eslint-disable no-alert */
 /* eslint-disable no-console */
 import { axiosInstance, getRefreshToken } from '@/api/interceptor';
+import { NOTICE } from '@/constants/message';
 import { PATH } from '@/constants/path';
 import store, { useNewDispatch, useNewSelector } from '@/store';
 import { selectAccessToken, tokenActions } from '@/store/auth';
@@ -44,7 +45,7 @@ export const useTokenRefresh = () => {
         localStorage.removeItem('isLoggedIn');
 
         // 로그인 페이지로 이동
-        alert('로그인 시간이 만료되었습니다. 다시 로그인해주세요.');
+        alert(NOTICE.LOGIN.EXPIRED);
         navigate(`/${PATH.LOGIN}`);
       }
     };

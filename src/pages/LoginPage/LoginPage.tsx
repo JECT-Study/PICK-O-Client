@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ERROR } from '@/constants/message';
+import { ERROR, SUCCESS } from '@/constants/message';
 import { LogoLarge } from '@/assets';
 import LoginForm from '@/components/molecules/LoginForm/LoginForm';
 import { useLocation } from 'react-router-dom';
@@ -26,7 +26,7 @@ const LoginPage = () => {
     }
 
     if (state?.status === 'logout' && modalVisible) {
-      showToastModal('로그아웃되었습니다.');
+      showToastModal(SUCCESS.LOGOUT);
       setModalVisible(false);
     }
   }, [modalVisible, showToastModal, state?.status]);

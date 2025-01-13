@@ -1,6 +1,7 @@
 /* eslint-disable no-alert */
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 import { PATH } from '@/constants/path';
+import { NOTICE } from '@/constants/message';
 import { ServerResponse } from '@/types/api';
 import store from '@/store';
 import { tokenActions } from '@/store/auth';
@@ -103,7 +104,7 @@ axiosInstance.interceptors.response.use(
         localStorage.removeItem('isLoggedIn');
 
         // 로그아웃 후 로그인 페이지로 이동
-        alert('로그인 시간이 만료되었습니다. 다시 로그인해주세요.');
+        alert(NOTICE.LOGIN.EXPIRED);
         window.location.href = `/${PATH.LOGIN}`;
 
         return Promise.reject(err);
