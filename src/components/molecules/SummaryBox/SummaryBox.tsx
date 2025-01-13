@@ -51,7 +51,7 @@ const SummaryBox = ({ summary, summaryStatus }: SummaryBoxProps) => {
     ),
   };
 
-  const renderContent = contentMap[summaryStatus || 'PENDING'];
+  const renderContent = contentMap[summaryStatus ?? 'PENDING'];
 
   return (
     <div css={S.summaryBoxStyling}>
