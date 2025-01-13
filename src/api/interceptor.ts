@@ -31,7 +31,7 @@ export const axiosRefreshInstance = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-  withCredentials: true, // 쿠키 값 전달
+  withCredentials: true,
   timeout: AXIOS.TIMEOUT,
 });
 
