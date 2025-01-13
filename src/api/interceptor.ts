@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable no-console */
+/* eslint-disable no-alert */
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 import { PATH } from '@/constants/path';
 import { ServerResponse } from '@/types/api';
@@ -82,7 +81,6 @@ axiosInstance.interceptors.response.use(
       try {
         // 쿠키에 리프레시 토큰을 담아 액세스 토큰 재발급
         const newAccessToken = await getRefreshToken();
-        console.log('interceptor', newAccessToken);
 
         // 리덕스에 새 액세스 토큰 업데이트
         store.dispatch(tokenActions.setToken(newAccessToken));
@@ -105,7 +103,7 @@ axiosInstance.interceptors.response.use(
         localStorage.removeItem('isLoggedIn');
 
         // 로그아웃 후 로그인 페이지로 이동
-        console.log('인터셉터에서 표시!!');
+        alert('로그인 시간이 만료되었습니다. 다시 로그인해주세요.');
         window.location.href = `/${PATH.LOGIN}`;
 
         return Promise.reject(err);

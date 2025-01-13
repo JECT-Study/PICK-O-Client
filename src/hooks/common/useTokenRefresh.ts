@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable no-alert */
 /* eslint-disable no-console */
 import { axiosInstance, getRefreshToken } from '@/api/interceptor';
 import { PATH } from '@/constants/path';
@@ -26,7 +26,6 @@ export const useTokenRefresh = () => {
       try {
         // 쿠키에 담긴 리프레시 토큰으로 액세스 토큰 재발급
         const newAccessToken = await getRefreshToken();
-        console.log('useTokenRefresh', newAccessToken);
 
         // 해더와 리덕스에 새 토큰 넣음
         dispatch(tokenActions.setToken(newAccessToken));
@@ -45,7 +44,7 @@ export const useTokenRefresh = () => {
         localStorage.removeItem('isLoggedIn');
 
         // 로그인 페이지로 이동
-        console.log('토큰리프레시 훅에서 표시!!');
+        alert('로그인 시간이 만료되었습니다. 다시 로그인해주세요.');
         navigate(`/${PATH.LOGIN}`);
       }
     };
