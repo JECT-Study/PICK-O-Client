@@ -55,7 +55,7 @@ const BalanceGameSection = ({
 
   const gameStages: GameDetail[] =
     game?.gameDetailResponses ?? gameDefaultDetail;
-  const isGuest = !!useNewSelector(selectAccessToken);
+  const isGuest = !useNewSelector(selectAccessToken);
 
   const [guestVotedList, setGuestVotedList] = useState<VoteRecord[]>([]);
 
