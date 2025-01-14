@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
-import { useNewSelector } from '@/store';
-import { selectAccessToken } from '@/store/auth';
 import { useLocation, useParams } from 'react-router-dom';
-import { useParseJwt } from '@/hooks/common/useParseJwt';
 import { useMemberQuery } from '@/hooks/api/member/useMemberQuery';
 import { useCommentsQuery } from '@/hooks/api/comment/useCommentsQuery';
 import { useBestCommentsQuery } from '@/hooks/api/comment/useBestCommentsQuery';
@@ -24,8 +21,7 @@ const TalkPickPage = () => {
     order: 'desc',
   });
 
-  const accessToken = useNewSelector(selectAccessToken);
-  const { member } = useMemberQuery(useParseJwt(accessToken).memberId);
+  const { member } = useMemberQuery();
 
   const { talkPickId } = useParams();
   const location = useLocation();

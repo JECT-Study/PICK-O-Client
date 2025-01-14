@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useNewSelector } from '@/store';
-import { selectAccessToken } from '@/store/auth';
-import { useParseJwt } from '@/hooks/common/useParseJwt';
 import { useMemberQuery } from '@/hooks/api/member/useMemberQuery';
 import { useGameBySetId } from '@/hooks/api/game/useGameBySetIdQuery';
 import Divider from '@/components/atoms/Divider/Divider';
@@ -17,8 +14,7 @@ const BalanceGamePage = () => {
   const { gameSet } = useGameBySetId(gameSetId);
   const [currentStage, setCurrentStage] = useState<number>(0);
 
-  const accessToken = useNewSelector(selectAccessToken);
-  const { member } = useMemberQuery(useParseJwt(accessToken).memberId);
+  const { member } = useMemberQuery();
 
   const isMyGame: boolean = member?.nickname === gameSet?.member;
 

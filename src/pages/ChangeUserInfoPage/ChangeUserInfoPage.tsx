@@ -1,7 +1,4 @@
-import React, { useState } from 'react';
-import { useNewSelector } from '@/store';
-import { selectAccessToken } from '@/store/auth';
-import { useParseJwt } from '@/hooks/common/useParseJwt';
+import React, { useState, useEffect } from 'react';
 import { useMemberQuery } from '@/hooks/api/member/useMemberQuery';
 import Button from '@/components/atoms/Button/Button';
 import ToastModal from '@/components/atoms/ToastModal/ToastModal';
@@ -14,8 +11,7 @@ import { useChangeUserInfoForm } from '@/hooks/changeUserInfo/useChangeUserInfoF
 import * as S from './ChangeUserInfoPage.style';
 
 const ChangeUserInfoPage = () => {
-  const accessToken = useNewSelector(selectAccessToken);
-  const { member } = useMemberQuery(useParseJwt(accessToken).memberId);
+  const { member } = useMemberQuery();
 
   const [passwordInput, setPasswordInput] = useState<string>('');
   const [verifySuccess, setVerifySuccess] = useState<boolean>(false);
@@ -28,6 +24,12 @@ const ChangeUserInfoPage = () => {
       handlePasswordSubmit();
     }
   };
+
+  useEffect(() => {
+    if (member?.signupType === 'SOCIAL') {
+      setVerifySuccess(true);
+    }
+  }, [member]);
 
   const {
     form,
@@ -48,58 +50,59 @@ const ChangeUserInfoPage = () => {
           <ToastModal>{modalText}</ToastModal>
         </div>
       )}
-      {verifySuccess ? (
-        <>
-          <span css={S.subTextStyling}>회원정보 수정</span>
-          <div css={S.changeUserInfoFormWrapper}>
-            <div css={S.changeUserInfoFormStyling}>
-              <InputProfileImage
-                setImageFileId={setEach}
-                imgSrc={member?.profileImgUrl}
-                setIsImageChanged={setIsImageChanged}
-              />
-              <InputInfoNickname
-                value={form.nickname}
-                onChange={onChange}
-                defaultValue={member?.nickname ?? ''}
-                setIsNicknameChanged={setIsNicknameChanged}
-                setIsNicknameSuccess={setIsNicknameSuccess}
-              />
+      {member &&
+        (verifySuccess ? (
+          <>
+            <span css={S.subTextStyling}>회원정보 수정</span>
+            <div css={S.changeUserInfoFormWrapper}>
+              <div css={S.changeUserInfoFormStyling}>
+                <InputProfileImage
+                  setImageFileId={setEach}
+                  imgSrc={member?.profileImgUrl}
+                  setIsImageChanged={setIsImageChanged}
+                />
+                <InputInfoNickname
+                  value={form.nickname}
+                  onChange={onChange}
+                  defaultValue={member?.nickname ?? ''}
+                  setIsNicknameChanged={setIsNicknameChanged}
+                  setIsNicknameSuccess={setIsNicknameSuccess}
+                />
+              </div>
+              <Button type="submit" variant="roundPrimary2" css={S.btnStyling}>
+                수정완료
+              </Button>
             </div>
-            <Button type="submit" variant="roundPrimary2" css={S.btnStyling}>
-              수정완료
-            </Button>
-          </div>
-        </>
-      ) : (
-        <>
-          <span css={S.subTextStyling}>비밀번호 확인</span>
-          <span css={S.checkPasswordTextStyling}>
-            회원정보 보호를 위해, 비밀번호를 다시 한번 입력해 주세요.
-          </span>
-          <div css={S.checkPasswordFormWrapper}>
-            <div css={S.checkPasswordFormStyling}>
-              <InputInfoEmail value={member?.email} />
-              <InputInfoPw
-                inputRef={inputRef}
-                isError={isError}
-                errorMessage={errorMessage}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setPasswordInput(e.target.value)
-                }
-                onKeyDown={handlePasswordKeyDown}
-              />
+          </>
+        ) : (
+          <>
+            <span css={S.subTextStyling}>비밀번호 확인</span>
+            <span css={S.checkPasswordTextStyling}>
+              회원정보 보호를 위해, 비밀번호를 다시 한번 입력해 주세요.
+            </span>
+            <div css={S.checkPasswordFormWrapper}>
+              <div css={S.checkPasswordFormStyling}>
+                <InputInfoEmail value={member?.email} />
+                <InputInfoPw
+                  inputRef={inputRef}
+                  isError={isError}
+                  errorMessage={errorMessage}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setPasswordInput(e.target.value)
+                  }
+                  onKeyDown={handlePasswordKeyDown}
+                />
+              </div>
+              <Button
+                variant="roundPrimary2"
+                css={S.btnStyling}
+                onClick={handlePasswordSubmit}
+              >
+                확인
+              </Button>
             </div>
-            <Button
-              variant="roundPrimary2"
-              css={S.btnStyling}
-              onClick={handlePasswordSubmit}
-            >
-              확인
-            </Button>
-          </div>
-        </>
-      )}
+          </>
+        ))}
     </form>
   );
 };

@@ -7,6 +7,7 @@ export const changeUserInfoPageContainer = css({
   flexDirection: 'column',
   alignItems: 'center',
   width: '100%',
+  minHeight: '720px',
   padding: '100px 0',
   background: color.GY[3],
 });

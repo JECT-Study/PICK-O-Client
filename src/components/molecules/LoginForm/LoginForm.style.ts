@@ -67,11 +67,3 @@ export const loginButtonStyling = css({
   outline: `1px solid ${color.GY[2]}`,
   cursor: 'pointer',
 });
-
-export const toastModalStyling = css({
-  position: 'fixed',
-  top: '110px',
-  left: '50%',
-  transform: 'translate(-50%)',
-  zIndex: '1000',
-});

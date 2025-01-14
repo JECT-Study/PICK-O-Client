@@ -2,9 +2,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Comment } from '@/types/comment';
 import { ArrowDown, ArrowUp } from '@/assets';
-import { useNewSelector } from '@/store';
-import { selectAccessToken } from '@/store/auth';
-import { useParseJwt } from '@/hooks/common/useParseJwt';
 import { useMemberQuery } from '@/hooks/api/member/useMemberQuery';
 import { formatDateFromISOWithTime } from '@/utils/formatData';
 import { useCommentActions } from '@/hooks/comment/useCommentActions';
@@ -35,8 +32,7 @@ const CommentItem = ({
   selectedPage,
   talkPickWriter,
 }: CommentItemProps) => {
-  const accessToken = useNewSelector(selectAccessToken);
-  const { member } = useMemberQuery(useParseJwt(accessToken).memberId);
+  const { member } = useMemberQuery();
 
   const isMyComment = useMemo(() => {
     return comment?.nickname === member?.nickname;

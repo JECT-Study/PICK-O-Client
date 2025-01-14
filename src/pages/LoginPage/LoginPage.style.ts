@@ -14,3 +14,11 @@ export const loginContainer = css({
 export const logoStyle = css({
   marginBottom: '24px',
 });
+
+export const toastModalStyling = css({
+  position: 'fixed',
+  top: '110px',
+  left: '50%',
+  transform: 'translate(-50%)',
+  zIndex: '1000',
+});
