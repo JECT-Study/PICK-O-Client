@@ -34,8 +34,8 @@ const SummaryBox = ({ summary, summaryStatus }: SummaryBoxProps) => {
       <div css={S.summaryStatusWrapper}>
         <StatusFail />
         <div css={S.summaryTextWrapper}>
-          <p>{SUMMARY.FAIL[1]}</p>
-          <p>{SUMMARY.FAIL[2]}</p>
+          <p>{SUMMARY.FAIL.UNKNOWN}</p>
+          <p>{SUMMARY.FAIL.REFRESH}</p>
         </div>
       </div>
     ),
@@ -44,9 +44,9 @@ const SummaryBox = ({ summary, summaryStatus }: SummaryBoxProps) => {
         <StatusNotRequired />
         <div css={S.summaryTextWrapper}>
           <span css={S.summaryText}>
-            {SUMMARY.NOT_REQUIRED[1]} <SadEmoji />
+            {SUMMARY.NOT_REQUIRED.TEXT_VALIDATION} <SadEmoji />
           </span>
-          <p>{SUMMARY.NOT_REQUIRED[2]}</p>
+          <p>{SUMMARY.NOT_REQUIRED.TEXT_CHECK}</p>
         </div>
       </div>
     ),
