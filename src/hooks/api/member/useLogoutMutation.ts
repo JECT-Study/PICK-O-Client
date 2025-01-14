@@ -14,10 +14,6 @@ export const useLogoutMutation = () => {
   return useMutation({
     mutationFn: postLogout,
     onSuccess: () => {
-      // 로컬 스토리지에 로그인 여부 제거
-      localStorage.removeItem('isLoggedIn');
-
-      // 헤더와 리덕스에서 토큰 제거
       delete axiosInstance.defaults.headers.Authorization;
       dispatch(tokenActions.deleteToken());
 

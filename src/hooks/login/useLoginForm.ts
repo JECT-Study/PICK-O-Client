@@ -47,12 +47,9 @@ export const useLoginForm = (
       setErrorMessage(undefined);
       onModalLoginSuccess?.();
 
-      // 로그인 성공 시 응답 토큰을 헤더와 리덕스에 넣음
       dispatch(tokenActions.setToken(res));
       axiosInstance.defaults.headers.Authorization = `Bearer ${res}`;
 
-      // 로컬 스토리지에 로그인 상태 업데이트
-      localStorage.setItem('isLoggedIn', 'true');
       localStorage.setItem('savedEmail', form.email);
 
       await queryClient.invalidateQueries({

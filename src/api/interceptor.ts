@@ -78,14 +78,10 @@ axiosInstance.interceptors.response.use(
         store.dispatch(tokenActions.setToken(newAccessToken));
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
 
-        localStorage.setItem('isLoggedIn', 'true');
-
         return await axiosInstance(originalRequest);
       } catch (err) {
         delete axiosInstance.defaults.headers.Authorization;
         store.dispatch(tokenActions.deleteToken());
-
-        localStorage.removeItem('isLoggedIn');
 
         alert(NOTICE.LOGIN.EXPIRED);
         window.location.href = `/${PATH.LOGIN}`;
