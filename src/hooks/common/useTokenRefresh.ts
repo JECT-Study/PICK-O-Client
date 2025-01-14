@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
-import { axiosInstance, getRefreshToken } from '@/api/interceptor';
+import { axiosInstance } from '@/api/interceptor';
+import { getRefreshToken } from '@/api/auth';
 import store, { useNewDispatch, useNewSelector } from '@/store';
 import { selectAccessToken, tokenActions } from '@/store/auth';
 import { useEffect } from 'react';
@@ -20,8 +21,6 @@ export const useTokenRefresh = () => {
 
         dispatch(tokenActions.setToken(newAccessToken));
         axiosInstance.defaults.headers.Authorization = `Bearer ${newAccessToken}`;
-
-        localStorage.setItem('isLoggedIn', 'true');
       } catch (error) {
         store.dispatch(tokenActions.deleteToken());
         delete axiosInstance.defaults.headers.Authorization;

@@ -2,10 +2,10 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 import { PATH } from '@/constants/path';
 import { NOTICE } from '@/constants/message';
-import { ServerResponse } from '@/types/api';
 import store from '@/store';
 import { tokenActions } from '@/store/auth';
-import { AXIOS, END_POINT, HTTP_STATUS_CODE } from '../constants/api';
+import { getRefreshToken } from './auth';
+import { AXIOS, HTTP_STATUS_CODE } from '../constants/api';
 import { HTTPError } from './HttpError';
 
 export interface AxiosErrorResponse {
@@ -25,22 +25,6 @@ export const axiosInstance = axios.create({
   withCredentials: true,
   timeout: AXIOS.TIMEOUT,
 });
-
-export const axiosRefreshInstance = axios.create({
-  baseURL,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  withCredentials: true,
-  timeout: AXIOS.TIMEOUT,
-});
-
-export const getRefreshToken = async () => {
-  const { data } = await axiosRefreshInstance.get<ServerResponse>(
-    `${END_POINT.REFRESH}`,
-  );
-  return data;
-};
 
 // request interceptor (before request)
 axiosInstance.interceptors.request.use(
