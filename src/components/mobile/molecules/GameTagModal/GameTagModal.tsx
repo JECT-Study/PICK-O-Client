@@ -23,7 +23,7 @@ const GameTagModal = ({
   setSubTagValue,
   submitGame,
 }: GameTagModalProps) => {
-  const [mainTag, setMainTag] = useState<'커플' | '취향' | '기타' | ''>('');
+  const [mainTag, setMainTag] = useState<string>(form.mainTag);
 
   const handleMainTag = (tag: '커플' | '취향' | '기타') => {
     setMainTagValue('mainTag', tag);
