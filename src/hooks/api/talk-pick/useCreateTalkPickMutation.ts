@@ -1,7 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { HTTP_STATUS_CODE } from '@/constants/api';
-import { postTalkPick, postTalkPickSummary } from '@/api/talk-pick';
-import { Id } from '@/types/api';
+import { postTalkPick } from '@/api/talk-pick';
 import { NewTalkPick } from '@/types/talk-pick';
 import { useNavigate } from 'react-router-dom';
 import { AxiosErrorResponse } from '@/api/interceptor';
@@ -16,15 +15,13 @@ export const useCreateTalkPickMutation = (
 
   const mutation = useMutation({
     mutationFn: (data: NewTalkPick) => postTalkPick(data),
-    onSuccess: async (talkPickId: Id) => {
+    onSuccess: async () => {
       await queryClient.invalidateQueries({
         queryKey: ['talkPick'],
       });
       showToastModal(SUCCESS.POST.CREATE, () => {
         navigate(`/${PATH.TALKPICK_PLACE}`);
       });
-
-      await postTalkPickSummary(talkPickId);
     },
     onError: (err: AxiosErrorResponse) => {
       if (err.status === HTTP_STATUS_CODE.UNAUTHORIZED) {
