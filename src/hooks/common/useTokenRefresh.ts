@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
-import { axiosInstance } from '@/api/interceptor';
+import { useQueryClient } from '@tanstack/react-query';
 import { getRefreshToken } from '@/api/auth';
-import store, { useNewDispatch, useNewSelector } from '@/store';
+import { useNewDispatch, useNewSelector } from '@/store';
 import { selectAccessToken, tokenActions } from '@/store/auth';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 export const useTokenRefresh = () => {
   const dispatch = useNewDispatch();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const accessToken = useNewSelector(selectAccessToken);
 
@@ -18,16 +19,17 @@ export const useTokenRefresh = () => {
 
       try {
         const newAccessToken = await getRefreshToken();
-
         dispatch(tokenActions.setToken(newAccessToken));
-        axiosInstance.defaults.headers.Authorization = `Bearer ${newAccessToken}`;
+
+        await queryClient.invalidateQueries({
+          queryKey: ['members'],
+        });
       } catch (error) {
-        store.dispatch(tokenActions.deleteToken());
-        delete axiosInstance.defaults.headers.Authorization;
+        dispatch(tokenActions.deleteToken());
       }
     };
     tokenRefresh().catch((error) => {
       console.error('토큰 에러: ', error);
     });
-  }, [accessToken, dispatch, navigate]);
+  }, [accessToken, dispatch, navigate, queryClient]);
 };
