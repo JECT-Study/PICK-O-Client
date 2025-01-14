@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { useQueryClient } from '@tanstack/react-query';
-import { getRefreshToken } from '@/api/auth';
+import { getRefreshToken } from '@/api/interceptor';
 import { useNewDispatch, useNewSelector } from '@/store';
 import { selectAccessToken, tokenActions } from '@/store/auth';
 import { useEffect } from 'react';
