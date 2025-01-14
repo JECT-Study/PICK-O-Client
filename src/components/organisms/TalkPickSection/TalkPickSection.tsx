@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable no-console */
 import React, { useState } from 'react';
@@ -29,7 +28,7 @@ import useToastModal from '@/hooks/modal/useToastModal';
 import * as S from './TalkPickSection.style';
 
 export interface TalkPickProps {
-  talkPick?: TalkPickDetail;
+  talkPick: TalkPickDetail;
   myTalkPick: boolean;
   isTodayTalkPick: boolean;
 }
@@ -193,7 +192,7 @@ const TalkPickSection = ({
         <div css={S.talkPickContentWrapper}>
           <SummaryBox
             summary={talkPick?.summary}
-            summaryStatus={talkPick?.summaryStatus}
+            summaryStatus={talkPick.summaryStatus}
           />
           {isExpanded && (
             <div css={S.talkPickContent}>
