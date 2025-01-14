@@ -82,6 +82,7 @@ const App: React.FC = () => {
             path={PATH.BALANCEGAME()}
             element={isMobile ? <BalanceGameMobilePage /> : <BalanceGamePage />}
           />
+          <Route path="/bbb" element={<BalanceGameCreationMobilePage />} />
           {/* <Route path="/search" element={<SearchResultsPage />} /> */}
           {/* <Route path="posts" element={<PostList />} />
           <Route path="posts/:id" element={<PostPage />} />
