@@ -6,13 +6,14 @@ import {
   transformBalanceGameToTempGame,
   transformTempGameToBalanceGame,
 } from '@/utils/balanceGameUtils';
+import { SUCCESS } from '@/constants/message';
 import useGameInputs from '@/hooks/game/useGameInputs';
 import useToastModal from '@/hooks/modal/useToastModal';
 import { useCreateGameMutation } from '@/hooks/api/game/useCreateGameMutation';
 import { useLoadTempGameQuery } from '@/hooks/api/game/useLoadTempGameQuery';
 import { useSaveTempGameMutation } from '@/hooks/api/game/useSaveTempGameMutation';
-import { useFileUploadMutation } from '../api/file/useFileUploadMutation';
-import { useDeleteFileMutation } from '../api/file/useDeleteFileMutation';
+import { useFileUploadMutation } from '@/hooks/api/file/useFileUploadMutation';
+import { useDeleteFileMutation } from '@/hooks/api/file/useDeleteFileMutation';
 import {
   validateBalanceGameForm,
   validateGameTag,
@@ -60,6 +61,7 @@ export const usePostBalanceGameForm = (
     );
     saveTempGame(tempBalanceGame);
     setIsTempGameLoaded(true);
+    showToastModal(SUCCESS.TEMPGAME.SAVE);
   };
 
   const handleDraftButton = () => {
@@ -71,6 +73,7 @@ export const usePostBalanceGameForm = (
       );
       setForm(savedBalanceGame);
       setIsTempGameLoaded(true);
+      showToastModal(SUCCESS.TEMPGAME.LOAD);
     }
   };
 
