@@ -1,18 +1,15 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable no-console */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useEffect, useState } from 'react';
-import { usePostBalanceGameForm } from '@/hooks/game/usePostBalanceGameForm';
+import React, { useState } from 'react';
 import ToastModal from '@/components/atoms/ToastModal/ToastModal';
-import Button from '../../atoms/Button/Button';
-import GameStageLabel from '../../atoms/GameStageLabel/GameStageLabel';
-import DraftSaveButton from '../../atoms/DraftSaveButton/DraftSaveButton';
-import TitleDescriptionField from '../../atoms/TitleDescriptionField/TitleDescriptionField';
-import OptionCard from '../../molecules/OptionCard/OptionCard';
-import GameTagModal from '../../molecules/GameTagModal/GameTagModal';
-import TempGameModal from '../../molecules/TempGameModal/TempGameModal';
+import Button from '@/components/mobile/atoms/Button/Button';
+import GameStageLabel from '@/components/mobile/atoms/GameStageLabel/GameStageLabel';
+import DraftSaveButton from '@/components/mobile/atoms/DraftSaveButton/DraftSaveButton';
+import TitleDescriptionField from '@/components/mobile/atoms/TitleDescriptionField/TitleDescriptionField';
+import TextModal from '@/components/mobile/molecules/TextModal/TextModal';
+import OptionCard from '@/components/mobile/molecules/OptionCard/OptionCard';
+import GameTagModal from '@/components/mobile/molecules/GameTagModal/GameTagModal';
+import TempGameModal from '@/components/mobile/molecules/TempGameModal/TempGameModal';
+import { usePostBalanceGameForm } from '@/hooks/game/usePostBalanceGameForm';
 import * as S from './BalanceGameCreateSection.style';
-import TextModal from '../../molecules/TextModal/TextModal';
 
 const BalanceGameCreateSection = () => {
   const [gameStage, setGameStage] = useState<number>(0);
@@ -37,10 +34,6 @@ const BalanceGameCreateSection = () => {
     handleTempBalanceGame,
     handleDraftButton,
   } = usePostBalanceGameForm(gameStage, setGameStage, setTagModalOpen);
-
-  useEffect(() => {
-    console.log(form);
-  }, [form]);
 
   return (
     <form css={S.balanceGameStyling}>
