@@ -117,7 +117,7 @@ const BalanceGameSection = ({
         />
       </div>
       <div css={S.balancGameTopWrapper}>
-        <GameTag tag="커플" />
+        <GameTag tag={game?.mainTag ?? ''} />
         <div css={S.iconButtonWrapper}>
           <IconButton
             icon={<MobileShare />}

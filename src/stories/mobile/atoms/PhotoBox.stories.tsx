@@ -10,34 +10,25 @@ const meta: Meta<typeof PhotoBox> = {
   parameters: {
     layout: 'centered',
   },
-  argTypes: {
-    imgUrl: {
-      control: 'text',
-      description: '이미지 Url',
-    },
-    alt: {
-      control: 'text',
-      description: '이미지 Url 이 없을 시 대체 텍스트',
-    },
+  args: {
+    alt: 'photoBox alt',
+    optionId: 0,
+    handleImageChange: () => {},
+    handleDeleteImg: () => {},
   },
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
-  args: {
-    imgUrl: '',
-    alt: '대체 텍스트',
-  },
-};
+export const Default: Story = {};
 
 export const All: Story = {
-  render: () => (
+  render: (args) => (
     <ul css={storyContainer}>
       <li css={storyInnerContainer}>
-        <PhotoBox alt="No image (default)" />
-        <PhotoBox imgUrl={SampleFirst} alt="샘플 이미지" />
+        <PhotoBox {...args} />
+        <PhotoBox imgUrl={SampleFirst} {...args} />
       </li>
     </ul>
   ),

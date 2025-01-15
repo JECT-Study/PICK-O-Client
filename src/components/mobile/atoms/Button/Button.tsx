@@ -4,7 +4,12 @@ import * as S from './Button.style';
 
 export interface ButtonProps extends ComponentPropsWithRef<'button'> {
   size?: 'large' | 'medium';
-  variant?: 'primary' | 'roundPrimary' | 'Primary2' | 'outlineShadow';
+  variant?:
+    | 'primary'
+    | 'roundPrimary'
+    | 'Primary2'
+    | 'Primary3'
+    | 'outlineShadow';
   active?: boolean;
 }
 

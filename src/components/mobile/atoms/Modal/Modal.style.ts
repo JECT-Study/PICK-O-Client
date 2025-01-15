@@ -15,6 +15,12 @@ export const modalStyling = css({
 
 export const getModalSize = (action: Required<ModalProps>['action']) => {
   const style = {
+    text: css({
+      paddingTop: '36px',
+      paddingLeft: '21px',
+      paddingRight: '21px',
+      paddingBottom: '26px',
+    }),
     share: css({
       paddingTop: '24px',
       paddingLeft: '20px',

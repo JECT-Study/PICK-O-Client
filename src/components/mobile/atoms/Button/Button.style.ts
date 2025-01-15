@@ -23,6 +23,11 @@ export const getVariantStyling = (
       backgroundColor: color.MAIN,
       color: color.WT,
     }),
+    Primary3: css({
+      borderRadius: '12px',
+      backgroundColor: active ? color.MAIN : color.GY[2],
+      color: color.WT,
+    }),
     outlineShadow: css({
       border: `1px solid ${color.GY[4]}`,
       borderRadius: '6px',
@@ -61,6 +66,13 @@ export const getSizeByVariantStyling = (
       medium: css({
         width: '64px',
         height: '34px',
+      }),
+    },
+    Primary3: {
+      large: css({}),
+      medium: css(typo.Comment.SemiBold, {
+        width: '142px',
+        height: '44px',
       }),
     },
     outlineShadow: {

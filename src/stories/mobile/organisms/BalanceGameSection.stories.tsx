@@ -66,8 +66,7 @@ const meta: Meta<typeof BalanceGameSection> = {
     isMyGame: false,
     currentStage: 0,
     setCurrentStage: () => {},
-    handleNextGame: () => {},
-    handlePrevGame: () => {},
+    changeStage: () => {},
   },
   decorators: [
     (Story) => (
