@@ -17,7 +17,7 @@ export const validateBalanceGameForm = (
     return { message: ERROR.VALIDATE.GAME_IMAGE, isValid: false };
   }
   if (gameStage === 9 && isEmptyString(form.title)) {
-    return { message: '제목을 입력해 주세요!', isValid: false };
+    return { message: ERROR.CREATE.EMPTY_TITLE, isValid: false };
   }
 
   return { message: '', isValid: true };
