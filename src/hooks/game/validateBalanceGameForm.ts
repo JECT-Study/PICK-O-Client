@@ -25,8 +25,8 @@ export const validateBalanceGameForm = (
 
 export const validateGameTag = (form: BalanceGame) => {
   if (isEmptyString(form.mainTag)) {
-    return { message: '메인 태그를 선택해주세요!', isValid: false };
+    return { isValid: false };
   }
 
-  return { message: '', isValid: true };
+  return { isValid: true };
 };
