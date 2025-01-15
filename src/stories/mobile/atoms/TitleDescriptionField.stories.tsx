@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import type { Meta, StoryObj } from '@storybook/react';
 import TitleDescriptionField from '@/components/mobile/atoms/TitleDescriptionField/TitleDescriptionField';
 
