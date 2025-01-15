@@ -80,6 +80,7 @@ const GameTagModal = ({
             name="subTag"
             css={S.inputStyling}
             placeholder="ex. 너무어려운밸런스게임, 선택장애, 이상형"
+            maxLength={10}
             value={form.subTag}
             onChange={setSubTagValue}
           />

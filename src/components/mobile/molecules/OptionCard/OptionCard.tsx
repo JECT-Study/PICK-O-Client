@@ -46,6 +46,7 @@ const OptionCard = ({
           <input
             type="text"
             placeholder={`${type} 선택지를 입력하세요.`}
+            maxLength={30}
             css={S.titleInput}
             {...nameProps}
           />
@@ -66,6 +67,7 @@ const OptionCard = ({
           <input
             type="text"
             placeholder="선택지에 대해 추가로 설명을 입력할 수 있어요!"
+            maxLength={50}
             css={S.subTitleInput}
             {...descriptionProps}
           />

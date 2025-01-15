@@ -16,6 +16,7 @@ const TitleDescriptionField = ({
       <input
         type="text"
         placeholder="제목(필수) 극악난이도 밸런스게임"
+        maxLength={50}
         css={S.titleStyling}
         {...titleProps}
       />
@@ -24,6 +25,7 @@ const TitleDescriptionField = ({
       </div>
       <textarea
         placeholder="ex) 둘 중 한 명과 반드시 연애해야만 한다면..."
+        maxLength={100}
         css={S.descriptionStyling}
         {...subTitleProps}
       />
