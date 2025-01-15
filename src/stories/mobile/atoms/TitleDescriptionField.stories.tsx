@@ -7,13 +7,11 @@ const meta = {
   component: TitleDescriptionField,
   parameters: { layout: 'centered' },
   args: {
-    title: '100억 부자 유병재 VS 무일푼 차은우',
-    description: '',
-    onTitleChange: (e) => {
-      console.log('Title:', e.target.value);
+    titleProps: {
+      name: 'title',
     },
-    onDescriptionChange: (e) => {
-      console.log('Description:', e.target.value);
+    subTitleProps: {
+      name: 'description',
     },
   },
 } satisfies Meta<typeof TitleDescriptionField>;
