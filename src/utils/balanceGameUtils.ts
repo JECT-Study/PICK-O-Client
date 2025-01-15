@@ -49,8 +49,8 @@ export const transformBalanceGameToTempGame = (
     tempGameOptions: gameSet.gameOptions.map((option) => ({
       name: option.name,
       description: option.description,
-      fileId: option.fileId || null,
-      imgUrl: option.imgUrl || '',
+      fileId: option.fileId ?? null,
+      imgUrl: option.imgUrl ?? '',
       optionType: option.optionType,
     })),
   })),
@@ -69,8 +69,8 @@ export const transformTempGameToBalanceGame = (
     gameOptions: tempGameSet.tempGameOptions.map((tempOption, index) => ({
       id: index,
       name: tempOption.name,
-      imgUrl: tempOption.imgUrl || '',
-      fileId: tempOption.fileId || null,
+      imgUrl: tempOption.imgUrl ?? '',
+      fileId: tempOption.fileId ?? null,
       description: tempOption.description,
       optionType: tempOption.optionType,
     })),
