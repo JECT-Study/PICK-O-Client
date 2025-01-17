@@ -44,7 +44,7 @@ const BalanceGameButton = ({
         <div css={S.contentWrapper}>
           {imgUrl && (
             <div css={S.imgContainer}>
-              <img src={imgUrl} alt={name} css={S.imageStyle} />
+              <img src={imgUrl} alt={name} css={S.imgStyle} />
             </div>
           )}
           <div css={S.descriptionStyle}>{description}</div>

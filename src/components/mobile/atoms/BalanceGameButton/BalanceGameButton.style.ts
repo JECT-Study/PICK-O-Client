@@ -47,7 +47,7 @@ export const imgContainer = css({
   flexShrink: 0,
 });
 
-export const imageStyle = css({
+export const imgStyle = css({
   maxWidth: '100%',
   maxHeight: '100%',
   objectFit: 'contain',
