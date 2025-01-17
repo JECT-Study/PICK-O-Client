@@ -20,6 +20,7 @@ const meta = {
   },
   args: {
     form: exampleGame,
+    isOpen: true,
     setMainTagValue: () => {},
     setSubTagValue: () => {},
     submitGame: () => {},

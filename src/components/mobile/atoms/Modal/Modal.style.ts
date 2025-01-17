@@ -16,28 +16,16 @@ export const modalStyling = css({
 export const getModalSize = (action: Required<ModalProps>['action']) => {
   const style = {
     text: css({
-      paddingTop: '36px',
-      paddingLeft: '21px',
-      paddingRight: '21px',
-      paddingBottom: '26px',
+      padding: '36px 21px 26px',
     }),
     share: css({
-      paddingTop: '24px',
-      paddingLeft: '20px',
-      paddingRight: '20px',
-      paddingBottom: '26px',
+      padding: '24px 20px 26px',
     }),
     tag: css({
-      paddingTop: '24px',
-      paddingLeft: '20px',
-      paddingRight: '20px',
-      paddingBottom: '30px',
+      padding: '24px 20px 30px',
     }),
     tempGame: css({
-      paddingTop: '24px',
-      paddingLeft: '20px',
-      paddingRight: '20px',
-      paddingBottom: '24px',
+      padding: '24px 20px',
     }),
   };
 
