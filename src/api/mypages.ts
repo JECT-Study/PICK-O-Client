@@ -9,7 +9,6 @@ import {
   SideBar,
 } from '@/types/mypages';
 import { END_POINT } from '@/constants/api';
-import { Id } from '@/types/api';
 import { axiosInstance } from './interceptor';
 
 export const getMyWritten = async (page: number, size: number) => {
