@@ -53,7 +53,12 @@ const ContentsButton = ({
   onBookmarkClick,
   ...attributes
 }: ContentsButtonProps) => {
-  const displayImages = images.length > 0 ? images : getRandomImagePair();
+  const validImages = images?.filter(Boolean);
+
+  const displayImages =
+    !validImages || validImages.length === 0
+      ? getRandomImagePair()
+      : validImages;
 
   return (
     <button
