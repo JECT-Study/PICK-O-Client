@@ -12,6 +12,7 @@ export type TalkPickDetail = {
   id: number;
   baseFields: TalkPickField;
   summary: TalkPickSummary;
+  summaryStatus: 'PENDING' | 'SUCCESS' | 'FAIL' | 'NOT_REQUIRED';
   imgUrls: string[];
   fileIds: number[];
   votesCountOfOptionA: number;

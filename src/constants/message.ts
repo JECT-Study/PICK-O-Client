@@ -174,3 +174,16 @@ export const NO_RESULT_MESSAGE = {
   BODY1: '단어의 철자가 정확한지 확인해 보세요.',
   BODY2: '검색 옵션을 변경해 다시 검색해 보세요.',
 };
+
+export const SUMMARY = {
+  TITLE: '세 줄 요약',
+  PENDING: 'AI가 세 줄 요약을 하고 있어요!',
+  FAIL: {
+    UNKNOWN: '알 수 없는 오류가 발생했어요.',
+    REFRESH: '새로고침을 눌러주세요!',
+  },
+  NOT_REQUIRED: {
+    TEXT_VALIDATION: '본문이 너무 짧아 요약할 수 없어요.',
+    TEXT_CHECK: '전체 글을 확인해 주세요!',
+  },
+};
