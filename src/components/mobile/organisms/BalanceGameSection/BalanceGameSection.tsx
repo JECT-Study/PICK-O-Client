@@ -164,7 +164,7 @@ const BalanceGameSection = ({
             />
           </div>
           <div css={S.subTagWrapper}>
-            <GameTagChip tag={game.subTag} />
+            {game.subTag && <GameTagChip tag={game.subTag} />}
           </div>
         </div>
       )}
