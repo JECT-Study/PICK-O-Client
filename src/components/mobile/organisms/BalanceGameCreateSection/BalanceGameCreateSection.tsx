@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { BUTTON_TEXT, MAX_STAGE } from '@/constants/game';
 import ToastModal from '@/components/atoms/ToastModal/ToastModal';
 import Button from '@/components/mobile/atoms/Button/Button';
 import GameStageLabel from '@/components/mobile/atoms/GameStageLabel/GameStageLabel';
@@ -159,10 +160,10 @@ const BalanceGameCreateSection = () => {
             css={S.getButtonVisibility(gameStage)}
             onClick={handlePrevGame}
           >
-            이전
+            {BUTTON_TEXT.PREVIOUS}
           </Button>
           <Button variant="primary" size="medium" onClick={handleNextGame}>
-            {gameStage === 9 ? '제작완료' : '다음'}
+            {gameStage === MAX_STAGE ? BUTTON_TEXT.COMPLETE : BUTTON_TEXT.NEXT}
           </Button>
         </div>
       </div>
