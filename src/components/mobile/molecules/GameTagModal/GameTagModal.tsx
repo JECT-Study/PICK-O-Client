@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BalanceGame } from '@/types/game';
 import { MobileCheckIcon } from '@/assets';
+import { TAG_OPTIONS } from '@/constants/game';
 import Modal from '@/components/mobile/atoms/Modal/Modal';
 import Button from '@/components/mobile/atoms/Button/Button';
 import Divider from '@/components/atoms/Divider/Divider';
@@ -23,15 +24,14 @@ const GameTagModal = ({
   setSubTagValue,
   submitGame,
 }: GameTagModalProps) => {
-  const [mainTag, setMainTag] = useState<string>(form.mainTag);
+  const currentMainTag: string = form.mainTag;
 
-  const handleMainTag = (tag: '커플' | '취향' | '기타') => {
+  const handleMainTag = (tag: string) => {
     setMainTagValue('mainTag', tag);
-    setMainTag(tag);
   };
 
   const handleTagSubmit = () => {
-    if (mainTag) {
+    if (currentMainTag) {
       submitGame();
       onClose?.();
     }
@@ -49,27 +49,16 @@ const GameTagModal = ({
             <span css={S.markStyling}>*</span>
           </div>
           <div css={S.buttonWrapper}>
-            <Button
-              type="button"
-              variant={mainTag === '커플' ? 'Primary2' : 'outlineShadow'}
-              onClick={() => handleMainTag('커플')}
-            >
-              커플
-            </Button>
-            <Button
-              type="button"
-              variant={mainTag === '취향' ? 'Primary2' : 'outlineShadow'}
-              onClick={() => handleMainTag('취향')}
-            >
-              취향
-            </Button>
-            <Button
-              type="button"
-              variant={mainTag === '기타' ? 'Primary2' : 'outlineShadow'}
-              onClick={() => handleMainTag('기타')}
-            >
-              기타
-            </Button>
+            {TAG_OPTIONS.map((tag) => (
+              <Button
+                key={tag}
+                type="button"
+                variant={currentMainTag === tag ? 'Primary2' : 'outlineShadow'}
+                onClick={() => handleMainTag(tag)}
+              >
+                {tag}
+              </Button>
+            ))}
           </div>
         </div>
         <div css={S.tagWrapper}>
@@ -89,9 +78,9 @@ const GameTagModal = ({
           size="large"
           variant="roundPrimary"
           onClick={handleTagSubmit}
-          disabled={!mainTag}
-          active={!!mainTag}
-          css={S.customButtonStyle(!mainTag)}
+          disabled={!currentMainTag}
+          active={!!currentMainTag}
+          css={S.customButtonStyle(!currentMainTag)}
         >
           등록하기
         </Button>
