@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import TopBanner from '@/components/molecules/TopBanner/TopBanner';
 import SearchTagBar from '@/components/molecules/SearchTagBar/SearchTagBar';
 import CategoryBox from '@/components/molecules/CategoryBox/CategoryBox';
@@ -9,13 +9,22 @@ import ToastModal from '@/components/atoms/ToastModal/ToastModal';
 import { useBestGameList } from '@/hooks/api/game/useBestGameListQuery';
 import { useLatestGameList } from '@/hooks/api/game/useLatestGameListQuery';
 import { ToggleGroupValue } from '@/types/toggle';
-import { NOTICE } from '@/constants/message';
+import { ERROR, NOTICE } from '@/constants/message';
 import FloatingMenuButton from '@/components/mobile/molecules/FloatingMenuButton/FloatingMenuButton';
 import useIsMobile from '@/hooks/common/useIsMobile';
+import { useQueryClient } from '@tanstack/react-query';
+import { GameContent } from '@/types/game';
+import { useCreateBookmarkMutation } from '@/hooks/api/bookmark/useCreateBookmarkMutation';
+import { useDeleteBookmarkMutation } from '@/hooks/api/bookmark/useDeleteBookmarkMutation';
+import { BookmarkContext } from '@/types/bookmarks';
 import * as S from './LandingPage.style';
 
 const LandingPage = () => {
   const isMobile = useIsMobile();
+  const queryClient = useQueryClient();
+  const createBookmark = useCreateBookmarkMutation();
+  const deleteBookmark = useDeleteBookmarkMutation();
+
   const { todayTalkPick } = useTodayTalkPickQuery();
   const [isServicePreparing, setIsServicePreparing] = useState<boolean>(false);
   const [selectedValue, setSelectedValue] = useState<ToggleGroupValue>({
@@ -50,6 +59,78 @@ const LandingPage = () => {
     navigate(`/result/search/all?query=${query}`);
   };
 
+  // onMutate 반환 타입은 BookmarkContext
+  const handleBookmarkClick = useCallback(
+    (content: GameContent) => {
+      if (!content.id) return;
+      const isUnbookmarking = content.bookmarkState;
+      const mutation = isUnbookmarking ? deleteBookmark : createBookmark;
+
+      mutation.mutate(content.id, {
+        onMutate: (variables: number): BookmarkContext => {
+          const prevBest = queryClient.getQueryData<GameContent[]>([
+            'bestGames',
+            activeTab,
+          ]);
+          const prevLatest = queryClient.getQueryData<GameContent[]>([
+            'latestGames',
+            activeTab,
+          ]);
+
+          if (prevBest) {
+            const updatedBest = prevBest.map((item) =>
+              item.id === variables
+                ? { ...item, bookmarkState: !isUnbookmarking }
+                : item,
+            );
+            queryClient.setQueryData(['bestGames', activeTab], updatedBest);
+          }
+          if (prevLatest) {
+            const updatedLatest = prevLatest.map((item) =>
+              item.id === variables
+                ? { ...item, bookmarkState: !isUnbookmarking }
+                : item,
+            );
+            queryClient.setQueryData(['latestGames', activeTab], updatedLatest);
+          }
+
+          return { prevBest, prevLatest };
+        },
+        onError: (error, variables, context) => {
+          if (context?.prevBest) {
+            queryClient.setQueryData(
+              ['bestGames', activeTab],
+              context.prevBest,
+            );
+          }
+          if (context?.prevLatest) {
+            queryClient.setQueryData(
+              ['latestGames', activeTab],
+              context.prevLatest,
+            );
+          }
+          alert(
+            isUnbookmarking
+              ? ERROR.BOOKMARK.GAME_DELETE_FAIL
+              : ERROR.BOOKMARK.GAME_FAIL,
+          );
+        },
+        onSuccess: () => {
+          alert(isUnbookmarking ? '북마크 해제 완료!' : '북마크 등록 완료!');
+        },
+        onSettled: async () => {
+          await queryClient.invalidateQueries({
+            queryKey: ['bestGames', activeTab],
+          });
+          await queryClient.invalidateQueries({
+            queryKey: ['latestGames', activeTab],
+          });
+        },
+      });
+    },
+    [activeTab, createBookmark, deleteBookmark, queryClient],
+  );
+
   return (
     <div css={S.pageWrapperStyle}>
       {isServicePreparing && (
@@ -73,6 +154,7 @@ const LandingPage = () => {
             setSelectedValue={setSelectedValue}
             activeTab={activeTab}
             setActiveTab={setActiveTab}
+            onBookmarkClick={handleBookmarkClick}
           />
           <div css={S.floatingDropdownStyle}>
             <FloatingMenuButton />
@@ -90,6 +172,7 @@ const LandingPage = () => {
             setSelectedValue={setSelectedValue}
             activeTab={activeTab}
             setActiveTab={setActiveTab}
+            onBookmarkClick={handleBookmarkClick}
           />
         </div>
       )}
