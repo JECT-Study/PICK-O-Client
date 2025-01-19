@@ -11,8 +11,6 @@ export const useDeleteBookmarkMutation = () => {
     number,
     BookmarkContext
   >({
-    mutationFn: async (gameId: Id) => {
-      return deleteDoneGameBookmark(gameId);
-    },
+    mutationFn: (gameId: Id) => deleteDoneGameBookmark(gameId),
   });
 };
