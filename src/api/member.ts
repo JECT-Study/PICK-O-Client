@@ -9,10 +9,8 @@ import {
 } from '@/types/member';
 import { axiosInstance } from './interceptor';
 
-export const getMember = async (memberId: number) => {
-  const { data } = await axiosInstance.get<Member>(
-    `${END_POINT.MEMBER(memberId)}`,
-  );
+export const getMember = async () => {
+  const { data } = await axiosInstance.get<Member>(`${END_POINT.MEMBER}`);
   return data;
 };
 

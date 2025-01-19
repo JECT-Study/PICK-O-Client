@@ -1,7 +1,4 @@
 import React, { useState } from 'react';
-import { useNewSelector } from '@/store';
-import { selectAccessToken } from '@/store/auth';
-import { useParseJwt } from '@/hooks/common/useParseJwt';
 import { useMemberQuery } from '@/hooks/api/member/useMemberQuery';
 import { CommentsPagination } from '@/types/comment';
 import { generatePageNumbers } from '@/utils/pagination';
@@ -39,8 +36,7 @@ const CommentsSection = ({
   handlePageChange,
   voted,
 }: CommentsSectionProps) => {
-  const accessToken = useNewSelector(selectAccessToken);
-  const { member } = useMemberQuery(useParseJwt(accessToken).memberId);
+  const { member } = useMemberQuery();
   const isMyTalkPick: boolean = talkPickWriter === member?.nickname;
 
   const totalPages = commentList?.totalPages ?? 0;
