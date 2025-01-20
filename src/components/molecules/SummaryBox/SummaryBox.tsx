@@ -7,10 +7,13 @@ import * as S from './SummaryBox.style';
 
 export interface SummaryBoxProps {
   summary?: TalkPickSummary;
-  summaryStatus: 'PENDING' | 'SUCCESS' | 'FAIL' | 'NOT_REQUIRED';
+  summaryStatus?: 'PENDING' | 'SUCCESS' | 'FAIL' | 'NOT_REQUIRED';
 }
 
-const SummaryBox = ({ summary, summaryStatus }: SummaryBoxProps) => {
+const SummaryBox = ({
+  summary,
+  summaryStatus = 'PENDING',
+}: SummaryBoxProps) => {
   const contentMap: Record<
     'PENDING' | 'SUCCESS' | 'FAIL' | 'NOT_REQUIRED',
     React.ReactNode
