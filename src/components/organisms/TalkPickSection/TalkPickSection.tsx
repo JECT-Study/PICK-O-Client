@@ -192,7 +192,7 @@ const TalkPickSection = ({
         <div css={S.talkPickContentWrapper}>
           <SummaryBox
             summary={talkPick?.summary}
-            summaryStatus={talkPick.summaryStatus}
+            summaryStatus={talkPick?.summaryStatus}
           />
           {isExpanded && (
             <div css={S.talkPickContent}>
