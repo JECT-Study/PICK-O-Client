@@ -30,7 +30,7 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const accessToken = useNewSelector(selectAccessToken) ?? '';
   const logout = useLogoutMutation();
-  const { member } = useMemberQuery(useParseJwt(accessToken)?.memberId);
+  const { member } = useMemberQuery();
 
   const handleMenuToggle = () => {
     setIsMenuOpen((prev) => !prev);
