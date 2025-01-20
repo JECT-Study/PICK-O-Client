@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import * as S from './MyBalanceGameList.style';
 
 export interface MyBalanceGameItem {
+  writerId: number;
   gameId: number;
   editedAt: string;
   optionAImg: string;
