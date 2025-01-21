@@ -47,21 +47,15 @@ export const useLandingPageDeleteBookmarkMutation = (activeTab: string) => {
             context.latestGames,
           );
         }
-        alert('북마크 해제 실패');
       },
 
-      onSuccess: async (data, gameId, context) => {
-        try {
-          await queryClient.invalidateQueries({
-            queryKey: ['bestGames', activeTab],
-          });
-          await queryClient.invalidateQueries({
-            queryKey: ['latestGames', activeTab],
-          });
-        } catch (error) {
-          console.error('Failed to invalidate queries:', error);
-        }
-        alert('북마크 해제 완료!');
+      onSuccess: async () => {
+        await queryClient.invalidateQueries({
+          queryKey: ['bestGames', activeTab],
+        });
+        await queryClient.invalidateQueries({
+          queryKey: ['latestGames', activeTab],
+        });
       },
     },
   );
