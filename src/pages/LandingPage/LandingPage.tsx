@@ -25,9 +25,12 @@ import * as S from './LandingPage.style';
 const LandingPage = () => {
   const isMobile = useIsMobile();
   const navigate = useNavigate();
+  const { isOpen: isLoginModalOpen, openModal, closeModal } = useModal();
+  const { isVisible, modalText, showToastModal } = useToastModal();
 
   const { member } = useMemberQuery();
   const { todayTalkPick } = useTodayTalkPickQuery();
+
   const [isServicePreparing, setIsServicePreparing] = useState<boolean>(false);
   const [selectedValue, setSelectedValue] = useState<ToggleGroupValue>({
     field: 'views',
@@ -74,9 +77,6 @@ const LandingPage = () => {
     showToastModal(SUCCESS.LOGIN);
     closeModal();
   };
-
-  const { isOpen: isLoginModalOpen, openModal, closeModal } = useModal();
-  const { isVisible, modalText, showToastModal } = useToastModal();
 
   const createBookmark = useLandingPageCreateBookmarkMutation(activeTab);
   const deleteBookmark = useLandingPageDeleteBookmarkMutation(activeTab);
