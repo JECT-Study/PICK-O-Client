@@ -15,7 +15,10 @@ export const useTokenRefresh = () => {
 
   useEffect(() => {
     const tokenRefresh = async () => {
-      if (accessToken) return;
+      if (accessToken) {
+        dispatch(tokenActions.setRefreshing(false));
+        return;
+      }
 
       try {
         const newAccessToken = await getRefreshToken();
@@ -26,6 +29,8 @@ export const useTokenRefresh = () => {
         });
       } catch (error) {
         dispatch(tokenActions.deleteToken());
+      } finally {
+        dispatch(tokenActions.setRefreshing(false));
       }
     };
     tokenRefresh().catch((error) => {

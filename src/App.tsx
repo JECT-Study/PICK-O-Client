@@ -24,7 +24,7 @@ import BalanceGamePage from './pages/BalanceGamePage/BalanceGamePage';
 import BalanceGameMobilePage from './pages/mobile/BalanceGameMobilePage/BalanceGameMobilePage';
 import BalanceGameCreationPage from './pages/BalanceGameCreationPage/BalanceGameCreationPage';
 import { useNewSelector } from './store';
-import { selectAccessToken } from './store/auth';
+import { selectAccessToken, selectIsRefreshing } from './store/auth';
 import useIsMobile from './hooks/common/useIsMobile';
 // import NotAuthRoutes from './components/Routes/NotAuthRoutes';
 // import { useMemberQuery } from './hooks/api/member/useMemberQuery';
@@ -50,6 +50,7 @@ const App: React.FC = () => {
 
   const isMobile = useIsMobile();
   const isLoggedIn = !!useNewSelector(selectAccessToken);
+  const isTokenRefreshing = useNewSelector(selectIsRefreshing);
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
@@ -60,6 +61,8 @@ const App: React.FC = () => {
     }
   }, [location.search, navigate]);
   useTokenRefresh();
+
+  if (isTokenRefreshing) return null;
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ko">
