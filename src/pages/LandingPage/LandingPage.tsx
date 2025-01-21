@@ -91,12 +91,20 @@ const LandingPage = () => {
       }
 
       if (content.bookmarked) {
-        deleteBookmark.mutate(content.id);
+        deleteBookmark.mutate(content.id, {
+          onError: () => {
+            showToastModal('북마크 해제에 실패했습니다.');
+          },
+        });
       } else {
-        createBookmark.mutate(content.id);
+        createBookmark.mutate(content.id, {
+          onError: () => {
+            showToastModal('북마크 등록에 실패했습니다.');
+          },
+        });
       }
     },
-    [createBookmark, deleteBookmark, openModal],
+    [createBookmark, deleteBookmark, openModal, showToastModal],
   );
 
   return (
