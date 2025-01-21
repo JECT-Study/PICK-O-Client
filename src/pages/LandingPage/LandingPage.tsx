@@ -1,25 +1,25 @@
 import React, { useCallback, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import TopBanner from '@/components/molecules/TopBanner/TopBanner';
 import SearchTagBar from '@/components/molecules/SearchTagBar/SearchTagBar';
 import CategoryBox from '@/components/molecules/CategoryBox/CategoryBox';
 import BalanceGameList from '@/components/organisms/BalanceGameList/BalanceGameList';
-import { useTodayTalkPickQuery } from '@/hooks/api/talk-pick/useTodayTalkPickQuery';
-import { useNavigate } from 'react-router-dom';
 import ToastModal from '@/components/atoms/ToastModal/ToastModal';
+import FloatingMenuButton from '@/components/mobile/molecules/FloatingMenuButton/FloatingMenuButton';
+import LoginModal from '@/components/molecules/LoginModal/LoginModal';
+import { useTodayTalkPickQuery } from '@/hooks/api/talk-pick/useTodayTalkPickQuery';
 import { useBestGameList } from '@/hooks/api/game/useBestGameListQuery';
 import { useLatestGameList } from '@/hooks/api/game/useLatestGameListQuery';
-import { ToggleGroupValue } from '@/types/toggle';
-import { NOTICE, SUCCESS } from '@/constants/message';
-import FloatingMenuButton from '@/components/mobile/molecules/FloatingMenuButton/FloatingMenuButton';
 import useIsMobile from '@/hooks/common/useIsMobile';
-import { GameContent } from '@/types/game';
-import { useLandingPageCreateBookmarkMutation } from '@/hooks/api/bookmark/useLandingPageCreateBookmarkMutation';
-import { useLandingPageDeleteBookmarkMutation } from '@/hooks/api/bookmark/useLandingPageDeleteBookmarkMutation';
 import { useMemberQuery } from '@/hooks/api/member/useMemberQuery';
 import { isLoggedIn } from '@/utils/auth';
+import { useLandingPageCreateBookmarkMutation } from '@/hooks/api/bookmark/useLandingPageCreateBookmarkMutation';
+import { useLandingPageDeleteBookmarkMutation } from '@/hooks/api/bookmark/useLandingPageDeleteBookmarkMutation';
 import useModal from '@/hooks/modal/useModal';
-import LoginModal from '@/components/molecules/LoginModal/LoginModal';
 import useToastModal from '@/hooks/modal/useToastModal';
+import { GameContent } from '@/types/game';
+import { ToggleGroupValue } from '@/types/toggle';
+import { NOTICE, SUCCESS } from '@/constants/message';
 import * as S from './LandingPage.style';
 
 const LandingPage = () => {
