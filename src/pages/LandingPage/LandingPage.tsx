@@ -51,12 +51,12 @@ const LandingPage = () => {
   );
 
   const processedContents = useMemo(() => {
-    if (!member) return [];
+    if (!member?.id) return [];
     return contents.map((item: GameContent) => ({
       ...item,
       showBookmark: item.writerId !== member.id,
     }));
-  }, [contents, member]);
+  }, [contents, member?.id]);
 
   const handleService = () => {
     setIsServicePreparing(true);
