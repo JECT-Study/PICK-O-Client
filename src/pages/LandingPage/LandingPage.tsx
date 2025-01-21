@@ -9,13 +9,17 @@ import ToastModal from '@/components/atoms/ToastModal/ToastModal';
 import { useBestGameList } from '@/hooks/api/game/useBestGameListQuery';
 import { useLatestGameList } from '@/hooks/api/game/useLatestGameListQuery';
 import { ToggleGroupValue } from '@/types/toggle';
-import { NOTICE } from '@/constants/message';
+import { NOTICE, SUCCESS } from '@/constants/message';
 import FloatingMenuButton from '@/components/mobile/molecules/FloatingMenuButton/FloatingMenuButton';
 import useIsMobile from '@/hooks/common/useIsMobile';
 import { GameContent } from '@/types/game';
 import { useLandingPageCreateBookmarkMutation } from '@/hooks/api/bookmark/useLandingPageCreateBookmarkMutation';
 import { useLandingPageDeleteBookmarkMutation } from '@/hooks/api/bookmark/useLandingPageDeleteBookmarkMutation';
 import { useMemberQuery } from '@/hooks/api/member/useMemberQuery';
+import { isLoggedIn } from '@/utils/auth';
+import useModal from '@/hooks/modal/useModal';
+import LoginModal from '@/components/molecules/LoginModal/LoginModal';
+import useToastModal from '@/hooks/modal/useToastModal';
 import * as S from './LandingPage.style';
 
 const LandingPage = () => {
@@ -66,12 +70,25 @@ const LandingPage = () => {
     navigate(`/result/search/all?query=${query}`);
   };
 
+  const handleLogin = () => {
+    showToastModal(SUCCESS.LOGIN);
+    closeModal();
+  };
+
+  const { isOpen: isLoginModalOpen, openModal, closeModal } = useModal();
+  const { isVisible, modalText, showToastModal } = useToastModal();
+
   const createBookmark = useLandingPageCreateBookmarkMutation(activeTab);
   const deleteBookmark = useLandingPageDeleteBookmarkMutation(activeTab);
 
   const handleBookmarkClick = useCallback(
     (content: GameContent) => {
       if (!content.id) return;
+
+      if (!isLoggedIn()) {
+        openModal();
+        return;
+      }
 
       if (content.bookmarked) {
         deleteBookmark.mutate(content.id);
@@ -84,6 +101,11 @@ const LandingPage = () => {
 
   return (
     <div css={S.pageWrapperStyle}>
+      {isVisible && (
+        <div css={S.toastModalStyling}>
+          <ToastModal>{modalText}</ToastModal>
+        </div>
+      )}
       {isServicePreparing && (
         <div css={S.toastModalStyling}>
           <ToastModal bgColor="white">{NOTICE.STATUS.NOT_READY}</ToastModal>
@@ -126,6 +148,13 @@ const LandingPage = () => {
             onBookmarkClick={handleBookmarkClick}
           />
         </div>
+      )}
+      {isLoginModalOpen && (
+        <LoginModal
+          isOpen={isLoginModalOpen}
+          onClose={closeModal}
+          onModalLoginSuccess={handleLogin}
+        />
       )}
     </div>
   );
