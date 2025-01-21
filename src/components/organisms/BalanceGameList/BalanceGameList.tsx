@@ -91,6 +91,7 @@ const BalanceGameList = ({
             title={content.title}
             mainTag={content.mainTag}
             subTag={content.subTag}
+            showBookmark={content.showBookmark}
             bookmarked={content.bookmarked || false}
             onClick={() => handleItemClick(content.id)}
             onBookmarkClick={() => {

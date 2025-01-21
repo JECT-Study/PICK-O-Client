@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import TopBanner from '@/components/molecules/TopBanner/TopBanner';
 import SearchTagBar from '@/components/molecules/SearchTagBar/SearchTagBar';
 import CategoryBox from '@/components/molecules/CategoryBox/CategoryBox';
@@ -15,12 +15,14 @@ import useIsMobile from '@/hooks/common/useIsMobile';
 import { GameContent } from '@/types/game';
 import { useLandingPageCreateBookmarkMutation } from '@/hooks/api/bookmark/useLandingPageCreateBookmarkMutation';
 import { useLandingPageDeleteBookmarkMutation } from '@/hooks/api/bookmark/useLandingPageDeleteBookmarkMutation';
+import { useMemberQuery } from '@/hooks/api/member/useMemberQuery';
 import * as S from './LandingPage.style';
 
 const LandingPage = () => {
   const isMobile = useIsMobile();
   const navigate = useNavigate();
 
+  const { member } = useMemberQuery();
   const { todayTalkPick } = useTodayTalkPickQuery();
   const [isServicePreparing, setIsServicePreparing] = useState<boolean>(false);
   const [selectedValue, setSelectedValue] = useState<ToggleGroupValue>({
@@ -39,7 +41,18 @@ const LandingPage = () => {
   const { bestGames } = useBestGameList(activeTab, isBestGamesEnabled);
   const { latestGames } = useLatestGameList(activeTab, isLatestGamesEnabled);
 
-  const contents = bestGames || latestGames || [];
+  const contents = useMemo(
+    () => bestGames || latestGames || [],
+    [bestGames, latestGames],
+  );
+
+  const processedContents = useMemo(() => {
+    if (!member) return [];
+    return contents.map((item: GameContent) => ({
+      ...item,
+      showBookmark: item.writerId !== member.id,
+    }));
+  }, [contents, member]);
 
   const handleService = () => {
     setIsServicePreparing(true);
@@ -87,7 +100,7 @@ const LandingPage = () => {
           </div>
           <BalanceGameList
             isMobile
-            contents={contents}
+            contents={processedContents}
             selectedValue={selectedValue}
             setSelectedValue={setSelectedValue}
             activeTab={activeTab}
@@ -105,7 +118,7 @@ const LandingPage = () => {
             <CategoryBox handleService={handleService} />
           </div>
           <BalanceGameList
-            contents={contents}
+            contents={processedContents}
             selectedValue={selectedValue}
             setSelectedValue={setSelectedValue}
             activeTab={activeTab}
