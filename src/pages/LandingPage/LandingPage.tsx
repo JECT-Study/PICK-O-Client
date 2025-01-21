@@ -96,7 +96,7 @@ const LandingPage = () => {
         createBookmark.mutate(content.id);
       }
     },
-    [createBookmark, deleteBookmark],
+    [createBookmark, deleteBookmark, openModal, isLoggedIn],
   );
 
   return (
