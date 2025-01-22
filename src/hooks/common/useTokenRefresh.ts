@@ -23,10 +23,6 @@ export const useTokenRefresh = () => {
       try {
         const newAccessToken = await getRefreshToken();
         dispatch(tokenActions.setToken(newAccessToken));
-
-        await queryClient.invalidateQueries({
-          queryKey: ['members'],
-        });
       } catch (error) {
         dispatch(tokenActions.deleteToken());
       } finally {
