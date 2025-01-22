@@ -49,7 +49,7 @@ const App: React.FC = () => {
   const navigate = useNavigate();
 
   const isMobile = useIsMobile();
-  const isLoggedIn = !!useNewSelector(selectAccessToken);
+  const accessToken = useNewSelector(selectAccessToken);
   const isTokenRefreshing = useNewSelector(selectIsRefreshing);
 
   useEffect(() => {
@@ -96,7 +96,7 @@ const App: React.FC = () => {
           <Route path={PATH.SEARCH.GAME} element={<SearchGamePage />} />
         </Route>
 
-        <Route element={<ProtectedRoutes isLoggedIn={isLoggedIn} />}>
+        <Route element={<ProtectedRoutes token={accessToken} />}>
           <Route path={PATH.MYPAGE} element={<LayoutNoFooter />}>
             <Route index element={<MyPage />} />
           </Route>
