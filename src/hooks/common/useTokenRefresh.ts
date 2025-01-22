@@ -2,12 +2,14 @@
 import { getRefreshToken } from '@/api/interceptor';
 import { useNewDispatch, useNewSelector } from '@/store';
 import { selectAccessToken, tokenActions } from '@/store/auth';
+import { useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export const useTokenRefresh = () => {
   const dispatch = useNewDispatch();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const accessToken = useNewSelector(selectAccessToken);
 
@@ -21,6 +23,10 @@ export const useTokenRefresh = () => {
       try {
         const newAccessToken = await getRefreshToken();
         dispatch(tokenActions.setToken(newAccessToken));
+
+        await queryClient.invalidateQueries({
+          queryKey: ['members'],
+        });
       } catch (error) {
         dispatch(tokenActions.deleteToken());
       } finally {
@@ -30,5 +36,5 @@ export const useTokenRefresh = () => {
     tokenRefresh().catch((error) => {
       console.error('토큰 에러: ', error);
     });
-  }, [accessToken, dispatch, navigate]);
+  }, [accessToken, dispatch, navigate, queryClient]);
 };
