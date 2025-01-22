@@ -1,26 +1,32 @@
-import { MyContentItem } from '@/components/organisms/MyContentList/MyContentList';
 import { MyBalanceGameItem } from '@/components/organisms/MyBalanceGameList/MyBalanceGameList';
 import { PaginationType } from '@/types/pagination';
 
-export interface BaseInfoItem {
+export interface TalkPickBaseInfoItem {
   id: number;
-  editedAt: string;
   title: string;
-  prefix: string;
-  commentCount: number;
   bookmarks: number;
+  commentCount: number;
+  editedAt: string;
+  bookmarked: boolean;
 }
 
-export interface VoteInfoItemResponse extends BaseInfoItem {
+export interface WrittenInfoItemResponse extends TalkPickBaseInfoItem {
   voteOption: string;
-}
-
-export interface CommentInfoItemResponse extends BaseInfoItem {
   commentContent: string;
 }
 
+export interface VoteInfoItemResponse extends TalkPickBaseInfoItem {
+  voteOption: string;
+}
+
+export interface CommentInfoItemResponse extends TalkPickBaseInfoItem {
+  commentContent: string;
+}
+
+export interface BookmarkInfoItemResponse extends TalkPickBaseInfoItem {}
+
 export interface MyWritten extends PaginationType {
-  content: MyContentItem[];
+  content: WrittenInfoItemResponse[];
 }
 
 export interface MyVote extends PaginationType {
@@ -32,8 +38,9 @@ export interface MyComment extends PaginationType {
 }
 
 export interface MyBookmark extends PaginationType {
-  content: MyContentItem[];
+  content: BookmarkInfoItemResponse[];
 }
+
 export interface GameWritten extends PaginationType {
   content: MyBalanceGameItem[];
 }
