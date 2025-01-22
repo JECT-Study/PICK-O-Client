@@ -77,6 +77,7 @@ export const SUCCESS = {
   },
   SIGN_UP: '회원가입 완료!',
   LOGIN: '로그인 완료!',
+  LOGOUT: '로그아웃되었습니다.',
   COPY: {
     LINK: '복사 완료!',
   },
@@ -109,6 +110,9 @@ export const NOTICE = {
   },
   STATUS: {
     NOT_READY: '아직 준비 중인 서비스입니다!',
+  },
+  LOGIN: {
+    EXPIRED: '로그인 시간이 만료되었습니다. 다시 로그인해주세요.',
   },
 } as const;
 
