@@ -10,10 +10,9 @@ export interface TalkPickBaseInfoItem {
   bookmarked: boolean;
 }
 
-export interface WrittenInfoItemResponse extends TalkPickBaseInfoItem {
-  voteOption: string;
-  commentContent: string;
-}
+export interface BookmarkInfoItemResponse extends TalkPickBaseInfoItem {}
+
+export interface WrittenInfoItemResponse extends TalkPickBaseInfoItem {}
 
 export interface VoteInfoItemResponse extends TalkPickBaseInfoItem {
   voteOption: string;
@@ -22,8 +21,6 @@ export interface VoteInfoItemResponse extends TalkPickBaseInfoItem {
 export interface CommentInfoItemResponse extends TalkPickBaseInfoItem {
   commentContent: string;
 }
-
-export interface BookmarkInfoItemResponse extends TalkPickBaseInfoItem {}
 
 export interface MyWritten extends PaginationType {
   content: WrittenInfoItemResponse[];
