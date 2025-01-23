@@ -1,6 +1,15 @@
 import { MyBalanceGameItem } from '@/components/organisms/MyBalanceGameList/MyBalanceGameList';
 import { PaginationType } from '@/types/pagination';
 
+export interface TalkPickBaseInfoItem {
+  id: number;
+  title: string;
+  bookmarks: number;
+  commentCount: number;
+  editedAt: string;
+  bookmarked: boolean;
+}
+
 export interface MyContentItem {
   id: number;
   editedAt: string;
@@ -11,13 +20,14 @@ export interface MyContentItem {
   bookmarked: boolean;
 }
 
-export interface TalkPickBaseInfoItem {
+export interface InfoItem {
   id: number;
-  title: string;
-  bookmarks: number;
-  commentCount: number;
   editedAt: string;
-  bookmarked: boolean;
+  title: string;
+  prefix: string;
+  content: string;
+  commentCount: number;
+  bookmarks: number;
 }
 
 export interface BookmarkInfoItemResponse extends TalkPickBaseInfoItem {}
