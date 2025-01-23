@@ -32,6 +32,7 @@ export interface InfoItem {
 export interface MyBalanceGameItem {
   writerId: number;
   gameId: number;
+  gameSetId: number;
   editedAt: string;
   optionAImg: string;
   optionBImg: string;
