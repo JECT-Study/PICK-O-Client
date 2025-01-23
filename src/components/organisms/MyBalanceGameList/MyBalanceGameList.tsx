@@ -6,9 +6,13 @@ import * as S from './MyBalanceGameList.style';
 
 export interface MyBalanceGameListProps {
   items: MyBalanceGameItem[];
+  onBookmarkClick?: (item: MyBalanceGameItem) => void;
 }
 
-const MyBalanceGameList = ({ items = [] }: MyBalanceGameListProps) => {
+const MyBalanceGameList = ({
+  items = [],
+  onBookmarkClick,
+}: MyBalanceGameListProps) => {
   const navigate = useNavigate();
 
   const groupedItems = useMemo(() => {
@@ -34,31 +38,21 @@ const MyBalanceGameList = ({ items = [] }: MyBalanceGameListProps) => {
         <div key={date} css={S.dateWrapper}>
           <span css={S.dateLabel}>{date}</span>
           <ul css={S.contentList}>
-            {groupedItems[date].map(
-              ({
-                gameId,
-                optionAImg,
-                optionBImg,
-                title,
-                mainTagName,
-                subTag,
-                bookmarked,
-                showBookmark,
-              }) => (
-                <li key={gameId} css={S.contentItem}>
-                  <ContentsButton
-                    images={[optionAImg, optionBImg]}
-                    title={title}
-                    mainTag={mainTagName}
-                    subTag={subTag}
-                    bookmarked={bookmarked}
-                    showBookmark={showBookmark}
-                    size="medium"
-                    onClick={() => handleItemClick(gameId)}
-                  />
-                </li>
-              ),
-            )}
+            {groupedItems[date].map((item) => (
+              <li key={item.gameId} css={S.contentItem}>
+                <ContentsButton
+                  images={[item.optionAImg, item.optionBImg]}
+                  title={item.title}
+                  mainTag={item.mainTagName}
+                  subTag={item.subTag}
+                  bookmarked={item.bookmarked}
+                  showBookmark={item.showBookmark}
+                  size="medium"
+                  onClick={() => handleItemClick(item.gameId)}
+                  onBookmarkClick={() => onBookmarkClick?.(item)}
+                />
+              </li>
+            ))}
           </ul>
         </div>
       ))}
