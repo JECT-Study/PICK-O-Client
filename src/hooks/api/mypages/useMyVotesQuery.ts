@@ -1,6 +1,12 @@
 import { getMyVote } from '@/api/mypages';
-import { MyVote, VoteInfoItemResponse } from '@/types/mypages';
+import { InfoItem, MyVote } from '@/types/mypages';
 import { useInfiniteScroll } from '@/hooks/api/mypages/useInfiniteScroll';
+import { InfiniteData } from '@tanstack/react-query';
+import { transformVoteItem } from '@/utils/transformTalkPick';
+
+type MyVoteTransformed = Omit<MyVote, 'content'> & {
+  content: InfoItem[];
+};
 
 export const useMyVotesQuery = () => {
   const {
@@ -9,32 +15,25 @@ export const useMyVotesQuery = () => {
     hasNextPage,
     isFetchingNextPage,
     isLoading,
-  } = useInfiniteScroll<MyVote>(
+  } = useInfiniteScroll<MyVote, MyVoteTransformed>(
     ['myVote'],
-    ({ pageParam = 0 }) => getMyVote(pageParam, 20),
-    (data) => {
-      const firstPage = data.pages[0];
+
+    async ({ pageParam = 0 }) => {
+      return getMyVote(pageParam, 20);
+    },
+
+    (infiniteData: InfiniteData<MyVote>): MyVoteTransformed => {
+      const firstPage = infiniteData.pages[0];
       return {
-        content: data.pages.flatMap((page) =>
-          page.content.map((item: VoteInfoItemResponse) => ({
-            ...item,
-            content: item.voteOption,
-            prefix: '내 선택',
-          })),
+        ...firstPage,
+
+        content: infiniteData.pages.flatMap((page) =>
+          page.content.map((item) => transformVoteItem(item)),
         ),
-        pageable: firstPage.pageable,
-        totalPages: firstPage.totalPages,
-        totalElements: firstPage.totalElements,
-        last: firstPage.last,
-        size: firstPage.size,
-        number: firstPage.number,
-        sort: firstPage.sort,
-        numberOfElements: firstPage.numberOfElements,
-        first: firstPage.first,
-        empty: firstPage.empty,
       };
     },
   );
+
   return {
     myVote: myVoteData,
     fetchNextPage,
