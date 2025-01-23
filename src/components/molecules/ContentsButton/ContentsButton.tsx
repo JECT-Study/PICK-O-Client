@@ -91,9 +91,7 @@ const ContentsButton = ({
             css={S.bookmarkWrapper}
             onClick={(e) => {
               e.stopPropagation();
-              if (onBookmarkClick) {
-                onBookmarkClick();
-              }
+              onBookmarkClick?.();
             }}
           />
         )}

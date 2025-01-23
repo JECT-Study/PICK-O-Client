@@ -34,9 +34,7 @@ const MyContentBox = ({
           css={S.bookmarkWrapper}
           onClick={(e) => {
             e.stopPropagation();
-            if (onBookmarkClick) {
-              onBookmarkClick();
-            }
+            onBookmarkClick?.();
           }}
         />
       )}
