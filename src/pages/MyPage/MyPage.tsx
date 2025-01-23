@@ -1,13 +1,9 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import SideBar from '@/components/organisms/SideBar/SideBar';
 import OptionBar from '@/components/organisms/OptionBar/OptionBar';
-import MyContentList, {
-  MyContentItem,
-} from '@/components/organisms/MyContentList/MyContentList';
-import InfoList, { InfoItem } from '@/components/organisms/InfoList/InfoList';
-import MyBalanceGameList, {
-  MyBalanceGameItem,
-} from '@/components/organisms/MyBalanceGameList/MyBalanceGameList';
+import MyContentList from '@/components/organisms/MyContentList/MyContentList';
+import InfoList from '@/components/organisms/InfoList/InfoList';
+import MyBalanceGameList from '@/components/organisms/MyBalanceGameList/MyBalanceGameList';
 import { OptionKeys } from '@/constants/optionSets';
 import { useMyVotesQuery } from '@/hooks/api/mypages/useMyVotesQuery';
 import { useMyCommentsQuery } from '@/hooks/api/mypages/useMyCommentsQuery';
@@ -21,6 +17,11 @@ import { useObserver } from '@/hooks/api/mypages/useObserver';
 import MypageListSkeleton from '@/components/atoms/MypageListSkeleton/MypageListSkeleton';
 import MypageCardSkeleton from '@/components/atoms/MypageCardSkeleton/MypageCardSkeleton';
 import { useMyPageOptions } from '@/hooks/mypages/useMyPageOptions';
+import { useMyTalkPickBookmarkCreateMutation } from '@/hooks/api/bookmark/useMyTalkPickBookmarkCreateMutation';
+import { useMyTalkPickBookmarkDeleteMutation } from '@/hooks/api/bookmark/useMyTalkPickBookmarkDeleteMutation';
+import { useMyBalanceGameBookmarkCreateMutation } from '@/hooks/api/bookmark/useMyBalanceGameBookmarkCreateMutation';
+import { useMyBalanceGameBookmarkDeleteMutation } from '@/hooks/api/bookmark/useMyBalanceGameBookmarkDeleteMutation';
+import { MyBalanceGameItem, MyContentItem } from '@/types/mypages';
 import * as S from './MyPage.style';
 
 const MyPage = () => {
@@ -33,13 +34,21 @@ const MyPage = () => {
   } = useMyPageOptions();
 
   const { memberInfo, isLoading } = useMyInfoQuery();
+  const currentUserId = memberInfo?.id ?? 0;
+
   const myBookmarksQuery = useMyBookmarksQuery();
   const myVotesQuery = useMyVotesQuery();
   const myCommentsQuery = useMyCommentsQuery();
   const myWrittensQuery = useMyWrittensQuery();
   const gameBookmarksQuery = useGameBookmarksQuery();
-  const gameVotesQuery = useGameVotesQuery();
+  const gameVotesQuery = useGameVotesQuery(currentUserId);
   const gameWrittensQuery = useGameWrittensQuery();
+
+  const talkPickCreateBookmark = useMyTalkPickBookmarkCreateMutation();
+  const talkPickDeleteBookmark = useMyTalkPickBookmarkDeleteMutation();
+
+  const balanceCreateBookmark = useMyBalanceGameBookmarkCreateMutation();
+  const balanceDeleteBookmark = useMyBalanceGameBookmarkDeleteMutation();
 
   const queries = {
     myBookmarks: myBookmarksQuery,
@@ -51,78 +60,113 @@ const MyPage = () => {
     gameWrittens: gameWrittensQuery,
   };
 
-  const isQueryLoading = Object.values(queries).some(
-    (query) => query.isLoading,
-  );
+  const isQueryLoading = Object.values(queries).some((q) => q.isLoading);
 
   const { ref } = useObserver(queries);
 
-  const queryResult = useMemo(() => {
-    if (selectedGroup === OptionKeys.TALK_PICK) {
-      switch (selectedOption) {
-        case 'bookmarks':
-          return queries.myBookmarks.myBookmarks;
-        case 'votes':
-          return queries.myVotes.myVote;
-        case 'comments':
-          return queries.myComments.myComments;
-        case 'written':
-          return queries.myWrittens.myWritten;
-        default:
-          return null;
-      }
-    } else if (selectedGroup === OptionKeys.BALANCE_GAME) {
-      switch (selectedOption) {
-        case 'bookmarks':
-          return queries.gameBookmarks.gameBookmark;
-        case 'votes':
-          return queries.gameVotes.gameVote;
-        case 'written':
-          return queries.gameWrittens.gameWritten;
-        default:
-          return null;
-      }
+  if (isLoading) {
+    return (
+      <div css={S.pageContainer}>
+        <SideBar isLoading />
+        <div css={S.contentWrapper}>
+          <OptionBar
+            selectedGroup={selectedGroup}
+            selectedOption={selectedOption}
+            options={options}
+            onGroupSelect={handleGroupSelect}
+            onOptionSelect={handleOptionSelect}
+          />
+          <div css={S.contentList}>
+            {/* 일단 그룹 별로 스켈레톤이 다른 걸로 생각 */}
+            {selectedGroup === OptionKeys.TALK_PICK ? (
+              <MypageListSkeleton count={8} />
+            ) : (
+              <MypageCardSkeleton />
+            )}
+          </div>
+          <div ref={ref} css={S.loader} />
+        </div>
+      </div>
+    );
+  }
+
+  const handleTalkPickBookmarkClick = (item: MyContentItem) => {
+    if (item.bookmarked) {
+      talkPickDeleteBookmark.mutate(item.id);
+    } else {
+      talkPickCreateBookmark.mutate(item.id);
     }
-    return null;
-  }, [
-    selectedGroup,
-    selectedOption,
-    queries.myBookmarks.myBookmarks,
-    queries.myVotes.myVote,
-    queries.myComments.myComments,
-    queries.myWrittens.myWritten,
-    queries.gameBookmarks.gameBookmark,
-    queries.gameVotes.gameVote,
-    queries.gameWrittens.gameWritten,
-  ]);
+  };
+
+  const handleBalanceBookmarkClick = (item: MyBalanceGameItem) => {
+    if (item.bookmarked) {
+      balanceDeleteBookmark.mutate(item.gameId);
+    } else {
+      balanceCreateBookmark.mutate(item.gameId);
+    }
+  };
 
   const renderContent = () => {
-    if (isQueryLoading) {
-      const skeletonCount = queryResult?.content?.length || 8;
-      if (selectedGroup === OptionKeys.TALK_PICK) {
-        return <MypageListSkeleton count={skeletonCount} />;
-      }
-      if (selectedGroup === OptionKeys.BALANCE_GAME) {
-        return <MypageCardSkeleton />;
-      }
-    }
-
-    if (!queryResult) {
-      return null;
-    }
-
     if (selectedGroup === OptionKeys.TALK_PICK) {
-      if (selectedOption === 'bookmarks' || selectedOption === 'written') {
-        const content = queryResult.content as MyContentItem[];
-        return <MyContentList items={content} />;
-      }
-      if (selectedOption === 'votes' || selectedOption === 'comments') {
-        const content = queryResult.content as InfoItem[];
-        return <InfoList items={content} />;
+      switch (selectedOption) {
+        case 'bookmarks': {
+          const data = myBookmarksQuery.myBookmarks;
+          if (!data) return null;
+          return (
+            <MyContentList
+              items={data.content}
+              onBookmarkClick={handleTalkPickBookmarkClick}
+            />
+          );
+        }
+        case 'written': {
+          const data = myWrittensQuery.myWritten;
+          if (!data) return null;
+          return <MyContentList items={data.content} />;
+        }
+        case 'votes': {
+          const data = myVotesQuery.myVote;
+          if (!data) return null;
+          return <InfoList items={data.content} />;
+        }
+        case 'comments': {
+          const data = myCommentsQuery.myComments;
+          if (!data) return null;
+          return <InfoList items={data.content} />;
+        }
+        default:
+          return null;
       }
     } else if (selectedGroup === OptionKeys.BALANCE_GAME) {
-      const content = queryResult.content as MyBalanceGameItem[];
-      return <MyBalanceGameList items={content} />;
+      switch (selectedOption) {
+        case 'bookmarks': {
+          const data = gameBookmarksQuery.gameBookmark;
+          if (!data) return null;
+          return (
+            <MyBalanceGameList
+              items={data.content}
+              onBookmarkClick={handleBalanceBookmarkClick}
+            />
+          );
+        }
+        case 'votes': {
+          const data = gameVotesQuery.gameVote;
+          if (!data) return null;
+          return (
+            <MyBalanceGameList
+              items={data.content}
+              onBookmarkClick={handleBalanceBookmarkClick}
+            />
+          );
+        }
+        case 'written': {
+          const data = gameWrittensQuery.gameWritten;
+          if (!data) return null;
+          return <MyBalanceGameList items={data.content} />;
+        }
+        default:
+          return null;
+      }
     }
 
     return null;
@@ -130,11 +174,7 @@ const MyPage = () => {
 
   return (
     <div css={S.pageContainer}>
-      {isLoading ? (
-        <SideBar isLoading />
-      ) : (
-        <SideBar isLoading={false} {...memberInfo} />
-      )}
+      <SideBar isLoading={false} {...memberInfo} />
       <div css={S.contentWrapper}>
         <OptionBar
           selectedGroup={selectedGroup}
