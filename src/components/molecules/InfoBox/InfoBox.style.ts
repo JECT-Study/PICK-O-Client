@@ -17,6 +17,7 @@ export const infoContainer = css({
   backgroundColor: color.WT,
   boxSizing: 'border-box',
   cursor: 'pointer',
+
   '&:focus-visible': {
     outline: `1px solid ${color.BK}`,
     outlineOffset: '1px',
