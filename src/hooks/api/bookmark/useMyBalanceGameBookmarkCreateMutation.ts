@@ -10,9 +10,9 @@ export const useMyBalanceGameBookmarkCreateMutation = () => {
 
   return useMutation<AxiosResponse<ServerResponse>, Error, Id, BookmarkContext>(
     {
-      mutationFn: (gameId: number) => postDoneGameBookmark(gameId),
+      mutationFn: (gameSetId: number) => postDoneGameBookmark(gameSetId),
 
-      onMutate: (gameId: number): BookmarkContext => {
+      onMutate: (gameSetId: number): BookmarkContext => {
         const prevGameBookmark = queryClient.getQueryData<{
           content: MyBalanceGameItem[];
         }>(['gameBookmark']);
@@ -23,7 +23,7 @@ export const useMyBalanceGameBookmarkCreateMutation = () => {
 
         if (prevGameBookmark) {
           const updated = prevGameBookmark.content.map((item) =>
-            item.gameId === gameId ? { ...item, bookmarked: true } : item,
+            item.gameSetId === gameSetId ? { ...item, bookmarked: true } : item,
           );
           queryClient.setQueryData(['gameBookmark'], {
             ...prevGameBookmark,
@@ -33,7 +33,7 @@ export const useMyBalanceGameBookmarkCreateMutation = () => {
 
         if (prevGameVote) {
           const updated = prevGameVote.content.map((item) =>
-            item.gameId === gameId ? { ...item, bookmarked: true } : item,
+            item.gameSetId === gameSetId ? { ...item, bookmarked: true } : item,
           );
           queryClient.setQueryData(['gameVote'], {
             ...prevGameVote,
@@ -47,7 +47,7 @@ export const useMyBalanceGameBookmarkCreateMutation = () => {
         };
       },
 
-      onError: (error, gameId, context) => {
+      onError: (error, gameSetId, context) => {
         if (context?.gameBookmark) {
           queryClient.setQueryData(['gameBookmark'], {
             content: context.gameBookmark,

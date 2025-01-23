@@ -10,16 +10,16 @@ export const useMyTalkPickBookmarkDeleteMutation = () => {
 
   return useMutation<AxiosResponse<ServerResponse>, Error, Id, BookmarkContext>(
     {
-      mutationFn: (gameId: number) => deleteTalkPickBookmark(gameId),
+      mutationFn: (talkPickId: number) => deleteTalkPickBookmark(talkPickId),
 
-      onMutate: (gameId: number): BookmarkContext => {
+      onMutate: (talkPickId: number): BookmarkContext => {
         const prevMyBookmarks = queryClient.getQueryData<{
           content: MyContentItem[];
         }>(['myBookmarks']);
 
         if (prevMyBookmarks) {
           const updated = prevMyBookmarks.content.map((item) =>
-            item.id === gameId ? { ...item, bookmarked: false } : item,
+            item.id === talkPickId ? { ...item, bookmarked: false } : item,
           );
           queryClient.setQueryData(['myBookmarks'], {
             ...prevMyBookmarks,
@@ -32,7 +32,7 @@ export const useMyTalkPickBookmarkDeleteMutation = () => {
         };
       },
 
-      onError: (error, gameId, context) => {
+      onError: (error, talkPickId, context) => {
         if (context?.myBookmarks) {
           queryClient.setQueryData(['myBookmarks'], {
             content: context.myBookmarks,

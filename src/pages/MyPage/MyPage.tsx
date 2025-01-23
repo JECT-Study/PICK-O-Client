@@ -112,13 +112,13 @@ const MyPage = () => {
 
   const handleBalanceBookmarkClick = (item: MyBalanceGameItem) => {
     if (item.bookmarked) {
-      balanceDeleteBookmark.mutate(item.gameId, {
+      balanceDeleteBookmark.mutate(item.gameSetId, {
         onError: () => {
           showToastModal('북마크 해제에 실패했습니다.');
         },
       });
     } else {
-      balanceCreateBookmark.mutate(item.gameId, {
+      balanceCreateBookmark.mutate(item.gameSetId, {
         onError: () => {
           showToastModal('북마크 등록에 실패했습니다.');
         },

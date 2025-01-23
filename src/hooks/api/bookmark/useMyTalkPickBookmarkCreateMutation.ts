@@ -10,16 +10,16 @@ export const useMyTalkPickBookmarkCreateMutation = () => {
 
   return useMutation<AxiosResponse<ServerResponse>, Error, Id, BookmarkContext>(
     {
-      mutationFn: (gameId: number) => postTalkPickBookmark(gameId),
+      mutationFn: (talkPickId: number) => postTalkPickBookmark(talkPickId),
 
-      onMutate: (gameId: number): BookmarkContext => {
+      onMutate: (talkPickId: number): BookmarkContext => {
         const prevMyBookmarks = queryClient.getQueryData<{
           content: MyContentItem[];
         }>(['myBookmarks']);
 
         if (prevMyBookmarks) {
           const updated = prevMyBookmarks.content.map((item) =>
-            item.id === gameId ? { ...item, bookmarked: true } : item,
+            item.id === talkPickId ? { ...item, bookmarked: true } : item,
           );
           queryClient.setQueryData(['myBookmarks'], {
             ...prevMyBookmarks,
@@ -32,7 +32,7 @@ export const useMyTalkPickBookmarkCreateMutation = () => {
         };
       },
 
-      onError: (error, gameId, context) => {
+      onError: (error, talkPickId, context) => {
         if (context?.myBookmarks) {
           queryClient.setQueryData(['myBookmarks'], {
             content: context.myBookmarks,
