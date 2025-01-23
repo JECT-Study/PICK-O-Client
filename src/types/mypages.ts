@@ -1,6 +1,16 @@
 import { MyBalanceGameItem } from '@/components/organisms/MyBalanceGameList/MyBalanceGameList';
 import { PaginationType } from '@/types/pagination';
 
+export interface MyContentItem {
+  id: number;
+  editedAt: string;
+  title: string;
+  commentCount: number;
+  bookmarks: number;
+  showBookmark: boolean;
+  bookmarked: boolean;
+}
+
 export interface TalkPickBaseInfoItem {
   id: number;
   title: string;

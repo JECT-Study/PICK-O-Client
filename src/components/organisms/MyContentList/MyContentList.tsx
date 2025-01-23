@@ -1,17 +1,8 @@
 import React, { useMemo } from 'react';
 import MyContentBox from '@/components/molecules/MyContentBox/MyContentBox';
 import { useNavigate } from 'react-router-dom';
+import { MyContentItem } from '@/types/mypages';
 import * as S from './MyContentList.style';
-
-export interface MyContentItem {
-  id: number;
-  editedAt: string;
-  title: string;
-  commentCount: number;
-  bookmarks: number;
-  showBookmark?: boolean;
-  bookmarked?: boolean;
-}
 
 export interface MyContentListProps {
   items: MyContentItem[];
