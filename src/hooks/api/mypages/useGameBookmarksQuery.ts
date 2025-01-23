@@ -1,7 +1,12 @@
 import { getGameBookmark } from '@/api/mypages';
-import { GameBookmark } from '@/types/mypages';
-import { MyBalanceGameItem } from '@/components/organisms/MyBalanceGameList/MyBalanceGameList';
+import { GameBookmark, MyBalanceGameItem } from '@/types/mypages';
 import { useInfiniteScroll } from '@/hooks/api/mypages/useInfiniteScroll';
+import { InfiniteData } from '@tanstack/react-query';
+import { transformBalanceGameItem } from '@/utils/transformBalanceGame';
+
+type GameBookmarkTransformed = Omit<GameBookmark, 'content'> & {
+  content: MyBalanceGameItem[];
+};
 
 export const useGameBookmarksQuery = () => {
   const {
@@ -10,28 +15,20 @@ export const useGameBookmarksQuery = () => {
     hasNextPage,
     isFetchingNextPage,
     isLoading,
-  } = useInfiniteScroll<GameBookmark>(
+  } = useInfiniteScroll<GameBookmark, GameBookmarkTransformed>(
     ['gameBookmark'],
-    ({ pageParam = 0 }) => getGameBookmark(pageParam, 20),
-    (data) => {
-      const firstPage = data.pages[0];
+
+    async ({ pageParam = 0 }) => {
+      return getGameBookmark(pageParam, 20);
+    },
+
+    (infiniteData: InfiniteData<GameBookmark>): GameBookmarkTransformed => {
+      const firstPage = infiniteData.pages[0];
       return {
-        content: data.pages.flatMap((page) =>
-          page.content.map((item: MyBalanceGameItem) => ({
-            ...item,
-            showBookmark: true,
-          })),
+        ...firstPage,
+        content: infiniteData.pages.flatMap((page) =>
+          page.content.map((item) => transformBalanceGameItem(item)),
         ),
-        pageable: firstPage.pageable,
-        totalPages: firstPage.totalPages,
-        totalElements: firstPage.totalElements,
-        last: firstPage.last,
-        size: firstPage.size,
-        number: firstPage.number,
-        sort: firstPage.sort,
-        numberOfElements: firstPage.numberOfElements,
-        first: firstPage.first,
-        empty: firstPage.empty,
       };
     },
   );

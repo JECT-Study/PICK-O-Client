@@ -1,37 +1,33 @@
 import { getGameVote } from '@/api/mypages';
-import { GameVote } from '@/types/mypages';
-import { MyBalanceGameItem } from '@/components/organisms/MyBalanceGameList/MyBalanceGameList';
+import { GameVote, MyBalanceGameItem } from '@/types/mypages';
 import { useInfiniteScroll } from '@/hooks/api/mypages/useInfiniteScroll';
+import { InfiniteData } from '@tanstack/react-query';
+import { transformGameVoteItem } from '@/utils/transformBalanceGame';
 
-export const useGameVotesQuery = () => {
+type GameVoteTransformed = Omit<GameVote, 'content'> & {
+  content: MyBalanceGameItem[];
+};
+
+export const useGameVotesQuery = (memberId: number) => {
   const {
     data: gameVotesData,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
     isLoading,
-  } = useInfiniteScroll<GameVote>(
+  } = useInfiniteScroll<GameVote, GameVoteTransformed>(
     ['gameVote'],
-    ({ pageParam = 0 }) => getGameVote(pageParam, 20),
-    (data) => {
-      const firstPage = data.pages[0];
+    async ({ pageParam = 0 }) => {
+      return getGameVote(pageParam, 20);
+    },
+    (infiniteData: InfiniteData<GameVote>): GameVoteTransformed => {
+      const firstPage = infiniteData.pages[0];
+
       return {
-        content: data.pages.flatMap((page) =>
-          page.content.map((item: MyBalanceGameItem) => ({
-            ...item,
-            showBookmark: false,
-          })),
+        ...firstPage,
+        content: infiniteData.pages.flatMap((page) =>
+          page.content.map((item) => transformGameVoteItem(item, memberId)),
         ),
-        pageable: firstPage.pageable,
-        totalPages: firstPage.totalPages,
-        totalElements: firstPage.totalElements,
-        last: firstPage.last,
-        size: firstPage.size,
-        number: firstPage.number,
-        sort: firstPage.sort,
-        numberOfElements: firstPage.numberOfElements,
-        first: firstPage.first,
-        empty: firstPage.empty,
       };
     },
   );
