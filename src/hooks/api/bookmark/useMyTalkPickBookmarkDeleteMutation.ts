@@ -2,7 +2,7 @@ import { Id, ServerResponse } from '@/types/api';
 import { AxiosResponse } from 'axios';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { BookmarkContext } from '@/types/bookmarks';
-import { deleteDoneGameBookmark } from '@/api/bookmarks';
+import { deleteTalkPickBookmark } from '@/api/bookmarks';
 import { MyContentItem } from '@/types/mypages';
 
 export const useMyTalkPickBookmarkDeleteMutation = () => {
@@ -10,7 +10,7 @@ export const useMyTalkPickBookmarkDeleteMutation = () => {
 
   return useMutation<AxiosResponse<ServerResponse>, Error, Id, BookmarkContext>(
     {
-      mutationFn: (gameId: number) => deleteDoneGameBookmark(gameId),
+      mutationFn: (gameId: number) => deleteTalkPickBookmark(gameId),
 
       onMutate: (gameId: number): BookmarkContext => {
         const prevMyBookmarks = queryClient.getQueryData<{

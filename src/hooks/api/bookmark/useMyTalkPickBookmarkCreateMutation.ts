@@ -1,6 +1,6 @@
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
-import { postDoneGameBookmark } from '@/api/bookmarks';
+import { postTalkPickBookmark } from '@/api/bookmarks';
 import { Id, ServerResponse } from '@/types/api';
 import { BookmarkContext } from '@/types/bookmarks';
 import { MyContentItem } from '@/types/mypages';
@@ -10,7 +10,7 @@ export const useMyTalkPickBookmarkCreateMutation = () => {
 
   return useMutation<AxiosResponse<ServerResponse>, Error, Id, BookmarkContext>(
     {
-      mutationFn: (gameId: number) => postDoneGameBookmark(gameId),
+      mutationFn: (gameId: number) => postTalkPickBookmark(gameId),
 
       onMutate: (gameId: number): BookmarkContext => {
         const prevMyBookmarks = queryClient.getQueryData<{
