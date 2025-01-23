@@ -1,7 +1,12 @@
-import { getMyBookmark } from '@/api/mypages';
-import { MyBookmark } from '@/types/mypages';
-import { MyContentItem } from '@/components/organisms/MyContentList/MyContentList';
 import { useInfiniteScroll } from '@/hooks/api/mypages/useInfiniteScroll';
+import { getMyBookmark } from '@/api/mypages';
+import { MyBookmark, MyContentItem } from '@/types/mypages';
+import { transformBookmarkItem } from '@/utils/transformTalkPick';
+import { InfiniteData } from '@tanstack/react-query';
+
+type MyBookmarkTransformed = Omit<MyBookmark, 'content'> & {
+  content: MyContentItem[];
+};
 
 export const useMyBookmarksQuery = () => {
   const {
@@ -10,28 +15,21 @@ export const useMyBookmarksQuery = () => {
     hasNextPage,
     isFetchingNextPage,
     isLoading,
-  } = useInfiniteScroll<MyBookmark>(
+  } = useInfiniteScroll<MyBookmark, MyBookmarkTransformed>(
     ['myBookmarks'],
-    ({ pageParam = 0 }) => getMyBookmark(pageParam, 20),
-    (data) => {
-      const firstPage = data.pages[0];
+
+    async ({ pageParam = 0 }) => {
+      return getMyBookmark(pageParam, 20);
+    },
+
+    (infiniteData: InfiniteData<MyBookmark>): MyBookmarkTransformed => {
+      const firstPage = infiniteData.pages[0];
+
       return {
-        content: data.pages.flatMap((page) =>
-          page.content.map((item: MyContentItem) => ({
-            ...item,
-            showBookmark: true,
-          })),
+        ...firstPage,
+        content: infiniteData.pages.flatMap((page) =>
+          page.content.map((item) => transformBookmarkItem(item)),
         ),
-        pageable: firstPage.pageable,
-        totalPages: firstPage.totalPages,
-        totalElements: firstPage.totalElements,
-        last: firstPage.last,
-        size: firstPage.size,
-        number: firstPage.number,
-        sort: firstPage.sort,
-        numberOfElements: firstPage.numberOfElements,
-        first: firstPage.first,
-        empty: firstPage.empty,
       };
     },
   );
