@@ -1,4 +1,4 @@
-import React, { ComponentPropsWithRef } from 'react';
+import React, { ComponentPropsWithRef, useMemo } from 'react';
 import Chips from '@/components/atoms/Chips/Chips';
 import Bookmark, { BookmarkProps } from '@/components/atoms/Bookmark/Bookmark';
 import { highlightText } from '@/utils/highlightText';
@@ -35,9 +35,11 @@ const randomImages = [
   RandomTealFrame,
 ];
 
-const getRandomImagePair = (): string[] => {
-  const randomIndexes = getRandomNumbers(randomImages.length);
-  return [randomImages[randomIndexes[0]], randomImages[randomIndexes[1]]];
+const useRandomImagePair = () => {
+  return useMemo(() => {
+    const randomIndexes = getRandomNumbers(randomImages.length);
+    return [randomImages[randomIndexes[0]], randomImages[randomIndexes[1]]];
+  }, []);
 };
 
 const ContentsButton = ({
@@ -55,10 +57,10 @@ const ContentsButton = ({
 }: ContentsButtonProps) => {
   const validImages = images?.filter(Boolean);
 
+  const memoizedRandomPair = useRandomImagePair();
+
   const displayImages =
-    !validImages || validImages.length === 0
-      ? getRandomImagePair()
-      : validImages;
+    !validImages || validImages.length === 0 ? memoizedRandomPair : validImages;
 
   return (
     <button
