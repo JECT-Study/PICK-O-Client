@@ -1,21 +1,8 @@
 import React, { useMemo } from 'react';
 import ContentsButton from '@/components/molecules/ContentsButton/ContentsButton';
 import { useNavigate } from 'react-router-dom';
+import { MyBalanceGameItem } from '@/types/mypages';
 import * as S from './MyBalanceGameList.style';
-
-export interface MyBalanceGameItem {
-  writerId: number;
-  gameId: number;
-  editedAt: string;
-  optionAImg: string;
-  optionBImg: string;
-  title: string;
-  mainTagName: string;
-  subTag: string;
-  bookmarked?: boolean;
-  showBookmark?: boolean;
-  size?: 'large' | 'medium' | 'small';
-}
 
 export interface MyBalanceGameListProps {
   items: MyBalanceGameItem[];

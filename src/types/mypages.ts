@@ -1,4 +1,3 @@
-import { MyBalanceGameItem } from '@/components/organisms/MyBalanceGameList/MyBalanceGameList';
 import { PaginationType } from '@/types/pagination';
 
 export interface TalkPickBaseInfoItem {
@@ -28,6 +27,20 @@ export interface InfoItem {
   content: string;
   commentCount: number;
   bookmarks: number;
+}
+
+export interface MyBalanceGameItem {
+  writerId: number;
+  gameId: number;
+  editedAt: string;
+  optionAImg: string;
+  optionBImg: string;
+  title: string;
+  mainTagName: string;
+  subTag: string;
+  bookmarked?: boolean;
+  showBookmark?: boolean;
+  size?: 'large' | 'medium' | 'small';
 }
 
 export interface BookmarkInfoItemResponse extends TalkPickBaseInfoItem {}
