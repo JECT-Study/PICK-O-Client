@@ -1,17 +1,8 @@
 import React, { useMemo } from 'react';
 import InfoBox from '@/components/molecules/InfoBox/InfoBox';
 import { useNavigate } from 'react-router-dom';
+import { InfoItem } from '@/types/mypages';
 import * as S from './InfoList.style';
-
-export interface InfoItem {
-  id: number;
-  editedAt: string;
-  title: string;
-  prefix: string;
-  content: string;
-  commentCount: number;
-  bookmarks: number;
-}
 
 export interface InfoListProps {
   items: InfoItem[];
