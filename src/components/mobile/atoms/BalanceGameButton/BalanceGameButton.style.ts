@@ -35,11 +35,22 @@ export const nameStyle = css(typo.Mobile.Text.SemiBold_14, {
   fontSize: '16px',
 });
 
-export const imageStyle = css({
+export const imgContainer = css({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
   width: '90px',
   height: '90px',
   borderRadius: '10px',
-  objectFit: 'cover',
+  backgroundColor: color.GY[2],
+  overflow: 'hidden',
+  flexShrink: 0,
+});
+
+export const imgStyle = css({
+  maxWidth: '100%',
+  maxHeight: '100%',
+  objectFit: 'contain',
 });
 
 export const contentWrapper = css({

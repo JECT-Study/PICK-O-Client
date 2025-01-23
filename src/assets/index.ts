@@ -129,6 +129,9 @@ export { default as BlueCheckIcon } from './svg/blue-check-icon.svg';
 export { default as StatusNotRequired } from './svg/status-not-required.svg';
 export { default as StatusFail } from './svg/status-fail.svg';
 export { default as SadEmoji } from './svg/sad-emoji.svg';
+export { default as MobileTrashCan } from './svg/mobile-trash-can.svg';
+export { default as MobileChoicePlus } from './svg/mobile-choice-plus.svg';
+export { default as MobileChoiceMinus } from './svg/mobile-choice-minus.svg';
 
 // TODO: 이전 SVG
 export { default as Email } from './svg/email.svg';
