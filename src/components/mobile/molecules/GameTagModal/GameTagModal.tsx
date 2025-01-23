@@ -53,7 +53,8 @@ const GameTagModal = ({
               <Button
                 key={tag}
                 type="button"
-                variant={currentMainTag === tag ? 'Primary2' : 'outlineShadow'}
+                variant={currentMainTag === tag ? 'primary' : 'outlineShadow'}
+                css={S.buttonStyling}
                 onClick={() => handleMainTag(tag)}
               >
                 {tag}

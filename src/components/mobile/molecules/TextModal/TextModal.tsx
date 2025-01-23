@@ -22,14 +22,14 @@ const TextModal = ({ text, isOpen, onConfirm, onClose }: TextModalProps) => {
         <div css={S.textStyling}>{text}</div>
         <div css={S.buttonWrapper}>
           <Button
-            variant="Primary3"
-            size="medium"
+            variant="primary"
+            css={S.buttonStyling}
             active={false}
             onClick={onConfirm}
           >
             확인
           </Button>
-          <Button variant="Primary3" size="medium" onClick={onClose}>
+          <Button variant="primary" css={S.buttonStyling} onClick={onClose}>
             취소
           </Button>
         </div>

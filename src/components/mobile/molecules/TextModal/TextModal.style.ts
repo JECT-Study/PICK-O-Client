@@ -17,3 +17,9 @@ export const buttonWrapper = css({
   display: 'flex',
   gap: '9px',
 });
+
+export const buttonStyling = css({
+  width: '142px',
+  height: '44px',
+  borderRadius: '12px',
+});
