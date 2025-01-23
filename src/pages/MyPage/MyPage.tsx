@@ -22,6 +22,8 @@ import { useMyTalkPickBookmarkDeleteMutation } from '@/hooks/api/bookmark/useMyT
 import { useMyBalanceGameBookmarkCreateMutation } from '@/hooks/api/bookmark/useMyBalanceGameBookmarkCreateMutation';
 import { useMyBalanceGameBookmarkDeleteMutation } from '@/hooks/api/bookmark/useMyBalanceGameBookmarkDeleteMutation';
 import { MyBalanceGameItem, MyContentItem } from '@/types/mypages';
+import useToastModal from '@/hooks/modal/useToastModal';
+import ToastModal from '@/components/atoms/ToastModal/ToastModal';
 import * as S from './MyPage.style';
 
 const MyPage = () => {
@@ -32,6 +34,8 @@ const MyPage = () => {
     handleGroupSelect,
     handleOptionSelect,
   } = useMyPageOptions();
+
+  const { isVisible, modalText, showToastModal } = useToastModal();
 
   const { memberInfo, isLoading } = useMyInfoQuery();
   const currentUserId = memberInfo?.id ?? 0;
@@ -92,17 +96,33 @@ const MyPage = () => {
 
   const handleTalkPickBookmarkClick = (item: MyContentItem) => {
     if (item.bookmarked) {
-      talkPickDeleteBookmark.mutate(item.id);
+      talkPickDeleteBookmark.mutate(item.id, {
+        onError: () => {
+          showToastModal('북마크 해제에 실패했습니다.');
+        },
+      });
     } else {
-      talkPickCreateBookmark.mutate(item.id);
+      talkPickCreateBookmark.mutate(item.id, {
+        onError: () => {
+          showToastModal('북마크 등록에 실패했습니다.');
+        },
+      });
     }
   };
 
   const handleBalanceBookmarkClick = (item: MyBalanceGameItem) => {
     if (item.bookmarked) {
-      balanceDeleteBookmark.mutate(item.gameId);
+      balanceDeleteBookmark.mutate(item.gameId, {
+        onError: () => {
+          showToastModal('북마크 해제에 실패했습니다.');
+        },
+      });
     } else {
-      balanceCreateBookmark.mutate(item.gameId);
+      balanceCreateBookmark.mutate(item.gameId, {
+        onError: () => {
+          showToastModal('북마크 등록에 실패했습니다.');
+        },
+      });
     }
   };
 
@@ -174,6 +194,11 @@ const MyPage = () => {
 
   return (
     <div css={S.pageContainer}>
+      {isVisible && (
+        <div css={S.toastModalStyle}>
+          <ToastModal>{modalText}</ToastModal>
+        </div>
+      )}
       <SideBar isLoading={false} {...memberInfo} />
       <div css={S.contentWrapper}>
         <OptionBar
