@@ -1,48 +1,53 @@
-import { Id, ServerResponse } from '@/types/api';
-import { AxiosResponse } from 'axios';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { BookmarkContext } from '@/types/bookmarks';
+import {
+  InfiniteData,
+  useMutation,
+  useQueryClient,
+} from '@tanstack/react-query';
 import { deleteTalkPickBookmark } from '@/api/bookmarks';
-import { MyContentItem } from '@/types/mypages';
+import { MyBookmarkTransformedPage } from '@/hooks/api/mypages/useMyBookmarksQuery';
+import { AxiosResponse } from 'axios';
+import { ServerResponse } from '@/types/api';
 
 export const useMyTalkPickBookmarkDeleteMutation = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<AxiosResponse<ServerResponse>, Error, Id, BookmarkContext>(
-    {
-      mutationFn: (talkPickId: number) => deleteTalkPickBookmark(talkPickId),
+  return useMutation<
+    AxiosResponse<ServerResponse>,
+    Error,
+    number,
+    InfiniteData<MyBookmarkTransformedPage> | undefined
+  >({
+    mutationFn: (talkPickId: number) => deleteTalkPickBookmark(talkPickId),
 
-      onMutate: (talkPickId: number): BookmarkContext => {
-        const prevMyBookmarks = queryClient.getQueryData<{
-          content: MyContentItem[];
-        }>(['myBookmarks']);
+    onMutate: async (talkPickId) => {
+      await queryClient.cancelQueries({ queryKey: ['myBookmarks'] });
 
-        if (prevMyBookmarks) {
-          const updated = prevMyBookmarks.content.map((item) =>
+      const previousData = queryClient.getQueryData<
+        InfiniteData<MyBookmarkTransformedPage>
+      >(['myBookmarks']);
+
+      if (previousData) {
+        const newPages = previousData.pages.map((page) => ({
+          ...page,
+          content: page.content.map((item) =>
             item.id === talkPickId ? { ...item, bookmarked: false } : item,
-          );
-          queryClient.setQueryData(['myBookmarks'], {
-            ...prevMyBookmarks,
-            content: updated,
-          });
-        }
+          ),
+        }));
 
-        return {
-          myBookmarks: prevMyBookmarks?.content,
-        };
-      },
-
-      onError: (error, talkPickId, context) => {
-        if (context?.myBookmarks) {
-          queryClient.setQueryData(['myBookmarks'], {
-            content: context.myBookmarks,
-          });
-        }
-      },
-
-      onSuccess: async () => {
-        await queryClient.invalidateQueries({ queryKey: ['myBookmarks'] });
-      },
+        queryClient.setQueryData(['myBookmarks'], {
+          ...previousData,
+          pages: newPages,
+        });
+      }
+      return previousData;
     },
-  );
+
+    onError: (err, talkPickId, context) => {
+      if (context) {
+        queryClient.setQueryData(['myBookmarks'], context);
+      }
+    },
+
+    onSuccess: async () => {},
+  });
 };
