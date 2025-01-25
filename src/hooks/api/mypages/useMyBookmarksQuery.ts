@@ -4,38 +4,42 @@ import { MyBookmark, MyContentItem } from '@/types/mypages';
 import { transformBookmarkItem } from '@/utils/transformTalkPick';
 import { InfiniteData } from '@tanstack/react-query';
 
-type MyBookmarkTransformed = Omit<MyBookmark, 'content'> & {
+export type MyBookmarkTransformedPage = Omit<MyBookmark, 'content'> & {
   content: MyContentItem[];
 };
 
 export const useMyBookmarksQuery = () => {
-  const {
-    data: myBookmarksData,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    isLoading,
-  } = useInfiniteScroll<MyBookmark, MyBookmarkTransformed>(
-    ['myBookmarks'],
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
+    useInfiniteScroll<MyBookmark, InfiniteData<MyBookmarkTransformedPage>>(
+      ['myBookmarks'],
 
-    async ({ pageParam = 0 }) => {
-      return getMyBookmark(pageParam, 20);
-    },
+      async ({ pageParam = 0 }) => {
+        return getMyBookmark(pageParam, 20);
+      },
 
-    (infiniteData: InfiniteData<MyBookmark>): MyBookmarkTransformed => {
-      const firstPage = infiniteData.pages[0];
+      (infiniteData) => {
+        const newPages = infiniteData.pages.map((page) => {
+          const transformedContent: MyContentItem[] = page.content.map(
+            transformBookmarkItem,
+          );
 
-      return {
-        ...firstPage,
-        content: infiniteData.pages.flatMap((page) =>
-          page.content.map((item) => transformBookmarkItem(item)),
-        ),
-      };
-    },
-  );
+          return {
+            ...page,
+            content: transformedContent,
+          };
+        });
+
+        const newInfiniteData: InfiniteData<MyBookmarkTransformedPage> = {
+          ...infiniteData,
+          pages: newPages,
+        };
+
+        return newInfiniteData;
+      },
+    );
 
   return {
-    myBookmarks: myBookmarksData,
+    myBookmarks: data,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
