@@ -24,7 +24,7 @@ import BalanceGamePage from './pages/BalanceGamePage/BalanceGamePage';
 import BalanceGameMobilePage from './pages/mobile/BalanceGameMobilePage/BalanceGameMobilePage';
 import BalanceGameCreationPage from './pages/BalanceGameCreationPage/BalanceGameCreationPage';
 import { useNewSelector } from './store';
-import { selectAccessToken } from './store/auth';
+import { selectAccessToken, selectIsRefreshing } from './store/auth';
 import useIsMobile from './hooks/common/useIsMobile';
 // import NotAuthRoutes from './components/Routes/NotAuthRoutes';
 // import { useMemberQuery } from './hooks/api/member/useMemberQuery';
@@ -49,7 +49,8 @@ const App: React.FC = () => {
   const navigate = useNavigate();
 
   const isMobile = useIsMobile();
-  const isLoggedIn = !!useNewSelector(selectAccessToken);
+  const accessToken = useNewSelector(selectAccessToken);
+  const isTokenRefreshing = useNewSelector(selectIsRefreshing);
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
@@ -60,6 +61,8 @@ const App: React.FC = () => {
     }
   }, [location.search, navigate]);
   useTokenRefresh();
+
+  if (isTokenRefreshing) return null;
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ko">
@@ -93,7 +96,7 @@ const App: React.FC = () => {
           <Route path={PATH.SEARCH.GAME} element={<SearchGamePage />} />
         </Route>
 
-        <Route element={<ProtectedRoutes isLoggedIn={isLoggedIn} />}>
+        <Route element={<ProtectedRoutes token={accessToken} />}>
           <Route path={PATH.MYPAGE} element={<LayoutNoFooter />}>
             <Route index element={<MyPage />} />
           </Route>
