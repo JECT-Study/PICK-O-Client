@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import TopBanner from '@/components/molecules/TopBanner/TopBanner';
 import SearchTagBar from '@/components/molecules/SearchTagBar/SearchTagBar';
 import CategoryBox from '@/components/molecules/CategoryBox/CategoryBox';
@@ -38,7 +38,15 @@ const LandingPage = () => {
   const { bestGames } = useBestGameList(activeTab, isBestGamesEnabled);
   const { latestGames } = useLatestGameList(activeTab, isLatestGamesEnabled);
 
-  const contents = bestGames || latestGames || [];
+  const contents = useMemo(() => {
+    if (isBestGamesEnabled) {
+      return bestGames ?? [];
+    }
+    if (isLatestGamesEnabled) {
+      return latestGames ?? [];
+    }
+    return [];
+  }, [isBestGamesEnabled, isLatestGamesEnabled, bestGames, latestGames]);
 
   const handleService = () => {
     setIsServicePreparing(true);
