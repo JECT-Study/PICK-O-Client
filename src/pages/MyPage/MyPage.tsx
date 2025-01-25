@@ -130,11 +130,13 @@ const MyPage = () => {
     if (selectedGroup === OptionKeys.TALK_PICK) {
       switch (selectedOption) {
         case 'bookmarks': {
-          const data = myBookmarksQuery.myBookmarks;
-          if (!data) return null;
+          const infiniteData = myBookmarksQuery.myBookmarks;
+          if (!infiniteData) return null;
+
+          const allContent = infiniteData.pages.flatMap((page) => page.content);
           return (
             <MyContentList
-              items={data.content}
+              items={allContent}
               onBookmarkClick={handleTalkPickBookmarkClick}
             />
           );
