@@ -1,72 +1,97 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import {
+  InfiniteData,
+  useMutation,
+  useQueryClient,
+} from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 import { Id, ServerResponse } from '@/types/api';
-import { BookmarkContext } from '@/types/bookmarks';
 import { deleteDoneGameBookmark } from '@/api/bookmarks';
-import { MyBalanceGameItem } from '@/types/mypages';
+import { GameBookmarkTransformedPage } from '@/hooks/api/mypages/useGameBookmarksQuery';
+import { GameVoteTransformedPage } from '@/hooks/api/mypages/useGameVotesQuery';
 
 export const useMyBalanceGameBookmarkDeleteMutation = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<AxiosResponse<ServerResponse>, Error, Id, BookmarkContext>(
-    {
-      mutationFn: (gameSetId: number) => deleteDoneGameBookmark(gameSetId),
+  type GameBookmarkInfinite = InfiniteData<GameBookmarkTransformedPage>;
 
-      onMutate: (gameSetId) => {
-        const prevGameBookmark = queryClient.getQueryData<{
-          content: MyBalanceGameItem[];
-        }>(['gameBookmark']);
-        const prevGameVote = queryClient.getQueryData<{
-          content: MyBalanceGameItem[];
-        }>(['gameVote']);
+  type GameVoteInfinite = InfiniteData<GameVoteTransformedPage>;
 
-        if (prevGameBookmark) {
-          const updated = prevGameBookmark.content.map((item) =>
-            item.gameSetId === gameSetId
-              ? { ...item, bookmarked: false }
-              : item,
-          );
-          queryClient.setQueryData(['gameBookmark'], {
-            ...prevGameBookmark,
-            content: updated,
-          });
-        }
+  interface DeleteBookmarkContext {
+    gameBookmark?: GameBookmarkInfinite;
+    gameVote?: GameVoteInfinite;
+  }
 
-        if (prevGameVote) {
-          const updated = prevGameVote.content.map((item) =>
-            item.gameSetId === gameSetId
-              ? { ...item, bookmarked: false }
-              : item,
-          );
-          queryClient.setQueryData(['gameVote'], {
-            ...prevGameVote,
-            content: updated,
-          });
-        }
-
-        return {
-          gameBookmark: prevGameBookmark?.content,
-          gameVote: prevGameVote?.content,
-        };
-      },
-
-      onError: (error, gameSetId, context) => {
-        if (context?.gameBookmark) {
-          queryClient.setQueryData(['gameBookmark'], {
-            content: context.gameBookmark,
-          });
-        }
-        if (context?.gameVote) {
-          queryClient.setQueryData(['gameVote'], {
-            content: context.gameVote,
-          });
-        }
-      },
-
-      onSuccess: async () => {
-        await queryClient.invalidateQueries({ queryKey: ['gameBookmark'] });
-        await queryClient.invalidateQueries({ queryKey: ['gameVote'] });
-      },
+  return useMutation<
+    AxiosResponse<ServerResponse>,
+    Error,
+    Id,
+    DeleteBookmarkContext
+  >({
+    mutationFn: (gameSetId: number) => {
+      return deleteDoneGameBookmark(gameSetId);
     },
-  );
+
+    onMutate: async (gameSetId: number): Promise<DeleteBookmarkContext> => {
+      await queryClient.cancelQueries({ queryKey: ['gameBookmark'] });
+      await queryClient.cancelQueries({ queryKey: ['gameVote'] });
+
+      const prevGameBookmark = queryClient.getQueryData<GameBookmarkInfinite>([
+        'gameBookmark',
+      ]);
+      const prevGameVote = queryClient.getQueryData<GameVoteInfinite>([
+        'gameVote',
+      ]);
+
+      if (prevGameBookmark) {
+        const newPages = prevGameBookmark.pages.map((page) => ({
+          ...page,
+          content: page.content.map((item) =>
+            item.gameSetId === gameSetId
+              ? { ...item, bookmarked: false }
+              : item,
+          ),
+        }));
+        queryClient.setQueryData<GameBookmarkInfinite>(['gameBookmark'], {
+          ...prevGameBookmark,
+          pages: newPages,
+        });
+      }
+
+      if (prevGameVote) {
+        const newPages = prevGameVote.pages.map((page) => ({
+          ...page,
+          content: page.content.map((item) =>
+            item.gameSetId === gameSetId
+              ? { ...item, bookmarked: false }
+              : item,
+          ),
+        }));
+        queryClient.setQueryData<GameVoteInfinite>(['gameVote'], {
+          ...prevGameVote,
+          pages: newPages,
+        });
+      }
+
+      return {
+        gameBookmark: prevGameBookmark,
+        gameVote: prevGameVote,
+      };
+    },
+
+    onError: (err, gameSetId, context) => {
+      if (!context) return;
+
+      if (context.gameBookmark) {
+        queryClient.setQueryData(['gameBookmark'], context.gameBookmark);
+      }
+
+      if (context.gameVote) {
+        queryClient.setQueryData(['gameVote'], context.gameVote);
+      }
+    },
+
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['gameVote'] });
+    },
+  });
 };
