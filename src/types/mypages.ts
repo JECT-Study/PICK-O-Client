@@ -83,12 +83,3 @@ export interface GameVote extends PaginationType {
 export interface GameBookmark extends PaginationType {
   content: MyBalanceGameItem[];
 }
-
-export interface SideBar {
-  id: number;
-  nickname: string;
-  profileImageUrl: string;
-  createdAt: string;
-  postsCount: number;
-  bookmarkedPostsCount: number;
-}
