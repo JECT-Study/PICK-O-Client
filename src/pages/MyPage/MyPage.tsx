@@ -25,6 +25,7 @@ import { MyBalanceGameItem, MyContentItem } from '@/types/mypages';
 import useToastModal from '@/hooks/modal/useToastModal';
 import ToastModal from '@/components/atoms/ToastModal/ToastModal';
 import { UseMutationOptions } from '@tanstack/react-query';
+import { ERROR, SUCCESS } from '@/constants/message';
 import * as S from './MyPage.style';
 
 const SKELETON_ITEMS_DEFAULT = 8;
@@ -111,19 +112,19 @@ const MyPage = () => {
     if (isBookmarked) {
       mutate(id, {
         onSuccess: () => {
-          showToastModal('저장을 해제했어요.');
+          showToastModal(SUCCESS.BOOKMARK.DELETE_MUTATE_SUCCESS);
         },
         onError: () => {
-          showToastModal('저장 해제에 실패했어요');
+          showToastModal(ERROR.BOOKMARK.DELETE_MUTATE_FAIL);
         },
       });
     } else {
       mutate(id, {
         onSuccess: () => {
-          showToastModal('다시 저장했어요.');
+          showToastModal(SUCCESS.BOOKMARK.POST_MUTATE_SUCCESS);
         },
         onError: () => {
-          showToastModal('컨텐츠가 벌써 떠나 버렸어요');
+          showToastModal(ERROR.BOOKMARK.POST_MUTATE_FAIL);
         },
       });
     }
