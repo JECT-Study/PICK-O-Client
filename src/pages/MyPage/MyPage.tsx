@@ -231,10 +231,10 @@ const MyPage = () => {
       )}
       <SideBar
         isLoading={false}
-        nickname={member?.nickname || ''}
-        postsCount={member?.postsCount || 0}
-        bookmarkedPostsCount={member?.bookmarkedPostsCount || 0}
-        profileImageUrl={member?.profileImgUrl || ''}
+        nickname={member?.nickname ?? ''}
+        postsCount={member?.postsCount ?? 0}
+        bookmarkedPostsCount={member?.bookmarkedPostsCount ?? 0}
+        profileImageUrl={member?.profileImgUrl ?? ''}
       />
       <div css={S.contentWrapper}>
         <OptionBar
