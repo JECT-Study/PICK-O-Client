@@ -16,7 +16,7 @@ import * as S from './ContentsButton.style';
 export interface ContentsButtonProps extends ComponentPropsWithRef<'button'> {
   title: string;
   mainTag: string;
-  subTag: string;
+  subTag?: string;
   images: string[];
   bookmarked?: BookmarkProps['bookmarked'];
   showBookmark?: boolean;
@@ -77,7 +77,7 @@ const ContentsButton = ({
           <img src={displayImages[1]} alt="option B" css={S.image} />
         </div>
         <div css={S.chipsContainer}>
-          <Chips>{subTag}</Chips>
+          {subTag?.trim() && <Chips>{subTag}</Chips>}
           <Chips>{`#${mainTag}`}</Chips>
         </div>
       </div>
