@@ -22,7 +22,6 @@ import { ToggleGroupValue } from '@/types/toggle';
 import { NOTICE, SUCCESS } from '@/constants/message';
 import { useTodayBalanceGameList } from '@/hooks/game/useTodayBalanceGameList';
 import { todayTalkPickDummyData } from '@/mocks/data/banner';
-import { useTodayTalkPickQuery } from '@/hooks/api/talk-pick/useTodayTalkPickQuery';
 import * as S from './LandingPage.style';
 
 const LandingPage = () => {
@@ -32,7 +31,6 @@ const LandingPage = () => {
   const { isVisible, modalText, showToastModal } = useToastModal();
 
   const { member } = useMemberQuery();
-  const { todayTalkPick } = useTodayTalkPickQuery();
 
   const { todayTalkPickList = todayTalkPickDummyData } =
     useTodayTalkPickQuery();
