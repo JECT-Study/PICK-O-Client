@@ -24,6 +24,7 @@ import { useMyBalanceGameBookmarkDeleteMutation } from '@/hooks/api/bookmark/use
 import { MyBalanceGameItem, MyContentItem } from '@/types/mypages';
 import useToastModal from '@/hooks/modal/useToastModal';
 import ToastModal from '@/components/atoms/ToastModal/ToastModal';
+import { UseMutationOptions } from '@tanstack/react-query';
 import * as S from './MyPage.style';
 
 const SKELETON_ITEMS_DEFAULT = 8;
@@ -97,45 +98,32 @@ const MyPage = () => {
     );
   }
 
-  const handleTalkPickBookmarkClick = (item: MyContentItem) => {
-    if (item.bookmarked) {
-      talkPickDeleteBookmark.mutate(item.id, {
-        onSuccess: () => {
-          showToastModal('저장을 해제했어요.');
-        },
-        onError: () => {
-          showToastModal('저장 해제에 실패했어요.');
-        },
-      });
-    } else {
-      talkPickCreateBookmark.mutate(item.id, {
-        onSuccess: () => {
-          showToastModal('다시 저장했어요.');
-        },
-        onError: () => {
-          showToastModal('컨텐츠가 벌써 떠나 버렸어요ㅠㅠ');
-        },
-      });
-    }
-  };
+  const handleBookmarkClick = <TData, TError>(
+    item: MyContentItem | MyBalanceGameItem,
+    mutate: (
+      id: number,
+      options?: UseMutationOptions<TData, TError, number, unknown>,
+    ) => void,
+  ) => {
+    const id = 'gameSetId' in item ? item.gameSetId : item.id;
+    const isBookmarked = item.bookmarked;
 
-  const handleBalanceBookmarkClick = (item: MyBalanceGameItem) => {
-    if (item.bookmarked) {
-      balanceDeleteBookmark.mutate(item.gameSetId, {
+    if (isBookmarked) {
+      mutate(id, {
         onSuccess: () => {
           showToastModal('저장을 해제했어요.');
         },
         onError: () => {
-          showToastModal('저장 해제에 실패했어요.');
+          showToastModal('저장 해제에 실패했어요');
         },
       });
     } else {
-      balanceCreateBookmark.mutate(item.gameSetId, {
+      mutate(id, {
         onSuccess: () => {
           showToastModal('다시 저장했어요.');
         },
         onError: () => {
-          showToastModal('컨텐츠가 벌써 떠나 버렸어요ㅠㅠ');
+          showToastModal('컨텐츠가 벌써 떠나 버렸어요');
         },
       });
     }
@@ -152,7 +140,14 @@ const MyPage = () => {
           return (
             <MyContentList
               items={allContent}
-              onBookmarkClick={handleTalkPickBookmarkClick}
+              onBookmarkClick={(item) =>
+                handleBookmarkClick(
+                  item,
+                  item.bookmarked
+                    ? talkPickDeleteBookmark.mutate
+                    : talkPickCreateBookmark.mutate,
+                )
+              }
             />
           );
         }
@@ -184,7 +179,14 @@ const MyPage = () => {
           return (
             <MyBalanceGameList
               items={allContent}
-              onBookmarkClick={handleBalanceBookmarkClick}
+              onBookmarkClick={(item) =>
+                handleBookmarkClick(
+                  item,
+                  item.bookmarked
+                    ? balanceDeleteBookmark.mutate
+                    : balanceCreateBookmark.mutate,
+                )
+              }
             />
           );
         }
@@ -196,7 +198,14 @@ const MyPage = () => {
           return (
             <MyBalanceGameList
               items={allContent}
-              onBookmarkClick={handleBalanceBookmarkClick}
+              onBookmarkClick={(item) =>
+                handleBookmarkClick(
+                  item,
+                  item.bookmarked
+                    ? balanceDeleteBookmark.mutate
+                    : balanceCreateBookmark.mutate,
+                )
+              }
             />
           );
         }
