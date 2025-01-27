@@ -5,6 +5,7 @@ import MyContentList from '@/components/organisms/MyContentList/MyContentList';
 import InfoList from '@/components/organisms/InfoList/InfoList';
 import MyBalanceGameList from '@/components/organisms/MyBalanceGameList/MyBalanceGameList';
 import { OptionKeys } from '@/constants/optionSets';
+import { useMemberQuery } from '@/hooks/api/member/useMemberQuery';
 import { useMyVotesQuery } from '@/hooks/api/mypages/useMyVotesQuery';
 import { useMyCommentsQuery } from '@/hooks/api/mypages/useMyCommentsQuery';
 import { useMyWrittensQuery } from '@/hooks/api/mypages/useMyWrittensQuery';
@@ -12,7 +13,6 @@ import { useMyBookmarksQuery } from '@/hooks/api/mypages/useMyBookmarksQuery';
 import { useGameBookmarksQuery } from '@/hooks/api/mypages/useGameBookmarksQuery';
 import { useGameWrittensQuery } from '@/hooks/api/mypages/useGameWrittensQuery';
 import { useGameVotesQuery } from '@/hooks/api/mypages/useGameVotesQuery';
-import { useMyInfoQuery } from '@/hooks/api/mypages/useMyInfoQuery';
 import { useObserver } from '@/hooks/api/mypages/useObserver';
 import MypageListSkeleton from '@/components/atoms/MypageListSkeleton/MypageListSkeleton';
 import MypageCardSkeleton from '@/components/atoms/MypageCardSkeleton/MypageCardSkeleton';
@@ -41,8 +41,8 @@ const MyPage = () => {
 
   const { isVisible, modalText, showToastModal } = useToastModal();
 
-  const { memberInfo, isLoading } = useMyInfoQuery();
-  const currentUserId = memberInfo?.id ?? 0;
+  const { member, isLoading: isMemberLoading } = useMemberQuery();
+  const currentUserId = member?.id ?? 0;
 
   const myBookmarksQuery = useMyBookmarksQuery();
   const myVotesQuery = useMyVotesQuery();
@@ -68,9 +68,8 @@ const MyPage = () => {
     gameWrittens: gameWrittensQuery,
   };
 
-  const isQueryLoading = Object.values(queries).some(
-    (query) => query.isLoading,
-  );
+  const isQueryLoading =
+    Object.values(queries).some((query) => query.isLoading) || isMemberLoading;
 
   const { ref } = useObserver(queries);
 
@@ -230,7 +229,13 @@ const MyPage = () => {
           <ToastModal>{modalText}</ToastModal>
         </div>
       )}
-      <SideBar isLoading={false} {...memberInfo} />
+      <SideBar
+        isLoading={false}
+        nickname={member?.nickname || ''}
+        postsCount={member?.postsCount || 0}
+        bookmarkedPostsCount={member?.bookmarkedPostsCount || 0}
+        profileImageUrl={member?.profileImgUrl || ''}
+      />
       <div css={S.contentWrapper}>
         <OptionBar
           selectedGroup={selectedGroup}
