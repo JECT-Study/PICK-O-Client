@@ -4,19 +4,20 @@ import { HTTP_STATUS_CODE } from '@/constants/api';
 import { useNewDispatch } from '@/store';
 import { tokenActions } from '@/store/auth';
 import { MemberForm } from '@/types/member';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ChangeEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PATH } from '@/constants/path';
 import { ERROR, SUCCESS } from '../../constants/message';
 import useInputs from '../common/useInputs';
-import useToastModal from '../modal/useToastModal';
 import { validateLoginForm } from './validateLoginForm';
 
 export const useLoginForm = (
+  showToastModal?: (message: string, callback?: () => void) => void,
   pathTalkPickId?: number,
   onModalLoginSuccess?: () => void,
 ) => {
+  const queryClient = useQueryClient();
   const initialState: Pick<MemberForm, 'email' | 'password'> = {
     email: localStorage.getItem('savedEmail') ?? '',
     password: '',
@@ -25,7 +26,6 @@ export const useLoginForm = (
   const { form, onChange } =
     useInputs<Pick<MemberForm, 'email' | 'password'>>(initialState);
 
-  const { isVisible, modalText, showToastModal } = useToastModal();
   const [isError, setIsError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
     undefined,
@@ -42,7 +42,7 @@ export const useLoginForm = (
 
   const login = useMutation({
     mutationFn: postLogin,
-    onSuccess: (res: string) => {
+    onSuccess: async (res: string) => {
       setIsError(false);
       setErrorMessage(undefined);
       onModalLoginSuccess?.();
@@ -50,11 +50,13 @@ export const useLoginForm = (
       dispatch(tokenActions.setToken(res));
       axiosInstance.defaults.headers.Authorization = `Bearer ${res}`;
 
-      localStorage.setItem('accessToken', res);
-      localStorage.setItem('refreshToken', 'refreshToken');
       localStorage.setItem('savedEmail', form.email);
 
-      showToastModal(SUCCESS.LOGIN, () => {
+      await queryClient.invalidateQueries({
+        queryKey: ['members'],
+      });
+
+      showToastModal?.(SUCCESS.LOGIN, () => {
         if (pathTalkPickId) {
           navigate(`/${PATH.TALKPICK(pathTalkPickId)}`);
         } else {
@@ -88,7 +90,5 @@ export const useLoginForm = (
     isError,
     errorMessage,
     handleSubmit,
-    isVisible,
-    modalText,
   };
 };

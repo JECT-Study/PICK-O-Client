@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import 'dayjs/locale/ko';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import MyPage from '@/pages/MyPage/MyPage';
 import SearchGamePage from '@/pages/SearchResultsPage/SearchGamePage';
 import SearchTalkPickPage from '@/pages/SearchResultsPage/SearchTalkPickPage';
@@ -23,6 +23,10 @@ import SignUpPage from './pages/SignUpPage/SignUpPage';
 import BalanceGamePage from './pages/BalanceGamePage/BalanceGamePage';
 import BalanceGameMobilePage from './pages/mobile/BalanceGameMobilePage/BalanceGameMobilePage';
 import BalanceGameCreationPage from './pages/BalanceGameCreationPage/BalanceGameCreationPage';
+import BalanceGameCreationMobilePage from './pages/mobile/BalanceGameCreationMobilePage/BalanceGameCreationMobilePage';
+import { useNewSelector } from './store';
+import { selectAccessToken } from './store/auth';
+import useIsMobile from './hooks/common/useIsMobile';
 // import NotAuthRoutes from './components/Routes/NotAuthRoutes';
 // import { useMemberQuery } from './hooks/api/member/useMemberQuery';
 // import { useParseJwt } from './hooks/common/useParseJwt';
@@ -40,30 +44,22 @@ import BalanceGameCreationPage from './pages/BalanceGameCreationPage/BalanceGame
 // import PostPage from './pages/PostPage/PostPage';
 // import SearchResultPage from './pages/SearchResultPage/SearchResultPage';
 // import SignUpPage from './pages/SignUpPage/SignUpPage';
-import { getCookie } from './utils/cookie';
-import { axiosInstance } from './api/interceptor';
-import { useNewDispatch } from './store';
-import { tokenActions } from './store/auth';
-import useIsMobile from './hooks/common/useIsMobile';
 
 const App: React.FC = () => {
-  const dispatch = useNewDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const isMobile = useIsMobile();
+  const isLoggedIn = !!useNewSelector(selectAccessToken);
 
   useEffect(() => {
-    const token = getCookie('accessToken');
-    if (token) {
-      localStorage.setItem('accessToken', token);
-      localStorage.setItem('refreshToken', 'refreshToken');
+    const searchParams = new URLSearchParams(location.search);
+    const status = searchParams.get('status');
 
-      dispatch(tokenActions.setToken(token));
-      axiosInstance.defaults.headers.Authorization = `Bearer ${token}`;
+    if (status === 'already_registered') {
+      navigate(`/${PATH.LOGIN}`, { state: { status } });
     }
-  }, [dispatch]);
-
-  // const accessToken = useNewSelector(selectAccessToken);
-  // const { member } = useMemberQuery(useParseJwt(accessToken).memberId);
-  const isLoggedIn = !!localStorage.getItem('accessToken');
+  }, [location.search, navigate]);
   useTokenRefresh();
 
   return (
@@ -81,7 +77,6 @@ const App: React.FC = () => {
             path={PATH.BALANCEGAME()}
             element={isMobile ? <BalanceGameMobilePage /> : <BalanceGamePage />}
           />
-
           {/* <Route path="/search" element={<SearchResultsPage />} /> */}
           {/* <Route path="posts" element={<PostList />} />
           <Route path="posts/:id" element={<PostPage />} />
@@ -106,7 +101,13 @@ const App: React.FC = () => {
             <Route path={PATH.CREATE.TALK_PICK} element={<CreatePostPage />} />
             <Route
               path={PATH.CREATE.GAME}
-              element={<BalanceGameCreationPage />}
+              element={
+                isMobile ? (
+                  <BalanceGameCreationMobilePage />
+                ) : (
+                  <BalanceGameCreationPage />
+                )
+              }
             />
             <Route
               path={PATH.CHANGE.PROFILE}

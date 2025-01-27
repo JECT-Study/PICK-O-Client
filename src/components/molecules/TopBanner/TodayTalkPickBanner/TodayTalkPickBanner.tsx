@@ -4,21 +4,17 @@ import { useNavigate } from 'react-router-dom';
 import { TodayTalkPick } from '@/types/talk-pick';
 import { Check, CheckSmall } from '@/assets';
 import useIsMobile from '@/hooks/common/useIsMobile';
-import {
-  bannerBtnStyling,
-  bannerChipStyling,
-  talkPickStyling,
-  talkPickTextStyling,
-} from './TodayTalkPickBanner.style';
+import * as S from './TodayTalkPickBanner.style';
 
 interface TodayTalkPickBannerProps {
-  talkPick?: TodayTalkPick;
+  index: number;
+  talkPick: TodayTalkPick;
 }
 
-const TodayTalkPickBanner = ({ talkPick }: TodayTalkPickBannerProps) => {
+const TodayTalkPickBanner = ({ index, talkPick }: TodayTalkPickBannerProps) => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
-  const onClickBanner = () => {
+  const onBannerClick = () => {
     navigate(`/${PATH.TODAY_TALKPICK}`, {
       state: { talkPickId: talkPick?.id, isTodayTalkPick: true },
     });
@@ -28,18 +24,18 @@ const TodayTalkPickBanner = ({ talkPick }: TodayTalkPickBannerProps) => {
     <button
       type="button"
       key={talkPick?.id}
-      css={talkPickStyling}
-      onClick={onClickBanner}
+      css={S.talkPickStyling(index)}
+      onClick={onBannerClick}
     >
-      <div css={bannerChipStyling}>
+      <div css={S.bannerChipStyling}>
         {isMobile ? <CheckSmall /> : <Check />}
         오늘의 톡픽
       </div>
-      <div css={talkPickTextStyling}>
+      <div css={S.talkPickTextStyling(index)}>
         {talkPick?.title} <br />
         {talkPick?.optionA} VS {talkPick?.optionB}
       </div>
-      <div css={bannerBtnStyling}>투표결과 보러 가기</div>
+      <div css={S.bannerBtnStyling(index)}>투표결과 보러 가기</div>
     </button>
   );
 };

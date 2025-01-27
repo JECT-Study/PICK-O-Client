@@ -40,3 +40,23 @@ export const summarySpinnerStyling = css({
 export const summarySpinnerText = css(typo.Main.Medium, {
   color: color.GY[1],
 });
+
+export const summaryTextWrapper = css(typo.Main.Medium, {
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  color: color.GY[1],
+});
+
+export const summaryStatusWrapper = css({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  gap: '20px',
+});
+
+export const summaryText = css({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '6px',
+});

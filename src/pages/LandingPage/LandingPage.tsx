@@ -20,6 +20,9 @@ import useToastModal from '@/hooks/modal/useToastModal';
 import { GameContent } from '@/types/game';
 import { ToggleGroupValue } from '@/types/toggle';
 import { NOTICE, SUCCESS } from '@/constants/message';
+import { useTodayBalanceGameList } from '@/hooks/game/useTodayBalanceGameList';
+import { todayTalkPickDummyData } from '@/mocks/data/banner';
+import { useTodayTalkPickQuery } from '@/hooks/api/talk-pick/useTodayTalkPickQuery';
 import * as S from './LandingPage.style';
 
 const LandingPage = () => {
@@ -31,6 +34,9 @@ const LandingPage = () => {
   const { member } = useMemberQuery();
   const { todayTalkPick } = useTodayTalkPickQuery();
 
+  const { todayTalkPickList = todayTalkPickDummyData } =
+    useTodayTalkPickQuery();
+  const { todayBalanceGameList } = useTodayBalanceGameList();
   const [isServicePreparing, setIsServicePreparing] = useState<boolean>(false);
   const [selectedValue, setSelectedValue] = useState<ToggleGroupValue>({
     field: 'views',
@@ -48,10 +54,15 @@ const LandingPage = () => {
   const { bestGames } = useBestGameList(activeTab, isBestGamesEnabled);
   const { latestGames } = useLatestGameList(activeTab, isLatestGamesEnabled);
 
-  const contents = useMemo(
-    () => bestGames || latestGames || [],
-    [bestGames, latestGames],
-  );
+  const contents = useMemo(() => {
+    if (isBestGamesEnabled) {
+      return bestGames ?? [];
+    }
+    if (isLatestGamesEnabled) {
+      return latestGames ?? [];
+    }
+    return [];
+  }, [isBestGamesEnabled, isLatestGamesEnabled, bestGames, latestGames]);
 
   const processedContents = useMemo(() => {
     if (!member?.id) return [];
@@ -119,7 +130,10 @@ const LandingPage = () => {
           <ToastModal bgColor="white">{NOTICE.STATUS.NOT_READY}</ToastModal>
         </div>
       )}
-      <TopBanner todayTalkPick={todayTalkPick} />
+      <TopBanner
+        todayTalkPickList={todayTalkPickList}
+        todayBalanceGameList={todayBalanceGameList}
+      />
 
       {isMobile ? (
         <div css={S.contentWrapStyle}>

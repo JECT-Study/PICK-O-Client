@@ -116,6 +116,14 @@ export { default as MobileFolder } from './svg/mobile-folder.svg';
 export { default as MobileFolderCheck } from './svg/mobile-folder-check.svg';
 export { default as MobileCheckIcon } from './svg/mobile-check-icon.svg';
 export { default as MobileTempIcon } from './svg/mobile-temp-icon.svg';
+export { default as TalkPickBannerFirst } from './images/talk-pick-banner-first.png';
+export { default as TalkPickBannerSecond } from './images/talk-pick-banner-second.png';
+export { default as GameBannerFirst } from './images/game-banner-first.png';
+export { default as GameBannerSecond } from './images/game-banner-second.png';
+export { default as MobileTalkPickBannerFirst } from './images/mo-talk-pick-banner-first.png';
+export { default as MobileTalkPickBannerSecond } from './images/mo-talk-pick-banner-second.png';
+export { default as MobileGameBannerFirst } from './images/mo-game-banner-first.png';
+export { default as MobileGameBannerSecond } from './images/mo-game-banner-second.png';
 export { default as RedCheckIcon } from './svg/red-check-icon.svg';
 export { default as BlueCheckIcon } from './svg/blue-check-icon.svg';
 export { default as RandomBlackFrame } from './images/random-black-frame.png';
@@ -124,6 +132,12 @@ export { default as RandomGreenFrame } from './images/random-green-frame.png';
 export { default as RandomPinkFrame } from './images/random-pink-frame.png';
 export { default as RandomPurpleFrame } from './images/random-purple-frame.png';
 export { default as RandomTealFrame } from './images/random-teal-frame.png';
+export { default as StatusNotRequired } from './svg/status-not-required.svg';
+export { default as StatusFail } from './svg/status-fail.svg';
+export { default as SadEmoji } from './svg/sad-emoji.svg';
+export { default as MobileTrashCan } from './svg/mobile-trash-can.svg';
+export { default as MobileChoicePlus } from './svg/mobile-choice-plus.svg';
+export { default as MobileChoiceMinus } from './svg/mobile-choice-minus.svg';
 
 // TODO: 이전 SVG
 export { default as Email } from './svg/email.svg';

@@ -13,3 +13,4 @@ export const useMemberQuery = () => {
   });
   return { member, isLoading, isError };
 };
+

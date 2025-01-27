@@ -40,6 +40,12 @@ export const buttonWrapper = css({
   gap: '8px',
 });
 
+export const buttonStyling = css(typo.Mobile.Text.SemiBold_14, {
+  width: '64px',
+  height: '34px',
+  borderRadius: '6px',
+});
+
 export const inputStyling = css(typo.Mobile.Text.Medium_12, {
   fontSize: '14px',
   width: '295px',
