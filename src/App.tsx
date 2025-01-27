@@ -11,6 +11,7 @@ import ProtectedRoutes from './components/Routes/ProtectedRoutes';
 import { PATH } from './constants/path';
 import { useTokenRefresh } from './hooks/common/useTokenRefresh';
 import { Layout, LayoutNoFooter } from './layout/layout';
+import LoadingPage from './pages/LoadingPage/LoadingPage';
 import CreatePostPage from './pages/CreatePostPage/CreatePostPage';
 import LandingPage from './pages/LandingPage/LandingPage';
 import LoginPage from './pages/LoginPage/LoginPage';
@@ -62,7 +63,7 @@ const App: React.FC = () => {
   }, [location.search, navigate]);
   useTokenRefresh();
 
-  if (isTokenRefreshing) return null;
+  if (isTokenRefreshing) return <LoadingPage />;
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ko">
