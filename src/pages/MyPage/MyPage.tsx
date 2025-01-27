@@ -26,6 +26,8 @@ import useToastModal from '@/hooks/modal/useToastModal';
 import ToastModal from '@/components/atoms/ToastModal/ToastModal';
 import * as S from './MyPage.style';
 
+const SKELETON_ITEMS_DEFAULT = 8;
+
 const MyPage = () => {
   const {
     selectedGroup,
@@ -84,7 +86,7 @@ const MyPage = () => {
           />
           <div css={S.contentList}>
             {selectedGroup === OptionKeys.TALK_PICK ? (
-              <MypageListSkeleton count={8} />
+              <MypageListSkeleton count={SKELETON_ITEMS_DEFAULT} />
             ) : (
               <MypageCardSkeleton />
             )}
