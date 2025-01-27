@@ -64,11 +64,13 @@ const MyPage = () => {
     gameWrittens: gameWrittensQuery,
   };
 
-  const isQueryLoading = Object.values(queries).some((q) => q.isLoading);
+  const isQueryLoading = Object.values(queries).some(
+    (query) => query.isLoading,
+  );
 
   const { ref } = useObserver(queries);
 
-  if (isLoading) {
+  if (isQueryLoading) {
     return (
       <div css={S.pageContainer}>
         <SideBar isLoading />
@@ -81,7 +83,6 @@ const MyPage = () => {
             onOptionSelect={handleOptionSelect}
           />
           <div css={S.contentList}>
-            {/* 일단 그룹 별로 스켈레톤이 다른 걸로 생각 */}
             {selectedGroup === OptionKeys.TALK_PICK ? (
               <MypageListSkeleton count={8} />
             ) : (
@@ -97,14 +98,20 @@ const MyPage = () => {
   const handleTalkPickBookmarkClick = (item: MyContentItem) => {
     if (item.bookmarked) {
       talkPickDeleteBookmark.mutate(item.id, {
+        onSuccess: () => {
+          showToastModal('저장을 해제했어요.');
+        },
         onError: () => {
-          showToastModal('북마크 해제에 실패했습니다.');
+          showToastModal('저장 해제에 실패했어요.');
         },
       });
     } else {
       talkPickCreateBookmark.mutate(item.id, {
+        onSuccess: () => {
+          showToastModal('다시 저장했어요.');
+        },
         onError: () => {
-          showToastModal('북마크 등록에 실패했습니다.');
+          showToastModal('컨텐츠가 벌써 떠나 버렸어요ㅠㅠ');
         },
       });
     }
@@ -113,14 +120,20 @@ const MyPage = () => {
   const handleBalanceBookmarkClick = (item: MyBalanceGameItem) => {
     if (item.bookmarked) {
       balanceDeleteBookmark.mutate(item.gameSetId, {
+        onSuccess: () => {
+          showToastModal('저장을 해제했어요.');
+        },
         onError: () => {
-          showToastModal('북마크 해제에 실패했습니다.');
+          showToastModal('저장 해제에 실패했어요.');
         },
       });
     } else {
       balanceCreateBookmark.mutate(item.gameSetId, {
+        onSuccess: () => {
+          showToastModal('다시 저장했어요.');
+        },
         onError: () => {
-          showToastModal('북마크 등록에 실패했습니다.');
+          showToastModal('컨텐츠가 벌써 떠나 버렸어요ㅠㅠ');
         },
       });
     }
@@ -162,21 +175,25 @@ const MyPage = () => {
     } else if (selectedGroup === OptionKeys.BALANCE_GAME) {
       switch (selectedOption) {
         case 'bookmarks': {
-          const data = gameBookmarksQuery.gameBookmark;
-          if (!data) return null;
+          const infiniteData = gameBookmarksQuery.gameBookmark;
+          if (!infiniteData) return null;
+
+          const allContent = infiniteData.pages.flatMap((page) => page.content);
           return (
             <MyBalanceGameList
-              items={data.content}
+              items={allContent}
               onBookmarkClick={handleBalanceBookmarkClick}
             />
           );
         }
         case 'votes': {
-          const data = gameVotesQuery.gameVote;
-          if (!data) return null;
+          const infiniteData = gameVotesQuery.gameVote;
+          if (!infiniteData) return null;
+
+          const allContent = infiniteData.pages.flatMap((page) => page.content);
           return (
             <MyBalanceGameList
-              items={data.content}
+              items={allContent}
               onBookmarkClick={handleBalanceBookmarkClick}
             />
           );
