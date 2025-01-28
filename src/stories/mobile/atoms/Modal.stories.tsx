@@ -11,7 +11,7 @@ const meta = {
   },
   argTypes: {
     action: {
-      options: ['share', 'tag', 'tempGame'],
+      options: ['text', 'share', 'tag', 'tempGame'],
       control: { type: 'radio' },
     },
     isOpen: { control: { type: 'boolean' } },
@@ -50,6 +50,10 @@ export const All: Story = {
           </Modal>
         </li>
         <li css={storyInnerContainer}>
+          <h3>Text</h3>
+          <Modal {...args} action="text">
+            Text Modal
+          </Modal>
           <h3>Share</h3>
           <Modal {...args} action="share">
             Share Modal

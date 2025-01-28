@@ -24,6 +24,7 @@ import SignUpPage from './pages/SignUpPage/SignUpPage';
 import BalanceGamePage from './pages/BalanceGamePage/BalanceGamePage';
 import BalanceGameMobilePage from './pages/mobile/BalanceGameMobilePage/BalanceGameMobilePage';
 import BalanceGameCreationPage from './pages/BalanceGameCreationPage/BalanceGameCreationPage';
+import BalanceGameCreationMobilePage from './pages/mobile/BalanceGameCreationMobilePage/BalanceGameCreationMobilePage';
 import { useNewSelector } from './store';
 import { selectAccessToken } from './store/auth';
 import useIsMobile from './hooks/common/useIsMobile';
@@ -77,7 +78,6 @@ const App: React.FC = () => {
             path={PATH.BALANCEGAME()}
             element={isMobile ? <BalanceGameMobilePage /> : <BalanceGamePage />}
           />
-
           {/* <Route path="/search" element={<SearchResultsPage />} /> */}
           {/* <Route path="posts" element={<PostList />} />
           <Route path="posts/:id" element={<PostPage />} />
@@ -102,7 +102,13 @@ const App: React.FC = () => {
             <Route path={PATH.CREATE.TALK_PICK} element={<CreatePostPage />} />
             <Route
               path={PATH.CREATE.GAME}
-              element={<BalanceGameCreationPage />}
+              element={
+                isMobile ? (
+                  <BalanceGameCreationMobilePage />
+                ) : (
+                  <BalanceGameCreationPage />
+                )
+              }
             />
             <Route
               path={PATH.CHANGE.PROFILE}

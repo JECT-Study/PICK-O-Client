@@ -5,7 +5,7 @@ import useOutsideClick from '@/hooks/common/useOutsideClick';
 import * as S from './Modal.style';
 
 export interface ModalProps {
-  action?: 'share' | 'tag' | 'tempGame';
+  action?: 'text' | 'share' | 'tag' | 'tempGame';
   isOpen?: boolean;
   onClose?: () => void;
   hasCloseButton?: boolean;
