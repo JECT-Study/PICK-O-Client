@@ -22,7 +22,7 @@ export const PATH = {
   BALANCEGAME: (setId: number | string = ':setId') => `balancegame/${setId}`,
   TALKPICK: (talkPickId: number | string = ':talkPickId') =>
     `talkpick/${talkPickId}`,
-
+  NOTIFICATION: 'notifications',
   // PW: 'findPassword',
   // HISTORY: {
   //   MAIN: 'history',
