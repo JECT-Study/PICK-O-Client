@@ -30,7 +30,7 @@ export const useGameBookmarksQuery = () => {
     );
 
   return {
-    gameBookmark: data,
+    data,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,

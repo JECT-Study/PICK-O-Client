@@ -33,7 +33,7 @@ export const useGameVotesQuery = (memberId: number) => {
     );
 
   return {
-    gameVote: data,
+    data,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,

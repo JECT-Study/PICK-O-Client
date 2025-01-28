@@ -9,33 +9,28 @@ type MyWrittenTransformed = Omit<MyWritten, 'content'> & {
 };
 
 export const useMyWrittensQuery = () => {
-  const {
-    data: myWrittenData,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    isLoading,
-  } = useInfiniteScroll<MyWritten, MyWrittenTransformed>(
-    ['myWritten'],
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
+    useInfiniteScroll<MyWritten, MyWrittenTransformed>(
+      ['myWritten'],
 
-    async ({ pageParam = 0 }) => {
-      return getMyWritten(pageParam, 20);
-    },
+      async ({ pageParam = 0 }) => {
+        return getMyWritten(pageParam, 20);
+      },
 
-    (infiniteData: InfiniteData<MyWritten>): MyWrittenTransformed => {
-      const firstPage = infiniteData.pages[0];
+      (infiniteData: InfiniteData<MyWritten>): MyWrittenTransformed => {
+        const firstPage = infiniteData.pages[0];
 
-      return {
-        ...firstPage,
-        content: infiniteData.pages.flatMap((page) =>
-          page.content.map((item) => transformWrittenItem(item)),
-        ),
-      };
-    },
-  );
+        return {
+          ...firstPage,
+          content: infiniteData.pages.flatMap((page) =>
+            page.content.map((item) => transformWrittenItem(item)),
+          ),
+        };
+      },
+    );
 
   return {
-    myWritten: myWrittenData,
+    data,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,

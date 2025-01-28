@@ -9,33 +9,28 @@ type MyCommentTransformed = Omit<MyComment, 'content'> & {
 };
 
 export const useMyCommentsQuery = () => {
-  const {
-    data: myCommentsData,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    isLoading,
-  } = useInfiniteScroll<MyComment, MyCommentTransformed>(
-    ['myComments'],
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
+    useInfiniteScroll<MyComment, MyCommentTransformed>(
+      ['myComments'],
 
-    async ({ pageParam = 0 }) => {
-      return getMyComment(pageParam, 20);
-    },
+      async ({ pageParam = 0 }) => {
+        return getMyComment(pageParam, 20);
+      },
 
-    (infiniteData: InfiniteData<MyComment>): MyCommentTransformed => {
-      const firstPage = infiniteData.pages[0];
+      (infiniteData: InfiniteData<MyComment>): MyCommentTransformed => {
+        const firstPage = infiniteData.pages[0];
 
-      return {
-        ...firstPage,
-        content: infiniteData.pages.flatMap((page) =>
-          page.content.map((item) => transformCommentItem(item)),
-        ),
-      };
-    },
-  );
+        return {
+          ...firstPage,
+          content: infiniteData.pages.flatMap((page) =>
+            page.content.map((item) => transformCommentItem(item)),
+          ),
+        };
+      },
+    );
 
   return {
-    myComments: myCommentsData,
+    data,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,

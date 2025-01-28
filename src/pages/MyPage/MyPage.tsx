@@ -133,7 +133,7 @@ const MyPage = () => {
     if (selectedGroup === OptionKeys.TALK_PICK) {
       switch (selectedOption) {
         case 'bookmarks': {
-          const infiniteData = myBookmarksQuery.myBookmarks;
+          const infiniteData = myBookmarksQuery.data;
           if (!infiniteData) return null;
 
           const allContent = infiniteData.pages.flatMap((page) => page.content);
@@ -152,17 +152,17 @@ const MyPage = () => {
           );
         }
         case 'written': {
-          const data = myWrittensQuery.myWritten;
+          const { data } = myWrittensQuery;
           if (!data) return null;
           return <MyContentList items={data.content} />;
         }
         case 'votes': {
-          const data = myVotesQuery.myVote;
+          const { data } = myVotesQuery;
           if (!data) return null;
           return <InfoList items={data.content} />;
         }
         case 'comments': {
-          const data = myCommentsQuery.myComments;
+          const { data } = myCommentsQuery;
           if (!data) return null;
           return <InfoList items={data.content} />;
         }
@@ -172,7 +172,7 @@ const MyPage = () => {
     } else if (selectedGroup === OptionKeys.BALANCE_GAME) {
       switch (selectedOption) {
         case 'bookmarks': {
-          const infiniteData = gameBookmarksQuery.gameBookmark;
+          const infiniteData = gameBookmarksQuery.data;
           if (!infiniteData) return null;
 
           const allContent = infiniteData.pages.flatMap((page) => page.content);
@@ -191,7 +191,7 @@ const MyPage = () => {
           );
         }
         case 'votes': {
-          const infiniteData = gameVotesQuery.gameVote;
+          const infiniteData = gameVotesQuery.data;
           if (!infiniteData) return null;
 
           const allContent = infiniteData.pages.flatMap((page) => page.content);
@@ -210,7 +210,7 @@ const MyPage = () => {
           );
         }
         case 'written': {
-          const data = gameWrittensQuery.gameWritten;
+          const { data } = gameWrittensQuery;
           if (!data) return null;
           return <MyBalanceGameList items={data.content} />;
         }

@@ -9,32 +9,27 @@ type GameWrittenTransformed = Omit<GameWritten, 'content'> & {
 };
 
 export const useGameWrittensQuery = () => {
-  const {
-    data: gameWrittensData,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    isLoading,
-  } = useInfiniteScroll<GameWritten, GameWrittenTransformed>(
-    ['gameWritten'],
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
+    useInfiniteScroll<GameWritten, GameWrittenTransformed>(
+      ['gameWritten'],
 
-    async ({ pageParam = 0 }) => {
-      return getGameWritten(pageParam, 20);
-    },
+      async ({ pageParam = 0 }) => {
+        return getGameWritten(pageParam, 20);
+      },
 
-    (infiniteData: InfiniteData<GameWritten>): GameWrittenTransformed => {
-      const firstPage = infiniteData.pages[0];
-      return {
-        ...firstPage,
-        content: infiniteData.pages.flatMap((page) =>
-          page.content.map((item) => transformGameWrittenItem(item)),
-        ),
-      };
-    },
-  );
+      (infiniteData: InfiniteData<GameWritten>): GameWrittenTransformed => {
+        const firstPage = infiniteData.pages[0];
+        return {
+          ...firstPage,
+          content: infiniteData.pages.flatMap((page) =>
+            page.content.map((item) => transformGameWrittenItem(item)),
+          ),
+        };
+      },
+    );
 
   return {
-    gameWritten: gameWrittensData,
+    data,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,

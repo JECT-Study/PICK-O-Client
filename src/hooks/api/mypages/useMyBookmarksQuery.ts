@@ -39,7 +39,7 @@ export const useMyBookmarksQuery = () => {
     );
 
   return {
-    myBookmarks: data,
+    data,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,

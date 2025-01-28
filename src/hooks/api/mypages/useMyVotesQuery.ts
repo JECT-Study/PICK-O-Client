@@ -9,33 +9,28 @@ type MyVoteTransformed = Omit<MyVote, 'content'> & {
 };
 
 export const useMyVotesQuery = () => {
-  const {
-    data: myVoteData,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    isLoading,
-  } = useInfiniteScroll<MyVote, MyVoteTransformed>(
-    ['myVote'],
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
+    useInfiniteScroll<MyVote, MyVoteTransformed>(
+      ['myVote'],
 
-    async ({ pageParam = 0 }) => {
-      return getMyVote(pageParam, 20);
-    },
+      async ({ pageParam = 0 }) => {
+        return getMyVote(pageParam, 20);
+      },
 
-    (infiniteData: InfiniteData<MyVote>): MyVoteTransformed => {
-      const firstPage = infiniteData.pages[0];
-      return {
-        ...firstPage,
+      (infiniteData: InfiniteData<MyVote>): MyVoteTransformed => {
+        const firstPage = infiniteData.pages[0];
+        return {
+          ...firstPage,
 
-        content: infiniteData.pages.flatMap((page) =>
-          page.content.map((item) => transformVoteItem(item)),
-        ),
-      };
-    },
-  );
+          content: infiniteData.pages.flatMap((page) =>
+            page.content.map((item) => transformVoteItem(item)),
+          ),
+        };
+      },
+    );
 
   return {
-    myVote: myVoteData,
+    data,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
