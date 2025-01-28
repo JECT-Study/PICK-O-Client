@@ -12,6 +12,7 @@ export const notificationItemStyle = css({
   width: '392px',
   '@media (max-width: 430px)': {
     width: '335px',
+    boxShadow: '1px 1px 7px rgba(0, 0, 0, 0.1)',
   },
 });
 

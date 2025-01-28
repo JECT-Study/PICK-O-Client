@@ -5,15 +5,17 @@ export const containerStyle = css({
 });
 
 export const notificationContentStyle = css({
-  flex: 1,
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+  gap: '10px',
   overflowY: 'auto',
-  marginTop: '18px',
 });
 
 export const buttonStyle = css({
   border: 'none',
   background: 'transparent',
-  width: '100%',
-  textAlign: 'left',
+  width: '335px',
   cursor: 'pointer',
 });
