@@ -18,18 +18,18 @@ import {
 export interface NotificationListProps {
   isNew?: boolean;
   notifications: NotificationItemProps[];
-  // onClickNotification?: (notificationId: number) => void;
+  onClickNotification?: (notificationId: number) => void;
 }
 
 const Notification = ({
   isNew = false,
   notifications,
-  // onClickNotification,
+  onClickNotification,
 }: NotificationListProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const handleNotification = () => {
-    setIsOpen(!isOpen);
+    setIsOpen((prev) => !prev);
   };
 
   return (
@@ -42,7 +42,8 @@ const Notification = ({
       ) : (
         <NotificationBell css={buttonStyle} onClick={handleNotification} />
       )}
-      {isOpen ? (
+
+      {isOpen && (
         <div css={notificationStyle}>
           <div css={titleStyle}>알림</div>
           <div css={notificationContentStyle}>
@@ -52,9 +53,14 @@ const Notification = ({
                 aria-label="알림 아이템"
                 css={notificationItemStyle}
                 key={notification.id}
-                // onClick={() => onClickNotification(notification.id as number)}
+                onClick={() =>
+                  onClickNotification && notification.id != null
+                    ? onClickNotification(notification.id)
+                    : undefined
+                }
               >
                 <NotificationItem
+                  id={notification.id}
                   category={notification.category}
                   createdAt={notification.createdAt}
                   postTitle={notification.postTitle}
@@ -65,7 +71,7 @@ const Notification = ({
             ))}
           </div>
         </div>
-      ) : null}
+      )}
     </div>
   );
 };
