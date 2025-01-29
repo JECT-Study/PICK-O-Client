@@ -8,7 +8,7 @@ import Divider from '@/components/atoms/Divider/Divider';
 import SocialLoginButton from '@/components/atoms/SocialLoginButton/SocialLoginButton';
 import { useLoginForm } from '@/hooks/login/useLoginForm';
 import type { State } from '@/pages/LoginPage/LoginPage';
-import * as S from './LoginForm.style';
+import * as S from './MobileLoginForm.style';
 
 export interface LoginFormProps {
   showToastModal?: (message: string, callback?: () => void) => void;
@@ -16,7 +16,7 @@ export interface LoginFormProps {
   onModalLoginSuccess?: () => void;
 }
 
-const LoginForm = ({
+const MobileLoginForm = ({
   showToastModal,
   loginState,
   onModalLoginSuccess,
@@ -95,4 +95,4 @@ const LoginForm = ({
   );
 };
 
-export default LoginForm;
+export default MobileLoginForm;

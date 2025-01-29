@@ -3,13 +3,13 @@ import store from '@/store';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import ReactQueryProvider from '@/providers/ReactQueryProvider';
-import LoginForm from '@/components/mobile/molecules/LoginForm/LoginForm';
+import MobileLoginForm from '@/components/mobile/molecules/MobileLoginForm/MobileLoginForm';
 import type { Meta, StoryObj } from '@storybook/react';
 import { storyContainer, storyInnerContainer } from '@/stories/story.styles';
 
 const meta = {
-  title: 'mobile/molecules/LoginForm',
-  component: LoginForm,
+  title: 'mobile/molecules/MobileLoginForm',
+  component: MobileLoginForm,
   parameters: {
     layout: 'centered',
   },
@@ -26,7 +26,7 @@ const meta = {
       </Provider>
     ),
   ],
-} satisfies Meta<typeof LoginForm>;
+} satisfies Meta<typeof MobileLoginForm>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -37,7 +37,7 @@ export const All: Story = {
   render: (args) => (
     <ul css={storyContainer}>
       <li css={storyInnerContainer}>
-        <LoginForm {...args} />
+        <MobileLoginForm {...args} />
       </li>
     </ul>
   ),

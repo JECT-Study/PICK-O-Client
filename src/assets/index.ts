@@ -136,6 +136,7 @@ export { default as MobileKakaoLogin } from './svg/mobile-kakao-login.svg';
 export { default as MobileGoogleLogin } from './svg/mobile-google-login.svg';
 export { default as MobileNaverLogin } from './svg/mobile-naver-login.svg';
 export { default as MobileRecentLogin } from './svg/mobile-recent-login.svg';
+export { default as LogoMedium } from './svg/logo-medium.svg';
 
 // TODO: 이전 SVG
 export { default as Email } from './svg/email.svg';
