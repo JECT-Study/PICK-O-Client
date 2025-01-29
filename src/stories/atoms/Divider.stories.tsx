@@ -15,6 +15,10 @@ const meta = {
       options: ['width', 'height'],
       control: { type: 'radio' },
     },
+    tone: {
+      options: ['gy', 'wv'],
+      control: { type: 'radio' },
+    },
     length: { control: { type: 'number' } },
   },
   args: {
@@ -29,6 +33,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     orientation: 'height',
+    tone: 'gy',
     length: 14,
   },
 };
@@ -39,10 +44,12 @@ export const All: Story = {
       <li css={storyInnerContainer}>
         <h3>Height Divider</h3>
         <Divider {...args} />
+        <Divider {...args} tone="wv" />
       </li>
       <li css={storyInnerContainer}>
         <h3>Width Divider</h3>
         <Divider orientation="width" length={522} />
+        <Divider orientation="width" length={522} tone="wv" />
       </li>
     </ul>
   ),
