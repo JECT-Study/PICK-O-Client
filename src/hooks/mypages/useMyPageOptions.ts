@@ -1,53 +1,51 @@
 import { useState, useEffect, useCallback } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { OptionKeys, optionSets } from '@/constants/optionSets';
-import { validateUrlParam } from '@/utils/validateUrlParam';
-
-const isValidOptionKey = (value: string): boolean => {
-  return Object.values(OptionKeys).includes(value as OptionKeys);
-};
 
 export const useMyPageOptions = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
 
-  const initialGroup = validateUrlParam(
-    searchParams.get('group'),
+  const [selectedGroup, setSelectedGroup] = useState<OptionKeys>(
     OptionKeys.TALK_PICK,
-    isValidOptionKey,
   );
-  const initialOption =
-    searchParams.get('option') ?? optionSets[initialGroup][0].value;
-
-  const [selectedGroup, setSelectedGroup] = useState<OptionKeys>(initialGroup);
-  const [selectedOption, setSelectedOption] = useState<string>(initialOption);
+  const [selectedOption, setSelectedOption] = useState<string>(
+    optionSets[OptionKeys.TALK_PICK][0].value,
+  );
 
   useEffect(() => {
-    const group = validateUrlParam(
-      searchParams.get('group'),
-      OptionKeys.TALK_PICK,
-      isValidOptionKey,
-    );
-    const option = searchParams.get('option') ?? optionSets[group][0].value;
-    setSelectedGroup(group);
-    setSelectedOption(option);
-  }, [searchParams]);
+    const pathArr = pathname.split('/');
+
+    const newGroup: OptionKeys =
+      pathArr[2] === 'balancegame'
+        ? OptionKeys.BALANCE_GAME
+        : OptionKeys.TALK_PICK;
+
+    const defaultOpt = optionSets[newGroup][0].value;
+    const newOption = pathArr[3] || defaultOpt;
+
+    setSelectedGroup(newGroup);
+    setSelectedOption(newOption);
+  }, [pathname]);
 
   const handleGroupSelect = useCallback(
     (group: OptionKeys) => {
-      const firstOption = optionSets[group][0].value;
-      setSelectedGroup(group);
-      setSelectedOption(firstOption);
-      setSearchParams({ group });
+      const defaultOpt = optionSets[group][0].value;
+      const groupPath =
+        group === OptionKeys.BALANCE_GAME ? 'balancegame' : 'talkpick';
+
+      navigate(`/mypage/${groupPath}/${defaultOpt}`);
     },
-    [setSearchParams],
+    [navigate],
   );
 
   const handleOptionSelect = useCallback(
     (option: string) => {
-      setSelectedOption(option);
-      setSearchParams({ group: selectedGroup, option });
+      const groupPath =
+        selectedGroup === OptionKeys.BALANCE_GAME ? 'balancegame' : 'talkpick';
+      navigate(`/mypage/${groupPath}/${option}`);
     },
-    [selectedGroup, setSearchParams],
+    [navigate, selectedGroup],
   );
 
   const options = optionSets[selectedGroup];
