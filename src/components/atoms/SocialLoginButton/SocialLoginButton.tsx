@@ -1,28 +1,43 @@
 import React, { forwardRef } from 'react';
 import type { ComponentPropsWithRef, ForwardedRef } from 'react';
-import { KakaoLogin, GoogleLogin, NaverLogin, RecentLogin } from '@/assets';
+import {
+  KakaoLogin,
+  GoogleLogin,
+  NaverLogin,
+  MobileKakaoLogin,
+  MobileGoogleLogin,
+  MobileNaverLogin,
+  RecentLogin,
+  MobileRecentLogin,
+} from '@/assets';
 import * as S from './SocialLoginButton.style';
 
 export interface SocialLoginButtonProps
   extends ComponentPropsWithRef<'button'> {
   variant: 'kakao' | 'google' | 'naver';
+  size?: 'medium' | 'small';
   recent?: boolean;
 }
 
 const SocialLoginButton = (
-  { variant, recent = false, ...props }: SocialLoginButtonProps,
+  {
+    variant,
+    size = 'medium',
+    recent = false,
+    ...props
+  }: SocialLoginButtonProps,
   ref: ForwardedRef<HTMLButtonElement>,
 ) => {
   let ImageComponent;
   switch (variant) {
     case 'kakao':
-      ImageComponent = KakaoLogin;
+      ImageComponent = size === 'medium' ? KakaoLogin : MobileKakaoLogin;
       break;
     case 'google':
-      ImageComponent = GoogleLogin;
+      ImageComponent = size === 'medium' ? GoogleLogin : MobileGoogleLogin;
       break;
     case 'naver':
-      ImageComponent = NaverLogin;
+      ImageComponent = size === 'medium' ? NaverLogin : MobileNaverLogin;
       break;
     default:
       return null;
@@ -30,10 +45,20 @@ const SocialLoginButton = (
 
   return (
     <div css={S.socialLoginStyling}>
-      <button type="button" ref={ref} css={S.loginButtonStyling} {...props}>
+      <button
+        type="button"
+        ref={ref}
+        css={[S.loginButtonStyling, S.getSizeStyling(size)]}
+        {...props}
+      >
         <ImageComponent />
       </button>
-      {recent && <RecentLogin css={S.recentLoginStyling} />}
+      {recent &&
+        (size === 'medium' ? (
+          <RecentLogin css={S.getRecentLoginStyling(size)} />
+        ) : (
+          <MobileRecentLogin css={S.getRecentLoginStyling(size)} />
+        ))}
     </div>
   );
 };

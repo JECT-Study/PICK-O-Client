@@ -132,6 +132,10 @@ export { default as SadEmoji } from './svg/sad-emoji.svg';
 export { default as MobileTrashCan } from './svg/mobile-trash-can.svg';
 export { default as MobileChoicePlus } from './svg/mobile-choice-plus.svg';
 export { default as MobileChoiceMinus } from './svg/mobile-choice-minus.svg';
+export { default as MobileKakaoLogin } from './svg/mobile-kakao-login.svg';
+export { default as MobileGoogleLogin } from './svg/mobile-google-login.svg';
+export { default as MobileNaverLogin } from './svg/mobile-naver-login.svg';
+export { default as MobileRecentLogin } from './svg/mobile-recent-login.svg';
 
 // TODO: 이전 SVG
 export { default as Email } from './svg/email.svg';
