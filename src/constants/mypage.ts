@@ -1,0 +1,1 @@
+export const SKELETON_ITEMS_DEFAULT = 8;
