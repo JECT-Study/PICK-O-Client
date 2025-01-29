@@ -96,6 +96,15 @@ const typo = {
       letterSpacing: `${16 * -0.05}px`,
     },
   },
+  Text: {
+    Regular: {
+      fontFamily: 'Pretendard',
+      fontSize: '14px',
+      fontWeight: 400,
+      lineHeight: '1.6',
+      letterSpacing: `${16 * -0.05}px`,
+    },
+  },
   Number: {
     SemiBold: {
       fontFamily: 'Poppins-Medium',
