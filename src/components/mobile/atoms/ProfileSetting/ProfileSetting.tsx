@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { DefaultPerson, Plus } from '@/assets';
+import { MobileDefaultPerson, MobilePlus } from '@/assets';
 import type { ComponentPropsWithoutRef, ForwardedRef } from 'react';
 import * as S from './ProfileSetting.style';
 
@@ -24,7 +24,7 @@ const ProfileSetting = (
             />
           </div>
           <div css={S.profilePlusWrapper} {...attributes}>
-            <Plus />
+            <MobilePlus />
           </div>
         </>
       ) : (
@@ -34,10 +34,10 @@ const ProfileSetting = (
             {...attributes}
             ref={ref}
           >
-            <DefaultPerson />
+            <MobileDefaultPerson />
           </div>
           <div css={S.profilePlusWrapper} {...attributes}>
-            <Plus />
+            <MobilePlus />
           </div>
         </>
       )}

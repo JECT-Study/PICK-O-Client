@@ -3,7 +3,7 @@ import { useDropzone } from 'react-dropzone';
 import { useFriendsListQuery } from '@/hooks/api/friends/useFriendsListQuery';
 import { useFileUploadMutation } from '@/hooks/api/file/useFileUploadMutation';
 
-export interface InputProfileImageProps {
+export interface ProfileImageProps {
   setImageFileId: (name: string, profileImgId: number | null) => void;
   imgSrc?: string;
   setIsImageChanged?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -13,7 +13,7 @@ export const useCheckProfileImage = ({
   setImageFileId,
   imgSrc,
   setIsImageChanged,
-}: InputProfileImageProps) => {
+}: ProfileImageProps) => {
   const [imageSrc, setImageSrc] = useState<string>(imgSrc || '');
   const [isError, setIsError] = useState<boolean>(false);
 
