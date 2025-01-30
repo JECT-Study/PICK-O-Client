@@ -20,6 +20,7 @@ import ChangeUserInfoPage from './pages/ChangeUserInfoPage/ChangeUserInfoPage';
 import TalkPickPage from './pages/TalkPickPage/TalkPickPage';
 import TalkPickPlacePage from './pages/TalkPickPlacePage/TalkPickPlacePage';
 import SignUpPage from './pages/SignUpPage/SignUpPage';
+import SignUpMobilePage from './pages/mobile/SignUpMobilePage/SignUpMobilePage';
 import BalanceGamePage from './pages/BalanceGamePage/BalanceGamePage';
 import BalanceGameMobilePage from './pages/mobile/BalanceGameMobilePage/BalanceGameMobilePage';
 import BalanceGameCreationPage from './pages/BalanceGameCreationPage/BalanceGameCreationPage';
@@ -67,7 +68,10 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<LandingPage />} />
-          <Route path={PATH.SIGN_UP} element={<SignUpPage />} />
+          <Route
+            path={PATH.SIGN_UP}
+            element={isMobile ? <SignUpMobilePage /> : <SignUpPage />}
+          />
           <Route path={PATH.LOGIN} element={<LoginPage />} />
           <Route path={PATH.CHANGE.PASSWORD} element={<ChangePasswordPage />} />
           <Route path={PATH.TODAY_TALKPICK} element={<TalkPickPage />} />

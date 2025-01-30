@@ -148,6 +148,13 @@ const typo = {
         lineHeight: '1.6',
         letterSpacing: `${24 * -0.05}px`,
       },
+      SemiBold_22: {
+        fontFamily: 'Pretendard',
+        fontSize: '22px',
+        fontWeight: 600,
+        lineHeight: '1.6',
+        letterSpacing: `${22 * -0.05}px`,
+      },
     },
     Main: {
       Medium_16: {

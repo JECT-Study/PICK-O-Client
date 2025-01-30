@@ -11,6 +11,7 @@ export const profileSettingInnerContainer = css({
   borderRadius: '50%',
   overflow: 'hidden',
   border: `3px solid ${color.WT}`,
+  boxShadow: '0px 1px 6px rgba(0, 0, 0, 0.1)',
 });
 
 export const profileImageWrapper = css({
