@@ -15,7 +15,6 @@ export const inputWrapperStyling = (success: boolean) =>
     alignItems: 'center',
     width: '100%',
     height: '44px',
-    padding: '4px 0',
     gap: '15px',
     borderBottom: success
       ? `1px solid ${color.MAIN}`

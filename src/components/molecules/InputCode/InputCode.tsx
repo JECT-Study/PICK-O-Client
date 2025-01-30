@@ -5,9 +5,12 @@ import React, { ChangeEvent, useEffect } from 'react';
 import Button from '@/components/atoms/Button/Button';
 import Input from '@/components/atoms/Input/Input';
 import Label from '@/components/atoms/Label/Label';
+import MobileInput from '@/components/mobile/atoms/Input/Input';
+import MobileButton from '@/components/mobile/atoms/Button/Button';
 import * as S from './InputCode.style';
 
 interface InputCodeProps {
+  isMobile?: boolean;
   value: Pick<MemberForm, 'email' | 'verificationCode'>;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   onSuccessChange: (name: string, value: boolean) => void;
@@ -16,6 +19,7 @@ interface InputCodeProps {
 }
 
 const InputCode = ({
+  isMobile = false,
   value,
   onChange,
   onSuccessChange,
@@ -34,7 +38,28 @@ const InputCode = ({
     }
   }, [errorMessage]);
 
-  return (
+  return isMobile ? (
+    <MobileInput
+      id="verificationCode"
+      name="verificationCode"
+      placeholder="인증번호를 입력해주세요."
+      isError={isError}
+      errorMessage={errorMessage}
+      value={value.verificationCode}
+      ref={inputRef}
+      onChange={onChange}
+      disabled={!sendSuccess}
+      btn={
+        <MobileButton
+          onClick={handleSubmit}
+          css={S.mobileButtonStyling}
+          active={sendSuccess}
+        >
+          확인
+        </MobileButton>
+      }
+    />
+  ) : (
     <div css={S.inputCodeContainer}>
       <Label id="verificationCode" css={S.labelStyling}>
         인증번호
