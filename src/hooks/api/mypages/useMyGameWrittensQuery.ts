@@ -4,26 +4,27 @@ import { useInfiniteScroll } from '@/hooks/api/mypages/useInfiniteScroll';
 import { InfiniteData } from '@tanstack/react-query';
 import { transformGameWrittenItem } from '@/utils/transformBalanceGame';
 
-type GameWrittenTransformed = Omit<GameWritten, 'content'> & {
+export interface GameWrittenTransformedPage
+  extends Omit<GameWritten, 'content'> {
   content: MyBalanceGameItem[];
-};
+}
 
 export const useMyGameWrittensQuery = () => {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-    useInfiniteScroll<GameWritten, GameWrittenTransformed>(
+    useInfiniteScroll<GameWritten, InfiniteData<GameWrittenTransformedPage>>(
       ['gameWritten'],
-
       async ({ pageParam = 0 }) => {
         return getGameWritten(pageParam, 20);
       },
+      (infiniteData: InfiniteData<GameWritten>) => {
+        const newPages = infiniteData.pages.map((page) => ({
+          ...page,
+          content: page.content.map((item) => transformGameWrittenItem(item)),
+        }));
 
-      (infiniteData: InfiniteData<GameWritten>): GameWrittenTransformed => {
-        const firstPage = infiniteData.pages[0];
         return {
-          ...firstPage,
-          content: infiniteData.pages.flatMap((page) =>
-            page.content.map((item) => transformGameWrittenItem(item)),
-          ),
+          ...infiniteData,
+          pages: newPages,
         };
       },
     );
