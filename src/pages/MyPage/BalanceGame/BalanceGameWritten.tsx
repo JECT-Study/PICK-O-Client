@@ -14,7 +14,9 @@ const BalanceGameWritten = () => {
     return null;
   }
 
-  return <MyBalanceGameList items={data.content} />;
+  const allContent = data.pages.flatMap((page) => page.content);
+
+  return <MyBalanceGameList items={allContent} />;
 };
 
 export default BalanceGameWritten;
