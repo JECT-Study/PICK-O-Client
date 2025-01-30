@@ -27,12 +27,3 @@ export const contentList = css({
   overflowY: 'auto',
   position: 'relative',
 });
-
-export const loader = css({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  padding: '20px',
-  color: color.BK,
-  marginTop: '10px',
-});
