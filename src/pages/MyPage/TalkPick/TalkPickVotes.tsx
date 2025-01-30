@@ -15,7 +15,9 @@ const TalkPickVotes = () => {
     return null;
   }
 
-  return <InfoList items={data.content} />;
+  const allContent = data.pages.flatMap((page) => page.content);
+
+  return <InfoList items={allContent} />;
 };
 
 export default TalkPickVotes;

@@ -15,7 +15,9 @@ const TalkPickWritten = () => {
     return null;
   }
 
-  return <MyContentList items={data.content} />;
+  const allContent = data.pages.flatMap((page) => page.content);
+
+  return <MyContentList items={allContent} />;
 };
 
 export default TalkPickWritten;
