@@ -10,7 +10,7 @@ import SearchTalkPickPage from '@/pages/SearchResultsPage/SearchTalkPickPage';
 import BalanceGameLayout from '@/pages/MyPage/BalanceGameLayout';
 import TalkPickLayout from '@/pages/MyPage/TalkPickLayout';
 import TalkPickBookmarks from '@/pages/MyPage/TalkPick/TalkPickBookmarks';
-import TalkPickWritten from '@/pages/MyPage/TalkPick/TalkPcikWritten';
+import TalkPickWritten from '@/pages/MyPage/TalkPick/TalkPickWritten';
 import BalanceGameVotes from '@/pages/MyPage/BalanceGame/BalanceGameVotes';
 import BalanceGameBookmarks from '@/pages/MyPage/BalanceGame/BalanceGameBookmarks';
 import TalkPickVotes from '@/pages/MyPage/TalkPick/TalkPickVotes';
