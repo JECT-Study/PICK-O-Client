@@ -8,7 +8,7 @@ type MyWrittenTransformed = Omit<MyWritten, 'content'> & {
   content: MyContentItem[];
 };
 
-export const useMyWrittensQuery = () => {
+export const useMyTalkPickWrittensQuery = () => {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useInfiniteScroll<MyWritten, MyWrittenTransformed>(
       ['myWritten'],

@@ -8,7 +8,7 @@ type MyCommentTransformed = Omit<MyComment, 'content'> & {
   content: InfoItem[];
 };
 
-export const useMyCommentsQuery = () => {
+export const useMyTalkPickCommentsQuery = () => {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useInfiniteScroll<MyComment, MyCommentTransformed>(
       ['myComments'],

@@ -5,8 +5,8 @@ import {
 } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 import { Id, ServerResponse } from '@/types/api';
-import { GameBookmarkTransformedPage } from '@/hooks/api/mypages/useGameBookmarksQuery';
-import { GameVoteTransformedPage } from '@/hooks/api/mypages/useGameVotesQuery';
+import { GameBookmarkTransformedPage } from '@/hooks/api/mypages/useMyGameBookmarksQuery';
+import { GameVoteTransformedPage } from '@/hooks/api/mypages/useMyGameVotesQuery';
 import { postDoneGameBookmark } from '@/api/bookmarks';
 
 export const useMyBalanceGameBookmarkCreateMutation = () => {

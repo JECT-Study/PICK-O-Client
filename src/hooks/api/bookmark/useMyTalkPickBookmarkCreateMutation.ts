@@ -3,7 +3,7 @@ import {
   useMutation,
   InfiniteData,
 } from '@tanstack/react-query';
-import { MyBookmarkTransformedPage } from '@/hooks/api/mypages/useMyBookmarksQuery';
+import { MyBookmarkTransformedPage } from '@/hooks/api/mypages/useMyTalkPickBookmarksQuery';
 import { postTalkPickBookmark } from '@/api/bookmarks';
 import { ServerResponse } from '@/types/api';
 import { AxiosResponse } from 'axios';

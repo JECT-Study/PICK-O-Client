@@ -1,10 +1,10 @@
 import React from 'react';
-import { useGameWrittensQuery } from '@/hooks/api/mypages/useGameWrittensQuery';
+import { useMyGameWrittensQuery } from '@/hooks/api/mypages/useMyGameWrittensQuery';
 import MyBalanceGameList from '@/components/organisms/MyBalanceGameList/MyBalanceGameList';
 import MypageCardSkeleton from '@/components/atoms/MypageCardSkeleton/MypageCardSkeleton';
 
 const BalanceGameWritten = () => {
-  const { data, isLoading } = useGameWrittensQuery();
+  const { data, isLoading } = useMyGameWrittensQuery();
 
   if (isLoading) {
     return <MypageCardSkeleton />;

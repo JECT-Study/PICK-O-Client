@@ -6,8 +6,8 @@ import {
 import { AxiosResponse } from 'axios';
 import { Id, ServerResponse } from '@/types/api';
 import { deleteDoneGameBookmark } from '@/api/bookmarks';
-import { GameBookmarkTransformedPage } from '@/hooks/api/mypages/useGameBookmarksQuery';
-import { GameVoteTransformedPage } from '@/hooks/api/mypages/useGameVotesQuery';
+import { GameBookmarkTransformedPage } from '@/hooks/api/mypages/useMyGameBookmarksQuery';
+import { GameVoteTransformedPage } from '@/hooks/api/mypages/useMyGameVotesQuery';
 
 export const useMyBalanceGameBookmarkDeleteMutation = () => {
   const queryClient = useQueryClient();

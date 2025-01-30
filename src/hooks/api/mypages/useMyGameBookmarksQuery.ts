@@ -9,7 +9,7 @@ export interface GameBookmarkTransformedPage
   content: MyBalanceGameItem[];
 }
 
-export const useGameBookmarksQuery = () => {
+export const useMyGameBookmarksQuery = () => {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useInfiniteScroll<GameBookmark, InfiniteData<GameBookmarkTransformedPage>>(
       ['gameBookmark'],

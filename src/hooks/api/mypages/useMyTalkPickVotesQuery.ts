@@ -8,7 +8,7 @@ type MyVoteTransformed = Omit<MyVote, 'content'> & {
   content: InfoItem[];
 };
 
-export const useMyVotesQuery = () => {
+export const useMyTalkPickVotesQuery = () => {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useInfiniteScroll<MyVote, MyVoteTransformed>(
       ['myVote'],

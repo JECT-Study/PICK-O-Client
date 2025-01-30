@@ -1,5 +1,5 @@
 import React from 'react';
-import { useMyBookmarksQuery } from '@/hooks/api/mypages/useMyBookmarksQuery';
+import { useMyTalkPickBookmarksQuery } from '@/hooks/api/mypages/useMyTalkPickBookmarksQuery';
 import { useMyTalkPickBookmarkCreateMutation } from '@/hooks/api/bookmark/useMyTalkPickBookmarkCreateMutation';
 import { useMyTalkPickBookmarkDeleteMutation } from '@/hooks/api/bookmark/useMyTalkPickBookmarkDeleteMutation';
 import MyContentList from '@/components/organisms/MyContentList/MyContentList';
@@ -13,7 +13,7 @@ import { showToast } from '@/store/slice/toastSlice';
 
 const TalkPickBookmarks = () => {
   const dispatch = useDispatch();
-  const { data, isLoading } = useMyBookmarksQuery();
+  const { data, isLoading } = useMyTalkPickBookmarksQuery();
   const createBookmark = useMyTalkPickBookmarkCreateMutation();
   const deleteBookmark = useMyTalkPickBookmarkDeleteMutation();
 

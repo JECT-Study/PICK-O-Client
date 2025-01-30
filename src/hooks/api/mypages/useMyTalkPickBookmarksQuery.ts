@@ -8,7 +8,7 @@ export type MyBookmarkTransformedPage = Omit<MyBookmark, 'content'> & {
   content: MyContentItem[];
 };
 
-export const useMyBookmarksQuery = () => {
+export const useMyTalkPickBookmarksQuery = () => {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useInfiniteScroll<MyBookmark, InfiniteData<MyBookmarkTransformedPage>>(
       ['myBookmarks'],

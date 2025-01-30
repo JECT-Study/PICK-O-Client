@@ -8,7 +8,7 @@ type GameWrittenTransformed = Omit<GameWritten, 'content'> & {
   content: MyBalanceGameItem[];
 };
 
-export const useGameWrittensQuery = () => {
+export const useMyGameWrittensQuery = () => {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useInfiniteScroll<GameWritten, GameWrittenTransformed>(
       ['gameWritten'],

@@ -8,7 +8,7 @@ export interface GameVoteTransformedPage extends Omit<GameVote, 'content'> {
   content: MyBalanceGameItem[];
 }
 
-export const useGameVotesQuery = (memberId: number) => {
+export const useMyGameVotesQuery = (memberId: number) => {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useInfiniteScroll<GameVote, InfiniteData<GameVoteTransformedPage>>(
       ['gameVote'],

@@ -4,7 +4,7 @@ import {
   useQueryClient,
 } from '@tanstack/react-query';
 import { deleteTalkPickBookmark } from '@/api/bookmarks';
-import { MyBookmarkTransformedPage } from '@/hooks/api/mypages/useMyBookmarksQuery';
+import { MyBookmarkTransformedPage } from '@/hooks/api/mypages/useMyTalkPickBookmarksQuery';
 import { AxiosResponse } from 'axios';
 import { ServerResponse } from '@/types/api';
 
