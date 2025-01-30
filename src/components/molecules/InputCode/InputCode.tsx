@@ -16,6 +16,7 @@ interface InputCodeProps {
   onSuccessChange: (name: string, value: boolean) => void;
   sendSuccess: boolean;
   handleVerifySuccess?: React.Dispatch<React.SetStateAction<boolean>>;
+  success?: boolean;
 }
 
 const InputCode = ({
@@ -25,6 +26,7 @@ const InputCode = ({
   onSuccessChange,
   sendSuccess,
   handleVerifySuccess,
+  success = false,
 }: InputCodeProps) => {
   const { inputRef, isError, errorMessage, handleSubmit } = useCheckCode(
     value,
@@ -49,6 +51,7 @@ const InputCode = ({
       ref={inputRef}
       onChange={onChange}
       disabled={!sendSuccess}
+      success={success}
       btn={
         <MobileButton
           onClick={handleSubmit}

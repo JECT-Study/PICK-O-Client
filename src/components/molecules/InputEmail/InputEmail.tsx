@@ -16,6 +16,7 @@ interface InputEmailProps {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   onSuccessChange?: (name: string, value: boolean) => void;
   handleSendSuccess?: React.Dispatch<React.SetStateAction<boolean>>;
+  success?: boolean;
 }
 
 const InputEmail = ({
@@ -25,6 +26,7 @@ const InputEmail = ({
   onChange,
   onSuccessChange,
   handleSendSuccess,
+  success = false,
 }: InputEmailProps) => {
   const { inputRef, isError, errorMessage, handleSubmit } = useCheckEmail(
     type,
@@ -48,6 +50,7 @@ const InputEmail = ({
       value={value}
       ref={inputRef}
       onChange={onChange}
+      success={success}
       btn={
         <MobileButton
           onClick={handleSubmit}

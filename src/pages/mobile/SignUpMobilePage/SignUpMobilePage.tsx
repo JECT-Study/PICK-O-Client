@@ -15,6 +15,7 @@ const SignUpMobilePage = () => {
     form,
     onChange,
     onSuccessChange,
+    successForm,
     setEach,
     isVisible,
     modalText,
@@ -44,6 +45,7 @@ const SignUpMobilePage = () => {
             onChange={onChange}
             onSuccessChange={onSuccessChange}
             handleSendSuccess={setSendSuccess}
+            success={successForm.email}
           />
           <InputCode
             isMobile
@@ -54,18 +56,21 @@ const SignUpMobilePage = () => {
             onChange={onChange}
             onSuccessChange={onSuccessChange}
             sendSuccess={sendSuccess}
+            success={successForm.verificationCode}
           />
           <InputNickname
             isMobile
             value={form.nickname}
             onChange={onChange}
             onSuccessChange={onSuccessChange}
+            success={successForm.nickname}
           />
           <InputPw
             isMobile
             value={form.password}
             onChange={onChange}
             onSuccessChange={onSuccessChange}
+            success={successForm.password}
           />
           <InputPwConfirm
             isMobile
@@ -73,6 +78,7 @@ const SignUpMobilePage = () => {
             onChange={onChange}
             onSuccessChange={onSuccessChange}
             pw={form.password}
+            success={successForm.passwordConfirm}
           />
         </div>
       </div>

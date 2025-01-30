@@ -12,6 +12,7 @@ interface InputPwConfirmProps {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   onSuccessChange?: (name: string, value: boolean) => void;
   pw: string;
+  success?: boolean;
 }
 
 const InputPwConfirm = ({
@@ -20,6 +21,7 @@ const InputPwConfirm = ({
   onChange,
   onSuccessChange,
   pw,
+  success = false,
 }: InputPwConfirmProps) => {
   const { inputRef, isError, errorMessage, handleVerify } =
     useCheckPasswordCheck({ value, pw });
@@ -49,6 +51,7 @@ const InputPwConfirm = ({
       onChange={onChange}
       onKeyDown={handleVerify}
       onBlur={handleVerify}
+      success={success}
     />
   ) : (
     <div css={S.inputPwConfirmContainer}>

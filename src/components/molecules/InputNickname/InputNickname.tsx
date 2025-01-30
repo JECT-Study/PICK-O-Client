@@ -14,6 +14,7 @@ interface InputNicknameProps {
   value: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   onSuccessChange?: (name: string, value: boolean) => void;
+  success?: boolean;
 }
 
 const InputNickname = ({
@@ -21,6 +22,7 @@ const InputNickname = ({
   value,
   onChange,
   onSuccessChange,
+  success = false,
 }: InputNicknameProps) => {
   const { inputRef, isError, errorMessage, handleSubmit } =
     useCheckNickname(value);
@@ -41,6 +43,7 @@ const InputNickname = ({
       value={value}
       ref={inputRef}
       onChange={onChange}
+      success={success}
       btn={
         <MobileButton
           onClick={handleSubmit}
