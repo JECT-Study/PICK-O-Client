@@ -1,23 +1,27 @@
 import React from 'react';
 import { useMyTalkPickCommentsQuery } from '@/hooks/api/mypages/useMyTalkPickCommentsQuery';
 import InfoList from '@/components/organisms/InfoList/InfoList';
-import MypageListSkeleton from '@/components/atoms/MypageListSkeleton/MypageListSkeleton';
-import { SKELETON_ITEMS_DEFAULT } from '@/constants/mypage';
+import InfiniteTalkPickList from '@/components/organisms/InfiniteTalkPickList/InfiniteTalkPickList';
+import { InfoItem } from '@/types/mypages';
 
 const TalkPickComments = () => {
-  const { data, isLoading } = useMyTalkPickCommentsQuery();
+  const { data, isLoading, hasNextPage, isFetchingNextPage, fetchNextPage } =
+    useMyTalkPickCommentsQuery();
 
-  if (isLoading) {
-    return <MypageListSkeleton count={SKELETON_ITEMS_DEFAULT} />;
-  }
+  const renderInfoList = (items: InfoItem[]) => {
+    return <InfoList items={items} />;
+  };
 
-  if (!data) {
-    return null;
-  }
-
-  const allContent = data.pages.flatMap((page) => page.content);
-
-  return <InfoList items={allContent} />;
+  return (
+    <InfiniteTalkPickList
+      data={data}
+      isLoading={isLoading}
+      hasNextPage={hasNextPage}
+      isFetchingNextPage={isFetchingNextPage}
+      fetchNextPage={fetchNextPage}
+      renderList={renderInfoList}
+    />
+  );
 };
 
 export default TalkPickComments;

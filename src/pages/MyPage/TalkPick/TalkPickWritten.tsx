@@ -1,23 +1,27 @@
 import React from 'react';
 import { useMyTalkPickWrittensQuery } from '@/hooks/api/mypages/useMyTalkPickWrittensQuery';
 import MyContentList from '@/components/organisms/MyContentList/MyContentList';
-import MypageListSkeleton from '@/components/atoms/MypageListSkeleton/MypageListSkeleton';
-import { SKELETON_ITEMS_DEFAULT } from '@/constants/mypage';
+import InfiniteTalkPickList from '@/components/organisms/InfiniteTalkPickList/InfiniteTalkPickList';
+import { MyContentItem } from '@/types/mypages';
 
 const TalkPickWritten = () => {
-  const { data, isLoading } = useMyTalkPickWrittensQuery();
+  const { data, isLoading, hasNextPage, isFetchingNextPage, fetchNextPage } =
+    useMyTalkPickWrittensQuery();
 
-  if (isLoading) {
-    return <MypageListSkeleton count={SKELETON_ITEMS_DEFAULT} />;
-  }
+  const renderMyContentList = (items: MyContentItem[]) => {
+    return <MyContentList items={items} />;
+  };
 
-  if (!data) {
-    return null;
-  }
-
-  const allContent = data.pages.flatMap((page) => page.content);
-
-  return <MyContentList items={allContent} />;
+  return (
+    <InfiniteTalkPickList
+      data={data}
+      isLoading={isLoading}
+      hasNextPage={hasNextPage}
+      isFetchingNextPage={isFetchingNextPage}
+      fetchNextPage={fetchNextPage}
+      renderList={renderMyContentList}
+    />
+  );
 };
 
 export default TalkPickWritten;

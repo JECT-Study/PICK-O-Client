@@ -10,18 +10,18 @@ import MypageListSkeleton from '@/components/atoms/MypageListSkeleton/MypageList
 import { SKELETON_ITEMS_DEFAULT } from '@/constants/mypage';
 import { useDispatch } from 'react-redux';
 import { showToast } from '@/store/slice/toastSlice';
+import InfiniteTalkPickList from '@/components/organisms/InfiniteTalkPickList/InfiniteTalkPickList';
 
 const TalkPickBookmarks = () => {
   const dispatch = useDispatch();
-  const { data, isLoading } = useMyTalkPickBookmarksQuery();
+  const { data, isLoading, hasNextPage, isFetchingNextPage, fetchNextPage } =
+    useMyTalkPickBookmarksQuery();
   const createBookmark = useMyTalkPickBookmarkCreateMutation();
   const deleteBookmark = useMyTalkPickBookmarkDeleteMutation();
 
   if (isLoading) {
     return <MypageListSkeleton count={SKELETON_ITEMS_DEFAULT} />;
   }
-
-  const allContent = data?.pages.flatMap((page) => page.content) ?? [];
 
   const handleBookmarkClick = <TData, TError>(
     item: MyContentItem,
@@ -69,15 +69,28 @@ const TalkPickBookmarks = () => {
     }
   };
 
+  const renderMyContentList = (items: MyContentItem[]) => {
+    return (
+      <MyContentList
+        items={items}
+        onBookmarkClick={(item) =>
+          handleBookmarkClick(
+            item,
+            item.bookmarked ? deleteBookmark.mutate : createBookmark.mutate,
+          )
+        }
+      />
+    );
+  };
+
   return (
-    <MyContentList
-      items={allContent}
-      onBookmarkClick={(item) =>
-        handleBookmarkClick(
-          item,
-          item.bookmarked ? deleteBookmark.mutate : createBookmark.mutate,
-        )
-      }
+    <InfiniteTalkPickList
+      data={data}
+      isLoading={isLoading}
+      hasNextPage={hasNextPage}
+      isFetchingNextPage={isFetchingNextPage}
+      fetchNextPage={fetchNextPage}
+      renderList={renderMyContentList}
     />
   );
 };
