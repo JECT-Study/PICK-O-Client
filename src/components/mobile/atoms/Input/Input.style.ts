@@ -6,7 +6,7 @@ export const inputContainerStyling = css({
   display: 'flex',
   flexDirection: 'column',
   width: '335px',
-  height: '68px',
+  minHeight: '68px',
 });
 
 export const inputWrapperStyling = (success: boolean) =>

@@ -32,43 +32,50 @@ const SignUpMobilePage = () => {
         </div>
       )}
       <div css={S.signUpHeadingStyling}>프로필 입력</div>
-      <div css={S.profileImageWrapper}>
-        <InputProfileImage isMobile setImageFileId={setEach} />
+      <div css={S.scrollFormStyling}>
+        <div css={S.profileImageWrapper}>
+          <InputProfileImage isMobile setImageFileId={setEach} />
+        </div>
+        <div css={S.inputWrapper}>
+          <InputEmail
+            isMobile
+            type="signup"
+            value={form.email}
+            onChange={onChange}
+            onSuccessChange={onSuccessChange}
+            handleSendSuccess={setSendSuccess}
+          />
+          <InputCode
+            isMobile
+            value={{
+              verificationCode: form.verificationCode,
+              email: form.email,
+            }}
+            onChange={onChange}
+            onSuccessChange={onSuccessChange}
+            sendSuccess={sendSuccess}
+          />
+          <InputNickname
+            isMobile
+            value={form.nickname}
+            onChange={onChange}
+            onSuccessChange={onSuccessChange}
+          />
+          <InputPw
+            isMobile
+            value={form.password}
+            onChange={onChange}
+            onSuccessChange={onSuccessChange}
+          />
+          <InputPwConfirm
+            isMobile
+            value={form.passwordConfirm}
+            onChange={onChange}
+            onSuccessChange={onSuccessChange}
+            pw={form.password}
+          />
+        </div>
       </div>
-      <InputEmail
-        isMobile
-        type="signup"
-        value={form.email}
-        onChange={onChange}
-        onSuccessChange={onSuccessChange}
-        handleSendSuccess={setSendSuccess}
-      />
-      <InputCode
-        isMobile
-        value={{ verificationCode: form.verificationCode, email: form.email }}
-        onChange={onChange}
-        onSuccessChange={onSuccessChange}
-        sendSuccess={sendSuccess}
-      />
-      <InputNickname
-        isMobile
-        value={form.nickname}
-        onChange={onChange}
-        onSuccessChange={onSuccessChange}
-      />
-      <InputPw
-        isMobile
-        value={form.password}
-        onChange={onChange}
-        onSuccessChange={onSuccessChange}
-      />
-      <InputPwConfirm
-        isMobile
-        value={form.passwordConfirm}
-        onChange={onChange}
-        onSuccessChange={onSuccessChange}
-        pw={form.password}
-      />
       <div css={S.btnContainer}>
         <Button active={false} onClick={handleCancel}>
           취소
