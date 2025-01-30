@@ -4,9 +4,9 @@ import { MyBookmark, MyContentItem } from '@/types/mypages';
 import { transformBookmarkItem } from '@/utils/transformTalkPick';
 import { InfiniteData } from '@tanstack/react-query';
 
-export type MyBookmarkTransformedPage = Omit<MyBookmark, 'content'> & {
+export interface MyBookmarkTransformedPage extends Omit<MyBookmark, 'content'> {
   content: MyContentItem[];
-};
+}
 
 export const useMyTalkPickBookmarksQuery = () => {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =

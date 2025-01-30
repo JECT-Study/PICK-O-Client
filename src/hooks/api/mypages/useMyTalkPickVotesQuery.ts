@@ -4,28 +4,29 @@ import { useInfiniteScroll } from '@/hooks/api/mypages/useInfiniteScroll';
 import { InfiniteData } from '@tanstack/react-query';
 import { transformVoteItem } from '@/utils/transformTalkPick';
 
-type MyVoteTransformed = Omit<MyVote, 'content'> & {
+export interface MyVoteTransformedPage extends Omit<MyVote, 'content'> {
   content: InfoItem[];
-};
+}
 
 export const useMyTalkPickVotesQuery = () => {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-    useInfiniteScroll<MyVote, MyVoteTransformed>(
+    useInfiniteScroll<MyVote, InfiniteData<MyVoteTransformedPage>>(
       ['myVote'],
-
       async ({ pageParam = 0 }) => {
         return getMyVote(pageParam, 20);
       },
+      (infiniteData) => {
+        const newPages = infiniteData.pages.map((page) => ({
+          ...page,
+          content: page.content.map((item) => transformVoteItem(item)),
+        }));
 
-      (infiniteData: InfiniteData<MyVote>): MyVoteTransformed => {
-        const firstPage = infiniteData.pages[0];
-        return {
-          ...firstPage,
-
-          content: infiniteData.pages.flatMap((page) =>
-            page.content.map((item) => transformVoteItem(item)),
-          ),
+        const newInfiniteData: InfiniteData<MyVoteTransformedPage> = {
+          ...infiniteData,
+          pages: newPages,
         };
+
+        return newInfiniteData;
       },
     );
 

@@ -4,28 +4,29 @@ import { useInfiniteScroll } from '@/hooks/api/mypages/useInfiniteScroll';
 import { transformWrittenItem } from '@/utils/transformTalkPick';
 import { InfiniteData } from '@tanstack/react-query';
 
-type MyWrittenTransformed = Omit<MyWritten, 'content'> & {
+export interface MyWrittenTransformedPage extends Omit<MyWritten, 'content'> {
   content: MyContentItem[];
-};
+}
 
 export const useMyTalkPickWrittensQuery = () => {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-    useInfiniteScroll<MyWritten, MyWrittenTransformed>(
+    useInfiniteScroll<MyWritten, InfiniteData<MyWrittenTransformedPage>>(
       ['myWritten'],
-
       async ({ pageParam = 0 }) => {
         return getMyWritten(pageParam, 20);
       },
+      (infiniteData) => {
+        const newPages = infiniteData.pages.map((page) => ({
+          ...page,
+          content: page.content.map((item) => transformWrittenItem(item)),
+        }));
 
-      (infiniteData: InfiniteData<MyWritten>): MyWrittenTransformed => {
-        const firstPage = infiniteData.pages[0];
-
-        return {
-          ...firstPage,
-          content: infiniteData.pages.flatMap((page) =>
-            page.content.map((item) => transformWrittenItem(item)),
-          ),
+        const newInfiniteData: InfiniteData<MyWrittenTransformedPage> = {
+          ...infiniteData,
+          pages: newPages,
         };
+
+        return newInfiniteData;
       },
     );
 
