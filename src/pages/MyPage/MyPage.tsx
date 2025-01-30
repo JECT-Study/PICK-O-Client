@@ -3,9 +3,8 @@ import SideBar from '@/components/organisms/SideBar/SideBar';
 import OptionBar from '@/components/organisms/OptionBar/OptionBar';
 import { useMemberQuery } from '@/hooks/api/member/useMemberQuery';
 import { useMyPageOptions } from '@/hooks/mypages/useMyPageOptions';
-import useToastModal from '@/hooks/modal/useToastModal';
-import ToastModal from '@/components/atoms/ToastModal/ToastModal';
 import { Outlet } from 'react-router-dom';
+import ToastContainer from '@/components/atoms/ToastModal/ToastModalContainer';
 import * as S from './MyPage.style';
 
 const MyPage = () => {
@@ -17,7 +16,6 @@ const MyPage = () => {
     handleOptionSelect,
   } = useMyPageOptions();
 
-  const { isVisible, modalText } = useToastModal();
   const { member, isLoading: isMemberLoading } = useMemberQuery();
 
   if (isMemberLoading) {
@@ -40,11 +38,7 @@ const MyPage = () => {
 
   return (
     <div css={S.pageContainer}>
-      {isVisible && (
-        <div css={S.toastModalStyle}>
-          <ToastModal>{modalText}</ToastModal>
-        </div>
-      )}
+      <ToastContainer />
       <SideBar
         isLoading={false}
         nickname={member?.nickname ?? ''}
