@@ -3,18 +3,19 @@ import { useMyBookmarksQuery } from '@/hooks/api/mypages/useMyBookmarksQuery';
 import { useMyTalkPickBookmarkCreateMutation } from '@/hooks/api/bookmark/useMyTalkPickBookmarkCreateMutation';
 import { useMyTalkPickBookmarkDeleteMutation } from '@/hooks/api/bookmark/useMyTalkPickBookmarkDeleteMutation';
 import MyContentList from '@/components/organisms/MyContentList/MyContentList';
-import useToastModal from '@/hooks/modal/useToastModal';
 import { ERROR, SUCCESS } from '@/constants/message';
 import { MyContentItem } from '@/types/mypages';
 import { UseMutationOptions } from '@tanstack/react-query';
 import MypageListSkeleton from '@/components/atoms/MypageListSkeleton/MypageListSkeleton';
 import { SKELETON_ITEMS_DEFAULT } from '@/constants/mypage';
+import { useDispatch } from 'react-redux';
+import { showToast } from '@/store/slice/toastSlice';
 
 const TalkPickBookmarks = () => {
+  const dispatch = useDispatch();
   const { data, isLoading } = useMyBookmarksQuery();
   const createBookmark = useMyTalkPickBookmarkCreateMutation();
   const deleteBookmark = useMyTalkPickBookmarkDeleteMutation();
-  const { showToastModal } = useToastModal();
 
   if (isLoading) {
     return <MypageListSkeleton count={SKELETON_ITEMS_DEFAULT} />;
@@ -33,13 +34,37 @@ const TalkPickBookmarks = () => {
 
     if (bookmarked) {
       mutate(id, {
-        onSuccess: () => showToastModal(SUCCESS.BOOKMARK.DELETE_MUTATE_SUCCESS),
-        onError: () => showToastModal(ERROR.BOOKMARK.DELETE_MUTATE_FAIL),
+        onSuccess: () => {
+          dispatch(
+            showToast({
+              message: SUCCESS.BOOKMARK.DELETE_MUTATE_SUCCESS,
+            }),
+          );
+        },
+        onError: () => {
+          dispatch(
+            showToast({
+              message: ERROR.BOOKMARK.DELETE_MUTATE_FAIL,
+            }),
+          );
+        },
       });
     } else {
       mutate(id, {
-        onSuccess: () => showToastModal(SUCCESS.BOOKMARK.POST_MUTATE_SUCCESS),
-        onError: () => showToastModal(ERROR.BOOKMARK.POST_MUTATE_FAIL),
+        onSuccess: () => {
+          dispatch(
+            showToast({
+              message: SUCCESS.BOOKMARK.POST_MUTATE_SUCCESS,
+            }),
+          );
+        },
+        onError: () => {
+          dispatch(
+            showToast({
+              message: ERROR.BOOKMARK.POST_MUTATE_FAIL,
+            }),
+          );
+        },
       });
     }
   };
