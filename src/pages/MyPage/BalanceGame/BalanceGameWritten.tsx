@@ -1,22 +1,20 @@
 import React from 'react';
 import { useMyGameWrittensQuery } from '@/hooks/api/mypages/useMyGameWrittensQuery';
-import MyBalanceGameList from '@/components/organisms/MyBalanceGameList/MyBalanceGameList';
-import MypageCardSkeleton from '@/components/atoms/MypageCardSkeleton/MypageCardSkeleton';
+import InfiniteBalanceGameList from '@/components/organisms/InfiniteBalanceGameList/InfiniteBalanceGameList';
 
 const BalanceGameWritten = () => {
-  const { data, isLoading } = useMyGameWrittensQuery();
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
+    useMyGameWrittensQuery();
 
-  if (isLoading) {
-    return <MypageCardSkeleton />;
-  }
-
-  if (!data) {
-    return null;
-  }
-
-  const allContent = data.pages.flatMap((page) => page.content);
-
-  return <MyBalanceGameList items={allContent} />;
+  return (
+    <InfiniteBalanceGameList
+      data={data}
+      isLoading={isLoading}
+      hasNextPage={hasNextPage}
+      isFetchingNextPage={isFetchingNextPage}
+      fetchNextPage={fetchNextPage}
+    />
+  );
 };
 
 export default BalanceGameWritten;
