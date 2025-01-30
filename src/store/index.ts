@@ -1,12 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import tokenReducer from './auth';
-import toastReducer from './slice/toastSlice';
 
 const store = configureStore({
   reducer: {
     token: tokenReducer,
-    toast: toastReducer,
   },
 });
 

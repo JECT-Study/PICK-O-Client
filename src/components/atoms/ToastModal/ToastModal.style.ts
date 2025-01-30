@@ -30,15 +30,3 @@ export const toastModalStyling = css(typo.Main.SemiBold, {
   borderRadius: '35px',
   boxShadow: '1px 1px 10px rgba(0, 0, 0, 0.07)',
 });
-
-export const toastContainer = css({
-  position: 'fixed',
-  top: '110px',
-  left: '50%',
-  transform: 'translate(-50%)',
-  zIndex: '1000',
-
-  '@media (max-width: 430px)': {
-    top: '65px',
-  },
-});
