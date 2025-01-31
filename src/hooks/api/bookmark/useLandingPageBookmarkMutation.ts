@@ -4,24 +4,37 @@ import { Id, ServerResponse } from '@/types/api';
 import { BookmarkContext } from '@/types/bookmarks';
 import { GameContent } from '@/types/game';
 
-/**
- * 북마크 Mutation 함수 타입
- */
 type BookmarkMutationFn = (
   gameId: Id,
 ) => Promise<AxiosResponse<ServerResponse>>;
 
-/**
- * @param activeTab 예: 'ALL' | 'TODAY'...
- * @param bookmarkMutationFn postDoneGameBookmark or deleteDoneGameBookmark
- * @param nextBookmarkedValue true(생성) or false(삭제)
- */
 export const useLandingPageBookmarkMutation = (
   activeTab: string,
   bookmarkMutationFn: BookmarkMutationFn,
   nextBookmarkedValue: boolean,
 ) => {
   const queryClient = useQueryClient();
+
+  const updateGameBookmark = (
+    queryKey: [string, string],
+    prevData: GameContent[] | undefined,
+    gameId: Id,
+    nextValue: boolean,
+  ) => {
+    if (!prevData) return;
+    const updated = prevData.map((item) =>
+      item.id === gameId ? { ...item, bookmarked: nextValue } : item,
+    );
+    queryClient.setQueryData(queryKey, updated);
+  };
+
+  const rollbackGameBookmark = (
+    queryKey: [string, string],
+    prevData: GameContent[] | undefined,
+  ) => {
+    if (!prevData) return;
+    queryClient.setQueryData(queryKey, prevData);
+  };
 
   return useMutation<AxiosResponse<ServerResponse>, Error, Id, BookmarkContext>(
     {
@@ -37,38 +50,28 @@ export const useLandingPageBookmarkMutation = (
           activeTab,
         ]);
 
-        if (prevBest) {
-          const updatedBest = prevBest.map((item) =>
-            item.id === gameId
-              ? { ...item, bookmarked: nextBookmarkedValue }
-              : item,
-          );
-          queryClient.setQueryData(['bestGames', activeTab], updatedBest);
-        }
-        if (prevLatest) {
-          const updatedLatest = prevLatest.map((item) =>
-            item.id === gameId
-              ? { ...item, bookmarked: nextBookmarkedValue }
-              : item,
-          );
-          queryClient.setQueryData(['latestGames', activeTab], updatedLatest);
-        }
+        updateGameBookmark(
+          ['bestGames', activeTab],
+          prevBest,
+          gameId,
+          nextBookmarkedValue,
+        );
+        updateGameBookmark(
+          ['latestGames', activeTab],
+          prevLatest,
+          gameId,
+          nextBookmarkedValue,
+        );
 
-        return {
-          bestGames: prevBest,
-          latestGames: prevLatest,
-        };
+        return { bestGames: prevBest, latestGames: prevLatest };
       },
 
       onError: (_error, gameId, context) => {
         if (context?.bestGames) {
-          queryClient.setQueryData(['bestGames', activeTab], context.bestGames);
+          rollbackGameBookmark(['bestGames', activeTab], context.bestGames);
         }
         if (context?.latestGames) {
-          queryClient.setQueryData(
-            ['latestGames', activeTab],
-            context.latestGames,
-          );
+          rollbackGameBookmark(['latestGames', activeTab], context.latestGames);
         }
       },
 
