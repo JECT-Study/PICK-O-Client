@@ -40,7 +40,6 @@ const SignUpMobilePage = () => {
         <div css={S.inputWrapper}>
           <InputEmail
             isMobile
-            type="signup"
             value={form.email}
             onChange={onChange}
             onSuccessChange={onSuccessChange}

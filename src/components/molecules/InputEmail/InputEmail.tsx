@@ -11,7 +11,6 @@ import * as S from './InputEmail.style';
 
 interface InputEmailProps {
   isMobile?: boolean;
-  type: string;
   value: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   onSuccessChange?: (name: string, value: boolean) => void;
@@ -21,7 +20,6 @@ interface InputEmailProps {
 
 const InputEmail = ({
   isMobile = false,
-  type,
   value,
   onChange,
   onSuccessChange,
@@ -29,7 +27,6 @@ const InputEmail = ({
   success = false,
 }: InputEmailProps) => {
   const { inputRef, isError, errorMessage, handleSubmit } = useCheckEmail(
-    type,
     value,
     handleSendSuccess,
   );
@@ -57,7 +54,7 @@ const InputEmail = ({
           css={S.mobileButtonStyling}
           active={!isEmptyString(value)}
         >
-          {type === 'signup' ? '인증' : '발송'}
+          인증
         </MobileButton>
       }
     />
@@ -81,7 +78,7 @@ const InputEmail = ({
             onClick={handleSubmit}
             css={S.inputEmailBtnStyling(isEmptyString(value))}
           >
-            {type === 'signup' ? '인증' : '발송'}
+            인증
           </Button>
         }
       />

@@ -27,10 +27,8 @@ const InputPwConfirm = ({
     useCheckPasswordCheck({ value, pw });
 
   useEffect(() => {
-    if (isError) {
-      handleVerify();
-    }
-  }, [value]);
+    handleVerify();
+  }, [value, pw]);
 
   useEffect(() => {
     if (value && onSuccessChange) {

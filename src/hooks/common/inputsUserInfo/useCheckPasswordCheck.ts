@@ -1,6 +1,6 @@
-import { ERROR } from '@/constants/message';
-import { isEmptyString } from '@/utils/validator';
 import { useRef, useState } from 'react';
+import { isEmptyString } from '@/utils/validator';
+import { ERROR } from '@/constants/message';
 
 interface CheckPwChkProps {
   value: string;
@@ -20,9 +20,10 @@ export const useCheckPasswordCheck = ({ value, pw }: CheckPwChkProps) => {
 
   const handleVerify = () => {
     if (isEmptyString(value)) {
-      setIsError(true);
-      setErrorMessage(ERROR.PW.EMPTY);
-    } else if (!isValidPwChkMatch(value)) {
+      return;
+    }
+
+    if (!isValidPwChkMatch(value)) {
       setIsError(true);
       setErrorMessage(ERROR.PW.NOT_MATCH);
     } else {

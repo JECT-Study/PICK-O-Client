@@ -4,7 +4,7 @@ import { HTTP_STATUS_CODE } from '@/constants/api';
 import { ERROR, SUCCESS } from '@/constants/message';
 import { isEmptyString } from '@/utils/validator';
 import { useMutation } from '@tanstack/react-query';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export const useCheckNickname = (value: string) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -12,6 +12,11 @@ export const useCheckNickname = (value: string) => {
     undefined,
   );
   const [isError, setIsError] = useState<boolean>(false);
+
+  useEffect(() => {
+    setIsError(true);
+    setErrorMessage(undefined);
+  }, [value]);
 
   function isValidNickname(nickname: string): boolean {
     return nickname.length >= 2 && nickname.length <= 10;
