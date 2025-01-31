@@ -1,9 +1,9 @@
-import { BalanceGameOption, BalanceGameSet, GameSet } from '@/types/game';
 import {
   BalanceGameOption,
   BalanceGameSet,
   BalanceGame,
   TempGame,
+  GameSet,
 } from '@/types/game';
 
 export const createInitialGameStages = (totalStage: number): BalanceGameSet[] =>
@@ -109,4 +109,3 @@ export const transformTempGameToBalanceGame = (
     })),
   })),
 });
-
