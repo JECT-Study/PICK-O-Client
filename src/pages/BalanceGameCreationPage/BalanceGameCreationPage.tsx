@@ -22,6 +22,7 @@ import useModal from '@/hooks/modal/useModal';
 import { SUCCESS, ERROR } from '@/constants/message';
 import { useImageHandlers } from '@/hooks/game/useImageHandlers';
 import { TOTAL_STAGE } from '@/constants/game';
+import { PATH } from '@/constants/path';
 import * as S from './BalanceGameCreationPage.style';
 
 const BalanceGameCreationPage = () => {
@@ -116,7 +117,7 @@ const BalanceGameCreationPage = () => {
     try {
       const gameId = await handleCreateBalanceGame(gameData);
       showToastModal(SUCCESS.GAME.CREATE);
-      navigate(`/balancegame/${gameId}`);
+      navigate(`/${PATH.BALANCEGAME.VIEW(gameId)}`);
     } catch (error) {
       showToastModal(ERROR.CREATEGAME.FAIL);
     }

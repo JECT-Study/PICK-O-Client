@@ -108,6 +108,7 @@ export const SUCCESS = {
     CREATE: '등록되었습니다!',
     EDIT: '수정이 완료되었습니다!',
     DELETE: '삭제가 완료되었습니다!',
+    REPORT: '신고 완료되었습니다!',
   },
   TAG: {
     EDIT: '태그 수정이 완료되었습니다!',

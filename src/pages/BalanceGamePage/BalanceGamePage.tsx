@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useNewSelector } from '@/store';
-import { selectAccessToken } from '@/store/auth';
-import { useParseJwt } from '@/hooks/common/useParseJwt';
 import { useMemberQuery } from '@/hooks/api/member/useMemberQuery';
 import { useGameBySetId } from '@/hooks/api/game/useGameBySetIdQuery';
 import Divider from '@/components/atoms/Divider/Divider';
@@ -31,9 +28,7 @@ const BalanceGamePage = () => {
   const { gameSet } = useGameBySetId(gameSetId);
   const [currentStage, setCurrentStage] = useState<number>(0);
 
-  const accessToken = useNewSelector(selectAccessToken);
-  const parsedJwt = useParseJwt(accessToken);
-  const { member } = useMemberQuery(parsedJwt.memberId);
+  const { member } = useMemberQuery();
   const { isVisible, modalText, showToastModal } = useToastModal();
 
   const isMyGame: boolean = member?.nickname === gameSet?.member;
@@ -72,9 +67,8 @@ const BalanceGamePage = () => {
     setModalProps({
       text: '정말 신고하시겠습니까?',
       onConfirm: () => {
-        // 신고 로직을 여기에 추가하세요.
         closeModal();
-        showToastModal(SUCCESS.REPORT.SUBMIT); // 예시 메시지
+        showToastModal(SUCCESS.GAME.REPORT);
       },
       onClose: closeModal,
     });
