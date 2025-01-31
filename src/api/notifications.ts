@@ -8,15 +8,7 @@ import { END_POINT } from '@/constants/api';
 import { useNewSelector } from '@/store';
 import { selectAccessToken } from '@/store/auth';
 import { axiosInstance } from '@/api/interceptor';
-
-interface NotificationMessage {
-  id: number;
-  category: string;
-  createdAt: string;
-  postTitle: string;
-  message: string;
-  isNew?: boolean;
-}
+import { NotificationMessage } from '@/types/notification';
 
 const baseURL =
   process.env.NODE_ENV === 'production' ? process.env.API_URL : '/api';
