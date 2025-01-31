@@ -26,7 +26,7 @@ export const useChangeUserInfoMutation = (
 
       if (memberId) {
         await queryClient.invalidateQueries({
-          queryKey: ['members', memberId],
+          queryKey: ['members'],
         });
       }
     },

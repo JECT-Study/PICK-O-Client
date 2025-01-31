@@ -83,6 +83,7 @@ export const SUCCESS = {
   },
   SIGN_UP: '회원가입 완료!',
   LOGIN: '로그인 완료!',
+  LOGOUT: '로그아웃되었습니다.',
   COPY: {
     LINK: '복사 완료!',
   },
@@ -120,6 +121,9 @@ export const NOTICE = {
   },
   STATUS: {
     NOT_READY: '아직 준비 중인 서비스입니다!',
+  },
+  LOGIN: {
+    EXPIRED: '로그인 시간이 만료되었습니다. 다시 로그인해주세요.',
   },
 } as const;
 
@@ -184,4 +188,17 @@ export const NO_RESULT_MESSAGE = {
   TITLE_SUFFIX: '에 대한 검색 결과가 없습니다.',
   BODY1: '단어의 철자가 정확한지 확인해 보세요.',
   BODY2: '검색 옵션을 변경해 다시 검색해 보세요.',
+};
+
+export const SUMMARY = {
+  TITLE: '세 줄 요약',
+  PENDING: 'AI가 세 줄 요약을 하고 있어요!',
+  FAIL: {
+    UNKNOWN: '알 수 없는 오류가 발생했어요.',
+    REFRESH: '새로고침을 눌러주세요!',
+  },
+  NOT_REQUIRED: {
+    TEXT_VALIDATION: '본문이 너무 짧아 요약할 수 없어요.',
+    TEXT_CHECK: '전체 글을 확인해 주세요!',
+  },
 };

@@ -7,7 +7,6 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useLogoutMutation } from '@/hooks/api/member/useLogoutMutation';
 import { useNewSelector } from '@/store';
-import { useParseJwt } from '@/hooks/common/useParseJwt';
 import { useMemberQuery } from '@/hooks/api/member/useMemberQuery';
 import { selectAccessToken } from '@/store/auth';
 import { Logo, DefaultProfile, ListIcon, LogoSmall } from '@/assets';
@@ -30,7 +29,7 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const accessToken = useNewSelector(selectAccessToken) ?? '';
   const logout = useLogoutMutation();
-  const { member } = useMemberQuery(useParseJwt(accessToken)?.memberId);
+  const { member } = useMemberQuery();
 
   const handleMenuToggle = () => {
     setIsMenuOpen((prev) => !prev);

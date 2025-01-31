@@ -32,7 +32,8 @@ const BalanceGamePage = () => {
   const [currentStage, setCurrentStage] = useState<number>(0);
 
   const accessToken = useNewSelector(selectAccessToken);
-  const { member } = useMemberQuery(useParseJwt(accessToken).memberId);
+  const parsedJwt = useParseJwt(accessToken);
+  const { member } = useMemberQuery(parsedJwt.memberId);
   const { isVisible, modalText, showToastModal } = useToastModal();
 
   const isMyGame: boolean = member?.nickname === gameSet?.member;
@@ -71,7 +72,9 @@ const BalanceGamePage = () => {
     setModalProps({
       text: '정말 신고하시겠습니까?',
       onConfirm: () => {
+        // 신고 로직을 여기에 추가하세요.
         closeModal();
+        showToastModal(SUCCESS.REPORT.SUBMIT); // 예시 메시지
       },
       onClose: closeModal,
     });

@@ -14,7 +14,7 @@ import ShareModal from '@/components/molecules/ShareModal/ShareModal';
 import LoginModal from '@/components/molecules/LoginModal/LoginModal';
 import BalanceGameBox from '@/components/molecules/BalanceGameBox/BalanceGameBox';
 import useToastModal from '@/hooks/modal/useToastModal';
-import { useGameBookmark } from '@/hooks/game/useBalanceGameBookmark';
+import { useBalanceGameBookmark } from '@/hooks/mypages/useBalanceGameBookmark';
 import { useGuestGameVote } from '@/hooks/game/useBalanceGameVote';
 import { VoteRecord } from '@/types/vote';
 import * as S from './BalanceGameSection.style';
@@ -58,7 +58,7 @@ const BalanceGameSection = ({
 
   const gameStages: GameDetail[] =
     game?.gameDetailResponses ?? gameDefaultDetail;
-  const isGuest = !localStorage.getItem('accessToken');
+  const isGuest = !useNewSelector(selectAccessToken);
 
   const [guestVotedList, setGuestVotedList] = useState<VoteRecord[]>([]);
 
@@ -119,15 +119,7 @@ const BalanceGameSection = ({
     changeStage(1);
   };
 
-  const { handleBookmarkClick } = useGameBookmark(
-    isGuest,
-    isMyGame,
-    currentGame.myBookmark,
-    gameSetId,
-    currentGame.id,
-    showToastModal,
-    game,
-  );
+  const { handleBookmarkClick } = useBalanceGameBookmark();
 
   const myGameItem: MenuItem[] = [
     { label: '수정', onClick: onEdit },
@@ -238,7 +230,7 @@ const BalanceGameSection = ({
           buttonLabel="이 게임 제법 폼이 좋아?"
           icon={currentGame.myBookmark ? <BookmarkPR /> : <BookmarkDF />}
           iconLabel="저장하기"
-          onClick={() => handleBookmarkClick(() => setLoginModalOpen(true))}
+          onClick={() => handleBookmarkClick(item)}
         />
       </div>
     </div>

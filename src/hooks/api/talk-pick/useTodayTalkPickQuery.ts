@@ -3,9 +3,9 @@ import { getTodayTalkPick } from '@/api/talk-pick';
 import { TodayTalkPick } from '@/types/talk-pick';
 
 export const useTodayTalkPickQuery = () => {
-  const { data: todayTalkPick } = useQuery<TodayTalkPick>({
+  const { data: todayTalkPickList } = useQuery<TodayTalkPick[]>({
     queryKey: ['todayTalkPick'],
     queryFn: getTodayTalkPick,
   });
-  return { todayTalkPick };
+  return { todayTalkPickList };
 };

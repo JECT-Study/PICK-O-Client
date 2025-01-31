@@ -28,7 +28,7 @@ import useToastModal from '@/hooks/modal/useToastModal';
 import * as S from './TalkPickSection.style';
 
 export interface TalkPickProps {
-  talkPick?: TalkPickDetail;
+  talkPick: TalkPickDetail;
   myTalkPick: boolean;
   isTodayTalkPick: boolean;
 }
@@ -190,7 +190,10 @@ const TalkPickSection = ({
           </div>
         </div>
         <div css={S.talkPickContentWrapper}>
-          <SummaryBox summary={talkPick?.summary} />
+          <SummaryBox
+            summary={talkPick?.summary}
+            summaryStatus={talkPick?.summaryStatus}
+          />
           {isExpanded && (
             <div css={S.talkPickContent}>
               <div css={S.talkPickContentTextStyling}>

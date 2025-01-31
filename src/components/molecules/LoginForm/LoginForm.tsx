@@ -6,31 +6,29 @@ import { PATH } from '@/constants/path';
 import Button from '@/components/atoms/Button/Button';
 import Input from '@/components/atoms/Input/Input';
 import Divider from '@/components/atoms/Divider/Divider';
-import ToastModal from '@/components/atoms/ToastModal/ToastModal';
 import SocialLoginButton from '@/components/atoms/SocialLoginButton/SocialLoginButton';
 import { useLoginForm } from '@/hooks/login/useLoginForm';
+import type { State } from '@/pages/LoginPage/LoginPage';
 import * as S from './LoginForm.style';
 
 export interface LoginFormProps {
+  showToastModal?: (message: string, callback?: () => void) => void;
   withSignInText?: boolean;
-  pathTalkPickId?: number;
+  loginState?: State;
   onModalLoginSuccess?: () => void;
 }
 
 const LoginForm = ({
+  showToastModal,
   withSignInText,
-  pathTalkPickId,
+  loginState,
   onModalLoginSuccess,
 }: LoginFormProps) => {
-  const {
-    form,
-    onChange,
-    isError,
-    errorMessage,
-    handleSubmit,
-    isVisible,
-    modalText,
-  } = useLoginForm(pathTalkPickId, onModalLoginSuccess);
+  const { form, onChange, isError, errorMessage, handleSubmit } = useLoginForm(
+    showToastModal,
+    loginState?.talkPickId,
+    onModalLoginSuccess,
+  );
 
   const handleSocialLogin = (social: string) => {
     window.location.href = `${process.env.API_URL}/oauth2/authorization/${social}`;
@@ -38,11 +36,6 @@ const LoginForm = ({
 
   return (
     <form onSubmit={handleSubmit} css={S.loginFormStyling}>
-      {isVisible && (
-        <div css={S.toastModalStyling}>
-          <ToastModal>{modalText}</ToastModal>
-        </div>
-      )}
       <div css={S.loginTextStyling}>LOGIN</div>
       <div css={S.loginFormWrapper}>
         <Input

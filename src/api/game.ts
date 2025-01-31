@@ -26,8 +26,8 @@ export const getTempGame = async () => {
   return data;
 };
 
-export const postGame = async (gameData: Game) => {
-  const { data } = await axiosInstance.post<GameContent>(
+export const postGame = async (gameData: BalanceGame) => {
+  const { data } = await axiosInstance.post<Id>(
     END_POINT.CREATE_GAME,
     gameData,
   );

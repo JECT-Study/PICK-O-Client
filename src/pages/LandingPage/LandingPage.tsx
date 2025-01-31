@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import TopBanner from '@/components/molecules/TopBanner/TopBanner';
 import SearchTagBar from '@/components/molecules/SearchTagBar/SearchTagBar';
 import CategoryBox from '@/components/molecules/CategoryBox/CategoryBox';
 import BalanceGameList from '@/components/organisms/BalanceGameList/BalanceGameList';
-import { useTodayTalkPickQuery } from '@/hooks/api/talk-pick/useTodayTalkPickQuery';
 import { useNavigate } from 'react-router-dom';
 import ToastModal from '@/components/atoms/ToastModal/ToastModal';
 import { useBestGameList } from '@/hooks/api/game/useBestGameListQuery';
@@ -12,11 +11,16 @@ import { ToggleGroupValue } from '@/types/toggle';
 import { NOTICE } from '@/constants/message';
 import FloatingMenuButton from '@/components/mobile/molecules/FloatingMenuButton/FloatingMenuButton';
 import useIsMobile from '@/hooks/common/useIsMobile';
+import { useTodayBalanceGameList } from '@/hooks/game/useTodayBalanceGameList';
+import { todayTalkPickDummyData } from '@/mocks/data/banner';
+import { useTodayTalkPickQuery } from '@/hooks/api/talk-pick/useTodayTalkPickQuery';
 import * as S from './LandingPage.style';
 
 const LandingPage = () => {
   const isMobile = useIsMobile();
-  const { todayTalkPick } = useTodayTalkPickQuery();
+  const { todayTalkPickList = todayTalkPickDummyData } =
+    useTodayTalkPickQuery();
+  const { todayBalanceGameList } = useTodayBalanceGameList();
   const [isServicePreparing, setIsServicePreparing] = useState<boolean>(false);
   const [selectedValue, setSelectedValue] = useState<ToggleGroupValue>({
     field: 'views',
@@ -34,7 +38,15 @@ const LandingPage = () => {
   const { bestGames } = useBestGameList(activeTab, isBestGamesEnabled);
   const { latestGames } = useLatestGameList(activeTab, isLatestGamesEnabled);
 
-  const contents = bestGames || latestGames || [];
+  const contents = useMemo(() => {
+    if (isBestGamesEnabled) {
+      return bestGames ?? [];
+    }
+    if (isLatestGamesEnabled) {
+      return latestGames ?? [];
+    }
+    return [];
+  }, [isBestGamesEnabled, isLatestGamesEnabled, bestGames, latestGames]);
 
   const handleService = () => {
     setIsServicePreparing(true);
@@ -57,7 +69,10 @@ const LandingPage = () => {
           <ToastModal bgColor="white">{NOTICE.STATUS.NOT_READY}</ToastModal>
         </div>
       )}
-      <TopBanner todayTalkPick={todayTalkPick} />
+      <TopBanner
+        todayTalkPickList={todayTalkPickList}
+        todayBalanceGameList={todayBalanceGameList}
+      />
 
       {isMobile ? (
         <div css={S.contentWrapStyle}>
