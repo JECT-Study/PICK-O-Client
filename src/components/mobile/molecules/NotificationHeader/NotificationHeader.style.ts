@@ -1,4 +1,3 @@
-// NotificationHeader.style.ts
 import { css } from '@emotion/react';
 import color from '@/styles/color';
 import typo from '@/styles/typo';

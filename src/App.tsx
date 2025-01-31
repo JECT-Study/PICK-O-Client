@@ -7,7 +7,7 @@ import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import MyPage from '@/pages/MyPage/MyPage';
 import SearchGamePage from '@/pages/SearchResultsPage/SearchGamePage';
 import SearchTalkPickPage from '@/pages/SearchResultsPage/SearchTalkPickPage';
-import NotificationPage from '@/components/mobile/pages/NotificationPage';
+import NotificationPage from '@/pages/mobile/NotificationPage/NotificationPage';
 import ProtectedRoutes from './components/Routes/ProtectedRoutes';
 import { PATH } from './constants/path';
 import { useTokenRefresh } from './hooks/common/useTokenRefresh';
