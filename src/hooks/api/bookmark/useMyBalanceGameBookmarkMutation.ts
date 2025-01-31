@@ -85,9 +85,11 @@ export const useMyBalanceGameBookmarkMutation = (
       },
 
       onSuccess: async () => {
-        for (const key of invalidateKeys) {
-          await queryClient.invalidateQueries({ queryKey: [key] });
-        }
+        await Promise.all(
+          invalidateKeys.map((key) =>
+            queryClient.invalidateQueries({ queryKey: [key] }),
+          ),
+        );
       },
     },
   );
