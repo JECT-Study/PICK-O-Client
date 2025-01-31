@@ -32,15 +32,13 @@ export const useFetchSSE = () => {
   const accessToken = useNewSelector(selectAccessToken);
 
   useEffect(() => {
-    console.log('SSE 훅이 실행되었습니다.');
-
     if (!accessToken) return;
 
     const EventSource = EventSourcePolyfill || NativeEventSource;
 
     const eventSource = new EventSource(`${baseURL}${END_POINT.NOTIFICATON}`, {
       headers: {
-        Authorization: accessToken,
+        Authorization: `Bearer ${accessToken}`,
       },
       withCredentials: true,
     });
