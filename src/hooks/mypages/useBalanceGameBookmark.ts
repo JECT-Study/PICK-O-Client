@@ -12,26 +12,34 @@ export const useBalanceGameBookmark = () => {
   const createBookmark = useMyBalanceGameBookmarkCreateMutation();
   const deleteBookmark = useMyBalanceGameBookmarkDeleteMutation();
 
+  const showSuccessToast = (operation: 'create' | 'delete') => {
+    const message =
+      operation === 'create'
+        ? SUCCESS.BOOKMARK.POST_MUTATE_SUCCESS
+        : SUCCESS.BOOKMARK.DELETE_MUTATE_SUCCESS;
+    dispatch(showToast({ message }));
+  };
+
+  const showErrorToast = (operation: 'create' | 'delete') => {
+    const message =
+      operation === 'create'
+        ? ERROR.BOOKMARK.POST_MUTATE_FAIL
+        : ERROR.BOOKMARK.DELETE_MUTATE_FAIL;
+    dispatch(showToast({ message }));
+  };
+
   const handleBookmarkClick = (item: MyBalanceGameItem) => {
     const { gameSetId, bookmarked } = item;
 
     if (bookmarked) {
       deleteBookmark.mutate(gameSetId, {
-        onSuccess: () =>
-          dispatch(
-            showToast({ message: SUCCESS.BOOKMARK.DELETE_MUTATE_SUCCESS }),
-          ),
-        onError: () =>
-          dispatch(showToast({ message: ERROR.BOOKMARK.DELETE_MUTATE_FAIL })),
+        onSuccess: () => showSuccessToast('delete'),
+        onError: () => showErrorToast('delete'),
       });
     } else {
       createBookmark.mutate(gameSetId, {
-        onSuccess: () =>
-          dispatch(
-            showToast({ message: SUCCESS.BOOKMARK.POST_MUTATE_SUCCESS }),
-          ),
-        onError: () =>
-          dispatch(showToast({ message: ERROR.BOOKMARK.POST_MUTATE_FAIL })),
+        onSuccess: () => showSuccessToast('create'),
+        onError: () => showErrorToast('create'),
       });
     }
   };
