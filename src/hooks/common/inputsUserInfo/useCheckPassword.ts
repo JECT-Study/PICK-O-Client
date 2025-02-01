@@ -30,9 +30,10 @@ export const useCheckPassword = (value: string) => {
 
   const handleVerify = () => {
     if (isEmptyString(value)) {
-      setIsError(true);
-      setErrorMessage(ERROR.PW.EMPTY);
-    } else if (!isValidPwFormat(value)) {
+      return;
+    }
+
+    if (!isValidPwFormat(value)) {
       setIsError(true);
       setErrorMessage(ERROR.PW.FORM);
     } else {

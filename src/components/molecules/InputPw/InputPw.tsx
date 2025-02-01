@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { ChangeEvent, useEffect, useRef } from 'react';
+import React, { ChangeEvent, useEffect } from 'react';
 import { INPUT_LIMIT } from '@/constants/input';
 import { useCheckPassword } from '@/hooks/common/inputsUserInfo/useCheckPassword';
 import Input from '@/components/atoms/Input/Input';
@@ -22,16 +22,10 @@ const InputPw = ({
   onSuccessChange,
   success = false,
 }: InputPwProps) => {
-  const isFirstRender = useRef(true);
   const { inputRef, isError, errorMessage, handleVerify } =
     useCheckPassword(value);
 
   useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-      return;
-    }
-
     handleVerify();
   }, [value]);
 

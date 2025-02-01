@@ -57,6 +57,8 @@ export const useSignupForm = () => {
     navigate(-1);
   };
 
+  console.log(successForm);
+
   return {
     form,
     onChange,
