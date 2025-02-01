@@ -1,7 +1,7 @@
 /* eslint-disable no-alert */
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 import { PATH } from '@/constants/path';
-import { NOTICE } from '@/constants/message';
+import { ERROR, NOTICE } from '@/constants/message';
 import store from '@/store';
 import { ServerResponse } from '@/types/api';
 import { tokenActions } from '@/store/auth';
@@ -71,7 +71,10 @@ axiosInstance.interceptors.response.use(
 
     const { data, status } = error.response;
 
-    if (status === HTTP_STATUS_CODE.UNAUTHORIZED) {
+    if (
+      status === HTTP_STATUS_CODE.UNAUTHORIZED &&
+      data.message !== ERROR.LOGIN.NOT_MATCH
+    ) {
       try {
         const newAccessToken = await getRefreshToken();
 

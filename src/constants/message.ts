@@ -22,6 +22,7 @@ export const ERROR = {
   },
   LOGIN: {
     FAIL: '이메일 또는 비밀번호가 일치하지 않습니다. 다시 확인해주세요.',
+    NOT_MATCH: '이메일 또는 비밀번호가 잘못되었습니다.',
   },
   CREATE: {
     OPTION_FORM: '글자 수는 최대 10자까지 입력해주세요.',
