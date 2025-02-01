@@ -12,7 +12,7 @@ export const loginFormStyling = css({
 export const loginFormWrapper = css({
   display: 'flex',
   flexDirection: 'column',
-  widht: '100%',
+  width: '100%',
 });
 
 export const pwTextStyling = css(typo.Text.Regular, {
