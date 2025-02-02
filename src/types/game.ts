@@ -4,6 +4,7 @@ export interface GameOption {
   id: number;
   name: string;
   imgUrl: string | null;
+  fileId?: number | null;
   description: string;
   optionType: 'A' | 'B';
 }
@@ -62,10 +63,10 @@ export interface BalanceGameOption {
   id: number;
   name: string;
   imgUrl: string;
-  fileId: number | null;
   description: string;
   optionType: 'A' | 'B';
   imageFile?: File | null;
+  fileId?: number | null;
 }
 
 export interface BalanceGameSet {

@@ -17,27 +17,43 @@ import TextModal from '@/components/molecules/TextModal/TextModal';
 import { useNavigate } from 'react-router-dom';
 import { useSaveTempGameMutation } from '@/hooks/api/game/useSaveTempGameMutation';
 import { createInitialGameStages } from '@/utils/balanceGameUtils';
-import { resizeImage } from '@/utils/imageUtils';
 import { useLoadTempGameQuery } from '@/hooks/api/game/useLoadTempGameQuery';
+import useModal from '@/hooks/modal/useModal';
 import { SUCCESS, ERROR } from '@/constants/message';
+import { useImageHandlers } from '@/hooks/game/useImageHandlers';
+import { TOTAL_STAGE } from '@/constants/game';
+import { PATH } from '@/constants/path';
 import * as S from './BalanceGameCreationPage.style';
 
 const BalanceGameCreationPage = () => {
   const [title, setTitle] = useState('');
-  const [games, setGames] = useState<BalanceGameSet[]>([]);
-  const [isTagModalOpen, setIsTagModalOpen] = useState(false);
-  const [isTextModalOpen, setIsTextModalOpen] = useState(false);
-  const [popupData, setPopupData] = useState<{
-    stageIndex: number;
-    optionIndex: number;
-  } | null>(null);
+  const [games, setGames] = useState<BalanceGameSet[]>(() =>
+    createInitialGameStages(TOTAL_STAGE),
+  );
   const navigate = useNavigate();
   const { handleCreateBalanceGame } = useCreateBalanceGameMutation();
   const { mutateAsync: uploadImage } = useFileUploadMutation();
   const { mutate: saveTempGame } = useSaveTempGameMutation();
   const { data: tempGame, isSuccess } = useLoadTempGameQuery();
   const { isVisible, modalText, showToastModal } = useToastModal();
-  const [loadedGames, setLoadedGames] = useState<BalanceGameSet[] | null>(null);
+
+  const {
+    isOpen: isTagModalOpen,
+    openModal: openTagModal,
+    closeModal: closeTagModal,
+  } = useModal();
+  const {
+    isOpen: isTextModalOpen,
+    openModal: openTextModal,
+    closeModal: closeTextModal,
+  } = useModal();
+
+  const [popupData, setPopupData] = useState<{
+    stageIndex: number;
+    optionIndex: number;
+  } | null>(null);
+
+  const { onImageChange, deleteImage } = useImageHandlers({ uploadImage });
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
@@ -45,7 +61,7 @@ const BalanceGameCreationPage = () => {
 
   const handleDraftLoad = () => {
     if (isSuccess && tempGame) {
-      const initialStages = createInitialGameStages(10);
+      const initialStages = createInitialGameStages(TOTAL_STAGE);
       const mappedGames: BalanceGameSet[] = initialStages.map((stage, idx) => ({
         description: tempGame.tempGames[idx]?.description || stage.description,
         gameOptions: stage.gameOptions.map((option, optionIdx) => ({
@@ -55,92 +71,31 @@ const BalanceGameCreationPage = () => {
       }));
 
       setTitle(tempGame.title);
-      setLoadedGames(mappedGames);
+      setGames(mappedGames);
       showToastModal(SUCCESS.TEMPGAME.LOAD);
     } else {
       showToastModal(ERROR.TEMPGAME.LOAD);
     }
   };
 
-  const handleImageUpload = async (
-    imageFile: File,
-    type: 'GAME_OPTION',
-  ): Promise<{ imgUrl: string; fileId: number }> => {
-    const resizedBlob = await resizeImage(imageFile, 577, 359);
-    const resizedFile = new File([resizedBlob], imageFile.name, {
-      type: imageFile.type,
-    });
-
-    const formData = new FormData();
-    formData.append('file', resizedFile);
-
-    try {
-      const response = await uploadImage({
-        formData,
-        params: { type },
-      });
-
-      const { imgUrls, fileIds } = response;
-      return { imgUrl: imgUrls[0], fileId: fileIds[0] };
-    } catch (error) {
-      throw new Error('이미지 업로드 실패');
-    }
-  };
-
-  const onImageChange = async (
-    stageIndex: number,
-    optionIndex: number,
-    imageFile: File,
-  ) => {
-    try {
-      const { imgUrl, fileId } = await handleImageUpload(
-        imageFile,
-        'GAME_OPTION',
-      );
-      setGames((prevGames) => {
-        const updatedGames = [...prevGames];
-        updatedGames[stageIndex].gameOptions[optionIndex] = {
-          ...updatedGames[stageIndex].gameOptions[optionIndex],
-          imgUrl,
-          fileId,
-        };
-        return updatedGames;
-      });
-    } catch (error) {
-      alert(ERROR.IMAGE.UPLOAD);
-    }
-  };
-
-  const onImageDelete = (stageIndex: number, optionIndex: number) => {
-    setPopupData({ stageIndex, optionIndex });
-    setIsTextModalOpen(true);
-  };
-
-  const confirmDeleteImage = () => {
+  const handleConfirmDeleteImage = () => {
     if (popupData) {
-      const { stageIndex, optionIndex } = popupData;
-      setGames((prevGames) => {
-        const updatedGames = [...prevGames];
-        updatedGames[stageIndex].gameOptions[optionIndex] = {
-          ...updatedGames[stageIndex].gameOptions[optionIndex],
-          imgUrl: '',
-          fileId: 0,
-        };
-        return updatedGames;
+      deleteImage(popupData.stageIndex, popupData.optionIndex, (updater) => {
+        setGames(updater);
       });
       showToastModal(SUCCESS.IMAGE.DELETE);
     }
     setPopupData(null);
-    setIsTextModalOpen(false);
+    closeTextModal();
   };
 
   const cancelDeleteImage = () => {
     setPopupData(null);
-    setIsTextModalOpen(false);
+    closeTextModal();
   };
 
   const handleCompleteClick = () => {
-    setIsTagModalOpen(true);
+    openTagModal();
   };
 
   const handleTagSubmit = async (
@@ -161,9 +116,8 @@ const BalanceGameCreationPage = () => {
 
     try {
       const gameId = await handleCreateBalanceGame(gameData);
-      showToastModal(SUCCESS.CREATEGAME.CREATE, () => {
-        navigate(`/balancegame/${gameId}`);
-      });
+      showToastModal(SUCCESS.GAME.CREATE);
+      navigate(`/${PATH.BALANCEGAME.VIEW(gameId)}`);
     } catch (error) {
       showToastModal(ERROR.CREATEGAME.FAIL);
     }
@@ -199,8 +153,32 @@ const BalanceGameCreationPage = () => {
     });
   };
 
+  /**
+   * 상태 변경 요청을 처리하는 콜백
+   * 자식이 상태를 갱신하고자 할 때 이 함수를 호출하면
+   * 부모에서 setGames를 통해 상태를 갱신
+   */
+  const handleGamesChange = (updatedGames: BalanceGameSet[]) => {
+    setGames(updatedGames);
+  };
+
+  const handleImageDeleteClick = (stageIndex: number, optionIndex: number) => {
+    setPopupData({ stageIndex, optionIndex });
+    openTextModal();
+  };
+
+  const handleImageChange = async (
+    stageIndex: number,
+    optionIndex: number,
+    file: File,
+  ) => {
+    return onImageChange(stageIndex, optionIndex, file, (updater) => {
+      setGames(updater);
+    });
+  };
+
   return (
-    <div css={S.PageContainer}>
+    <div css={S.pageContainer}>
       <div css={S.pageWrapper}>
         <div css={S.textWrapper}>
           <div css={S.subLabel}>
@@ -214,10 +192,10 @@ const BalanceGameCreationPage = () => {
           onTitleChange={handleTitleChange}
           handleCompleteClick={handleCompleteClick}
           onDraftLoad={handleDraftLoad}
-          onGamesUpdate={(updatedGames) => setGames(updatedGames)}
-          onImageChange={onImageChange}
-          onImageDelete={onImageDelete}
-          loadedGames={loadedGames || undefined}
+          games={games}
+          onGamesChange={handleGamesChange}
+          onImageChange={handleImageChange}
+          onImageDelete={handleImageDeleteClick}
         />
         <div css={S.buttonContainer}>
           <Button
@@ -235,7 +213,7 @@ const BalanceGameCreationPage = () => {
             <div css={S.centerStyling}>
               <TagModal
                 isOpen={isTagModalOpen}
-                onClose={() => setIsTagModalOpen(false)}
+                onClose={closeTagModal}
                 onTagSubmit={handleTagSubmit}
               />
             </div>
@@ -248,7 +226,7 @@ const BalanceGameCreationPage = () => {
               <TextModal
                 text="이미지를 삭제하시겠습니까?"
                 isOpen={isTextModalOpen}
-                onConfirm={confirmDeleteImage}
+                onConfirm={handleConfirmDeleteImage}
                 onClose={cancelDeleteImage}
               />
             </div>
