@@ -56,6 +56,12 @@ export const ERROR = {
     EMPTY_DATA: '게임 데이터가 없습니다.',
     FAIL: '게임 생성에 실패했습니다.',
   },
+  EDITGAME: {
+    FAIL: '게임 수정에 실패했습니다.',
+  },
+  DELETEGAME: {
+    FAIL: '게임 삭제에 실패했습니다.',
+  },
   VALIDATE: {
     GAME_IMAGE: 'A와 B의 이미지가 모두 없거나 모두 있어야 합니다!',
     OPTION: '모든 옵션의 설명을 입력해주세요!',
@@ -98,8 +104,14 @@ export const SUCCESS = {
     UPLOAD: '이미지가 업로드 되었습니다!',
     DELETE: '이미지가 삭제되었습니다!',
   },
-  CREATEGAME: {
+  GAME: {
     CREATE: '등록되었습니다!',
+    EDIT: '수정이 완료되었습니다!',
+    DELETE: '삭제가 완료되었습니다!',
+    REPORT: '신고 완료되었습니다!',
+  },
+  TAG: {
+    EDIT: '태그 수정이 완료되었습니다!',
   },
 } as const;
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Modal from '@/components/atoms/Modal/Modal';
 import Button from '@/components/atoms/Button/Button';
 import Input from '@/components/atoms/Input/Input';
@@ -9,11 +9,26 @@ interface TagModalProps {
   isOpen: boolean;
   onClose: () => void;
   onTagSubmit: (mainTag: string, subTag: string) => void;
+  initialMainTag?: string;
+  initialSubTag?: string;
 }
 
-const TagModal = ({ isOpen, onClose, onTagSubmit }: TagModalProps) => {
-  const [mainTag, setMainTag] = useState<string | null>(null);
-  const [subTag, setSubTag] = useState('');
+const TagModal = ({
+  isOpen,
+  onClose,
+  onTagSubmit,
+  initialMainTag,
+  initialSubTag,
+}: TagModalProps) => {
+  const [mainTag, setMainTag] = useState<string | null>(initialMainTag ?? null);
+  const [subTag, setSubTag] = useState<string>(initialSubTag ?? '');
+
+  useEffect(() => {
+    if (isOpen) {
+      setMainTag(initialMainTag ?? null);
+      setSubTag(initialSubTag ?? '');
+    }
+  }, [isOpen, initialMainTag, initialSubTag]);
 
   const handleTagSubmit = () => {
     if (mainTag) {

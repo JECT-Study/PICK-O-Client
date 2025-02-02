@@ -7,6 +7,7 @@ import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import MyPage from '@/pages/MyPage/MyPage';
 import SearchGamePage from '@/pages/SearchResultsPage/SearchGamePage';
 import SearchTalkPickPage from '@/pages/SearchResultsPage/SearchTalkPickPage';
+import BalanceGameEditPage from '@/pages/BalanceGameEditPage/BalanceGameEditPage';
 import ProtectedRoutes from './components/Routes/ProtectedRoutes';
 import { PATH } from './constants/path';
 import { useTokenRefresh } from './hooks/common/useTokenRefresh';
@@ -74,7 +75,7 @@ const App: React.FC = () => {
           <Route path={PATH.TALKPICK_PLACE} element={<TalkPickPlacePage />} />
           <Route path={PATH.TALKPICK()} element={<TalkPickPage />} />
           <Route
-            path={PATH.BALANCEGAME()}
+            path={PATH.BALANCEGAME.VIEW()}
             element={isMobile ? <BalanceGameMobilePage /> : <BalanceGamePage />}
           />
           {/* <Route path="/search" element={<SearchResultsPage />} /> */}
@@ -108,6 +109,10 @@ const App: React.FC = () => {
                   <BalanceGameCreationPage />
                 )
               }
+            />
+            <Route
+              path={PATH.BALANCEGAME.EDIT()}
+              element={<BalanceGameEditPage />}
             />
             <Route
               path={PATH.CHANGE.PROFILE}
