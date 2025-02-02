@@ -7,6 +7,15 @@ import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import MyPage from '@/pages/MyPage/MyPage';
 import SearchGamePage from '@/pages/SearchResultsPage/SearchGamePage';
 import SearchTalkPickPage from '@/pages/SearchResultsPage/SearchTalkPickPage';
+import BalanceGameLayout from '@/pages/MyPage/BalanceGameLayout';
+import TalkPickLayout from '@/pages/MyPage/TalkPickLayout';
+import TalkPickBookmarks from '@/pages/MyPage/TalkPick/TalkPickBookmarks';
+import TalkPickWritten from '@/pages/MyPage/TalkPick/TalkPickWritten';
+import BalanceGameVotes from '@/pages/MyPage/BalanceGame/BalanceGameVotes';
+import BalanceGameBookmarks from '@/pages/MyPage/BalanceGame/BalanceGameBookmarks';
+import TalkPickVotes from '@/pages/MyPage/TalkPick/TalkPickVotes';
+import TalkPickComments from '@/pages/MyPage/TalkPick/TalkPickComments';
+import BalanceGameWritten from '@/pages/MyPage/BalanceGame/BalanceGameWritten';
 import BalanceGameEditPage from '@/pages/BalanceGameEditPage/BalanceGameEditPage';
 import ProtectedRoutes from './components/Routes/ProtectedRoutes';
 import { PATH } from './constants/path';
@@ -96,7 +105,20 @@ const App: React.FC = () => {
 
         <Route element={<ProtectedRoutes isLoggedIn={isLoggedIn} />}>
           <Route path={PATH.MYPAGE} element={<LayoutNoFooter />}>
-            <Route index element={<MyPage />} />
+            <Route element={<MyPage />}>
+              <Route path="talkpick" element={<TalkPickLayout />}>
+                <Route path="bookmarks" element={<TalkPickBookmarks />} />
+                <Route path="written" element={<TalkPickWritten />} />
+                <Route path="votes" element={<TalkPickVotes />} />
+                <Route path="comments" element={<TalkPickComments />} />
+              </Route>
+              <Route path="balancegame" element={<BalanceGameLayout />}>
+                <Route path="bookmarks" element={<BalanceGameBookmarks />} />
+                <Route path="votes" element={<BalanceGameVotes />} />
+                <Route path="written" element={<BalanceGameWritten />} />
+              </Route>
+              <Route index element={<TalkPickBookmarks />} />
+            </Route>
           </Route>
           <Route path="/" element={<Layout />}>
             <Route path={PATH.CREATE.TALK_PICK} element={<CreatePostPage />} />
