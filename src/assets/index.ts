@@ -133,6 +133,9 @@ export { default as MobileBackButton } from './svg/mobile-back-button.svg';
 export { default as MobileTrashCan } from './svg/mobile-trash-can.svg';
 export { default as MobileChoicePlus } from './svg/mobile-choice-plus.svg';
 export { default as MobileChoiceMinus } from './svg/mobile-choice-minus.svg';
+export { default as PopularMedium } from './svg/popular-medium.svg';
+export { default as CoupleMedium } from './svg/couple-medium.svg';
+export { default as TasteMedium } from './svg/taste-medium.svg';
 
 // TODO: 이전 SVG
 export { default as Email } from './svg/email.svg';
