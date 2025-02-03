@@ -40,6 +40,7 @@ export const useFetchSSE = () => {
     eventSource.onmessage = (event) => {
       try {
         console.log('SSE 메시지를 수신했습니다:', event);
+        // TODO: 타입 단언에서 타입 가드로 수정
         const newMessage = JSON.parse(event.data) as NotificationMessage;
         setMessages((prev) => [newMessage, ...prev]);
       } catch (err) {
