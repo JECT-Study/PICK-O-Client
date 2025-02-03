@@ -114,7 +114,9 @@ const App: React.FC = () => {
               path={PATH.CHANGE.PROFILE}
               element={<ChangeUserInfoPage />}
             />
-            <Route path={PATH.NOTIFICATION} element={<NotificationPage />} />
+            {isMobile ?? ( // TODO: 404페이지 생성시 조건부로 수정
+              <Route path={PATH.NOTIFICATION} element={<NotificationPage />} />
+            )}
           </Route>
         </Route>
 
