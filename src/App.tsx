@@ -8,6 +8,7 @@ import MyPage from '@/pages/MyPage/MyPage';
 import SearchGamePage from '@/pages/SearchResultsPage/SearchGamePage';
 import SearchTalkPickPage from '@/pages/SearchResultsPage/SearchTalkPickPage';
 import NotificationPage from '@/pages/mobile/NotificationPage/NotificationPage';
+import BalanceGameCategoriesPage from '@/pages/mobile/BalanceGameCategoriesPage/BalanceGameCategoriesPage';
 import ProtectedRoutes from './components/Routes/ProtectedRoutes';
 import { PATH } from './constants/path';
 import { useTokenRefresh } from './hooks/common/useTokenRefresh';
@@ -77,6 +78,10 @@ const App: React.FC = () => {
           <Route
             path={PATH.BALANCEGAME()}
             element={isMobile ? <BalanceGameMobilePage /> : <BalanceGamePage />}
+          />
+          <Route
+            path={PATH.BALANCEGAMECATEGORIES}
+            element={<BalanceGameCategoriesPage />}
           />
           {/* <Route path="/search" element={<SearchResultsPage />} /> */}
           {/* <Route path="posts" element={<PostList />} />

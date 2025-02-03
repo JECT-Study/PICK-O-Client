@@ -23,6 +23,7 @@ export const PATH = {
   TALKPICK: (talkPickId: number | string = ':talkPickId') =>
     `talkpick/${talkPickId}`,
   NOTIFICATION: 'notifications',
+  BALANCEGAMECATEGORIES: 'balancegame',
   // PW: 'findPassword',
   // HISTORY: {
   //   MAIN: 'history',
