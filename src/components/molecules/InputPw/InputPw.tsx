@@ -50,7 +50,7 @@ const InputPw = ({
       onChange={onChange}
       onKeyDown={handleVerify}
       onBlur={handleVerify}
-      success={success}
+      isSuccess={success}
     />
   ) : (
     <div css={S.inputPwContainer}>

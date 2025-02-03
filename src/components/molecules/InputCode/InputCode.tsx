@@ -51,7 +51,7 @@ const InputCode = ({
       ref={inputRef}
       onChange={onChange}
       disabled={!sendSuccess}
-      success={success}
+      isSuccess={success}
       btn={
         <MobileButton
           onClick={handleSubmit}

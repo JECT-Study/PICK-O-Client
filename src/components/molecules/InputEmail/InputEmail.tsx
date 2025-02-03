@@ -47,7 +47,7 @@ const InputEmail = ({
       value={value}
       ref={inputRef}
       onChange={onChange}
-      success={success}
+      isSuccess={success}
       btn={
         <MobileButton
           onClick={handleSubmit}

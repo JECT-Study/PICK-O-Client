@@ -8,7 +8,7 @@ export interface InputProps
   isError?: boolean;
   btn?: ReactElement;
   errorMessage?: string;
-  success?: boolean;
+  isSuccess?: boolean;
 }
 
 const Input = (
@@ -16,13 +16,13 @@ const Input = (
     isError = false,
     btn,
     errorMessage,
-    success = false,
+    isSuccess = false,
     ...attributes
   }: InputProps,
   ref: ForwardedRef<HTMLInputElement>,
 ) => (
   <div css={S.inputContainerStyling}>
-    <div css={S.inputWrapperStyling(success)}>
+    <div css={S.inputWrapperStyling(isSuccess)}>
       <input ref={ref} css={S.inputStyling} {...attributes} />
       {btn}
     </div>

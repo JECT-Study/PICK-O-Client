@@ -14,12 +14,12 @@ const meta = {
   argTypes: {
     isError: { control: { type: 'boolean' } },
     errorMessage: { control: { type: 'text' } },
-    success: { control: { type: 'boolean' } },
+    isSuccess: { control: { type: 'boolean' } },
   },
   args: {
     isError: false,
     placeholder: 'placeholder',
-    success: false,
+    isSuccess: false,
   },
 } satisfies Meta<typeof Input>;
 
@@ -46,7 +46,7 @@ export const All: Story = {
       <li css={storyInnerContainer}>
         <h3>IsError and ErrorMessage</h3>
         <Input {...args} isError errorMessage="유효하지 않습니다." />
-        <Input {...args} errorMessage="유효합니다." success />
+        <Input {...args} errorMessage="유효합니다." isSuccess />
       </li>
     </ul>
   ),

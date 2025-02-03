@@ -9,14 +9,14 @@ export const inputContainerStyling = css({
   minHeight: '68px',
 });
 
-export const inputWrapperStyling = (success: boolean) =>
+export const inputWrapperStyling = (isSuccess: boolean) =>
   css({
     display: 'flex',
     alignItems: 'center',
     width: '100%',
     height: '44px',
     gap: '15px',
-    borderBottom: success
+    borderBottom: isSuccess
       ? `1px solid ${color.MAIN}`
       : `1px solid ${color.GY[2]}`,
   });
