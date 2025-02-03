@@ -61,12 +61,12 @@ export const useFetchSSE = () => {
   const handleMarkAsRead = useCallback(async (notificationId: number) => {
     try {
       await postNotification(notificationId);
+
       setMessages((prevMessages) =>
-        prevMessages.map((message) =>
-          message.id === notificationId
-            ? { ...message, isNew: false }
-            : message,
-        ),
+        prevMessages.map((message) => {
+          if (message.id !== notificationId) return message;
+          return { ...message, isNew: false };
+        }),
       );
     } catch (error) {
       console.error('알림 읽음 처리 중 오류 발생:', error);
