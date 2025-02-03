@@ -36,7 +36,7 @@ const DefaultProfileModal = ({
                 selectedImg === src && S.selectedImageStyling,
               ]}
             >
-              <img src={src} alt={src} css={S.profileImage} />
+              <img src={src} alt="프렌즈 이미지" css={S.profileImage} />
             </button>
           ))}
         </div>
