@@ -18,9 +18,9 @@ export const useCheckNickname = (value: string) => {
     setErrorMessage(undefined);
   }, [value]);
 
-  function isValidNickname(nickname: string): boolean {
+  const isValidNickname = (nickname: string): boolean => {
     return nickname.length >= 2 && nickname.length <= 10;
-  }
+  };
 
   const nicknameVerify = useMutation({
     mutationFn: () => getNicknameVerify(value),
