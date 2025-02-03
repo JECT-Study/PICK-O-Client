@@ -192,3 +192,10 @@ export const SUMMARY = {
     TEXT_CHECK: '전체 글을 확인해 주세요!',
   },
 };
+
+export const PROFILE = {
+  IMAGE: {
+    TITLE: '기본 이미지로 프로필 설정하기',
+    SIZE_LIMIT: '3MB 이하의 사진만 가능합니다.',
+  },
+};

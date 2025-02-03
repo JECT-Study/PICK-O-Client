@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
+import { PROFILE } from '@/constants/message';
 import Label from '@/components/atoms/Label/Label';
 import ProfileSetting from '@/components/atoms/ProfileSetting/ProfileSetting';
 import MobileProfileSetting from '@/components/mobile/atoms/ProfileSetting/ProfileSetting';
@@ -52,10 +53,10 @@ const InputProfileImage = ({
           css={S.mobileProfileDefaultText}
           onClick={() => setDefaultProfileModalOpen(true)}
         >
-          기본 이미지로 프로필 설정하기
+          {PROFILE.IMAGE.TITLE}
         </button>
         <span css={S.mobileProfileImageText(isError)}>
-          3MB 이하의 사진만 가능합니다.
+          {PROFILE.IMAGE.SIZE_LIMIT}
         </span>
       </div>
       <div css={S.defaultProfileModalcenterStyling}>
@@ -81,10 +82,10 @@ const InputProfileImage = ({
           css={S.profileDefaultText}
           onClick={() => setDefaultProfileModalOpen(true)}
         >
-          기본 이미지로 프로필 설정하기
+          {PROFILE.IMAGE.TITLE}
         </button>
         <span css={S.profileImageText(isError)}>
-          3MB 이하의 사진만 가능합니다.
+          {PROFILE.IMAGE.SIZE_LIMIT}
         </span>
       </div>
       <div css={S.defaultProfileModalcenterStyling}>
