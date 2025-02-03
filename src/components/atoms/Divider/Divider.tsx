@@ -3,13 +3,13 @@ import { getDividerStyling } from './Divider.style';
 
 export interface DividerProps {
   orientation?: 'width' | 'height';
-  tone?: 'gy' | 'wv';
+  tone?: 'gray' | 'violet';
   length: number;
 }
 
 const Divider = ({
   orientation = 'height',
-  tone = 'gy',
+  tone = 'gray',
   length,
 }: DividerProps) => (
   <div css={getDividerStyling({ orientation, length, tone })} />

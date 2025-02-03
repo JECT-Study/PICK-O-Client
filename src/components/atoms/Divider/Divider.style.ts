@@ -11,14 +11,14 @@ export const getDividerStyling = ({
     width: css({
       width: `${length}px`,
       borderBottom:
-        tone === 'gy'
+        tone === 'gray'
           ? `1px solid ${color.GY[2]}`
           : `1px solid ${color.WT_VIOLET}`,
     }),
     height: css({
       height: `${length}px`,
       borderRight:
-        tone === 'gy'
+        tone === 'gray'
           ? `1px solid ${color.GY[2]}`
           : `1px solid ${color.WT_VIOLET}`,
     }),

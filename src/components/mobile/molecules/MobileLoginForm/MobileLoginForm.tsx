@@ -65,7 +65,7 @@ const MobileLoginForm = ({
           <div css={S.signupTextStyling}>회원가입</div>
         </Link>
       </div>
-      <Divider orientation="width" length={335} tone="wv" />
+      <Divider orientation="width" length={335} tone="violet" />
       <div css={S.signInTextStyling}>3초만에 회원가입하고 PICK-O 즐기기!</div>
       <div css={S.btnWrapperStyling}>
         <SocialLoginButton
