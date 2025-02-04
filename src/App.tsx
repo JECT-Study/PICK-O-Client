@@ -7,6 +7,7 @@ import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import MyPage from '@/pages/MyPage/MyPage';
 import SearchGamePage from '@/pages/SearchResultsPage/SearchGamePage';
 import SearchTalkPickPage from '@/pages/SearchResultsPage/SearchTalkPickPage';
+import NotificationPage from '@/pages/mobile/NotificationPage/NotificationPage';
 import BalanceGameLayout from '@/pages/MyPage/BalanceGameLayout';
 import TalkPickLayout from '@/pages/MyPage/TalkPickLayout';
 import TalkPickBookmarks from '@/pages/MyPage/TalkPick/TalkPickBookmarks';
@@ -140,6 +141,9 @@ const App: React.FC = () => {
               path={PATH.CHANGE.PROFILE}
               element={<ChangeUserInfoPage />}
             />
+            {isMobile ?? ( // TODO: 404페이지 생성시 조건부로 수정
+              <Route path={PATH.NOTIFICATION} element={<NotificationPage />} />
+            )}
           </Route>
         </Route>
 

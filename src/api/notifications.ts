@@ -1,94 +1,81 @@
-// import { useState, useEffect, useCallback } from 'react';
-// import { EventSourcePolyfill, NativeEventSource } from 'event-source-polyfill';
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable consistent-return */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable no-console */
+import { useState, useEffect, useCallback } from 'react';
+import { EventSourcePolyfill, NativeEventSource } from 'event-source-polyfill';
 import { END_POINT } from '@/constants/api';
-import { axiosInstance } from './interceptor';
+import { useNewSelector } from '@/store';
+import { selectAccessToken } from '@/store/auth';
+import { axiosInstance } from '@/api/interceptor';
+import { NotificationMessage } from '@/types/notification';
 
-// interface NotificationMessage {
-//   id: number;
-//   category: string;
-//   createdAt: string;
-//   postTitle: string;
-//   message: string;
-//   isNew?: boolean;
-// }
+const baseURL =
+  process.env.NODE_ENV === 'production' ? process.env.API_URL : '/api';
 
 export const postNotification = async (Id: number) => {
   const response = await axiosInstance.post(END_POINT.READ_NOTIFICATION(Id));
   return response;
 };
 
-// export const useFetchSSE = () => {
-//   const [messages, setMessages] = useState<NotificationMessage[]>([]);
+export const useFetchSSE = () => {
+  const [messages, setMessages] = useState<NotificationMessage[]>([]);
 
-//   useEffect(() => {
-//     const EventSource = EventSourcePolyfill || NativeEventSource;
-//     const eventSource = new EventSource(
-//       `${process.env.API_URL}${END_POINT.NOTIFICATON}`,
-//       {
-//         headers: {
-//           Authorization: `${localStorage.getItem('accessToken')}`,
-//         },
-//         withCredentials: true,
-//         heartbeatTimeout: 86400000,
-//       },
-//     );
+  const accessToken = useNewSelector(selectAccessToken);
 
-//     eventSource.onmessage = (event) => {
-//       const newMessage = JSON.parse(event.data);
-//       setMessages((prevMessages) => [newMessage.time, ...prevMessages]);
-//     };
+  useEffect(() => {
+    if (!accessToken) return;
 
-//     eventSource.onerror = (error) => {
-//       console.error('EventSource failed:', error);
-//       eventSource.close();
-//     };
+    const EventSource = EventSourcePolyfill || NativeEventSource;
 
-//     return () => {
-//       eventSource.close();
-//     };
-//   }, []);
+    const eventSource = new EventSource(`${baseURL}${END_POINT.NOTIFICATON}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      withCredentials: true,
+    });
 
-// export const useFetchSSE = () => {
-//   try {
-//     const EventSource = EventSourcePolyfill || NativeEventSource;
-//     const eventSource = new EventSourcePolyfill(
-//       `${process.env.API_URL}${END_POINT.NOTIFICATON}`,
-//       {
-//         headers: {
-//           Authorization: `${localStorage.getItem('accessToken')}`,
-//         },
-//         withCredentials: true,
-//         heartbeatTimeout: 86400000,
-//       },
-//     );
+    console.log('EventSource가 초기화되었습니다:', eventSource);
 
-//     eventSource.onmessage = (e) => {
-//       console.log(e.data);
-//     };
+    eventSource.onmessage = (event) => {
+      try {
+        console.log('SSE 메시지를 수신했습니다:', event);
+        // TODO: 타입 단언에서 타입 가드로 수정
+        const newMessage = JSON.parse(event.data) as NotificationMessage;
+        setMessages((prev) => [newMessage, ...prev]);
+      } catch (err) {
+        console.error('SSE 데이터 파싱에 실패했습니다:', err);
+      }
+    };
 
-//     eventSource.onerror = (e) => {
-//       console.log(e);
-//       eventSource.close();
-//     };
+    eventSource.onerror = (err) => {
+      console.error('EventSource 에러:', err);
+      eventSource.close();
+    };
 
-//   } catch (err) {
-//     console.log('SSE error:', err);
-//   }
-// }
+    return () => {
+      console.log('EventSource를 종료합니다.');
+      eventSource.close();
+    };
+  }, []);
 
-//   const handleMarkAsRead = useCallback(async (notificationId: number) => {
-//     try {
-//       await postNotification(notificationId);
-//       setMessages((prevMessages) =>
-//         prevMessages.map((message) =>
-//           message.id === notificationId
-//             ? { ...message, isNew: false }
-//             : message,
-//         ),
-//       );
-//     } catch (error) {
-//       console.error('Error marking notification as read:', error);
-//     }
-//   }, []);
-//   return { messages, handleMarkAsRead };
-// };
+  const handleMarkAsRead = useCallback(async (notificationId: number) => {
+    try {
+      await postNotification(notificationId);
+
+      setMessages((prevMessages) =>
+        prevMessages.map((message) => {
+          if (message.id !== notificationId) return message;
+          return { ...message, isNew: false };
+        }),
+      );
+    } catch (error) {
+      console.error('알림 읽음 처리 중 오류 발생:', error);
+    }
+  }, []);
+
+  return {
+    messages,
+    handleMarkAsRead,
+  };
+};

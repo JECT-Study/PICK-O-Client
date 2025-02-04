@@ -122,7 +122,7 @@ export const END_POINT = {
     `/reports/talks/${talkPickId}/comments/${commentId}`,
 
   // notification API
-  NOTIFICATON: 'notifications',
+  NOTIFICATON: '/notifications',
   READ_NOTIFICATION: (msgId: Id) => `/notifications/${msgId}/read`,
 
   // friends API

@@ -135,6 +135,7 @@ export { default as RandomTealFrame } from './images/random-teal-frame.png';
 export { default as StatusNotRequired } from './svg/status-not-required.svg';
 export { default as StatusFail } from './svg/status-fail.svg';
 export { default as SadEmoji } from './svg/sad-emoji.svg';
+export { default as MobileBackButton } from './svg/mobile-back-button.svg';
 export { default as MobileTrashCan } from './svg/mobile-trash-can.svg';
 export { default as MobileChoicePlus } from './svg/mobile-choice-plus.svg';
 export { default as MobileChoiceMinus } from './svg/mobile-choice-minus.svg';
