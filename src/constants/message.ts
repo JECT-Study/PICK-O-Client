@@ -43,6 +43,8 @@ export const ERROR = {
     MY_GAME: '본인이 만든 밸런스게임은 저장할 수 없습니다.',
     GAME_FAIL: '게임 북마크에 실패했습니다.',
     GAME_DELETE_FAIL: '게임 북마크 삭제에 실패했습니다.',
+    POST_MUTATE_FAIL: '컨텐츠가 벌써 떠나 버렸어요ㅠㅠ',
+    DELETE_MUTATE_FAIL: '저장 해제에 실패했어요.',
   },
   TEMPGAME: {
     LOAD: '임시 저장 데이터를 불러오는 데 실패했습니다.',
@@ -55,6 +57,12 @@ export const ERROR = {
   CREATEGAME: {
     EMPTY_DATA: '게임 데이터가 없습니다.',
     FAIL: '게임 생성에 실패했습니다.',
+  },
+  EDITGAME: {
+    FAIL: '게임 수정에 실패했습니다.',
+  },
+  DELETEGAME: {
+    FAIL: '게임 삭제에 실패했습니다.',
   },
   VALIDATE: {
     GAME_IMAGE: 'A와 B의 이미지가 모두 없거나 모두 있어야 합니다!',
@@ -84,6 +92,10 @@ export const SUCCESS = {
   COMMENT: {
     REPORT: '신고 완료되었습니다.',
   },
+  BOOKMARK: {
+    POST_MUTATE_SUCCESS: '다시 저장했어요.',
+    DELETE_MUTATE_SUCCESS: '저장을 해제했어요.',
+  },
   EDIT_PROFILE: '수정 완료 되었습니다!',
   POST: {
     CREATE: '등록 완료!',
@@ -98,8 +110,14 @@ export const SUCCESS = {
     UPLOAD: '이미지가 업로드 되었습니다!',
     DELETE: '이미지가 삭제되었습니다!',
   },
-  CREATEGAME: {
+  GAME: {
     CREATE: '등록되었습니다!',
+    EDIT: '수정이 완료되었습니다!',
+    DELETE: '삭제가 완료되었습니다!',
+    REPORT: '신고 완료되었습니다!',
+  },
+  TAG: {
+    EDIT: '태그 수정이 완료되었습니다!',
   },
 } as const;
 

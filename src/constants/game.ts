@@ -3,6 +3,8 @@ export const GAME_VALUE = {
   SIZE: 16,
 };
 
+export const TOTAL_STAGE = 10;
+
 export const TAG_OPTIONS = ['커플', '취향', '기타'];
 
 export const MAX_STAGE = 9;

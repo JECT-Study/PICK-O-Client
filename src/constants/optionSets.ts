@@ -1,6 +1,6 @@
 export enum OptionKeys {
-  TALK_PICK = 'talkPick',
-  BALANCE_GAME = 'balanceGame',
+  TALK_PICK = 'talkpick',
+  BALANCE_GAME = 'balancegame',
 }
 
 export const optionSets: Record<
