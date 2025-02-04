@@ -96,6 +96,15 @@ const typo = {
       letterSpacing: `${16 * -0.05}px`,
     },
   },
+  Text: {
+    Regular: {
+      fontFamily: 'Pretendard',
+      fontSize: '14px',
+      fontWeight: 400,
+      lineHeight: '1.6',
+      letterSpacing: `${16 * -0.05}px`,
+    },
+  },
   Number: {
     SemiBold: {
       fontFamily: 'Poppins-Medium',
@@ -138,6 +147,13 @@ const typo = {
         fontWeight: 600,
         lineHeight: '1.6',
         letterSpacing: `${24 * -0.05}px`,
+      },
+      SemiBold_22: {
+        fontFamily: 'Pretendard',
+        fontSize: '22px',
+        fontWeight: 600,
+        lineHeight: '1.6',
+        letterSpacing: `${22 * -0.05}px`,
       },
     },
     Main: {

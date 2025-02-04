@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { ERROR, SUCCESS } from '@/constants/message';
-import { LogoLarge } from '@/assets';
+import { LogoLarge, LogoMedium } from '@/assets';
 import LoginForm from '@/components/molecules/LoginForm/LoginForm';
+import MobileLoginForm from '@/components/mobile/molecules/MobileLoginForm/MobileLoginForm';
 import { useLocation } from 'react-router-dom';
 import useToastModal from '@/hooks/modal/useToastModal';
 import ToastModal from '@/components/atoms/ToastModal/ToastModal';
+import useIsMobile from '@/hooks/common/useIsMobile';
 import * as S from './LoginPage.style';
 
 export interface State {
@@ -13,6 +15,8 @@ export interface State {
 }
 
 const LoginPage = () => {
+  const isMobile = useIsMobile();
+
   const location = useLocation();
   const state = location.state as State;
 
@@ -38,12 +42,21 @@ const LoginPage = () => {
           <ToastModal>{modalText}</ToastModal>
         </div>
       )}
-      <LogoLarge css={S.logoStyle} />
-      <LoginForm
-        showToastModal={showToastModal}
-        withSignInText
-        loginState={state}
-      />
+      {isMobile ? (
+        <>
+          <LogoMedium css={S.logoStyle} />
+          <MobileLoginForm showToastModal={showToastModal} loginState={state} />
+        </>
+      ) : (
+        <>
+          <LogoLarge css={S.logoStyle} />
+          <LoginForm
+            showToastModal={showToastModal}
+            withSignInText
+            loginState={state}
+          />
+        </>
+      )}
     </div>
   );
 };

@@ -62,6 +62,7 @@ export const useSignupForm = () => {
     onChange,
     setEach,
     onSuccessChange,
+    successForm,
     isVisible,
     modalText,
     handleSubmit,

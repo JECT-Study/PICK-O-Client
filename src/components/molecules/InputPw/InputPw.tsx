@@ -1,25 +1,32 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import React, { ChangeEvent, useEffect } from 'react';
 import { INPUT_LIMIT } from '@/constants/input';
 import { useCheckPassword } from '@/hooks/common/inputsUserInfo/useCheckPassword';
-import React, { ChangeEvent, useEffect } from 'react';
 import Input from '@/components/atoms/Input/Input';
 import Label from '@/components/atoms/Label/Label';
+import MobileInput from '@/components/mobile/atoms/Input/Input';
 import * as S from './InputPw.style';
 
 interface InputPwProps {
+  isMobile?: boolean;
   value: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   onSuccessChange?: (name: string, value: boolean) => void;
+  success?: boolean;
 }
 
-const InputPw = ({ value, onChange, onSuccessChange }: InputPwProps) => {
+const InputPw = ({
+  isMobile = false,
+  value,
+  onChange,
+  onSuccessChange,
+  success = false,
+}: InputPwProps) => {
   const { inputRef, isError, errorMessage, handleVerify } =
     useCheckPassword(value);
 
   useEffect(() => {
-    if (isError) {
-      handleVerify();
-    }
+    handleVerify();
   }, [value]);
 
   useEffect(() => {
@@ -28,7 +35,24 @@ const InputPw = ({ value, onChange, onSuccessChange }: InputPwProps) => {
     }
   }, [errorMessage]);
 
-  return (
+  return isMobile ? (
+    <MobileInput
+      id="password"
+      name="password"
+      type="password"
+      placeholder="비밀번호를 입력해주세요."
+      minLength={INPUT_LIMIT.PW_MIN}
+      maxLength={INPUT_LIMIT.PW_MAX}
+      isError={isError}
+      errorMessage={errorMessage}
+      value={value}
+      ref={inputRef}
+      onChange={onChange}
+      onKeyDown={handleVerify}
+      onBlur={handleVerify}
+      isSuccess={success}
+    />
+  ) : (
     <div css={S.inputPwContainer}>
       <Label id="password" css={S.labelStyling}>
         비밀번호

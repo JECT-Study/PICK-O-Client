@@ -8,11 +8,20 @@ export const loginContainer = css({
   width: '100%',
   paddingTop: '118px',
   paddingBottom: '60px',
-  background: color.GY[3],
+  backgroundColor: color.GY[3],
+
+  '@media (max-width: 430px)': {
+    paddingTop: '60px',
+    backgroundColor: color.WT,
+  },
 });
 
 export const logoStyle = css({
   marginBottom: '24px',
+
+  '@media (max-width: 430px)': {
+    marginBottom: '50px',
+  },
 });
 
 export const toastModalStyling = css({
@@ -21,4 +30,8 @@ export const toastModalStyling = css({
   left: '50%',
   transform: 'translate(-50%)',
   zIndex: '1000',
+
+  '@media (max-width: 430px)': {
+    top: '65px',
+  },
 });

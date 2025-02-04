@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import Modal from '@/components/atoms/Modal/Modal';
-import Button from '@/components/atoms/Button/Button';
+import Modal from '@/components/mobile/atoms/Modal/Modal';
+import Button from '@/components/mobile/atoms/Button/Button';
 import * as S from './DefaultProfileModal.style';
 
 export interface DefaultProfileModalProps {
@@ -23,8 +23,11 @@ const DefaultProfileModal = ({
   };
 
   return (
-    <Modal action="profile" isOpen={isOpen} onClose={onClose}>
+    <Modal action="share" isOpen={isOpen} onClose={onClose} hasCloseButton>
       <div css={S.defaultProfileModalStyling}>
+        <div css={S.selectTextStyling}>
+          나만의 <span>PICK-O 프렌즈</span>를 픽해보세요!
+        </div>
         <div css={S.imageWrapperStyling}>
           {imgList.map((src) => (
             <button
@@ -40,12 +43,11 @@ const DefaultProfileModal = ({
             </button>
           ))}
         </div>
-        <div css={S.selectTextStyling}>나만의 PICK-O 프렌즈를 픽해보세요!</div>
         <Button
           size="large"
           variant="primary"
           onClick={() => onSelect && onSelect(selectedImg)}
-          css={S.selectButtonStyling}
+          css={S.selectButtonStyling(!!selectedImg)}
         >
           설정 완료
         </Button>
