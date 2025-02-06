@@ -6,6 +6,7 @@ import ContentsButton from '@/components/molecules/ContentsButton/ContentsButton
 import { useNavigate } from 'react-router-dom';
 import { ERROR } from '@/constants/message';
 import { GameContent } from '@/types/game';
+import { PATH } from '@/constants/path';
 import * as S from './BalanceGameCategorySection.style';
 
 interface BalanceGameCategorySectionProps {
@@ -27,7 +28,7 @@ const BalanceGameCategorySection = ({
         alert(ERROR.GAME.NOT_EXIST);
         return;
       }
-      navigate(`/balancegame/${gameId}`);
+      navigate(PATH.BALANCEGAME(gameId));
     },
     [navigate],
   );

@@ -11,6 +11,7 @@ import { ToggleGroupValue } from '@/types/toggle';
 import { useNavigate } from 'react-router-dom';
 import { ERROR } from '@/constants/message';
 import MobileToggleGroup from '@/components/mobile/atoms/MobileToggleGroup/MobileToggleGroup';
+import { PATH } from '@/constants/path';
 import * as S from './BalanceGameList.style';
 
 export interface ContentListProps {
@@ -41,7 +42,7 @@ const BalanceGameList = ({
         alert(ERROR.GAME.NOT_EXIST);
         return;
       }
-      navigate(`/balancegame/${gameId}`);
+      navigate(PATH.BALANCEGAME(gameId));
     },
     [navigate],
   );

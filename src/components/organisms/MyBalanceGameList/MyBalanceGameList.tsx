@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import ContentsButton from '@/components/molecules/ContentsButton/ContentsButton';
 import { useNavigate } from 'react-router-dom';
+import { PATH } from '@/constants/path';
 import * as S from './MyBalanceGameList.style';
 
 export interface MyBalanceGameItem {
@@ -37,7 +38,7 @@ const MyBalanceGameList = ({ items = [] }: MyBalanceGameListProps) => {
   }, [items]);
 
   const handleItemClick = (gameId: number) => {
-    navigate(`/balancegame/${gameId}`);
+    navigate(PATH.BALANCEGAME(gameId));
   };
 
   return (

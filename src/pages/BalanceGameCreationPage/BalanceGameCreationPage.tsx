@@ -20,6 +20,7 @@ import { createInitialGameStages } from '@/utils/balanceGameUtils';
 import { resizeImage } from '@/utils/imageUtils';
 import { useLoadTempGameQuery } from '@/hooks/api/game/useLoadTempGameQuery';
 import { SUCCESS, ERROR } from '@/constants/message';
+import { PATH } from '@/constants/path';
 import * as S from './BalanceGameCreationPage.style';
 
 const BalanceGameCreationPage = () => {
@@ -162,7 +163,7 @@ const BalanceGameCreationPage = () => {
     try {
       const gameId = await handleCreateBalanceGame(gameData);
       showToastModal(SUCCESS.CREATEGAME.CREATE, () => {
-        navigate(`/balancegame/${gameId}`);
+        navigate(PATH.BALANCEGAME(gameId));
       });
     } catch (error) {
       showToastModal(ERROR.CREATEGAME.FAIL);
