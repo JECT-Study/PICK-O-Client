@@ -30,7 +30,7 @@ const MyBalanceGameList = ({
   }, [items]);
 
   const handleItemClick = (gameId: number) => {
-    navigate(/${PATH.BALANCEGAME.VIEW(gameId)}); 
+    navigate(`/${PATH.BALANCEGAME.VIEW(gameId)}`);
   };
 
   return (

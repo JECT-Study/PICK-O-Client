@@ -28,7 +28,7 @@ const BalanceGameCategorySection = ({
         alert(ERROR.GAME.NOT_EXIST);
         return;
       }
-      navigate(PATH.BALANCEGAME(gameId));
+      navigate(`/${PATH.BALANCEGAME.VIEW(gameId)}`);
     },
     [navigate],
   );
@@ -48,7 +48,7 @@ const BalanceGameCategorySection = ({
             title={content.title}
             mainTag={content.mainTag}
             subTag={content.subTag}
-            bookmarked={content.bookmarkState || false}
+            bookmarked={content.bookmarked || false}
             onClick={() => handleItemClick(content.id)}
           />
         ))}
