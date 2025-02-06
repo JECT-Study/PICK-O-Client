@@ -1,13 +1,7 @@
 import React, { forwardRef } from 'react';
-import { Plus } from '@/assets';
+import { DefaultPerson, Plus } from '@/assets';
 import type { ComponentPropsWithoutRef, ForwardedRef } from 'react';
-import {
-  profileImageWrapper,
-  profilePlusImageWrapper,
-  profilePlusWrapper,
-  profileSettingContainer,
-  profileSettingInnerContainer,
-} from './ProfileSetting.style';
+import * as S from './ProfileSetting.style';
 
 export interface ProfileSettingProps extends ComponentPropsWithoutRef<'img'> {
   isSetting?: boolean;
@@ -18,29 +12,34 @@ const ProfileSetting = (
   ref: ForwardedRef<HTMLImageElement>,
 ) => {
   return (
-    <div css={profileSettingContainer}>
+    <div css={S.profileSettingContainer}>
       {isSetting ? (
         <>
-          <div css={profileSettingInnerContainer}>
+          <div css={S.profileSettingInnerContainer}>
             <img
               alt="프로필 이미지"
               {...attributes}
               ref={ref}
-              css={profileImageWrapper}
+              css={S.profileImageWrapper}
             />
           </div>
-          <div css={profilePlusWrapper} {...attributes}>
+          <div css={S.profilePlusWrapper} {...attributes}>
             <Plus />
           </div>
         </>
       ) : (
-        <div
-          css={[profileSettingInnerContainer, profilePlusImageWrapper]}
-          {...attributes}
-          ref={ref}
-        >
-          <Plus />
-        </div>
+        <>
+          <div
+            css={[S.profileSettingInnerContainer, S.profilePlusImageWrapper]}
+            {...attributes}
+            ref={ref}
+          >
+            <DefaultPerson />
+          </div>
+          <div css={S.profilePlusWrapper} {...attributes}>
+            <Plus />
+          </div>
+        </>
       )}
     </div>
   );

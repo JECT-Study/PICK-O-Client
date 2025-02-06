@@ -10,6 +10,7 @@ import { GameContent } from '@/types/game';
 import { ToggleGroupValue } from '@/types/toggle';
 import { useNavigate } from 'react-router-dom';
 import { ERROR } from '@/constants/message';
+import { PATH } from '@/constants/path';
 import MobileToggleGroup from '@/components/mobile/atoms/MobileToggleGroup/MobileToggleGroup';
 import { PATH } from '@/constants/path';
 import * as S from './BalanceGameList.style';
@@ -22,6 +23,7 @@ export interface ContentListProps {
   setActiveTab: React.Dispatch<
     React.SetStateAction<'인기' | '커플' | '취향' | '월드컵'>
   >;
+  onBookmarkClick?: (content: GameContent) => void;
   isMobile?: boolean;
 }
 
@@ -31,6 +33,7 @@ const BalanceGameList = ({
   setSelectedValue,
   activeTab,
   setActiveTab,
+  onBookmarkClick,
   isMobile = false,
 }: ContentListProps) => {
   const [visibleItems, setVisibleItems] = useState<number>(4);
@@ -90,8 +93,12 @@ const BalanceGameList = ({
             title={content.title}
             mainTag={content.mainTag}
             subTag={content.subTag}
-            bookmarked={content.bookmarkState || false}
+            showBookmark={content.showBookmark}
+            bookmarked={content.bookmarked || false}
             onClick={() => handleItemClick(content.id)}
+            onBookmarkClick={() => {
+              onBookmarkClick?.(content);
+            }}
           />
         ))}
         {visibleItems < contents.length && (

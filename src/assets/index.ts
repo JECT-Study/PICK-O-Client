@@ -126,6 +126,12 @@ export { default as MobileGameBannerFirst } from './images/mo-game-banner-first.
 export { default as MobileGameBannerSecond } from './images/mo-game-banner-second.png';
 export { default as RedCheckIcon } from './svg/red-check-icon.svg';
 export { default as BlueCheckIcon } from './svg/blue-check-icon.svg';
+export { default as RandomBlackFrame } from './images/random-black-frame.png';
+export { default as RandomBlueFrame } from './images/random-blue-frame.png';
+export { default as RandomGreenFrame } from './images/random-green-frame.png';
+export { default as RandomPinkFrame } from './images/random-pink-frame.png';
+export { default as RandomPurpleFrame } from './images/random-purple-frame.png';
+export { default as RandomTealFrame } from './images/random-teal-frame.png';
 export { default as StatusNotRequired } from './svg/status-not-required.svg';
 export { default as StatusFail } from './svg/status-fail.svg';
 export { default as SadEmoji } from './svg/sad-emoji.svg';
@@ -137,6 +143,14 @@ export { default as PopularMedium } from './svg/popular-medium.svg';
 export { default as CoupleMedium } from './svg/couple-medium.svg';
 export { default as TasteMedium } from './svg/taste-medium.svg';
 export { default as MoreSmall } from './svg/more-small.svg';
+export { default as MobileKakaoLogin } from './svg/mobile-kakao-login.svg';
+export { default as MobileGoogleLogin } from './svg/mobile-google-login.svg';
+export { default as MobileNaverLogin } from './svg/mobile-naver-login.svg';
+export { default as MobileRecentLogin } from './svg/mobile-recent-login.svg';
+export { default as LogoMedium } from './svg/logo-medium.svg';
+export { default as DefaultPerson } from './svg/default-person.svg';
+export { default as MobileDefaultPerson } from './svg/mobile-default-person.svg';
+export { default as MobilePlus } from './svg/mobile-plus.svg';
 
 // TODO: 이전 SVG
 export { default as Email } from './svg/email.svg';

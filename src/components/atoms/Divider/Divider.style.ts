@@ -5,15 +5,22 @@ import type { DividerProps } from './Divider';
 export const getDividerStyling = ({
   orientation,
   length,
+  tone,
 }: Required<DividerProps>) => {
   const style = {
     width: css({
       width: `${length}px`,
-      borderBottom: `1px solid ${color.GY[2]}`,
+      borderBottom:
+        tone === 'gray'
+          ? `1px solid ${color.GY[2]}`
+          : `1px solid ${color.WT_VIOLET}`,
     }),
     height: css({
       height: `${length}px`,
-      borderRight: `1px solid ${color.GY[2]}`,
+      borderRight:
+        tone === 'gray'
+          ? `1px solid ${color.GY[2]}`
+          : `1px solid ${color.WT_VIOLET}`,
     }),
   };
 

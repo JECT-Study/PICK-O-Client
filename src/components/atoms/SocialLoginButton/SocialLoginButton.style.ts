@@ -1,5 +1,6 @@
 import { css } from '@emotion/react';
 import color from '@/styles/color';
+import type { SocialLoginButtonProps } from './SocialLoginButton';
 
 export const socialLoginStyling = css({
   display: 'flex',
@@ -12,8 +13,6 @@ export const loginButtonStyling = css({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  width: '83px',
-  height: '83px',
   borderRadius: '50%',
   backgroundColor: color.WT,
   outline: `1px solid ${color.GY[2]}`,
@@ -24,7 +23,25 @@ export const loginButtonStyling = css({
   },
 });
 
-export const recentLoginStyling = css({
-  position: 'absolute',
-  marginTop: '90px',
-});
+export const getSizeStyling = (
+  size: Required<SocialLoginButtonProps>['size'],
+) => {
+  const style = {
+    medium: css({
+      width: '83px',
+      height: '83px',
+    }),
+    small: css({
+      width: '58px',
+      height: '58px',
+    }),
+  };
+
+  return style[size];
+};
+
+export const getRecentLoginStyling = (size: string) =>
+  css({
+    position: 'absolute',
+    marginTop: size === 'medium' ? '90px' : '62px',
+  });

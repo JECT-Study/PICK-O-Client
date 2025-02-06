@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/control-has-associated-label */
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Envelope, Lock } from '@/assets';
@@ -72,7 +71,7 @@ const LoginForm = ({
         </Link>
         <Divider orientation="height" length={14} />
         <Link to={`/${PATH.CHANGE.PASSWORD}`}>
-          <div css={S.textStyling}>비밀번호 찾기</div>
+          <div css={S.textStyling}>비밀번호 재설정</div>
         </Link>
       </div>
       <Divider orientation="width" length={522} />

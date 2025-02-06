@@ -4,6 +4,7 @@ export interface GameOption {
   id: number;
   name: string;
   imgUrl: string | null;
+  fileId?: number | null;
   description: string;
   optionType: 'A' | 'B';
 }
@@ -34,10 +35,12 @@ export interface Game {
   mainTag: string;
   subTag: string;
   images: string[];
-  bookmarkState?: boolean;
+  showBookmark?: boolean;
+  bookmarked?: boolean;
 }
 
 export interface GameContent extends Game {
+  writerId: number;
   id: number;
 }
 
@@ -60,10 +63,10 @@ export interface BalanceGameOption {
   id: number;
   name: string;
   imgUrl: string;
-  fileId: number | null;
   description: string;
   optionType: 'A' | 'B';
   imageFile?: File | null;
+  fileId?: number | null;
 }
 
 export interface BalanceGameSet {

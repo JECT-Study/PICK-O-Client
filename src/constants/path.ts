@@ -19,7 +19,11 @@ export const PATH = {
   },
   TODAY_TALKPICK: 'todaytalkpick',
   TALKPICK_PLACE: 'talkpickplace',
-  BALANCEGAME: (setId: number | string = ':setId') => `balancegame/${setId}`,
+  BALANCEGAME: {
+    VIEW: (setId: number | string = ':setId') => `balancegame/${setId}`,
+    EDIT: (gameSetId: number | string = ':gameSetId') =>
+      `balancegame/edit/${gameSetId}`,
+  },
   TALKPICK: (talkPickId: number | string = ':talkPickId') =>
     `talkpick/${talkPickId}`,
   NOTIFICATION: 'notifications',

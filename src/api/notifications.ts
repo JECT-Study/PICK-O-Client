@@ -40,6 +40,7 @@ export const useFetchSSE = () => {
     eventSource.onmessage = (event) => {
       try {
         console.log('SSE 메시지를 수신했습니다:', event);
+        // TODO: 타입 단언에서 타입 가드로 수정
         const newMessage = JSON.parse(event.data) as NotificationMessage;
         setMessages((prev) => [newMessage, ...prev]);
       } catch (err) {
@@ -62,11 +63,10 @@ export const useFetchSSE = () => {
     try {
       await postNotification(notificationId);
       setMessages((prevMessages) =>
-        prevMessages.map((message) =>
-          message.id === notificationId
-            ? { ...message, isNew: false }
-            : message,
-        ),
+        prevMessages.map((message) => {
+          if (message.id !== notificationId) return message;
+          return { ...message, isNew: false };
+        }),
       );
     } catch (error) {
       console.error('알림 읽음 처리 중 오류 발생:', error);

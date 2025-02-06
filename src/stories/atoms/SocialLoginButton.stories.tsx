@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import SocialLoginButton from '@/components/atoms/SocialLoginButton/SocialLoginButton';
-import { storyContainer, storyInnerContainer } from '@/stories/story.styles';
+import { storyContainer, storyInnerRowContainer } from '@/stories/story.styles';
 
 const meta: Meta<typeof SocialLoginButton> = {
   title: 'atoms/SocialLoginButton',
@@ -13,6 +13,10 @@ const meta: Meta<typeof SocialLoginButton> = {
   argTypes: {
     variant: {
       options: ['kakao', 'google', 'naver'],
+      control: { type: 'radio' },
+    },
+    size: {
+      options: ['medium', 'small'],
       control: { type: 'radio' },
     },
     recent: { control: { type: 'boolean' } },
@@ -31,17 +35,17 @@ export const Default: Story = {};
 export const All: Story = {
   render: (args) => (
     <ul css={storyContainer}>
-      <li css={storyInnerContainer}>
-        <h3>Kakao Login Button</h3>
+      <h3>Medium</h3>
+      <li css={storyInnerRowContainer}>
         <SocialLoginButton {...args} />
-      </li>
-      <li css={storyInnerContainer}>
-        <h3>Google Login Button</h3>
         <SocialLoginButton variant="google" />
-      </li>
-      <li css={storyInnerContainer}>
-        <h3>Naver Login Button</h3>
         <SocialLoginButton variant="naver" />
+      </li>
+      <h3>Small</h3>
+      <li css={storyInnerRowContainer}>
+        <SocialLoginButton {...args} size="small" />
+        <SocialLoginButton variant="google" size="small" />
+        <SocialLoginButton variant="naver" size="small" />
       </li>
     </ul>
   ),
