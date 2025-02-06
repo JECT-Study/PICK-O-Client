@@ -40,7 +40,7 @@ const BalanceGameCategorySection = ({
         <MoreButton size="small" />
       </div>
       <div css={S.contentStyle}>
-        {contents.slice(0, 2).map((content) => (
+        {contents.map((content) => (
           <ContentsButton
             size="extraSmall"
             key={content.id}

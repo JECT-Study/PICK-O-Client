@@ -16,19 +16,22 @@ const BalanceGameCategoriesPage = () => {
       <BalanceGameCategorySection
         label="인기"
         icon={<PopularMedium />}
-        contents={bestGames ?? []}
+        contents={bestGames?.slice(0, 2) ?? []}
       />
       <BalanceGameCategorySection
         label="커플"
         icon={<CoupleMedium />}
-        contents={coupleGames ?? []}
+        contents={coupleGames?.slice(0, 2) ?? []}
       />
       <BalanceGameCategorySection
         label="취향"
         icon={<TasteMedium />}
-        contents={tasteGames ?? []}
+        contents={tasteGames?.slice(0, 2) ?? []}
       />
-      <BalanceGameCategorySection label="기타" contents={otherGames ?? []} />
+      <BalanceGameCategorySection
+        label="기타"
+        contents={otherGames?.slice(0, 2) ?? []}
+      />
     </div>
   );
 };
