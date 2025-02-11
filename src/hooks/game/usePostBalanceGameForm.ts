@@ -1,6 +1,7 @@
 import { PATH } from '@/constants/path';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { UploadedImage } from '@/types/file';
 import { BalanceGame, GameSet, TempGame } from '@/types/game';
 import {
   createInitialGameStages,
@@ -119,7 +120,7 @@ export const usePostBalanceGameForm = (
           params: { type: 'GAME_OPTION' },
         },
         {
-          onSuccess: (res) => {
+          onSuccess: (res: UploadedImage) => {
             setEach('fileId', res.fileIds[0], gameStage, optionId);
             setEach('imgUrl', res.imgUrls[0], gameStage, optionId);
           },
