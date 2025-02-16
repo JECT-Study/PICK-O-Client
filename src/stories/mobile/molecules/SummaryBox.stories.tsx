@@ -1,5 +1,5 @@
 import React from 'react';
-import SummaryBox from '@/components/molecules/SummaryBox/SummaryBox';
+import SummaryBox from '@/components/mobile/molecules/SummaryBox/SummaryBox';
 import { TalkPickSummary } from '@/types/talk-pick';
 import type { Meta, StoryObj } from '@storybook/react';
 import { storyContainer, storyInnerContainer } from '@/stories/story.styles';
@@ -17,7 +17,7 @@ const exampleSummary: TalkPickSummary = {
 };
 
 const meta = {
-  title: 'molecules/SummaryBox',
+  title: 'mobile/molecules/SummaryBox',
   component: SummaryBox,
   parameters: {
     layout: 'centered',
