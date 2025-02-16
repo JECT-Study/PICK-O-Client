@@ -65,7 +65,7 @@ export const All: Story = {
         </Button>
         <h1>outlineHighlightR</h1>
         <Button size="medium" variant="outlineHighlightR">
-          상관없다다다다다다
+          medium
         </Button>
         <h1>outlineHighlightB</h1>
         <Button size="medium" variant="outlineHighlightB">
