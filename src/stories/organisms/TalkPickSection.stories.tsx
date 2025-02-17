@@ -23,6 +23,7 @@ const defaultTodayTalkPick: TalkPickDetail = {
     summarySecondLine: '남친이 친구 새우 껍질을 어쩌고 저쩌고 뭐라뭐라',
     summaryThirdLine: '나 너무 속상한데 이걸 찬성해 말어',
   },
+  summaryStatus: 'SUCCESS',
   imgUrls: [],
   fileIds: [],
   votesCountOfOptionA: 1963,
