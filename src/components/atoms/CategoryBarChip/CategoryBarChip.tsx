@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 import * as S from './CategoryBarChip.style';
 
 export interface CategoryBarChipProps {
-  size?: 'large' | 'small';
+  size?: 'large' | 'small' | 'extraSmall';
   children?: ReactNode;
 }
 
