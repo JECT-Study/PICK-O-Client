@@ -19,6 +19,7 @@ import TalkPickVotes from '@/pages/MyPage/TalkPick/TalkPickVotes';
 import TalkPickComments from '@/pages/MyPage/TalkPick/TalkPickComments';
 import BalanceGameWritten from '@/pages/MyPage/BalanceGame/BalanceGameWritten';
 import BalanceGameEditPage from '@/pages/BalanceGameEditPage/BalanceGameEditPage';
+import TalkPickMobilePage from '@/pages/mobile/TalkPickMobilePage/TalkPickMobilePage';
 import ProtectedRoutes from './components/Routes/ProtectedRoutes';
 import { PATH } from './constants/path';
 import { useTokenRefresh } from './hooks/common/useTokenRefresh';
@@ -92,7 +93,10 @@ const App: React.FC = () => {
           <Route path={PATH.CHANGE.PASSWORD} element={<ChangePasswordPage />} />
           <Route path={PATH.TODAY_TALKPICK} element={<TalkPickPage />} />
           <Route path={PATH.TALKPICK_PLACE} element={<TalkPickPlacePage />} />
-          <Route path={PATH.TALKPICK()} element={<TalkPickPage />} />
+          <Route
+            path={PATH.TALKPICK()}
+            element={isMobile ? <TalkPickMobilePage /> : <TalkPickPage />}
+          />
           <Route
             path={PATH.BALANCEGAME.VIEW()}
             element={isMobile ? <BalanceGameMobilePage /> : <BalanceGamePage />}
