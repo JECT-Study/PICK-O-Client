@@ -50,7 +50,7 @@ const MobileCommentsSection = ({
             </div>
           </div>
         )}
-        {commentList?.totalElements ?? 0 ? (
+        {commentList?.totalElements === 0 ? (
           <div css={S.nonCommentsWrapper}>
             <span css={S.nonCommentsTopWrapper}>
               {COMMENT.NO_COMMENTS_YET}
