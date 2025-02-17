@@ -217,3 +217,8 @@ export const PROFILE = {
     SIZE_LIMIT: '3MB 이하의 사진만 가능합니다.',
   },
 };
+
+export const COMMENT = {
+  NO_COMMENTS_YET: '아직 댓글이 없어요',
+  FIRST_COMMENT_SUGGESTION: '첫 댓글을 달아보는건 어때요?',
+};
