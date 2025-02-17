@@ -5,7 +5,6 @@ import typo from '@/styles/typo';
 export const MainContainer = css({
   display: 'flex',
   flexDirection: 'column',
-  width: '344px',
 });
 
 export const myCommentColor = css({
@@ -16,9 +15,7 @@ export const commentContainer = css({
   display: 'flex',
   alignItems: 'flex-start',
   width: '100%',
-  padding: '30px 10px 30px 27px',
-  gap: '20px',
-  borderTop: '1px solid #f4f4f4',
+  gap: '8px',
 });
 
 export const profileWrapper = css({
@@ -29,7 +26,7 @@ export const commentInfoWrapper = css({
   display: 'flex',
   flexDirection: 'column',
   width: '100%',
-  gap: '10px',
+  gap: '3.5px',
 });
 
 export const commentTopWrapper = css({
@@ -39,7 +36,8 @@ export const commentTopWrapper = css({
 
 export const writerInfoWrapper = css({
   display: 'flex',
-  gap: '6px',
+  gap: '8px',
+  alignItems: 'center',
 });
 
 export const nickname = css({
@@ -71,7 +69,8 @@ export const replyButton = css({
   ...typo.Mobile.Text.Medium_12,
   display: 'flex',
   gap: '5px',
+  alignItems: 'center',
   background: 'none',
   color: color.GY[1],
-  cursor: 'pointer',
+  padding: 0,
 });

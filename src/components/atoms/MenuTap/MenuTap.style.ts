@@ -27,7 +27,7 @@ export const menuStlying = css({
   '@media (max-width: 430px)': {
     width: '58px',
     backgroundColor: color.WT,
-    border: `1px solid ${color.GY[1]}`,
+    border: `1px solid ${color.GY[3]}`,
     borderRadius: '6px',
   },
 });
@@ -46,6 +46,6 @@ export const menuItemStyling = css({
     ...typo.Mobile.Text.Medium_12,
     padding: '7px',
     color: color.GY[1],
-    borderBottom: `1px solid ${color.GY[1]}`,
+    borderBottom: `1px solid ${color.GY[3]}`,
   },
 });

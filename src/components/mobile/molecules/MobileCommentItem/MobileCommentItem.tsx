@@ -173,6 +173,7 @@ const MobileCommentItem = ({
               <div css={S.commentTextWrapper}>{comment?.content}</div>
               <div css={S.commentBottomWrapper}>
                 <LikeButton
+                  isMobile
                   likeCount={comment?.likesCount}
                   likeState={comment?.myLike}
                   onClick={handleLikeToggle}
@@ -183,7 +184,9 @@ const MobileCommentItem = ({
                   onClick={handleReplyToggle}
                 >
                   <MobileComment />
-                  <span>{comment.replyCount}</span>
+                  <span>
+                    {comment.replyCount === 0 ? '답글쓰기' : comment.replyCount}
+                  </span>
                 </button>
               </div>
             </>
