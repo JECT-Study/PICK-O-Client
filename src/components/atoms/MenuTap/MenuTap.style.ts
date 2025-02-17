@@ -24,9 +24,16 @@ export const menuStlying = css({
   borderRadius: '10px',
   overflow: 'hidden',
   boxShadow: '1px 2px 10px rgba(0, 0, 0, 0.07)',
+  '@media (max-width: 430px)': {
+    width: '58px',
+    backgroundColor: color.WT,
+    border: `1px solid ${color.GY[1]}`,
+    borderRadius: '6px',
+  },
 });
 
-export const menuItemStyling = css(typo.Comment.SemiBold, {
+export const menuItemStyling = css({
+  ...typo.Comment.SemiBold,
   width: '100%',
   padding: '10px',
   cursor: 'pointer',
@@ -34,5 +41,11 @@ export const menuItemStyling = css(typo.Comment.SemiBold, {
   borderBottom: `1px solid ${color.GY[2]}`,
   ':last-child': {
     borderBottom: 'none',
+  },
+  '@media (max-width: 430px)': {
+    ...typo.Mobile.Text.Medium_12,
+    padding: '7px',
+    color: color.GY[1],
+    borderBottom: `1px solid ${color.GY[1]}`,
   },
 });

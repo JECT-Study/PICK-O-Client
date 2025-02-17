@@ -20,7 +20,8 @@ export const getToastModalColor = (
   return style[bgColor];
 };
 
-export const toastModalStyling = css(typo.Main.SemiBold, {
+export const toastModalStyling = css({
+  ...typo.Main.SemiBold,
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
@@ -29,6 +30,10 @@ export const toastModalStyling = css(typo.Main.SemiBold, {
   padding: '20px 30px',
   borderRadius: '35px',
   boxShadow: '1px 1px 10px rgba(0, 0, 0, 0.07)',
+  '@media (max-width: 430px)': {
+    ...typo.Mobile.Text.SemiBold_12,
+    padding: '14px 24px',
+  },
 });
 
 export const toastContainer = css({
