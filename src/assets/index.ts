@@ -155,6 +155,7 @@ export { default as MobileComment } from './svg/mobile-comment.svg';
 export { default as CryEmoji } from './svg/cry-emoji.svg';
 export { default as MobileLikeButtonDF } from './svg/mobile-like-button-df.svg';
 export { default as MobileLikeButtonPR } from './svg/mobile-like-button-pr.svg';
+export { default as MobileArrowUp } from './svg/mobile-arrow-up.svg';
 
 // TODO: 이전 SVG
 export { default as Email } from './svg/email.svg';
