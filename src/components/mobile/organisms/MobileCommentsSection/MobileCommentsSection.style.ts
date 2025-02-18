@@ -16,7 +16,7 @@ export const commentsSectionContainer = css({
 export const commentTopWrapper = css(typo.Mobile.Text.SemiBold_14, {
   display: 'flex',
   alignItems: 'flex-start',
-  color: color.GY[4],
+  color: color.GY[7],
 });
 
 export const loggedInBackground = css({
@@ -58,6 +58,7 @@ export const commentsWrapper = css({
   padding: 0,
   margin: 0,
   height: 'auto',
+  gap: '17px',
 });
 
 export const nonCommentsWrapper = css(typo.Text.Regular, {
