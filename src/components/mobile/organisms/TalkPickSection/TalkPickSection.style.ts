@@ -6,13 +6,11 @@ export const talkPickStyling = css({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  gap: '7px',
+  gap: '10px',
 });
 
 export const talkPickTitle = css(typo.Main.SemiBold, {
   width: '100%',
-  wordWrap: 'break-word',
-  overflowWrap: 'break-word',
   color: color.BK,
 });
 
@@ -31,19 +29,60 @@ export const talkPickTopWrapper = css({
 export const talkPickWrapper = css({
   display: 'flex',
   flexDirection: 'column',
-  width: '335px',
-  padding: '20px 14px',
-  backgroundColor: color.WT,
-  outline: `1px solid ${color.GY[5]}`,
-  borderRadius: '10px',
-  boxShadow: '1px 2px 10px rgba(0, 0, 0, 0.07)',
+  width: '330px',
 });
 
 export const talkPickTopStyling = css({
   display: 'flex',
+  gap: '10px',
+});
+
+export const talkPickInfoWrapper = css({
+  display: 'flex',
   flexDirection: 'column',
-  paddingBottom: '17px',
+  width: '100%',
+  paddingTop: '6px',
   gap: '7px',
+});
+
+export const talkPickInfoTopWrapper = css({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+});
+
+export const talkPickInfoBottomWrapper = css({
+  display: 'flex',
+  justifyContent: 'space-between',
+});
+
+export const talkPickWriterWrapper = css({
+  display: 'flex',
+  gap: '10px',
+});
+
+export const talkPickWriterStyling = css(typo.Mobile.Text.Medium_12, {
+  color: color.GY[1],
+});
+
+export const talkPickDateStyling = css(typo.Mobile.Text.Regular_10, {
+  color: color.GY[2],
+});
+
+export const talkPickTitleStyling = css(typo.Main.SemiBold, {
+  width: '230px',
+  wordBreak: 'break-all',
+  whiteSpace: 'normal',
+  color: color.BK,
+});
+
+export const talkPickViewStyling = css(typo.Mobile.Text.Regular_10, {
+  color: color.GY[1],
+  marginTop: '6px',
+
+  '& > span': {
+    color: color.MAIN,
+  },
 });
 
 export const talkPickContentWrapper = css({
@@ -52,7 +91,6 @@ export const talkPickContentWrapper = css({
   alignItems: 'center',
   padding: '24px 0',
   gap: '17px',
-  borderTop: `1px solid ${color.GY[4]}`,
   borderBottom: `1px solid${color.GY[4]}`,
 });
 

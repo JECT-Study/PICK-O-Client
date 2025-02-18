@@ -1,17 +1,21 @@
 import React, { ComponentPropsWithRef, ForwardedRef, forwardRef } from 'react';
 import { NormalProfile } from '@/assets';
-import { profileWrapper, profileImage } from './ProfileIcon.style';
+import {
+  profileWrapper,
+  profileImage,
+  getProfileSize,
+} from './ProfileIcon.style';
 
 export interface ProfileProps extends ComponentPropsWithRef<'button'> {
   interaction: 'default' | 'custom';
   imgUrl?: string;
-  size?: 'small' | 'large';
+  size?: 'large' | 'small' | 'extraSmall';
 }
 
 interface ProfilePropsWithImage extends ComponentPropsWithRef<'button'> {
   interaction: 'custom';
   imgUrl: string;
-  size?: 'small' | 'large';
+  size?: 'large' | 'small' | 'extraSmall';
 }
 
 const ProfileIcon = (
@@ -25,12 +29,22 @@ const ProfileIcon = (
 ) => {
   const profileComponents = {
     normal: (
-      <button type="button" ref={ref} css={profileWrapper(size)} {...props}>
+      <button
+        type="button"
+        ref={ref}
+        css={[profileWrapper, getProfileSize(size)]}
+        {...props}
+      >
         <NormalProfile css={profileImage} />
       </button>
     ),
     settings: (
-      <button type="button" ref={ref} css={profileWrapper(size)} {...props}>
+      <button
+        type="button"
+        ref={ref}
+        css={[profileWrapper, getProfileSize(size)]}
+        {...props}
+      >
         <img css={profileImage} src={imgUrl} alt="profile" />
       </button>
     ),

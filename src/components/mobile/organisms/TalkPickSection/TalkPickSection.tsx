@@ -15,6 +15,7 @@ import { ERROR } from '@/constants/message';
 import { formatDate, formatNumber } from '@/utils/formatData';
 import Button from '@/components/atoms/Button/Button';
 import SummaryBox from '@/components/mobile/molecules/SummaryBox/SummaryBox';
+import ProfileIcon from '@/components/atoms/ProfileIcon/ProfileIcon';
 import ToastModal from '@/components/atoms/ToastModal/ToastModal';
 import VoteToggle from '@/components/mobile/molecules/VoteToggle/VoteToggle';
 import MenuTap, { MenuItem } from '@/components/atoms/MenuTap/MenuTap';
@@ -155,7 +156,30 @@ const TalkPickSection = ({
         </div>
       </div>
       <div css={S.talkPickWrapper}>
-        <div css={S.talkPickTopStyling}>TalkPickTopContent</div>
+        <div css={S.talkPickTopStyling}>
+          <ProfileIcon interaction="default" size="extraSmall" />
+          <div css={S.talkPickInfoWrapper}>
+            <div css={S.talkPickInfoTopWrapper}>
+              <div css={S.talkPickWriterWrapper}>
+                <div css={S.talkPickWriterStyling}>{talkPick?.writer}</div>
+                <div css={S.talkPickDateStyling}>
+                  {formatDate(talkPick?.createdAt)}
+                </div>
+              </div>
+              <MenuTap
+                menuData={myTalkPick ? myTalkPickItem : otherTalkPickItem}
+              />
+            </div>
+            <div css={S.talkPickInfoBottomWrapper}>
+              <div css={S.talkPickTitleStyling}>
+                {talkPick?.baseFields.title}
+              </div>
+              <div css={S.talkPickViewStyling}>
+                조회 <span>{formatNumber(talkPick?.views)}</span>
+              </div>
+            </div>
+          </div>
+        </div>
         <div css={S.talkPickContentWrapper}>
           <SummaryBox
             summary={talkPick?.summary}
