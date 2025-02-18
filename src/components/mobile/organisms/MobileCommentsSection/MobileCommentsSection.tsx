@@ -30,12 +30,6 @@ const MobileCommentsSection = ({
 
   const totalPages = commentList?.totalPages ?? 0;
   const pages = generatePageNumbers(totalPages);
-  const [commentValue, setCommentValue] = useState<string>('');
-
-  const { mutate: createComment } = useCreateCommentMutation(
-    talkPickId,
-    selectedPage,
-  );
 
   return (
     <div css={S.commentsSectionContainer}>
@@ -60,8 +54,10 @@ const MobileCommentsSection = ({
           </div>
         ) : (
           <div css={S.commentsWrapper}>
-            {commentList?.content.map((commentData) => (
+            {commentList?.content.map((commentData, idx) => (
               <MobileCommentItem
+                idx={idx}
+                totalElements={commentList.totalElements}
                 key={commentData.id}
                 comment={commentData}
                 selectedPage={selectedPage}

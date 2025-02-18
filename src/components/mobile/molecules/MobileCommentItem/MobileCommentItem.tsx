@@ -17,12 +17,16 @@ import useOutsideClick from '@/hooks/common/useOutsideClick';
 import * as S from './MobileCommentItem.style';
 
 export interface CommentItemProps {
+  idx: number;
+  totalElements: number;
   comment: Comment;
   selectedPage: number;
   talkPickWriter: string;
 }
 
 const MobileCommentItem = ({
+  idx,
+  totalElements,
   comment,
   selectedPage,
   talkPickWriter,
@@ -151,7 +155,9 @@ const MobileCommentItem = ({
               {isTalkPickWriter && (
                 <CategoryBarChip size="extraSmall">작성자</CategoryBarChip>
               )}
-              {/* {comment.edited && <span css={S.editedText}>수정됨</span>} */}
+              {idx === 0 && totalElements === 1 && (
+                <CategoryBarChip size="extraSmall">첫댓글</CategoryBarChip>
+              )}
             </div>
             {!editCommentClicked && (
               <MenuTap menuData={isMyComment ? myComment : reportComment} />
@@ -183,10 +189,14 @@ const MobileCommentItem = ({
                   css={S.replyButton}
                   onClick={handleReplyToggle}
                 >
-                  <MobileComment />
-                  <span>
-                    {comment.replyCount === 0 ? '답글쓰기' : comment.replyCount}
-                  </span>
+                  {comment.replyCount === 0 ? (
+                    '답글쓰기'
+                  ) : (
+                    <>
+                      <MobileComment />
+                      <span>{comment.replyCount}</span>
+                    </>
+                  )}
                 </button>
               </div>
             </>
