@@ -151,6 +151,7 @@ export { default as LogoMedium } from './svg/logo-medium.svg';
 export { default as DefaultPerson } from './svg/default-person.svg';
 export { default as MobileDefaultPerson } from './svg/mobile-default-person.svg';
 export { default as MobilePlus } from './svg/mobile-plus.svg';
+export { default as MobileReport } from './svg/mobile-report.svg';
 
 // TODO: 이전 SVG
 export { default as Email } from './svg/email.svg';
