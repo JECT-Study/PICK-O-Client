@@ -6,6 +6,8 @@ import MobileCommentsSection from '@/components/mobile/organisms/MobileCommentsS
 import { useTalkPickDetailQuery } from '@/hooks/api/talk-pick/useTalkPickDetailQuery';
 // import { ToggleGroupItem } from '@/types/toggle';
 import { useCommentsQuery } from '@/hooks/api/comment/useCommentsQuery';
+import CommentInput from '@/components/mobile/atoms/CommentInput/CommentInput';
+import { useCreateCommentMutation } from '@/hooks/api/comment/useCreateCommentMutation';
 import * as S from './TalkPickMobilePage.style';
 
 interface State {
@@ -15,6 +17,8 @@ interface State {
 
 const TalkPickMobilePage = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [comment, setComment] = useState<string>('');
+
   // const { member } = useMemberQuery();
 
   const { talkPickId } = useParams();
@@ -26,8 +30,19 @@ const TalkPickMobilePage = () => {
 
   const { talkPick } = useTalkPickDetailQuery(id);
 
+  const { mutate: createComment } = useCreateCommentMutation(id, currentPage);
+
   const handleCommentPageChange = (newPage: number) => {
     setCurrentPage(newPage);
+  };
+
+  const handleCommentChange = (value: string) => {
+    setComment(value);
+  };
+
+  const handleCommentSubmit = () => {
+    setComment('');
+    createComment({ content: comment });
   };
 
   const { comments } = useCommentsQuery(
@@ -50,6 +65,11 @@ const TalkPickMobilePage = () => {
           voted={talkPick?.votedOption !== null}
         />
       </div>
+      <CommentInput
+        comment={comment}
+        onCommentChange={handleCommentChange}
+        onCommentSubmit={handleCommentSubmit}
+      />
     </div>
   );
 };
