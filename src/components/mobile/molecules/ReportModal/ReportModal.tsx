@@ -38,7 +38,10 @@ const ReportModal = ({ isOpen, onConfirm, onClose }: ReportModalProps) => {
             <button
               type="button"
               value={option.value}
-              onClick={() => setReportReason(option.value)}
+              onClick={() => {
+                setReportReason(option.value);
+                setOtherReason('');
+              }}
               css={[
                 S.buttonStyling,
                 option.value === reportReason && S.selectedButtonStyling,
@@ -51,7 +54,6 @@ const ReportModal = ({ isOpen, onConfirm, onClose }: ReportModalProps) => {
         {reportReason === '기타' && (
           <input
             css={S.reportInputStyling}
-            value={finalReportReason}
             placeholder="신고사유를 작성해주세요."
             onChange={handleOtherReportReason}
           />

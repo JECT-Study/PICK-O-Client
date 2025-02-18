@@ -41,6 +41,7 @@ export const buttonStyling = css(typo.Mobile.Text.Medium_14, {
   borderRadius: '8px',
   backgroundColor: color.GY[5],
   color: color.GY[6],
+  cursor: 'pointer',
 });
 
 export const selectedButtonStyling = css({
