@@ -63,10 +63,9 @@ const LandingPage = () => {
   }, [isBestGamesEnabled, isLatestGamesEnabled, bestGames, latestGames]);
 
   const processedContents = useMemo(() => {
-    if (!member?.id) return [];
     return contents.map((item: GameContent) => ({
       ...item,
-      showBookmark: item.writerId !== member.id,
+      showBookmark: member?.id ? item.writerId !== member.id : false,
     }));
   }, [contents, member?.id]);
 
