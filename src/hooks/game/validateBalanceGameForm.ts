@@ -1,5 +1,6 @@
 import { ERROR } from '@/constants/message';
-import { isEmptyString } from '@/utils/validator';
+import { isAllLessThan, isEmptyString } from '@/utils/validator';
+import { createArrayFromCommaString } from '@/utils/array';
 import { BalanceGame } from '@/types/game';
 
 export const validateBalanceGameForm = (
@@ -24,7 +25,12 @@ export const validateBalanceGameForm = (
 };
 
 export const validateGameTag = (form: BalanceGame) => {
+  const subTagList = createArrayFromCommaString(form.subTag);
+
   if (isEmptyString(form.mainTag)) {
+    return { isValid: false };
+  }
+  if (!isAllLessThan(subTagList, 10)) {
     return { isValid: false };
   }
 

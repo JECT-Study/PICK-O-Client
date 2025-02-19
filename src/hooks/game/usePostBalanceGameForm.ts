@@ -132,7 +132,7 @@ export const usePostBalanceGameForm = (
   const handleDeleteImg = (fileId: number | null, optionId: number) => {
     if (!fileId) return;
 
-    if (existingBalanceGame) {
+    if (existingBalanceGame || isTempGameLoaded) {
       setEach('fileId', null, gameStage, optionId);
       setEach('imgUrl', '', gameStage, optionId);
     } else {

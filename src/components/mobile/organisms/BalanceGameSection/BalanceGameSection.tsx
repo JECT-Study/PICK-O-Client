@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useNewSelector } from '@/store';
 import { selectAccessToken } from '@/store/auth';
 import { GameDetail, GameSet } from '@/types/game';
+import { createArrayFromCommaString } from '@/utils/array';
 import { PATH } from '@/constants/path';
 import { ERROR } from '@/constants/message';
 import MenuTap, { MenuItem } from '@/components/atoms/MenuTap/MenuTap';
@@ -61,6 +62,8 @@ const BalanceGameSection = ({
   const [guestVotedList, setGuestVotedList] = useState<VoteRecord[]>([]);
 
   const currentGame: GameDetail = gameStages[currentStage];
+  const subTagList = createArrayFromCommaString(game?.subTag ?? '');
+
   const { handleGuestGameVote } = useGuestGameVote(
     guestVotedList,
     setGuestVotedList,
@@ -204,7 +207,7 @@ const BalanceGameSection = ({
             />
           </div>
           <div css={S.subTagWrapper}>
-            {game.subTag && <GameTagChip tag={game.subTag} />}
+            {game.subTag && subTagList.map((tag) => <GameTagChip tag={tag} />)}
           </div>
         </div>
       )}
