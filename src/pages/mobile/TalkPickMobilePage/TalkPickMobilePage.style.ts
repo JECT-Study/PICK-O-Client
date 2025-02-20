@@ -8,7 +8,7 @@ export const contentWrapStyle = css({
 });
 
 export const commentsWrapStyle = css({
-  marginTop: '444px',
+  margin: '444px 0 90px',
   borderTop: `10px solid ${color.GY[5]}`,
   width: '100%',
 });
