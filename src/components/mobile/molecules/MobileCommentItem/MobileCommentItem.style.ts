@@ -53,10 +53,16 @@ export const createdTime = css({
 
 export const commentTextWrapper = css({
   ...typo.Text.Regular,
-  display: 'flex',
+  display: '-webkit-box',
   width: '100%',
-  paddingRight: '20px',
+  '-webkit-line-clamp': 3,
+  '-webkit-box-orient': 'vertical',
+  overflow: 'hidden',
   color: color.BK,
+});
+
+export const moreButtonWrapper = css({
+  float: 'right',
 });
 
 export const commentBottomWrapper = css({

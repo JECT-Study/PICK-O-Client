@@ -14,6 +14,8 @@ import TextArea from '@/components/molecules/TextArea/TextArea';
 import CommentProfile from '@/components/atoms/CommentProfile/CommentProfile';
 import useToastModal from '@/hooks/modal/useToastModal';
 import useOutsideClick from '@/hooks/common/useOutsideClick';
+import MoreButton from '@/components/atoms/MoreButton/MoreButton';
+import { COMMENT } from '@/constants/message';
 import * as S from './MobileCommentItem.style';
 
 export interface CommentItemProps {
@@ -100,6 +102,17 @@ const MobileCommentItem = ({
   //     handleDelete();
   //   };
 
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const expandComment = () => {
+    setIsExpanded((prev) => !prev);
+  };
+
+  const isLongText = comment?.content.length > COMMENT.MAX_SHORTEN_LENGTH;
+  const shortenContent = isExpanded
+    ? comment?.content
+    : `${comment?.content.slice(0, COMMENT.MAX_SHORTEN_LENGTH)}...`;
+
   const myComment: MenuItem[] = [
     {
       label: '수정',
@@ -163,7 +176,7 @@ const MobileCommentItem = ({
               <MenuTap menuData={isMyComment ? myComment : reportComment} />
             )}
           </div>
-          {editCommentClicked ? (
+          {/* {editCommentClicked ? (
             <TextArea
               size="medium"
               value={editCommentText}
@@ -174,33 +187,38 @@ const MobileCommentItem = ({
               }
               onSubmit={handleEditSubmit}
             />
-          ) : (
-            <>
-              <div css={S.commentTextWrapper}>{comment?.content}</div>
-              <div css={S.commentBottomWrapper}>
-                <LikeButton
-                  isMobile
-                  likeCount={comment?.likesCount}
-                  likeState={comment?.myLike}
-                  onClick={handleLikeToggle}
-                />
-                <button
-                  type="button"
-                  css={S.replyButton}
-                  onClick={handleReplyToggle}
-                >
-                  {comment.replyCount === 0 ? (
-                    '답글쓰기'
-                  ) : (
-                    <>
-                      <MobileComment />
-                      <span>{comment.replyCount}</span>
-                    </>
-                  )}
-                </button>
+          ) : ( */}
+          <div css={S.commentTextWrapper}>
+            {shortenContent}
+            {isLongText && !isExpanded && (
+              <div css={S.moreButtonWrapper}>
+                <MoreButton size="small" icon="arrow" onClick={expandComment} />
               </div>
-            </>
-          )}
+            )}
+          </div>
+          <div css={S.commentBottomWrapper}>
+            <LikeButton
+              isMobile
+              likeCount={comment?.likesCount}
+              likeState={comment?.myLike}
+              onClick={handleLikeToggle}
+            />
+            <button
+              type="button"
+              css={S.replyButton}
+              onClick={handleReplyToggle}
+            >
+              {comment.replyCount === 0 ? (
+                '답글쓰기'
+              ) : (
+                <>
+                  <MobileComment />
+                  <span>{comment.replyCount}</span>
+                </>
+              )}
+            </button>
+          </div>
+          {/* )} */}
         </div>
       </div>
     </div>
