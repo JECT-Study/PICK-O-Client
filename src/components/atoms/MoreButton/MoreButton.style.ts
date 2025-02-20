@@ -11,7 +11,15 @@ export const moreButtonStyling = (icon: Required<MoreButtonProps>['icon']) =>
     gap: '7px',
     color: icon === 'plus' ? color.GY[1] : color.MAIN,
     cursor: 'pointer',
-    '@media (max-width: 430px)': {
-      ...typo.Mobile.Text.SemiBold_14,
-    },
+    '@media (max-width: 430px)':
+      icon === 'arrow'
+        ? {
+            ...typo.Mobile.Text.Medium_12,
+            color: color.GY[1],
+            gap: '3px',
+          }
+        : {
+            ...typo.Mobile.Text.SemiBold_14,
+            color: color.GY[1],
+          },
   });

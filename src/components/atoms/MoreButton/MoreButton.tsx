@@ -1,5 +1,5 @@
 import React, { forwardRef, ComponentPropsWithRef, ForwardedRef } from 'react';
-import { More, MoreReply, MoreSmall } from '@/assets';
+import { MobileArrowDown, More, MoreReply, MoreSmall } from '@/assets';
 import * as S from './MoreButton.style';
 
 export interface MoreButtonProps extends ComponentPropsWithRef<'button'> {
@@ -12,7 +12,14 @@ const MoreButton = (
   ref: ForwardedRef<HTMLButtonElement>,
 ) => {
   const getIcon = () => {
-    if (size === 'small') return <MoreSmall />;
+    if (size === 'small') {
+      switch (icon) {
+        case 'arrow':
+          return <MobileArrowDown />;
+        default:
+          return <MoreSmall />;
+      }
+    }
     return icon === 'plus' ? <More /> : <MoreReply />;
   };
 
