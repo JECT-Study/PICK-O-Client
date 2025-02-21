@@ -34,6 +34,7 @@ const defaultTodayTalkPick: TalkPickDetail = {
   myBookmark: false,
   votedOption: 'A',
   writer: '닉네임593',
+  writerProfileImgUrl: OctopusProfile,
   createdAt: '2024-08-04',
   isEdited: false,
 };

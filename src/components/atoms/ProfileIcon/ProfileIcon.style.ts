@@ -3,6 +3,7 @@ import { css } from '@emotion/react';
 export const profileWrapper = css({
   all: 'unset',
   display: 'flex',
+  flexShrink: 0,
   alignItems: 'center',
   justifyContent: 'center',
   borderRadius: '50%',

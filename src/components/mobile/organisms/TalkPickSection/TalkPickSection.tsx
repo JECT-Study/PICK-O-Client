@@ -166,7 +166,11 @@ const TalkPickSection = ({
       </div>
       <div css={S.talkPickWrapper}>
         <div css={S.talkPickTopStyling}>
-          <ProfileIcon interaction="default" size="extraSmall" />
+          <ProfileIcon
+            interaction={talkPick.writerProfileImgUrl ? 'custom' : 'default'}
+            imgUrl={talkPick.writerProfileImgUrl ?? ''}
+            size="extraSmall"
+          />
           <div css={S.talkPickInfoWrapper}>
             <div css={S.talkPickInfoTopWrapper}>
               <div css={S.talkPickWriterWrapper}>
