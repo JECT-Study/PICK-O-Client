@@ -220,7 +220,7 @@ const TalkPickSection = ({
         </div>
         <div css={S.voteBarWrapper}>
           <VotePrototype
-            talkPickId={talkPick?.id ?? 3}
+            talkPickId={talkPick?.id ?? 0}
             leftButtonText={talkPick?.baseFields.optionA ?? ''}
             rightButtonText={talkPick?.baseFields.optionB ?? ''}
             leftVotes={talkPick?.votesCountOfOptionA ?? 0}

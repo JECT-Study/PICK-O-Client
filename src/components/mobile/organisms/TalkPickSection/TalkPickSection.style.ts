@@ -10,6 +10,9 @@ export const talkPickStyling = css({
 });
 
 export const talkPickTitle = css(typo.Main.SemiBold, {
+  display: 'flex',
+  alignItems: 'center',
+  gap: '6px',
   width: '100%',
   color: color.BK,
 });
@@ -30,6 +33,8 @@ export const talkPickWrapper = css({
   display: 'flex',
   flexDirection: 'column',
   width: '330px',
+  padding: '10px 0',
+  borderTop: `1px solid${color.GY[4]}`,
 });
 
 export const talkPickTopStyling = css({

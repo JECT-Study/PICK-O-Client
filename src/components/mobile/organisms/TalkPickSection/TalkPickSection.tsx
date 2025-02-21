@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { useState } from 'react';
 import {
@@ -7,6 +6,7 @@ import {
   MobileBookmarkDF,
   MobileBookmarkPR,
   MobileShare,
+  PickIcon,
 } from '@/assets';
 import { useNavigate } from 'react-router-dom';
 import { TalkPickDetail } from '@/types/talk-pick';
@@ -21,6 +21,7 @@ import VoteToggle from '@/components/mobile/molecules/VoteToggle/VoteToggle';
 import MenuTap, { MenuItem } from '@/components/atoms/MenuTap/MenuTap';
 import TextModal from '@/components/mobile/molecules/TextModal/TextModal';
 import ShareModal from '@/components/mobile/molecules/ShareModal/ShareModal';
+import ReportModal from '@/components/mobile/molecules/ReportModal/ReportModal';
 import { useCreateTalkPickBookmarkMutation } from '@/hooks/api/bookmark/useCreateTalkPickBookmarkMutation';
 import { useDeleteTalkPickBookmarkMutation } from '@/hooks/api/bookmark/useDeleteTalkPickBookmarkMutation';
 import { useDeleteTalkPickMutation } from '@/hooks/api/talk-pick/useDeleteTalkPickMutation';
@@ -139,9 +140,17 @@ const TalkPickSection = ({
           }}
           onClose={onCloseModal}
         />
+        <ReportModal
+          isOpen={activeModal === 'reportTalkPick'}
+          onConfirm={() => {}}
+          onClose={onCloseModal}
+        />
       </div>
       <div css={S.talkPickTopWrapper}>
-        <div css={S.talkPickTitle}> {isTodayTalkPick && '오늘의 톡픽'}</div>
+        <div css={S.talkPickTitle}>
+          {isTodayTalkPick ? '오늘의 톡픽' : '톡픽'}
+          <PickIcon />
+        </div>
         <div css={S.buttonWrapper}>
           <IconButton
             icon={<MobileShare />}
@@ -211,7 +220,7 @@ const TalkPickSection = ({
         </div>
         <div css={S.voteToggleWrapper}>
           <VoteToggle
-            talkPickId={talkPick?.id ?? 3}
+            talkPickId={talkPick?.id ?? 0}
             leftButtonText={talkPick?.baseFields.optionA ?? ''}
             rightButtonText={talkPick?.baseFields.optionB ?? ''}
             selectedVote={talkPick?.votedOption ?? null}
