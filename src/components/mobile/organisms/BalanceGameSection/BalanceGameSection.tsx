@@ -207,7 +207,8 @@ const BalanceGameSection = ({
             />
           </div>
           <div css={S.subTagWrapper}>
-            {game.subTag && subTagList.map((tag) => <GameTagChip tag={tag} />)}
+            {game.subTag &&
+              subTagList.map((tag) => <GameTagChip key={tag} tag={tag} />)}
           </div>
         </div>
       )}
