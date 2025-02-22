@@ -30,6 +30,9 @@ export const validateGameTag = (form: BalanceGame) => {
   if (isEmptyString(form.mainTag)) {
     return { isValid: false };
   }
+  if (subTagList.length > 3) {
+    return { isValid: false };
+  }
   if (!isAllLessThan(subTagList, 10)) {
     return { isValid: false };
   }

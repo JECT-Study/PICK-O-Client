@@ -5,6 +5,7 @@ import { TAG_OPTIONS } from '@/constants/game';
 import Modal from '@/components/mobile/atoms/Modal/Modal';
 import Button from '@/components/mobile/atoms/Button/Button';
 import Divider from '@/components/atoms/Divider/Divider';
+import { validateGameTag } from '@/hooks/game/validateBalanceGameForm';
 import * as S from './GameTagModal.style';
 
 interface GameTagModalProps {
@@ -32,6 +33,12 @@ const GameTagModal = ({
 
   const handleTagSubmit = () => {
     if (currentMainTag) {
+      const gameValidation = validateGameTag(form);
+
+      if (!gameValidation.isValid) {
+        return;
+      }
+
       submitGame();
       onClose?.();
     }

@@ -17,10 +17,7 @@ import { useLoadTempGameQuery } from '@/hooks/api/game/useLoadTempGameQuery';
 import { useSaveTempGameMutation } from '@/hooks/api/game/useSaveTempGameMutation';
 import { useFileUploadMutation } from '@/hooks/api/file/useFileUploadMutation';
 import { useDeleteFileMutation } from '@/hooks/api/file/useDeleteFileMutation';
-import {
-  validateBalanceGameForm,
-  validateGameTag,
-} from './validateBalanceGameForm';
+import { validateBalanceGameForm } from './validateBalanceGameForm';
 import { useEditGamesMutation } from '../api/game/useEditGamesMutation';
 
 export const usePostBalanceGameForm = (
@@ -57,12 +54,6 @@ export const usePostBalanceGameForm = (
   const [isTempGameLoaded, setIsTempGameLoaded] = useState<boolean>(false);
 
   const handleBalanceGame = () => {
-    const gameValidation = validateGameTag(form);
-
-    if (!gameValidation.isValid) {
-      return;
-    }
-
     if (existingGame && gameSetId) {
       editBalanceGame(
         {
