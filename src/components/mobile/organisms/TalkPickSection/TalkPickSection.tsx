@@ -165,31 +165,32 @@ const TalkPickSection = ({
         </div>
       </div>
       <div css={S.talkPickWrapper}>
-        <div css={S.talkPickTopStyling}>
-          <ProfileIcon
-            interaction={talkPick.writerProfileImgUrl ? 'custom' : 'default'}
-            imgUrl={talkPick.writerProfileImgUrl ?? ''}
-            size="extraSmall"
-          />
-          <div css={S.talkPickInfoWrapper}>
-            <div css={S.talkPickInfoTopWrapper}>
+        <div css={S.talkPickInfoWrapper}>
+          <div css={S.talkPickInfoTopWrapper}>
+            <div css={S.talkPickTitleStyling}>{talkPick?.baseFields.title}</div>
+            <MenuTap
+              menuData={myTalkPick ? myTalkPickItem : otherTalkPickItem}
+            />
+          </div>
+          <div css={S.talkPickInfoBottomWrapper}>
+            <div css={S.talkPickWriterInfoWrapper}>
+              <ProfileIcon
+                interaction={
+                  talkPick.writerProfileImgUrl ? 'custom' : 'default'
+                }
+                imgUrl={talkPick.writerProfileImgUrl ?? ''}
+                size="extraSmall"
+              />
               <div css={S.talkPickWriterWrapper}>
                 <div css={S.talkPickWriterStyling}>{talkPick?.writer}</div>
+                <div css={S.talkPickDateStyling}>•</div>
                 <div css={S.talkPickDateStyling}>
                   {formatDate(talkPick?.createdAt)}
                 </div>
               </div>
-              <MenuTap
-                menuData={myTalkPick ? myTalkPickItem : otherTalkPickItem}
-              />
             </div>
-            <div css={S.talkPickInfoBottomWrapper}>
-              <div css={S.talkPickTitleStyling}>
-                {talkPick?.baseFields.title}
-              </div>
-              <div css={S.talkPickViewStyling}>
-                조회 <span>{formatNumber(talkPick?.views)}</span>
-              </div>
+            <div css={S.talkPickViewStyling}>
+              조회 <span>{formatNumber(talkPick?.views)}</span>
             </div>
           </div>
         </div>

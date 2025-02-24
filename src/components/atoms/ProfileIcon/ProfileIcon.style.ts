@@ -24,8 +24,8 @@ export const getProfileSize = (size: 'extraSmall' | 'small' | 'large') => {
       height: '40px',
     }),
     extraSmall: css({
-      width: '30px',
-      height: '30px',
+      width: '24px',
+      height: '24px',
     }),
   };
 

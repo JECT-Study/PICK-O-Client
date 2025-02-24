@@ -53,29 +53,36 @@ export const talkPickInfoWrapper = css({
 export const talkPickInfoTopWrapper = css({
   display: 'flex',
   justifyContent: 'space-between',
-  alignItems: 'center',
 });
 
 export const talkPickInfoBottomWrapper = css({
   display: 'flex',
   justifyContent: 'space-between',
+  alignItems: 'center',
+});
+
+export const talkPickWriterInfoWrapper = css({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '8px',
 });
 
 export const talkPickWriterWrapper = css({
   display: 'flex',
-  gap: '10px',
+  alignItems: 'center',
+  gap: '4px',
 });
 
-export const talkPickWriterStyling = css(typo.Mobile.Text.Medium_12, {
+export const talkPickWriterStyling = css(typo.Mobile.Text.SemiBold_12, {
   color: color.GY[1],
 });
 
-export const talkPickDateStyling = css(typo.Mobile.Text.Regular_10, {
+export const talkPickDateStyling = css(typo.Mobile.Text.Regular_12, {
   color: color.GY[2],
 });
 
 export const talkPickTitleStyling = css(typo.Main.SemiBold, {
-  width: '230px',
+  width: '300px',
   wordBreak: 'break-all',
   whiteSpace: 'normal',
   color: color.BK,
@@ -83,7 +90,6 @@ export const talkPickTitleStyling = css(typo.Main.SemiBold, {
 
 export const talkPickViewStyling = css(typo.Mobile.Text.Regular_10, {
   color: color.GY[1],
-  marginTop: '6px',
 
   '& > span': {
     color: color.MAIN,

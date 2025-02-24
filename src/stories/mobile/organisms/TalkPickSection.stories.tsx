@@ -49,7 +49,7 @@ const meta = {
   args: {
     talkPick: defaultTodayTalkPick,
     myTalkPick: false,
-    isTodayTalkPick: true,
+    isTodayTalkPick: false,
   },
   decorators: [
     (Story) => (
