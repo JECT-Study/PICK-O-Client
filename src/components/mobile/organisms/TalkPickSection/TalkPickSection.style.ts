@@ -143,7 +143,7 @@ export const contentBtnStyling = css({
 
 export const toastModalStyling = css({
   position: 'fixed',
-  top: '110px',
+  top: '65px',
   left: '50%',
   transform: 'translate(-50%)',
   zIndex: '1000',
