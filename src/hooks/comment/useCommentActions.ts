@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { Comment } from '@/types/comment';
 import { useCreateLikeCommentMutation } from '@/hooks/api/like/useCreateLikeCommentMutation';
 import { useDeleteLikeCommentMutation } from '@/hooks/api/like/useDeleteLikeCommentMutation';
@@ -6,14 +7,17 @@ import { useDeleteCommentMutation } from '@/hooks/api/comment/useDeleteCommentMu
 import { useReportCommentMutation } from '@/hooks/api/report/useReportCommentMutation';
 
 export const useCommentActions = (
-  commentData: Comment,
+  commentData: Comment | null,
   editText: string,
   selectedPage: number,
   setEditButtonClicked: (value: boolean) => void,
   showToastModal: (message: string, callback?: () => void) => void,
   parentId?: number,
 ) => {
-  const { id, talkPickId, content, myLike } = commentData;
+  const id = commentData?.id ?? 0;
+  const talkPickId = commentData?.talkPickId ?? 0;
+  const content = commentData?.content ?? '';
+  const myLike = commentData?.myLike ?? false;
 
   const { mutate: editComment } = useEditCommentMutation(
     talkPickId,
@@ -53,6 +57,16 @@ export const useCommentActions = (
     parentId,
   );
 
+  // 🔹 commentData가 없을 경우 빈 함수 반환
+  if (!commentData) {
+    return {
+      handleEditSubmit: () => {},
+      handleDelete: () => {},
+      handleLikeToggle: () => {},
+      handleReport: () => {},
+    };
+  }
+
   const handleEditSubmit = () => {
     if (content === editText) return;
     editComment({ content: editText });
@@ -62,8 +76,9 @@ export const useCommentActions = (
     deleteComment();
   };
 
-  const handleLikeToggle = () =>
+  const handleLikeToggle = () => {
     myLike ? deleteLikeComment() : createLikeComment();
+  };
 
   return {
     handleEditSubmit,

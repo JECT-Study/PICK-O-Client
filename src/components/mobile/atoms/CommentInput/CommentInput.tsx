@@ -5,12 +5,14 @@ import * as S from './CommentInput.style';
 
 interface CommentInputProps {
   comment: string;
+  isEditing: boolean;
   onCommentChange: (value: string) => void;
   onCommentSubmit: () => void;
 }
 
 const CommentInput = ({
   comment,
+  isEditing,
   onCommentChange,
   onCommentSubmit,
   ...attributes

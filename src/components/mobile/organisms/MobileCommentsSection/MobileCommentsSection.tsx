@@ -16,6 +16,7 @@ export interface CommentsSectionProps {
   commentList?: CommentsPagination;
   selectedPage: number;
   voted: boolean;
+  onEditComment: (commentId: number, content: string) => void;
 }
 
 const MobileCommentsSection = ({
@@ -24,6 +25,7 @@ const MobileCommentsSection = ({
   commentList,
   selectedPage,
   voted,
+  onEditComment,
 }: CommentsSectionProps) => {
   const { member } = useMemberQuery();
   const isMyTalkPick: boolean = talkPickWriter === member?.nickname;
@@ -62,19 +64,12 @@ const MobileCommentsSection = ({
                 comment={commentData}
                 selectedPage={selectedPage}
                 talkPickWriter={talkPickWriter}
+                onEditComment={onEditComment}
               />
             ))}
           </div>
         )}
       </div>
-      {/* <div css={S.paginationWrapper}>
-        <Pagination
-          pages={pages}
-          selected={selectedPage}
-          maxPage={totalPages}
-          onChangeNavigate={handlePageChange}
-        />
-      </div> */}
     </div>
   );
 };

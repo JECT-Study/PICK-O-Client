@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import { Comment } from '@/types/comment';
 import { MobileComment } from '@/assets';
 import { useMemberQuery } from '@/hooks/api/member/useMemberQuery';
@@ -10,10 +10,8 @@ import { useRepliesQuery } from '@/hooks/api/comment/useRepliesQuery';
 import MenuTap, { MenuItem } from '@/components/atoms/MenuTap/MenuTap';
 import CategoryBarChip from '@/components/atoms/CategoryBarChip/CategoryBarChip';
 import LikeButton from '@/components/atoms/LikeButton/LikeButton';
-import TextArea from '@/components/molecules/TextArea/TextArea';
 import CommentProfile from '@/components/atoms/CommentProfile/CommentProfile';
 import useToastModal from '@/hooks/modal/useToastModal';
-import useOutsideClick from '@/hooks/common/useOutsideClick';
 import MoreButton from '@/components/atoms/MoreButton/MoreButton';
 import { COMMENT } from '@/constants/message';
 import * as S from './MobileCommentItem.style';
@@ -24,6 +22,7 @@ export interface CommentItemProps {
   comment: Comment;
   selectedPage: number;
   talkPickWriter: string;
+  onEditComment: (commentId: number, content: string) => void;
 }
 
 const MobileCommentItem = ({
@@ -32,6 +31,7 @@ const MobileCommentItem = ({
   comment,
   selectedPage,
   talkPickWriter,
+  onEditComment,
 }: CommentItemProps) => {
   const { member } = useMemberQuery();
 
@@ -46,9 +46,12 @@ const MobileCommentItem = ({
   const commentRef = useRef<HTMLDivElement>(null);
   const { isVisible, modalText, showToastModal } = useToastModal();
 
-  const [editCommentClicked, setEditCommentClicked] = useState<boolean>(false);
-  const [editCommentText, setEditCommentText] = useState<string>(
+  const { handleDelete, handleLikeToggle, handleReport } = useCommentActions(
+    comment,
     comment.content,
+    selectedPage,
+    () => {},
+    showToastModal,
   );
 
   const [activeModal, setActiveModal] = useState<
@@ -60,22 +63,6 @@ const MobileCommentItem = ({
   };
 
   const [visibleReply, setVisibleReply] = useState<number>(10);
-
-  const { handleEditSubmit, handleDelete, handleLikeToggle, handleReport } =
-    useCommentActions(
-      comment,
-      editCommentText,
-      selectedPage,
-      setEditCommentClicked,
-      showToastModal,
-    );
-
-  useEffect(() => {
-    setEditCommentText(comment.content);
-  }, [comment.content]);
-
-  useOutsideClick(commentRef, () => setEditCommentClicked(false));
-
   const [showReply, setShowReply] = useState(false);
   const [replyValue, setReplyValue] = useState('');
 
@@ -97,11 +84,6 @@ const MobileCommentItem = ({
 
   const { replies } = useRepliesQuery(comment.talkPickId, comment.id);
 
-  //   const handleDeleteCommentButton = () => {
-  //     onCloseModal();
-  //     handleDelete();
-  //   };
-
   const [isExpanded, setIsExpanded] = useState(false);
 
   const expandComment = () => {
@@ -117,7 +99,7 @@ const MobileCommentItem = ({
     {
       label: '수정',
       onClick: () => {
-        setEditCommentClicked(true);
+        onEditComment(comment.id, comment.content);
       },
     },
     {
@@ -137,21 +119,9 @@ const MobileCommentItem = ({
     },
   ];
 
-  //   const handleReportCommentButton = (reason: string) => {
-  //     handleReport(reason);
-  //     onCloseModal();
-  //   };
-
-  //   const handleMoreButton = () => {
-  //     setVisibleReply((reply) => reply + 10);
-  //   };
-
   return (
-    <div css={S.MainContainer}>
-      <div
-        ref={commentRef}
-        css={[S.commentContainer, isMyComment && S.myCommentColor]}
-      >
+    <div css={[S.MainContainer, isMyComment && S.myCommentColor]}>
+      <div ref={commentRef} css={S.commentContainer}>
         <div css={S.profileWrapper}>
           <CommentProfile
             option={comment?.voteOption}
@@ -172,22 +142,8 @@ const MobileCommentItem = ({
                 <CategoryBarChip size="extraSmall">첫댓글</CategoryBarChip>
               )}
             </div>
-            {!editCommentClicked && (
-              <MenuTap menuData={isMyComment ? myComment : reportComment} />
-            )}
+            <MenuTap menuData={isMyComment ? myComment : reportComment} />
           </div>
-          {/* {editCommentClicked ? (
-            <TextArea
-              size="medium"
-              value={editCommentText}
-              label="댓글 수정"
-              isEdited={comment.content !== editCommentText}
-              onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-                setEditCommentText(e.target.value)
-              }
-              onSubmit={handleEditSubmit}
-            />
-          ) : ( */}
           <div css={S.commentTextWrapper}>
             {shortenContent}
             {isLongText && !isExpanded && (
@@ -218,10 +174,10 @@ const MobileCommentItem = ({
               )}
             </button>
           </div>
-          {/* )} */}
         </div>
       </div>
     </div>
   );
 };
+
 export default MobileCommentItem;
