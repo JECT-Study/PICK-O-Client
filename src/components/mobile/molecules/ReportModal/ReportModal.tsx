@@ -38,6 +38,7 @@ const ReportModal = ({ isOpen, onConfirm, onClose }: ReportModalProps) => {
             <button
               type="button"
               value={option.value}
+              key={option.value}
               onClick={() => {
                 setReportReason(option.value);
                 setOtherReason('');

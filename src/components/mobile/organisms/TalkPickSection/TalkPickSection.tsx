@@ -14,6 +14,7 @@ import { PATH } from '@/constants/path';
 import { ERROR } from '@/constants/message';
 import { formatDate, formatNumber } from '@/utils/formatData';
 import Button from '@/components/atoms/Button/Button';
+import IconButton from '@/components/mobile/atoms/IconButton/IconButton';
 import SummaryBox from '@/components/mobile/molecules/SummaryBox/SummaryBox';
 import ProfileIcon from '@/components/atoms/ProfileIcon/ProfileIcon';
 import ToastModal from '@/components/atoms/ToastModal/ToastModal';
@@ -27,7 +28,6 @@ import { useDeleteTalkPickBookmarkMutation } from '@/hooks/api/bookmark/useDelet
 import { useDeleteTalkPickMutation } from '@/hooks/api/talk-pick/useDeleteTalkPickMutation';
 import useToastModal from '@/hooks/modal/useToastModal';
 import * as S from './TalkPickSection.style';
-import IconButton from '../../atoms/IconButton/IconButton';
 
 export interface TalkPickProps {
   talkPick: TalkPickDetail;
@@ -207,7 +207,7 @@ const TalkPickSection = ({
               {talkPick?.imgUrls.length !== 0 && (
                 <div css={S.talkPickImageWrapper}>
                   {talkPick?.imgUrls.map((url, idx) => (
-                    <img src={url} alt={`image ${idx + 1}`} />
+                    <img src={url} key={url} alt={`image ${idx + 1}`} />
                   ))}
                 </div>
               )}
