@@ -27,15 +27,10 @@ export const validateBalanceGameForm = (
 export const validateGameTag = (form: BalanceGame) => {
   const subTagList = createArrayFromCommaString(form.subTag);
 
-  if (isEmptyString(form.mainTag)) {
-    return { isValid: false };
-  }
-  if (subTagList.length > 3) {
-    return { isValid: false };
-  }
-  if (!isAllLessThan(subTagList, 10)) {
-    return { isValid: false };
-  }
+  const isValid =
+    !isEmptyString(form.mainTag) &&
+    subTagList.length <= 3 &&
+    isAllLessThan(subTagList, 10);
 
-  return { isValid: true };
+  return { isValid };
 };

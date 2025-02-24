@@ -32,16 +32,13 @@ const GameTagModal = ({
   };
 
   const handleTagSubmit = () => {
-    if (currentMainTag) {
-      const gameValidation = validateGameTag(form);
+    if (!currentMainTag) return;
 
-      if (!gameValidation.isValid) {
-        return;
-      }
+    const { isValid } = validateGameTag(form);
+    if (!isValid) return;
 
-      submitGame();
-      onClose?.();
-    }
+    submitGame();
+    onClose?.();
   };
 
   return (
