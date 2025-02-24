@@ -22,12 +22,13 @@ import { ToggleGroupValue } from '@/types/toggle';
 import { NOTICE, SUCCESS } from '@/constants/message';
 import { useTodayBalanceGameList } from '@/hooks/game/useTodayBalanceGameList';
 import { todayTalkPickDummyData } from '@/mocks/data/banner';
+import { PATH } from '@/constants/path';
 import * as S from './LandingPage.style';
 
 const LandingPage = () => {
   const isMobile = useIsMobile();
   const navigate = useNavigate();
-  const { isOpen: isLoginModalOpen, openModal, closeModal } = useModal();
+  const { isOpen: isLoginModalOpen, closeModal } = useModal();
   const { isVisible, modalText, showToastModal } = useToastModal();
 
   const { member } = useMemberQuery();
@@ -63,10 +64,9 @@ const LandingPage = () => {
   }, [isBestGamesEnabled, isLatestGamesEnabled, bestGames, latestGames]);
 
   const processedContents = useMemo(() => {
-    if (!member?.id) return [];
     return contents.map((item: GameContent) => ({
       ...item,
-      showBookmark: item.writerId !== member.id,
+      showBookmark: member?.id ? item.writerId !== member.id : true,
     }));
   }, [contents, member?.id]);
 
@@ -95,7 +95,7 @@ const LandingPage = () => {
       if (!content.id) return;
 
       if (!isLoggedIn()) {
-        openModal();
+        navigate(`/${PATH.LOGIN}`);
         return;
       }
 
@@ -113,7 +113,7 @@ const LandingPage = () => {
         });
       }
     },
-    [createBookmark, deleteBookmark, openModal, showToastModal],
+    [createBookmark, deleteBookmark, navigate, showToastModal],
   );
 
   return (
