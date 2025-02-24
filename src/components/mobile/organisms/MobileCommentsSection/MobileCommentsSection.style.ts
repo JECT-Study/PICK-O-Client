@@ -7,7 +7,6 @@ export const commentsSectionContainer = css({
   flexDirection: 'column',
   paddingTop: '13px',
   // paddingBottom: '85px',
-  margin: '0 11px 0 20px',
   backgroundColor: color.WT,
   overflowY: 'auto',
   gap: '10px',
@@ -15,6 +14,7 @@ export const commentsSectionContainer = css({
 
 export const commentTopWrapper = css(typo.Mobile.Text.SemiBold_14, {
   display: 'flex',
+  margin: '0 11px 0 20px',
   alignItems: 'flex-start',
   color: color.GY[7],
 });

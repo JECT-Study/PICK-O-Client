@@ -16,6 +16,7 @@ export const commentContainer = css({
   alignItems: 'flex-start',
   width: '100%',
   gap: '8px',
+  padding: '10px 11px 14px 20px',
 });
 
 export const profileWrapper = css({
