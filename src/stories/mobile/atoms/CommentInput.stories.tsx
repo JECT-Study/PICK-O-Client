@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { storyContainer, storyInnerContainer } from '@/stories/story.styles';
@@ -27,16 +26,19 @@ export const All: Story = {
           comment=""
           onCommentChange={() => {}}
           onCommentSubmit={() => {}}
+          isEditing={false}
         />
         <CommentInput
           comment="안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕"
           onCommentChange={() => {}}
           onCommentSubmit={() => {}}
+          isEditing={false}
         />
         <CommentInput
           comment={'아'.repeat(501)}
           onCommentChange={() => {}}
           onCommentSubmit={() => {}}
+          isEditing={false}
         />
       </li>
     </ul>
