@@ -50,7 +50,7 @@ const BalanceGameCreateSection = () => {
             isOpen={tagModalOpen}
             onClose={() => setTagModalOpen(false)}
             setMainTagValue={setEach}
-            setSubTagValue={onChange}
+            setSubTagValue={setEach}
             submitGame={handleBalanceGame}
           />
         )}
@@ -79,7 +79,8 @@ const BalanceGameCreateSection = () => {
             }}
             onConfirm={() => {
               handleDeleteImg(
-                form.games[gameStage].gameOptions[selectedOptionId].fileId,
+                form.games[gameStage].gameOptions[selectedOptionId].fileId ??
+                  null,
                 selectedOptionId,
               );
               setImgDeleteModalOpen(false);

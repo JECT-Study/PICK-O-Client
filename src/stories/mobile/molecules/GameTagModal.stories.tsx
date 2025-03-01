@@ -8,7 +8,7 @@ const defaultGameOptions = createInitialGameStages(10);
 const exampleGame: BalanceGame = {
   title: 'title',
   mainTag: 'mainTag',
-  subTag: 'subTag',
+  subTag: '커플커플커플커플커플,커플커플커플커플커플,커플커플커플커플커플',
   games: defaultGameOptions,
 };
 

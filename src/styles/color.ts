@@ -1,5 +1,6 @@
 const color = {
   MAIN: '#7782FF',
+  MAIN_2: '#9DB7FF',
   BK: '#181818',
   GY: {
     1: '#8C8C8C',

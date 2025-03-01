@@ -9,3 +9,7 @@ export const createRangeArray = (currentPage: number, maxPage: number) => {
     (_, i) => startPage + i,
   );
 };
+
+export const createArrayFromCommaString = (str: string): string[] => {
+  return str.split(',');
+};
