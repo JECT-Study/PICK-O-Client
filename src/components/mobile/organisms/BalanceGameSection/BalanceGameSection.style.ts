@@ -78,6 +78,7 @@ export const descriptionStyling = css(typo.Mobile.Main.Regular_12, {
 
 export const subTagWrapper = css({
   display: 'flex',
+  flexWrap: 'wrap',
   width: '100%',
   marginBottom: '50px',
 });

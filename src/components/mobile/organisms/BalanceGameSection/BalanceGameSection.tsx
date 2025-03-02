@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { MobileBookmarkDF, MobileBookmarkPR, MobileShare } from '@/assets';
 import { useNavigate } from 'react-router-dom';
 import { GameDetail, GameSet } from '@/types/game';
+import { createArrayFromCommaString } from '@/utils/array';
 import { PATH } from '@/constants/path';
 import MenuTap, { MenuItem } from '@/components/atoms/MenuTap/MenuTap';
 import useToastModal from '@/hooks/modal/useToastModal';
@@ -56,6 +57,8 @@ const BalanceGameSection = ({
   const [guestVotedList, setGuestVotedList] = useState<VoteRecord[]>([]);
 
   const currentGame: GameDetail = gameStages[currentStage];
+  const subTagList = createArrayFromCommaString(game?.subTag ?? '');
+
   const { handleGuestGameVote } = useGuestGameVote(
     guestVotedList,
     setGuestVotedList,
@@ -164,7 +167,8 @@ const BalanceGameSection = ({
             />
           </div>
           <div css={S.subTagWrapper}>
-            {game.subTag && <GameTagChip tag={game.subTag} />}
+            {game.subTag &&
+              subTagList.map((tag) => <GameTagChip key={tag} tag={tag} />)}
           </div>
         </div>
       )}
