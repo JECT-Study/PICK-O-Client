@@ -29,15 +29,8 @@ const GameTagModal = ({
   submitGame,
 }: GameTagModalProps) => {
   const currentMainTag: string = form.mainTag;
-  const [subTagArray] = useState(() => createArrayFromCommaString(form.subTag)); // 초기 값 서브태그 배열 (빈 배열 가능, 값 안변함)
+  const [subTagArray] = useState(() => createArrayFromCommaString(form.subTag));
   const [currentSubTag, setCurrentSubTag] = useState<string[]>(subTagArray);
-  // 서브 태그 블록이 보여지는 배열은 currentSubTag
-  // subTagArray는 첫 form의 초기값에 대한 서브 태그만 저장
-  // 인풋에 값 입력 후 스페이스를 누르면 setCurrentSubTag로 currentSubTag에 서브태그 값 추가
-  // 만약 인풋에 값 입력된 상태에서 스페이스를 누르지 않았어도 서브태그에는 포함되어야하지만 currentSubTag에는 추가되면 안됨
-  // 인풋이 존재 -> currentSubTag + inputValue (배열로 들어가야함)
-  // 인풋이 존재x (이미 스페이스를 눌렀음) -> currentSubTag 만으로 처리 가능
-  // 인풋 컴포넌트는 currentSubTag.length로 제시 처리 가능
 
   const [inputValue, setInputValue] = useState<string>('');
   const [inputError, setInputError] = useState<boolean>(false);
@@ -50,7 +43,12 @@ const GameTagModal = ({
   }, [currentSubTag, setSubTagValue]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
+    const { value } = e.target;
+
+    if (value.length > 10) return;
+
+    setInputValue(value);
+    setInputError(false);
   };
 
   const handleSpaceAction = () => {
@@ -58,12 +56,22 @@ const GameTagModal = ({
 
     setCurrentSubTag((prev) => [...prev, inputValue]);
     setInputValue('');
+    setInputError(false);
   };
 
   const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (!inputValue) {
+      setInputError(false);
+      return;
+    }
     if (e.code === 'Space') {
       e.preventDefault();
       handleSpaceAction();
+    }
+    if (inputValue.length >= 10 && !inputError) {
+      setInputError(true);
+    } else if (inputValue.length < 10) {
+      setInputError(false);
     }
   };
 
@@ -115,7 +123,7 @@ const GameTagModal = ({
             <span css={S.tagTextStyling}>서브태그</span>
             <span css={S.subTagTextStyling}>(최대 3개)</span>
           </div>
-          <div css={S.subTagWrapper}>
+          <div css={S.subTagWrapper(currentSubTag.length === 3)}>
             {currentSubTag.map((tag, idx) => (
               <div css={S.subTagChipStyling}>
                 <span>#{tag}</span>

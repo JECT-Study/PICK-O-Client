@@ -47,7 +47,6 @@ export const tagBottomWrapper = css({
   width: '100%',
   display: 'flex',
   flexDirection: 'column',
-  gap: '4px',
 });
 
 export const buttonWrapper = css({
@@ -64,7 +63,7 @@ export const buttonStyling = css(typo.Mobile.Text.SemiBold_14, {
 export const inputWrapper = css({
   display: 'flex',
   flexDirection: 'column',
-  height: '64px',
+  height: '67px',
   gap: '4px',
 });
 
@@ -87,12 +86,15 @@ export const subTagButtonStyling = css({
   cursor: 'pointer',
 });
 
-export const subTagWrapper = css({
-  display: 'flex',
-  flexWrap: 'wrap',
-  width: '100%',
-  gap: '5px',
-});
+export const subTagWrapper = (isTagMax: boolean) =>
+  css({
+    display: 'flex',
+    flexWrap: 'wrap',
+    width: '100%',
+    gap: '5px',
+    paddingTop: '3px',
+    paddingBottom: isTagMax ? '17px' : '8px',
+  });
 
 export const inputStyling = css(typo.Mobile.Text.Medium_12, {
   fontSize: '14px',
