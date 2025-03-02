@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { BalanceGame } from '@/types/game';
 import { MobileCheckIcon } from '@/assets';
 import { TAG_OPTIONS } from '@/constants/game';
@@ -9,6 +8,7 @@ import Button from '@/components/mobile/atoms/Button/Button';
 import Divider from '@/components/atoms/Divider/Divider';
 import { validateGameTag } from '@/hooks/game/validateBalanceGameForm';
 import { createArrayFromCommaString } from '@/utils/array';
+import useOutsideClick from '@/hooks/common/useOutsideClick';
 import * as S from './GameTagModal.style';
 
 interface GameTagModalProps {
@@ -28,6 +28,8 @@ const GameTagModal = ({
   setSubTagValue,
   submitGame,
 }: GameTagModalProps) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+
   const currentMainTag: string = form.mainTag;
   const [subTagArray] = useState(() => createArrayFromCommaString(form.subTag));
   const [currentSubTag, setCurrentSubTag] = useState<string[]>(subTagArray);
@@ -58,6 +60,7 @@ const GameTagModal = ({
     setInputValue('');
     setInputError(false);
   };
+  useOutsideClick(inputRef, handleSpaceAction);
 
   const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (!inputValue) {
@@ -141,6 +144,7 @@ const GameTagModal = ({
             <div css={S.inputWrapper}>
               <input
                 type="text"
+                ref={inputRef}
                 css={S.inputStyling}
                 value={inputValue}
                 placeholder="ex. 연애, 데이트, 데이트취향"
