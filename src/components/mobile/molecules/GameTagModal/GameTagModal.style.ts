@@ -43,6 +43,13 @@ export const tagWrapper = css({
   gap: '8px',
 });
 
+export const tagBottomWrapper = css({
+  width: '100%',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '4px',
+});
+
 export const buttonWrapper = css({
   display: 'flex',
   gap: '8px',
@@ -57,7 +64,7 @@ export const buttonStyling = css(typo.Mobile.Text.SemiBold_14, {
 export const inputWrapper = css({
   display: 'flex',
   flexDirection: 'column',
-  height: '65px',
+  height: '64px',
   gap: '4px',
 });
 

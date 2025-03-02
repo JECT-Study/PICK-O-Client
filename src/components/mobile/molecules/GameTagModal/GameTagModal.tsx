@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BalanceGame } from '@/types/game';
 import { MobileCheckIcon } from '@/assets';
 import { TAG_OPTIONS } from '@/constants/game';
@@ -28,14 +29,50 @@ const GameTagModal = ({
   submitGame,
 }: GameTagModalProps) => {
   const currentMainTag: string = form.mainTag;
-  const subTagArray: string[] = createArrayFromCommaString(form.subTag);
+  const [subTagArray] = useState(() => createArrayFromCommaString(form.subTag)); // 초기 값 서브태그 배열 (빈 배열 가능, 값 안변함)
+  const [currentSubTag, setCurrentSubTag] = useState<string[]>(subTagArray);
+  // 서브 태그 블록이 보여지는 배열은 currentSubTag
+  // subTagArray는 첫 form의 초기값에 대한 서브 태그만 저장
+  // 인풋에 값 입력 후 스페이스를 누르면 setCurrentSubTag로 currentSubTag에 서브태그 값 추가
+  // 만약 인풋에 값 입력된 상태에서 스페이스를 누르지 않았어도 서브태그에는 포함되어야하지만 currentSubTag에는 추가되면 안됨
+  // 인풋이 존재 -> currentSubTag + inputValue (배열로 들어가야함)
+  // 인풋이 존재x (이미 스페이스를 눌렀음) -> currentSubTag 만으로 처리 가능
+  // 인풋 컴포넌트는 currentSubTag.length로 제시 처리 가능
 
-  const [errorMessage, setErrorMessage] = useState<string>(
-    '서브태그 1개 당 최대 10자까지 입력 가능',
-  );
+  const [inputValue, setInputValue] = useState<string>('');
+  const [inputError, setInputError] = useState<boolean>(false);
+
+  useEffect(() => {
+    const subTagList = inputValue
+      ? [...currentSubTag, inputValue]
+      : currentSubTag;
+    setSubTagValue('subTag', subTagList.join(','));
+  }, [currentSubTag, setSubTagValue]);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  };
+
+  const handleSpaceAction = () => {
+    if (!inputValue.trim()) return;
+
+    setCurrentSubTag((prev) => [...prev, inputValue]);
+    setInputValue('');
+  };
+
+  const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.code === 'Space') {
+      e.preventDefault();
+      handleSpaceAction();
+    }
+  };
 
   const handleMainTag = (tag: string) => {
     setMainTagValue('mainTag', tag);
+  };
+
+  const handleDeleteSubTag = (idx: number) => {
+    setCurrentSubTag((prev) => prev.filter((_, i) => i !== idx));
   };
 
   const handleTagSubmit = () => {
@@ -73,30 +110,42 @@ const GameTagModal = ({
             ))}
           </div>
         </div>
-        <div css={S.tagWrapper}>
+        <div css={S.tagBottomWrapper}>
           <div css={S.textBox}>
             <span css={S.tagTextStyling}>서브태그</span>
             <span css={S.subTagTextStyling}>(최대 3개)</span>
           </div>
           <div css={S.subTagWrapper}>
-            {subTagArray.map((tag, idx) => (
+            {currentSubTag.map((tag, idx) => (
               <div css={S.subTagChipStyling}>
                 <span>#{tag}</span>
-                <button type="button" css={S.subTagButtonStyling}>
+                <button
+                  type="button"
+                  css={S.subTagButtonStyling}
+                  onClick={() => handleDeleteSubTag(idx)}
+                >
                   ⨉
                 </button>
               </div>
             ))}
           </div>
-          <div css={S.inputWrapper}>
-            <input
-              css={S.inputStyling}
-              placeholder="ex. 연애, 데이트, 데이트취향"
-            />
-            {errorMessage && (
-              <span css={S.errorMessageStyling}>{errorMessage}</span>
-            )}
-          </div>
+          {currentSubTag.length !== 3 && (
+            <div css={S.inputWrapper}>
+              <input
+                type="text"
+                css={S.inputStyling}
+                value={inputValue}
+                placeholder="ex. 연애, 데이트, 데이트취향"
+                onChange={handleInputChange}
+                onKeyUp={handleKeyUp}
+              />
+              {inputError && (
+                <span css={S.errorMessageStyling}>
+                  서브태그 1개 당 최대 10자까지 입력 가능
+                </span>
+              )}
+            </div>
+          )}
           <Button
             size="large"
             variant="roundPrimary"
