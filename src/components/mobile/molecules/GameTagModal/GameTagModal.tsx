@@ -67,15 +67,13 @@ const GameTagModal = ({
       setInputError(false);
       return;
     }
+
     if (e.code === 'Space') {
       e.preventDefault();
       handleSpaceAction();
     }
-    if (inputValue.length >= 10 && !inputError) {
-      setInputError(true);
-    } else if (inputValue.length < 10) {
-      setInputError(false);
-    }
+
+    setInputError(inputValue.length >= 10);
   };
 
   const handleMainTag = (tag: string) => {
