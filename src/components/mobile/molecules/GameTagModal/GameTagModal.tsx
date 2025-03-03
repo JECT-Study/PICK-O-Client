@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from 'react';
 import { BalanceGame } from '@/types/game';
 import { MobileCheckIcon } from '@/assets';
@@ -126,7 +125,7 @@ const GameTagModal = ({
           </div>
           <div css={S.subTagWrapper(currentSubTag.length === 3)}>
             {currentSubTag.map((tag, idx) => (
-              <div css={S.subTagChipStyling}>
+              <div css={S.subTagChipStyling} key={tag}>
                 <span>#{tag}</span>
                 <button
                   type="button"
