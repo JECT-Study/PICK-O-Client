@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { TalkPickSummary } from '@/types/talk-pick';
 import { SadEmoji, Spinner, StatusFail, StatusNotRequired } from '@/assets';
 import SummaryItem from '@/components/mobile/atoms/SummaryItem/SummaryItem';
@@ -16,7 +16,7 @@ const SummaryBox = ({
 }: SummaryBoxProps) => {
   const contentMap: Record<
     'PENDING' | 'SUCCESS' | 'FAIL' | 'NOT_REQUIRED',
-    React.ReactNode
+    ReactNode
   > = {
     PENDING: (
       <div css={S.summarySpinnerWrapper}>
