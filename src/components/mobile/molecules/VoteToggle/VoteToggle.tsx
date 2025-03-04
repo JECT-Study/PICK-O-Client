@@ -31,7 +31,7 @@ const VoteToggle: React.FC<VoteToggleProps> = ({
   const [loggedOutVoteOption, setLoggedOutVoteOption] =
     useState<MyVoteOption>(null);
 
-  const currnetOption: MyVoteOption = accessToken
+  const currentOption: MyVoteOption = accessToken
     ? selectedVote
     : loggedOutVoteOption;
 
@@ -103,7 +103,7 @@ const VoteToggle: React.FC<VoteToggleProps> = ({
           onClick={() => {
             handleVoteButtonClick('A');
           }}
-          css={S.getButtonStyle('A', currnetOption)}
+          css={S.getButtonStyle('A', currentOption)}
         >
           {leftButtonText}
         </Button>
@@ -113,7 +113,7 @@ const VoteToggle: React.FC<VoteToggleProps> = ({
           onClick={() => {
             handleVoteButtonClick('B');
           }}
-          css={S.getButtonStyle('B', currnetOption)}
+          css={S.getButtonStyle('B', currentOption)}
         >
           {rightButtonText}
         </Button>
