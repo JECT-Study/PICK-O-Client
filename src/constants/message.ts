@@ -217,3 +217,14 @@ export const PROFILE = {
     SIZE_LIMIT: '3MB 이하의 사진만 가능합니다.',
   },
 };
+
+export const PROMPT = {
+  POST: {
+    DELETE: '해당 게시글을 삭제하시겠습니까?',
+    REPORT: '해당 게시글을 신고하시겠습니까?',
+  },
+  GAME: {
+    DELETE: '해당 게임을 삭제하시겠습니까?',
+    REPORT: '해당 게임을 신고하시겠습니까?',
+  },
+};

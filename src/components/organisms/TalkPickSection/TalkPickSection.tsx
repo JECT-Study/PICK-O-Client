@@ -11,7 +11,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { TalkPickDetail } from '@/types/talk-pick';
 import { PATH } from '@/constants/path';
-import { ERROR, SUCCESS } from '@/constants/message';
+import { ERROR, PROMPT, SUCCESS } from '@/constants/message';
 import { formatDate, formatNumber } from '@/utils/formatData';
 import Button from '@/components/atoms/Button/Button';
 import SummaryBox from '@/components/molecules/SummaryBox/SummaryBox';
@@ -143,13 +143,13 @@ const TalkPickSection = ({
           onClose={onCloseModal}
         />
         <TextModal
-          text="해당 게시글을 삭제하시겠습니까?"
+          text={PROMPT.POST.DELETE}
           isOpen={activeModal === 'deleteText'}
           onConfirm={handleDeleteButton}
           onClose={onCloseModal}
         />
         <TextModal
-          text="해당 게시글을 신고하시겠습니까?"
+          text={PROMPT.POST.REPORT}
           isOpen={activeModal === 'reportText'}
           onConfirm={() => {
             setActiveModal('reportTalkPick');
