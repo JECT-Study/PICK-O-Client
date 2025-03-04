@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { useState } from 'react';
 import {
   AngleSmallUp,
@@ -206,8 +205,8 @@ const TalkPickSection = ({
               </div>
               {talkPick?.imgUrls.length !== 0 && (
                 <div css={S.talkPickImageWrapper}>
-                  {talkPick?.imgUrls.map((url, idx) => (
-                    <img src={url} key={url} alt={`image ${idx + 1}`} />
+                  {talkPick?.imgUrls.map((url) => (
+                    <img src={url} key={url} alt={url} />
                   ))}
                 </div>
               )}
