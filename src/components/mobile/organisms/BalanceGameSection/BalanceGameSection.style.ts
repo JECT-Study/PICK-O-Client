@@ -81,6 +81,7 @@ export const subTagWrapper = css({
   flexWrap: 'wrap',
   width: '100%',
   marginBottom: '50px',
+  gap: '8px',
 });
 
 export const iconButtonWrapper = css({

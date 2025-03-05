@@ -24,6 +24,18 @@ export const getVariantStyling = (
       backgroundColor: color.GY[5],
       color: color.GY[1],
     }),
+    outlineHighlightR: css({
+      border: `2px solid ${color.PINK}`,
+      borderRadius: '10px',
+      backgroundColor: 'transparent',
+      color: color.RED,
+    }),
+    outlineHighlightB: css({
+      border: `2px solid ${color.SKYBLUE}`,
+      borderRadius: '10px',
+      backgroundColor: 'transparent',
+      color: color.BLUE,
+    }),
   };
 
   return style[variant];
@@ -58,6 +70,22 @@ export const getSizeByVariantStyling = (
         height: '34px',
       }),
     },
+    outlineHighlightR: {
+      large: css({}),
+      medium: css(typo.Comment.SemiBold, {
+        width: '134px',
+        height: '72px',
+        padding: '0 21px',
+      }),
+    },
+    outlineHighlightB: {
+      large: css({}),
+      medium: css(typo.Comment.SemiBold, {
+        width: '134px',
+        height: '72px',
+        padding: '0 21px',
+      }),
+    },
   };
 
   return style[variant][size];
@@ -68,6 +96,6 @@ export const buttonStyling = css({
   justifyContent: 'center',
   alignItems: 'center',
   border: 'none',
-  whiteSpace: 'nowrap',
+  whiteSpace: 'normal',
   cursor: 'pointer',
 });

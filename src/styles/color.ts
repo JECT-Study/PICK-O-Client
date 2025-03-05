@@ -8,6 +8,7 @@ const color = {
     3: '#F1F1F1',
     4: '#E6E9EF',
     5: '#F6F7F9',
+    6: '#949DAE',
   },
   WT: '#FFFFFF',
   WT_VIOLET: '#F2F3FF',
