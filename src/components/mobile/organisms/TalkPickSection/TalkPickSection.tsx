@@ -1,25 +1,27 @@
-/* eslint-disable no-console */
 import React, { useState } from 'react';
 import {
   AngleSmallUp,
   AngleSmallDown,
-  BookmarkRR,
-  BookmarkSR,
-  Share,
+  MobileBookmarkDF,
+  MobileBookmarkPR,
+  MobileShare,
+  PickIcon,
 } from '@/assets';
 import { useNavigate } from 'react-router-dom';
 import { TalkPickDetail } from '@/types/talk-pick';
 import { PATH } from '@/constants/path';
-import { ERROR, PROMPT, SUCCESS } from '@/constants/message';
+import { ERROR, PROMPT } from '@/constants/message';
 import { formatDate, formatNumber } from '@/utils/formatData';
 import Button from '@/components/atoms/Button/Button';
-import SummaryBox from '@/components/molecules/SummaryBox/SummaryBox';
+import IconButton from '@/components/mobile/atoms/IconButton/IconButton';
+import SummaryBox from '@/components/mobile/molecules/SummaryBox/SummaryBox';
+import ProfileIcon from '@/components/atoms/ProfileIcon/ProfileIcon';
 import ToastModal from '@/components/atoms/ToastModal/ToastModal';
-import VotePrototype from '@/components/molecules/VotePrototype/VotePrototype';
+import VoteToggle from '@/components/mobile/molecules/VoteToggle/VoteToggle';
 import MenuTap, { MenuItem } from '@/components/atoms/MenuTap/MenuTap';
-import TextModal from '@/components/molecules/TextModal/TextModal';
-import ShareModal from '@/components/molecules/ShareModal/ShareModal';
-import ReportModal from '@/components/molecules/ReportModal/ReportModal';
+import TextModal from '@/components/mobile/molecules/TextModal/TextModal';
+import ShareModal from '@/components/mobile/molecules/ShareModal/ShareModal';
+import ReportModal from '@/components/mobile/molecules/ReportModal/ReportModal';
 import { useCreateTalkPickBookmarkMutation } from '@/hooks/api/bookmark/useCreateTalkPickBookmarkMutation';
 import { useDeleteTalkPickBookmarkMutation } from '@/hooks/api/bookmark/useDeleteTalkPickBookmarkMutation';
 import { useDeleteTalkPickMutation } from '@/hooks/api/talk-pick/useDeleteTalkPickMutation';
@@ -37,7 +39,6 @@ const TalkPickSection = ({
   myTalkPick,
   isTodayTalkPick,
 }: TalkPickProps) => {
-  const currentURL: string = window.location.href;
   const navigate = useNavigate();
 
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
@@ -49,17 +50,6 @@ const TalkPickSection = ({
 
   const onCloseModal = () => {
     setActiveModal('none');
-  };
-
-  const copyTalkPickLink = (link: string) => {
-    navigator.clipboard
-      .writeText(link)
-      .then(() => {
-        console.log('톡픽 링크 복사 완료!');
-      })
-      .catch((err) => {
-        console.log(err);
-      });
   };
 
   const { mutate: createBookmark } = useCreateTalkPickBookmarkMutation(
@@ -103,6 +93,7 @@ const TalkPickSection = ({
       },
     },
   ];
+
   const otherTalkPickItem: MenuItem[] = [
     {
       label: '신고',
@@ -121,14 +112,8 @@ const TalkPickSection = ({
     onCloseModal();
   };
 
-  const handleCopyButton = (link: string) => {
-    copyTalkPickLink(link);
-    onCloseModal();
-    showToastModal(SUCCESS.COPY.LINK);
-  };
-
   return (
-    <div css={S.todayTalkPickStyling}>
+    <div css={S.talkPickStyling}>
       {isVisible && (
         <div css={S.toastModalStyling}>
           <ToastModal>{modalText}</ToastModal>
@@ -136,9 +121,8 @@ const TalkPickSection = ({
       )}
       <div css={S.centerStyling}>
         <ShareModal
-          link={currentURL}
           isOpen={activeModal === 'share'}
-          onConfirm={() => handleCopyButton(currentURL)}
+          onConfirm={() => {}}
           onClose={onCloseModal}
         />
         <TextModal
@@ -161,30 +145,51 @@ const TalkPickSection = ({
           onClose={onCloseModal}
         />
       </div>
-      <div css={S.talkPickTitle}> {isTodayTalkPick && '오늘의 톡픽'}</div>
+      <div css={S.talkPickTopWrapper}>
+        <div css={S.talkPickTitle}>
+          {isTodayTalkPick ? '오늘의 톡픽' : '톡픽'}
+          <PickIcon />
+        </div>
+        <div css={S.buttonWrapper}>
+          <IconButton
+            icon={<MobileShare />}
+            onClick={() => setActiveModal('share')}
+          />
+          <IconButton
+            icon={
+              talkPick?.myBookmark ? <MobileBookmarkPR /> : <MobileBookmarkDF />
+            }
+            onClick={handleBookmarkClick}
+          />
+        </div>
+      </div>
       <div css={S.talkPickWrapper}>
-        <div css={S.talkPickTopStyling}>
-          <div css={S.talkPickDetailWrapper}>
-            <div css={S.talkPickTitle}>{talkPick?.baseFields.title}</div>
+        <div css={S.talkPickInfoWrapper}>
+          <div css={S.talkPickInfoTopWrapper}>
+            <div css={S.talkPickTitleStyling}>{talkPick?.baseFields.title}</div>
             <MenuTap
               menuData={myTalkPick ? myTalkPickItem : otherTalkPickItem}
             />
           </div>
-          <div css={S.talkPickDetailWrapper}>
-            <div>
-              <span css={S.talkPickDetail}>{talkPick?.writer}</span>
-              <span css={S.talkPickDate}>
-                {formatDate(talkPick?.createdAt ?? '')}
-              </span>
-              {talkPick?.isEdited && (
-                <span css={S.talkPickDetail}>(수정됨)</span>
-              )}
+          <div css={S.talkPickInfoBottomWrapper}>
+            <div css={S.talkPickWriterInfoWrapper}>
+              <ProfileIcon
+                interaction={
+                  talkPick?.writerProfileImgUrl ? 'custom' : 'default'
+                }
+                imgUrl={talkPick?.writerProfileImgUrl ?? ''}
+                size="extraSmall"
+              />
+              <div css={S.talkPickWriterWrapper}>
+                <div css={S.talkPickWriterStyling}>{talkPick?.writer}</div>
+                <div css={S.talkPickDateStyling}>•</div>
+                <div css={S.talkPickDateStyling}>
+                  {formatDate(talkPick?.createdAt ?? '')}
+                </div>
+              </div>
             </div>
-            <div css={S.talkPickDetail}>
-              조회
-              <span css={S.talkPickView}>
-                {formatNumber(talkPick?.views ?? 0)}
-              </span>
+            <div css={S.talkPickViewStyling}>
+              조회 <span>{formatNumber(talkPick?.views ?? '')}</span>
             </div>
           </div>
         </div>
@@ -209,7 +214,7 @@ const TalkPickSection = ({
           )}
           <Button
             variant="outlineShadow"
-            size="large"
+            size="small"
             iconRight={isExpanded ? <AngleSmallUp /> : <AngleSmallDown />}
             css={S.contentBtnStyling}
             onClick={handleContentToggle}
@@ -217,37 +222,14 @@ const TalkPickSection = ({
             {isExpanded ? '요약하기' : '전체 글 보기'}
           </Button>
         </div>
-        <div css={S.voteBarWrapper}>
-          <VotePrototype
+        <div css={S.voteToggleWrapper}>
+          <VoteToggle
             talkPickId={talkPick?.id ?? 0}
             leftButtonText={talkPick?.baseFields.optionA ?? ''}
             rightButtonText={talkPick?.baseFields.optionB ?? ''}
-            leftVotes={talkPick?.votesCountOfOptionA ?? 0}
-            rightVotes={talkPick?.votesCountOfOptionB ?? 0}
             selectedVote={talkPick?.votedOption ?? null}
           />
         </div>
-      </div>
-      <div css={S.talkPickBtnWrapper}>
-        <Button
-          variant="outlineShadow"
-          size="medium"
-          iconLeft={talkPick?.myBookmark ? <BookmarkSR /> : <BookmarkRR />}
-          onClick={handleBookmarkClick}
-        >
-          {talkPick?.bookmarks}
-        </Button>
-        <Button
-          variant="outlineShadow"
-          size="medium"
-          iconLeft={<Share />}
-          css={S.shareBtnStyling}
-          onClick={() => {
-            setActiveModal('share');
-          }}
-        >
-          공유하기
-        </Button>
       </div>
     </div>
   );

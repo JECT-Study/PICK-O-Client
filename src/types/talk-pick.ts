@@ -22,6 +22,7 @@ export type TalkPickDetail = {
   myBookmark: boolean;
   votedOption: 'A' | 'B' | null;
   writer: string;
+  writerProfileImgUrl: string | null;
   createdAt: string;
   isEdited: boolean;
 };
