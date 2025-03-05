@@ -5,6 +5,7 @@ import { TAG_OPTIONS } from '@/constants/game';
 import Modal from '@/components/mobile/atoms/Modal/Modal';
 import Button from '@/components/mobile/atoms/Button/Button';
 import Divider from '@/components/atoms/Divider/Divider';
+import { validateGameTag } from '@/hooks/game/validateBalanceGameForm';
 import * as S from './GameTagModal.style';
 
 interface GameTagModalProps {
@@ -31,10 +32,13 @@ const GameTagModal = ({
   };
 
   const handleTagSubmit = () => {
-    if (currentMainTag) {
-      submitGame();
-      onClose?.();
-    }
+    if (!currentMainTag) return;
+
+    const { isValid } = validateGameTag(form);
+    if (!isValid) return;
+
+    submitGame();
+    onClose?.();
   };
 
   return (
@@ -70,7 +74,6 @@ const GameTagModal = ({
             name="subTag"
             css={S.inputStyling}
             placeholder="ex. 너무어려운밸런스게임, 선택장애, 이상형"
-            maxLength={10}
             value={form.subTag}
             onChange={setSubTagValue}
           />

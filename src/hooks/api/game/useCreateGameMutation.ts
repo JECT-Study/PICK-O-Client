@@ -21,7 +21,7 @@ export const useCreateGameMutation = (
       queryClient.invalidateQueries({
         queryKey: ['games'],
       });
-      showToastModal(SUCCESS.CREATEGAME.CREATE, () => {
+      showToastModal(SUCCESS.GAME.CREATE, () => {
         navigate(`/${PATH.BALANCEGAME.VIEW(gameId)}`);
       });
     },
