@@ -41,7 +41,7 @@ const GameTagModal = ({
       ? [...currentSubTag, inputValue]
       : currentSubTag;
     setSubTagValue('subTag', subTagList.join(','));
-  }, [currentSubTag, setCurrentSubTag, inputValue, setSubTagValue]);
+  }, [currentSubTag, inputValue, setSubTagValue]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;

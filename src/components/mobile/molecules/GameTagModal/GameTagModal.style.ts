@@ -93,7 +93,7 @@ export const subTagWrapper = (isTagMax: boolean) =>
     width: '100%',
     gap: '5px',
     paddingTop: '3px',
-    paddingBottom: isTagMax ? '17px' : '8px',
+    paddingBottom: isTagMax ? '17px' : '5px',
   });
 
 export const inputStyling = css(typo.Mobile.Text.Medium_12, {
