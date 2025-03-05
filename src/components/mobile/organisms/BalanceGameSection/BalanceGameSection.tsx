@@ -1,8 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { MobileBookmarkDF, MobileBookmarkPR, MobileShare } from '@/assets';
 import { useNavigate } from 'react-router-dom';
+import { useNewSelector } from '@/store';
+import { selectAccessToken } from '@/store/auth';
 import { GameDetail, GameSet } from '@/types/game';
+import { createArrayFromCommaString } from '@/utils/array';
 import { PATH } from '@/constants/path';
+import { ERROR, PROMPT } from '@/constants/message';
 import MenuTap, { MenuItem } from '@/components/atoms/MenuTap/MenuTap';
 import useToastModal from '@/hooks/modal/useToastModal';
 import { VoteRecord } from '@/types/vote';
@@ -15,7 +19,10 @@ import ToastModal from '@/components/atoms/ToastModal/ToastModal';
 import BalanceGameBox from '@/components/mobile/molecules/BalanceGameBox/BalanceGameBox';
 import { useGuestGameVote } from '@/hooks/game/useBalanceGameVote';
 import { useGameBookmark } from '@/hooks/game/useBalanceGameBookmark';
-import ShareModal from '../../molecules/ShareModal/ShareModal';
+import { useDeleteGameSetMutation } from '@/hooks/api/game/useDeleteGameSetMutation';
+import ShareModal from '@/components/mobile/molecules/ShareModal/ShareModal';
+import TextModal from '@/components/mobile/molecules/TextModal/TextModal';
+import ReportModal from '@/components/mobile/molecules/ReportModal/ReportModal';
 import * as S from './BalanceGameSection.style';
 
 export interface BalanceGameSectionProps {
@@ -51,11 +58,13 @@ const BalanceGameSection = ({
 
   const gameStages: GameDetail[] =
     game?.gameDetailResponses ?? gameDefaultDetail;
-  const isGuest = !localStorage.getItem('accessToken');
+  const isGuest = !useNewSelector(selectAccessToken);
 
   const [guestVotedList, setGuestVotedList] = useState<VoteRecord[]>([]);
 
   const currentGame: GameDetail = gameStages[currentStage];
+  const subTagList = createArrayFromCommaString(game?.subTag ?? '');
+
   const { handleGuestGameVote } = useGuestGameVote(
     guestVotedList,
     setGuestVotedList,
@@ -64,8 +73,16 @@ const BalanceGameSection = ({
     game,
   );
 
-  const [shareModalOpen, setShareModalOpen] = useState<boolean>(false);
   const { isVisible, modalText, showToastModal } = useToastModal();
+  const { mutate: deleteBalanceGame } = useDeleteGameSetMutation();
+
+  const [activeModal, setActiveModal] = useState<
+    'reportGame' | 'reportText' | 'deleteText' | 'share' | 'none'
+  >('none');
+
+  const onCloseModal = () => {
+    setActiveModal('none');
+  };
 
   useEffect(() => {
     if (game && initialRender.current) {
@@ -89,6 +106,20 @@ const BalanceGameSection = ({
     changeStage(1);
   };
 
+  const handleGameDeleteButton = () => {
+    deleteBalanceGame(
+      { gameSetId },
+      {
+        onSuccess: () => {
+          navigate('/');
+        },
+        onError: () => {
+          showToastModal(ERROR.DELETEGAME.FAIL);
+        },
+      },
+    );
+  };
+
   const { handleBookmarkClick } = useGameBookmark(
     isGuest,
     isMyGame,
@@ -99,8 +130,28 @@ const BalanceGameSection = ({
     game,
   );
 
-  const myGameItem: MenuItem[] = [{ label: '수정' }, { label: '삭제' }];
-  const otherGameItem: MenuItem[] = [{ label: '신고' }];
+  const myGameItem: MenuItem[] = [
+    {
+      label: '수정',
+      onClick: () => {
+        navigate(`/${PATH.CREATE.GAME}`, { state: { game, gameSetId } });
+      },
+    },
+    {
+      label: '삭제',
+      onClick: () => {
+        setActiveModal('deleteText');
+      },
+    },
+  ];
+  const otherGameItem: MenuItem[] = [
+    {
+      label: '신고',
+      onClick: () => {
+        setActiveModal('reportText');
+      },
+    },
+  ];
 
   return (
     <div css={S.balanceGameStyling}>
@@ -111,9 +162,26 @@ const BalanceGameSection = ({
       )}
       <div css={S.centerStyling}>
         <ShareModal
-          isOpen={shareModalOpen}
+          isOpen={activeModal === 'share'}
           onConfirm={() => {}}
-          onClose={() => setShareModalOpen(false)}
+          onClose={onCloseModal}
+        />
+        <TextModal
+          text={PROMPT.GAME.DELETE}
+          isOpen={activeModal === 'deleteText'}
+          onConfirm={handleGameDeleteButton}
+          onClose={onCloseModal}
+        />
+        <TextModal
+          text={PROMPT.GAME.REPORT}
+          isOpen={activeModal === 'reportText'}
+          onConfirm={() => setActiveModal('reportGame')}
+          onClose={onCloseModal}
+        />
+        <ReportModal
+          isOpen={activeModal === 'reportGame'}
+          onConfirm={() => {}}
+          onClose={onCloseModal}
         />
       </div>
       <div css={S.balancGameTopWrapper}>
@@ -121,7 +189,7 @@ const BalanceGameSection = ({
         <div css={S.iconButtonWrapper}>
           <IconButton
             icon={<MobileShare />}
-            onClick={() => setShareModalOpen(true)}
+            onClick={() => setActiveModal('share')}
           />
           <IconButton
             icon={
@@ -164,7 +232,8 @@ const BalanceGameSection = ({
             />
           </div>
           <div css={S.subTagWrapper}>
-            {game.subTag && <GameTagChip tag={game.subTag} />}
+            {game.subTag &&
+              subTagList.map((tag) => <GameTagChip key={tag} tag={tag} />)}
           </div>
         </div>
       )}

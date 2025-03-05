@@ -223,4 +223,14 @@ export const COMMENT = {
   FIRST_COMMENT_SUGGESTION: '첫 댓글을 달아보는건 어때요?',
   MAX_LENGTH: 500,
   MAX_SHORTEN_LENGTH: 90,
+
+export const PROMPT = {
+  POST: {
+    DELETE: '해당 게시글을 삭제하시겠습니까?',
+    REPORT: '해당 게시글을 신고하시겠습니까?',
+  },
+  GAME: {
+    DELETE: '해당 게임을 삭제하시겠습니까?',
+    REPORT: '해당 게임을 신고하시겠습니까?',
+  },
 };

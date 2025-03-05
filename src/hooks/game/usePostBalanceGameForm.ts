@@ -1,8 +1,12 @@
+import { PATH } from '@/constants/path';
 import { useState } from 'react';
-import { BalanceGame, TempGame } from '@/types/game';
+import { useNavigate } from 'react-router-dom';
+import { UploadedImage } from '@/types/file';
+import { BalanceGame, GameSet, TempGame } from '@/types/game';
 import {
   createInitialGameStages,
   transformBalanceGameToTempGame,
+  transformGameSetToBalanceGameSet,
   transformTempGameToBalanceGame,
 } from '@/utils/balanceGameUtils';
 import { SUCCESS } from '@/constants/message';
@@ -13,18 +17,22 @@ import { useLoadTempGameQuery } from '@/hooks/api/game/useLoadTempGameQuery';
 import { useSaveTempGameMutation } from '@/hooks/api/game/useSaveTempGameMutation';
 import { useFileUploadMutation } from '@/hooks/api/file/useFileUploadMutation';
 import { useDeleteFileMutation } from '@/hooks/api/file/useDeleteFileMutation';
-import {
-  validateBalanceGameForm,
-  validateGameTag,
-} from './validateBalanceGameForm';
+import { validateBalanceGameForm } from './validateBalanceGameForm';
+import { useEditGamesMutation } from '../api/game/useEditGamesMutation';
 
 export const usePostBalanceGameForm = (
   gameStage: number,
   setGameStage: React.Dispatch<React.SetStateAction<number>>,
   setTagModalOpen: React.Dispatch<React.SetStateAction<boolean>>,
+  existingGame?: GameSet,
+  gameSetId?: number,
 ) => {
+  const navigate = useNavigate();
+  const existingBalanceGame =
+    existingGame && transformGameSetToBalanceGameSet(existingGame);
+
   const defaultGameOptions = createInitialGameStages(10);
-  const initialState: BalanceGame = {
+  const initialState: BalanceGame = existingBalanceGame ?? {
     title: '',
     mainTag: '',
     subTag: '',
@@ -35,6 +43,7 @@ export const usePostBalanceGameForm = (
   const { isVisible, modalText, showToastModal } = useToastModal();
 
   const { mutate: createBalanceGame } = useCreateGameMutation(showToastModal);
+  const { mutate: editBalanceGame } = useEditGamesMutation();
 
   const { mutate: uploadFiles } = useFileUploadMutation();
   const { mutate: deleteFiles } = useDeleteFileMutation();
@@ -45,12 +54,23 @@ export const usePostBalanceGameForm = (
   const [isTempGameLoaded, setIsTempGameLoaded] = useState<boolean>(false);
 
   const handleBalanceGame = () => {
-    const gameValidation = validateGameTag(form);
-
-    if (!gameValidation.isValid) {
-      return;
+    if (existingGame && gameSetId) {
+      editBalanceGame(
+        {
+          gameSetId,
+          data: form,
+        },
+        {
+          onSuccess: () => {
+            showToastModal(SUCCESS.GAME.EDIT, () => {
+              navigate(`/${PATH.BALANCEGAME.VIEW(gameSetId)}`);
+            });
+          },
+        },
+      );
+    } else {
+      createBalanceGame(form);
     }
-    createBalanceGame(form);
   };
 
   const handleTempBalanceGame = () => {
@@ -91,7 +111,7 @@ export const usePostBalanceGameForm = (
           params: { type: 'GAME_OPTION' },
         },
         {
-          onSuccess: (res) => {
+          onSuccess: (res: UploadedImage) => {
             setEach('fileId', res.fileIds[0], gameStage, optionId);
             setEach('imgUrl', res.imgUrls[0], gameStage, optionId);
           },
@@ -101,7 +121,12 @@ export const usePostBalanceGameForm = (
   };
 
   const handleDeleteImg = (fileId: number | null, optionId: number) => {
-    if (fileId) {
+    if (!fileId) return;
+
+    if (existingBalanceGame || isTempGameLoaded) {
+      setEach('fileId', null, gameStage, optionId);
+      setEach('imgUrl', '', gameStage, optionId);
+    } else {
       deleteFiles(fileId, {
         onSuccess: () => {
           setEach('fileId', null, gameStage, optionId);

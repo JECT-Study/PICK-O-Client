@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import { TalkPickSummary } from '@/types/talk-pick';
 import { SadEmoji, Spinner, StatusFail, StatusNotRequired } from '@/assets';
-import SummaryItem from '@/components/atoms/SummaryItem/SummaryItem';
+import SummaryItem from '@/components/mobile/atoms/SummaryItem/SummaryItem';
 import { SUMMARY } from '@/constants/message';
 import * as S from './SummaryBox.style';
 
@@ -20,8 +20,9 @@ const SummaryBox = ({
   > = {
     PENDING: (
       <div css={S.summarySpinnerWrapper}>
+        <div css={S.summaryTextStyling}>{SUMMARY.TITLE}</div>
         <div css={S.summarySpinnerStyling}>
-          <Spinner />
+          <Spinner css={S.spinnerStyling} />
         </div>
         <p css={S.summarySpinnerText}>{SUMMARY.PENDING}</p>
       </div>
@@ -35,7 +36,8 @@ const SummaryBox = ({
     ),
     FAIL: (
       <div css={S.summaryStatusWrapper}>
-        <StatusFail />
+        <div css={S.summaryTextStyling}>{SUMMARY.TITLE}</div>
+        <StatusFail css={S.iconStyling} />
         <div css={S.summaryTextWrapper}>
           <p>{SUMMARY.FAIL.UNKNOWN}</p>
           <p>{SUMMARY.FAIL.REFRESH}</p>
@@ -44,10 +46,12 @@ const SummaryBox = ({
     ),
     NOT_REQUIRED: (
       <div css={S.summaryStatusWrapper}>
-        <StatusNotRequired />
+        <div css={S.summaryTextStyling}>{SUMMARY.TITLE}</div>
+        <StatusNotRequired css={S.iconStyling} />
         <div css={S.summaryTextWrapper}>
           <span css={S.summaryText}>
-            {SUMMARY.NOT_REQUIRED.TEXT_VALIDATION} <SadEmoji />
+            {SUMMARY.NOT_REQUIRED.TEXT_VALIDATION}
+            <SadEmoji css={S.iconStyling} />
           </span>
           <p>{SUMMARY.NOT_REQUIRED.TEXT_CHECK}</p>
         </div>
@@ -57,11 +61,6 @@ const SummaryBox = ({
 
   const renderContent = contentMap[summaryStatus];
 
-  return (
-    <div css={S.summaryBoxStyling}>
-      <div css={S.summaryTextStyling}>{SUMMARY.TITLE}</div>
-      {renderContent}
-    </div>
-  );
+  return <div css={S.summaryBoxStyling}>{renderContent}</div>;
 };
 export default SummaryBox;

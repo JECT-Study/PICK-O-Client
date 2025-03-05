@@ -18,4 +18,8 @@ const isTimeLimit = (timeLimit: number) => {
   return differenceTime < 2;
 };
 
-export { isEmptyString, isLongerThan, isAllTrue, isTimeLimit };
+const isAllLessThan = (arr: string[], num: number) => {
+  return arr.every((str) => str.length <= num);
+};
+
+export { isEmptyString, isLongerThan, isAllTrue, isTimeLimit, isAllLessThan };
