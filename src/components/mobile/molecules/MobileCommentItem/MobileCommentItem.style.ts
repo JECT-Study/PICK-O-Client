@@ -81,3 +81,11 @@ export const replyButton = css({
   color: color.GY[1],
   padding: 0,
 });
+
+export const centerStyling = css({
+  position: 'fixed',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  zIndex: 1000,
+});
