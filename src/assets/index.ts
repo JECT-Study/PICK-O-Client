@@ -158,7 +158,6 @@ export { default as MobileLikeButtonPR } from './svg/mobile-like-button-pr.svg';
 export { default as MobileArrowUp } from './svg/mobile-arrow-up.svg';
 export { default as MobileArrowDown } from './svg/mobile-arrow-down.svg';
 export { default as MobileReport } from './svg/mobile-report.svg';
-export { default as MobileReport } from './svg/mobile-report.svg';
 export { default as PickIcon } from './svg/pick-icon.svg';
 
 // TODO: 이전 SVG
