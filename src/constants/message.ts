@@ -223,6 +223,7 @@ export const COMMENT = {
   FIRST_COMMENT_SUGGESTION: '첫 댓글을 달아보는건 어때요?',
   MAX_LENGTH: 500,
   MAX_SHORTEN_LENGTH: 90,
+};
 
 export const PROMPT = {
   POST: {
