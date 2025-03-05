@@ -73,7 +73,7 @@ export const subTagChipStyling = css(typo.Mobile.Text.SemiBold_12, {
   padding: '5px 9px 5px 12px',
   gap: '5px',
   borderRadius: '6px',
-  outline: `1px solid ${color.MAIN_2}`,
+  outline: `1px solid ${color.SECONDARY}`,
   backgroundColor: color.WT_VIOLET,
   color: color.MAIN,
 });
