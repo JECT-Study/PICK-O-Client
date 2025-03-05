@@ -64,25 +64,11 @@ const MobileCommentItem = ({
 
   const [visibleReply, setVisibleReply] = useState<number>(10);
   const [showReply, setShowReply] = useState(false);
-  const [replyValue, setReplyValue] = useState('');
 
   const handleReplyToggle = () => {
     setShowReply(!showReply);
     setVisibleReply(10);
   };
-
-  const { mutate: createReply } = useCreateReplyMutation(
-    comment.talkPickId,
-    comment.id,
-    selectedPage,
-  );
-
-  const handleReplyButton = () => {
-    createReply({ content: replyValue });
-    setReplyValue('');
-  };
-
-  const { replies } = useRepliesQuery(comment.talkPickId, comment.id);
 
   const [isExpanded, setIsExpanded] = useState(false);
 
