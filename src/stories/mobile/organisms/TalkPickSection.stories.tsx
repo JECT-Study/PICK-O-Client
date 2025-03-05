@@ -6,7 +6,8 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import ReactQueryProvider from '@/providers/ReactQueryProvider';
 import type { Meta, StoryObj } from '@storybook/react';
 import { setToken } from '@/store/auth';
-import TalkPickSection from '@/components/organisms/TalkPickSection/TalkPickSection';
+import { OctopusProfile, RabbitProfile } from '@/assets';
+import TalkPickSection from '@/components/mobile/organisms/TalkPickSection/TalkPickSection';
 
 const defaultTodayTalkPick: TalkPickDetail = {
   id: 0,
@@ -24,7 +25,7 @@ const defaultTodayTalkPick: TalkPickDetail = {
     summaryThirdLine: '나 너무 속상한데 이걸 찬성해 말어',
   },
   summaryStatus: 'SUCCESS',
-  imgUrls: [],
+  imgUrls: [OctopusProfile, RabbitProfile],
   fileIds: [],
   votesCountOfOptionA: 1963,
   votesCountOfOptionB: 2635,
@@ -33,12 +34,13 @@ const defaultTodayTalkPick: TalkPickDetail = {
   myBookmark: false,
   votedOption: 'A',
   writer: '닉네임593',
+  writerProfileImgUrl: OctopusProfile,
   createdAt: '2024-08-04',
   isEdited: false,
 };
 
 const meta = {
-  title: 'organisms/TalkPickSection',
+  title: 'mobile/organisms/TalkPickSection',
   component: TalkPickSection,
   parameters: {
     layout: 'centered',

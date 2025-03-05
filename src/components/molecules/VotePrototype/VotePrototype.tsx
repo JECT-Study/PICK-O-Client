@@ -39,7 +39,7 @@ const VotePrototype: React.FC<VotePrototypeProps> = ({
   const totalVotes: number = leftVotes + rightVotes;
   const leftPercentage: string = ((leftVotes / totalVotes) * 100).toFixed(1);
   const rightPercentage: string = ((rightVotes / totalVotes) * 100).toFixed(1);
-  const currnetOption: MyVoteOption = accessToken
+  const currentOption: MyVoteOption = accessToken
     ? selectedVote
     : loggedOutVoteOption;
 
@@ -112,7 +112,7 @@ const VotePrototype: React.FC<VotePrototypeProps> = ({
           onClick={() => {
             handleVoteButtonClick('A');
           }}
-          css={S.getButtonStyle('A', currnetOption)}
+          css={S.getButtonStyle('A', currentOption)}
         >
           {leftButtonText}
         </Button>
@@ -123,7 +123,7 @@ const VotePrototype: React.FC<VotePrototypeProps> = ({
           onClick={() => {
             handleVoteButtonClick('B');
           }}
-          css={S.getButtonStyle('B', currnetOption)}
+          css={S.getButtonStyle('B', currentOption)}
         >
           {rightButtonText}
         </Button>
