@@ -6,7 +6,7 @@ export const contentWrapper = css({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  gap: '20px',
+  gap: '16px',
 });
 
 export const textBox = css({
@@ -24,15 +24,29 @@ export const tagTextStyling = css(typo.Mobile.Text.SemiBold_14, {
   color: color.GY[1],
 });
 
+export const subTagTextStyling = css(typo.Mobile.Main.Regular_12, {
+  color: color.GY[2],
+});
+
 export const markStyling = css(typo.Mobile.Text.SemiBold_14, {
   color: color.MAIN,
+});
+
+export const errorMessageStyling = css(typo.Mobile.Main.Regular_12, {
+  color: color.RED,
 });
 
 export const tagWrapper = css({
   width: '100%',
   display: 'flex',
   flexDirection: 'column',
-  gap: '6px',
+  gap: '8px',
+});
+
+export const tagBottomWrapper = css({
+  width: '100%',
+  display: 'flex',
+  flexDirection: 'column',
 });
 
 export const buttonWrapper = css({
@@ -45,6 +59,42 @@ export const buttonStyling = css(typo.Mobile.Text.SemiBold_14, {
   height: '34px',
   borderRadius: '6px',
 });
+
+export const inputWrapper = css({
+  display: 'flex',
+  flexDirection: 'column',
+  height: '67px',
+  gap: '4px',
+});
+
+export const subTagChipStyling = css(typo.Mobile.Text.SemiBold_12, {
+  display: 'flex',
+  alignItems: 'center',
+  padding: '5px 9px 5px 12px',
+  gap: '5px',
+  borderRadius: '6px',
+  outline: `1px solid ${color.SECONDARY}`,
+  backgroundColor: color.WT_VIOLET,
+  color: color.MAIN,
+});
+
+export const subTagButtonStyling = css({
+  all: 'unset',
+  display: 'flex',
+  color: color.MAIN,
+  fontSize: '12px',
+  cursor: 'pointer',
+});
+
+export const subTagWrapper = (isTagMax: boolean) =>
+  css({
+    display: 'flex',
+    flexWrap: 'wrap',
+    width: '100%',
+    gap: '5px',
+    paddingTop: '3px',
+    paddingBottom: isTagMax ? '17px' : '5px',
+  });
 
 export const inputStyling = css(typo.Mobile.Text.Medium_12, {
   fontSize: '14px',

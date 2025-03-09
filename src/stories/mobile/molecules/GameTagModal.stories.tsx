@@ -7,8 +7,8 @@ import type { Meta, StoryObj } from '@storybook/react';
 const defaultGameOptions = createInitialGameStages(10);
 const exampleGame: BalanceGame = {
   title: 'title',
-  mainTag: 'mainTag',
-  subTag: 'subTag',
+  mainTag: '커플',
+  subTag: '커플커플커플커플커플',
   games: defaultGameOptions,
 };
 

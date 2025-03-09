@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { BalanceGame } from '@/types/game';
 import { MobileCheckIcon } from '@/assets';
 import { TAG_OPTIONS } from '@/constants/game';
@@ -6,6 +6,8 @@ import Modal from '@/components/mobile/atoms/Modal/Modal';
 import Button from '@/components/mobile/atoms/Button/Button';
 import Divider from '@/components/atoms/Divider/Divider';
 import { validateGameTag } from '@/hooks/game/validateBalanceGameForm';
+import { createArrayFromCommaString } from '@/utils/array';
+import useOutsideClick from '@/hooks/common/useOutsideClick';
 import * as S from './GameTagModal.style';
 
 interface GameTagModalProps {
@@ -13,7 +15,7 @@ interface GameTagModalProps {
   isOpen?: boolean;
   onClose?: () => void;
   setMainTagValue: (name: string, tag: string) => void;
-  setSubTagValue: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  setSubTagValue: (name: string, tag: string) => void;
   submitGame: () => void;
 }
 
@@ -25,10 +27,60 @@ const GameTagModal = ({
   setSubTagValue,
   submitGame,
 }: GameTagModalProps) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+
   const currentMainTag: string = form.mainTag;
+  const [subTagArray] = useState(() => createArrayFromCommaString(form.subTag));
+  const [currentSubTag, setCurrentSubTag] = useState<string[]>(subTagArray);
+
+  const [inputValue, setInputValue] = useState<string>('');
+  const [inputError, setInputError] = useState<boolean>(false);
+
+  useEffect(() => {
+    const subTagList = inputValue
+      ? [...currentSubTag, inputValue]
+      : currentSubTag;
+    setSubTagValue('subTag', subTagList.join(','));
+  }, [currentSubTag, inputValue, setSubTagValue]);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+
+    if (value.length > 10) return;
+
+    setInputValue(value);
+    setInputError(false);
+  };
+
+  const handleSpaceAction = () => {
+    if (!inputValue.trim()) return;
+
+    setCurrentSubTag((prev) => [...prev, inputValue.trim()]);
+    setInputValue('');
+    setInputError(false);
+  };
+  useOutsideClick(inputRef, handleSpaceAction);
+
+  const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (!inputValue) {
+      setInputError(false);
+      return;
+    }
+
+    if (e.code === 'Space') {
+      e.preventDefault();
+      handleSpaceAction();
+    }
+
+    setInputError(inputValue.length >= 10);
+  };
 
   const handleMainTag = (tag: string) => {
     setMainTagValue('mainTag', tag);
+  };
+
+  const handleDeleteSubTag = (idx: number) => {
+    setCurrentSubTag((prev) => prev.filter((_, i) => i !== idx));
   };
 
   const handleTagSubmit = () => {
@@ -66,28 +118,54 @@ const GameTagModal = ({
             ))}
           </div>
         </div>
-        <div css={S.tagWrapper}>
+        <div css={S.tagBottomWrapper}>
           <div css={S.textBox}>
             <span css={S.tagTextStyling}>서브태그</span>
+            <span css={S.subTagTextStyling}>(최대 3개)</span>
           </div>
-          <input
-            name="subTag"
-            css={S.inputStyling}
-            placeholder="ex. 너무어려운밸런스게임, 선택장애, 이상형"
-            value={form.subTag}
-            onChange={setSubTagValue}
-          />
+          <div css={S.subTagWrapper(currentSubTag.length === 3)}>
+            {currentSubTag.map((tag, idx) => (
+              <div css={S.subTagChipStyling} key={tag}>
+                <span>#{tag}</span>
+                <button
+                  type="button"
+                  css={S.subTagButtonStyling}
+                  onClick={() => handleDeleteSubTag(idx)}
+                >
+                  ⨉
+                </button>
+              </div>
+            ))}
+          </div>
+          {currentSubTag.length !== 3 && (
+            <div css={S.inputWrapper}>
+              <input
+                type="text"
+                ref={inputRef}
+                css={S.inputStyling}
+                value={inputValue}
+                placeholder="ex. 연애, 데이트, 데이트취향"
+                onChange={handleInputChange}
+                onKeyUp={handleKeyUp}
+              />
+              {inputError && (
+                <span css={S.errorMessageStyling}>
+                  서브태그 1개 당 최대 10자까지 입력 가능
+                </span>
+              )}
+            </div>
+          )}
+          <Button
+            size="large"
+            variant="roundPrimary"
+            onClick={handleTagSubmit}
+            disabled={!currentMainTag}
+            active={!!currentMainTag}
+            css={S.customButtonStyle(!currentMainTag)}
+          >
+            등록하기
+          </Button>
         </div>
-        <Button
-          size="large"
-          variant="roundPrimary"
-          onClick={handleTagSubmit}
-          disabled={!currentMainTag}
-          active={!!currentMainTag}
-          css={S.customButtonStyle(!currentMainTag)}
-        >
-          등록하기
-        </Button>
       </div>
     </Modal>
   );

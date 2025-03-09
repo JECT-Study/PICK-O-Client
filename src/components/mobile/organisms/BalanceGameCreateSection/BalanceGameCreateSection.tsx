@@ -65,7 +65,7 @@ const BalanceGameCreateSection = ({
             isOpen={tagModalOpen}
             onClose={() => setTagModalOpen(false)}
             setMainTagValue={setEach}
-            setSubTagValue={onChange}
+            setSubTagValue={setEach}
             submitGame={handleBalanceGame}
           />
         )}

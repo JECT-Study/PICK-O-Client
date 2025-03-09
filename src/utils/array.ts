@@ -11,5 +11,5 @@ export const createRangeArray = (currentPage: number, maxPage: number) => {
 };
 
 export const createArrayFromCommaString = (str: string): string[] => {
-  return str.split(',');
+  return str ? str.split(',') : [];
 };
