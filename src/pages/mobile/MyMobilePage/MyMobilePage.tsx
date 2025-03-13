@@ -137,7 +137,9 @@ const MyMobilePage = () => {
           id: item.id,
           title: item.title,
           imgUrl:
-            item.imgUrls && item.imgUrls.length > 0 ? item.imgUrls[0] : '',
+            item.imgUrls && item.imgUrls.length > 0
+              ? item.imgUrls[0]
+              : undefined,
         };
 
         if (groups[dateStr]) {
