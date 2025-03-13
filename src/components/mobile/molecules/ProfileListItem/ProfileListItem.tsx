@@ -40,7 +40,7 @@ const ProfileListItem = ({
   ...restProps
 }: ProfileListItemProps) => {
   const randomImage = useRandomImage();
-  const displayImgUrl = imgUrl || randomImage;
+  const displayImgUrl = imgUrl ?? randomImage;
 
   return (
     <Link css={S.containerStyle} {...restProps}>
