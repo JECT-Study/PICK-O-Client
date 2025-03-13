@@ -165,7 +165,7 @@ const MyMobilePage = () => {
           onClick: () => {},
           onBookmarkClick: () => {},
           bookmarked: item.bookmarked ?? false,
-          showBookmark: false,
+          showBookmark: activeButton === 'saved' || activeButton === 'voted',
           size: 'extraSmall',
         };
 
