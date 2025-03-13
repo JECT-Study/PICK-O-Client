@@ -30,6 +30,7 @@ import SelectGroup, {
 } from '@/components/mobile/atoms/SelectGroup/SelectGroup';
 import { useNavigate } from 'react-router-dom';
 import { SmileEmoji } from '@/assets';
+import { PATH } from '@/constants/path';
 import * as S from './MyMobilePage.style';
 
 type InfiniteQueryOrNull<T> = UseInfiniteQueryResult<T, Error> | null;
@@ -218,7 +219,7 @@ const MyMobilePage = () => {
           {
             id: 0,
             label: editMenuLabel,
-            onClick: () => navigate('/change/profile'),
+            onClick: () => navigate(`/${PATH.CHANGE.PROFILE}`),
           },
         ]}
       />
