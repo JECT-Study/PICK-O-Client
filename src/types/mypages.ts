@@ -7,7 +7,7 @@ export interface TalkPickBaseInfoItem {
   commentCount: number;
   editedAt: string;
   bookmarked: boolean;
-  imgUrl?: string;
+  imgUrls?: string;
 }
 
 export interface MyContentItem {
@@ -18,7 +18,7 @@ export interface MyContentItem {
   bookmarks: number;
   showBookmark: boolean;
   bookmarked: boolean;
-  imgUrl?: string;
+  imgUrls?: string;
 }
 
 export interface InfoItem {
@@ -29,7 +29,7 @@ export interface InfoItem {
   content: string;
   commentCount: number;
   bookmarks: number;
-  imgUrl?: string;
+  imgUrls?: string;
 }
 
 export interface MyBalanceGameItem {
