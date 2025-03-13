@@ -60,10 +60,12 @@ export const LayoutNoFooter = () => {
             display: 'flex',
             justifyContent: 'center',
             width: '100%',
+            '@media (max-width: 430px)': {
+              paddingTop: '55px',
+            },
           })}
         >
           <Outlet />
-          {/* <Footer/> */}
         </main>
       </div>
     </>
