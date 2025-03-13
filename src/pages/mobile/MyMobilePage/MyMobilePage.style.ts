@@ -21,8 +21,9 @@ export const selectGroupWrapper = css({
 export const contentWrapper = css({
   display: 'flex',
   flexDirection: 'column',
+  width: '100%',
   alignItems: 'center',
   justifyContent: 'center',
   padding: '18px 0',
-  width: '100%',
+  gap: '10px',
 });
