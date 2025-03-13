@@ -178,7 +178,7 @@ const MyMobilePage = () => {
       });
       setDateGroupedData(newArr);
     }
-  }, [mergedData, activeTab]);
+  }, [mergedData, activeTab, activeButton]);
 
   const handleButtonClick = (buttonId: ButtonType) => {
     setActiveButton(buttonId);
