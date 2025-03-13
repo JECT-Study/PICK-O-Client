@@ -190,7 +190,7 @@ const MyMobilePage = () => {
       { label: '밸런스게임', value: 'balanceGame' },
     ];
 
-  if (isMemberLoading) return <div>유저 정보 로딩중...</div>;
+  if (isMemberLoading) return <div />;
 
   if (!currentQuery) {
     return <div />;
@@ -235,10 +235,10 @@ const MyMobilePage = () => {
             ),
           )
         ) : (
-          <p>게시물이 없습니다.</p>
+          <p />
         )}
         <div ref={infiniteRef} style={{ marginTop: '16px' }}>
-          {isFetchingAnyNextPage && <div>로딩 중...</div>}
+          {isFetchingAnyNextPage && <div />}
         </div>
       </div>
     </div>
