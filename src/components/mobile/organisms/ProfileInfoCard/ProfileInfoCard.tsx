@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import MobileProfileImage from '@/components/mobile/atoms/MobileProfileImage/MobileProfileImage';
 import LabelCountBox from '@/components/mobile/molecules/LabelCountBox/LabelCountBox';
 import MenuTap from '@/components/atoms/MenuTap/MenuTap';
@@ -10,7 +10,7 @@ export interface ProfileInfoCardProps {
   username: string;
   postCount: number;
   bookmarkCount: number;
-  menuData: { id: number; label: string; onClick: () => void }[];
+  menuData: { id: number; label: ReactNode; onClick: () => void }[];
 }
 
 const ProfileInfoCard = ({
