@@ -8,33 +8,26 @@ export interface MyVoteTransformedPage extends Omit<MyVote, 'content'> {
   content: InfoItem[];
 }
 
-export const useMyTalkPickVotesQuery = () => {
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-    useInfiniteScroll<MyVote, InfiniteData<MyVoteTransformedPage>>(
-      ['myVote'],
-      async ({ pageParam = 0 }) => {
-        return getMyVote(pageParam, 20);
-      },
-      (infiniteData) => {
-        const newPages = infiniteData.pages.map((page) => ({
-          ...page,
-          content: page.content.map((item) => transformVoteItem(item)),
-        }));
-
-        const newInfiniteData: InfiniteData<MyVoteTransformedPage> = {
-          ...infiniteData,
-          pages: newPages,
-        };
-
-        return newInfiniteData;
-      },
-    );
-
-  return {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    isLoading,
-  };
+export const useMyTalkPickVotesQuery = (
+  options?: Parameters<
+    typeof useInfiniteScroll<MyVote, InfiniteData<MyVoteTransformedPage>>
+  >[3],
+) => {
+  return useInfiniteScroll<MyVote, InfiniteData<MyVoteTransformedPage>>(
+    ['myVote'] as const,
+    async ({ pageParam = 0 }) => {
+      return getMyVote(pageParam, 20);
+    },
+    (infiniteData: InfiniteData<MyVote>) => {
+      const newPages = infiniteData.pages.map((page) => ({
+        ...page,
+        content: page.content.map((item) => transformVoteItem(item)),
+      }));
+      return {
+        ...infiniteData,
+        pages: newPages,
+      };
+    },
+    options,
+  );
 };

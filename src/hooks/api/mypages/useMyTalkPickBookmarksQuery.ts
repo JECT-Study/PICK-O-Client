@@ -8,41 +8,27 @@ export interface MyBookmarkTransformedPage extends Omit<MyBookmark, 'content'> {
   content: MyContentItem[];
 }
 
-export const useMyTalkPickBookmarksQuery = () => {
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-    useInfiniteScroll<MyBookmark, InfiniteData<MyBookmarkTransformedPage>>(
-      ['myBookmarks'],
-
-      async ({ pageParam = 0 }) => {
-        return getMyBookmark(pageParam, 20);
-      },
-
-      (infiniteData) => {
-        const newPages = infiniteData.pages.map((page) => {
-          const transformedContent: MyContentItem[] = page.content.map(
-            transformBookmarkItem,
-          );
-
-          return {
-            ...page,
-            content: transformedContent,
-          };
-        });
-
-        const newInfiniteData: InfiniteData<MyBookmarkTransformedPage> = {
-          ...infiniteData,
-          pages: newPages,
-        };
-
-        return newInfiniteData;
-      },
-    );
-
-  return {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    isLoading,
-  };
+export const useMyTalkPickBookmarksQuery = (
+  options?: Parameters<
+    typeof useInfiniteScroll<
+      MyBookmark,
+      InfiniteData<MyBookmarkTransformedPage>
+    >
+  >[3],
+) => {
+  return useInfiniteScroll<MyBookmark, InfiniteData<MyBookmarkTransformedPage>>(
+    ['myBookmarks'] as const,
+    async ({ pageParam = 0 }) => getMyBookmark(pageParam, 20),
+    (infiniteData: InfiniteData<MyBookmark>) => {
+      const newPages = infiniteData.pages.map((page) => ({
+        ...page,
+        content: page.content.map((item) => transformBookmarkItem(item)),
+      }));
+      return {
+        ...infiniteData,
+        pages: newPages,
+      };
+    },
+    options,
+  );
 };
