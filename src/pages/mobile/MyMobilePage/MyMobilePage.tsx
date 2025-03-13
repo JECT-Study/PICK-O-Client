@@ -134,9 +134,7 @@ const MyMobilePage = () => {
           id: item.id,
           title: item.title,
           imgUrl:
-            item.imgUrls && item.imgUrls.length > 0
-              ? item.imgUrls[0]
-              : '/images/default-talkpick.png',
+            item.imgUrls && item.imgUrls.length > 0 ? item.imgUrls[0] : '',
         };
 
         if (groups[dateStr]) {
