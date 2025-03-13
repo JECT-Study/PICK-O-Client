@@ -83,7 +83,6 @@ const MyMobilePage = () => {
 
   const currentQuery =
     activeButton !== null ? queryMap[activeTab][activeButton] : null;
-  console.log(currentQuery?.data);
 
   const observerConfig = {
     current: {
@@ -111,7 +110,6 @@ const MyMobilePage = () => {
 
   useEffect(() => {
     if (!mergedData || !mergedData.content) {
-      console.log('mergedData 없음 또는 content 없음');
       setDateGroupedData([]);
       return;
     }
@@ -147,7 +145,6 @@ const MyMobilePage = () => {
         .sort((a, b) => (a < b ? 1 : -1))
         .map((date) => ({ date, items: groups[date] }));
 
-      console.log('dateGroupedData (talkPick):', groupedData);
       setDateGroupedData(groupedData);
     } else if (activeTab === 'balanceGame') {
       const balanceGameItems = mergedData.content as MyBalanceGameItem[];
@@ -179,8 +176,6 @@ const MyMobilePage = () => {
           newArr.push({ date: dateStr, items: [transformed] });
         }
       });
-
-      console.log('dateGroupedData (balanceGame):', newArr);
       setDateGroupedData(newArr);
     }
   }, [mergedData, activeTab]);
