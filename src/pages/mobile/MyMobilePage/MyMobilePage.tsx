@@ -117,7 +117,7 @@ const MyMobilePage = () => {
   }, [activeTab]);
 
   useEffect(() => {
-    if (!mergedData || !mergedData.content) {
+    if (!mergedData?.content) {
       setDateGroupedData([]);
       return;
     }
