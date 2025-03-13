@@ -156,10 +156,10 @@ const MyMobilePage = () => {
         const transformed: ContentsButtonProps = {
           id: String(item.gameId),
           title: item.title,
-          images: [
-            item.optionAImg || '/images/default.png',
-            item.optionBImg || '/images/default.png',
-          ],
+          images:
+            item.optionAImg && item.optionBImg
+              ? [item.optionAImg, item.optionBImg]
+              : [],
           mainTag: item.mainTagName || '기본메인',
           subTag: item.subTag || '',
           onClick: () => {},
