@@ -19,6 +19,7 @@ import TalkPickVotes from '@/pages/MyPage/TalkPick/TalkPickVotes';
 import TalkPickComments from '@/pages/MyPage/TalkPick/TalkPickComments';
 import BalanceGameWritten from '@/pages/MyPage/BalanceGame/BalanceGameWritten';
 import BalanceGameEditPage from '@/pages/BalanceGameEditPage/BalanceGameEditPage';
+import MyMobilePage from '@/pages/mobile/MyMobilePage/MyMobilePage';
 import ProtectedRoutes from './components/Routes/ProtectedRoutes';
 import { PATH } from './constants/path';
 import { useTokenRefresh } from './hooks/common/useTokenRefresh';
@@ -119,20 +120,24 @@ const App: React.FC = () => {
 
         <Route element={<ProtectedRoutes token={accessToken} />}>
           <Route path={PATH.MYPAGE} element={<LayoutNoFooter />}>
-            <Route element={<MyPage />}>
-              <Route path="talkpick" element={<TalkPickLayout />}>
-                <Route path="bookmarks" element={<TalkPickBookmarks />} />
-                <Route path="written" element={<TalkPickWritten />} />
-                <Route path="votes" element={<TalkPickVotes />} />
-                <Route path="comments" element={<TalkPickComments />} />
+            {isMobile ? (
+              <Route index element={<MyMobilePage />} />
+            ) : (
+              <Route element={<MyPage />}>
+                <Route path="talkpick" element={<TalkPickLayout />}>
+                  <Route path="bookmarks" element={<TalkPickBookmarks />} />
+                  <Route path="written" element={<TalkPickWritten />} />
+                  <Route path="votes" element={<TalkPickVotes />} />
+                  <Route path="comments" element={<TalkPickComments />} />
+                </Route>
+                <Route path="balancegame" element={<BalanceGameLayout />}>
+                  <Route path="bookmarks" element={<BalanceGameBookmarks />} />
+                  <Route path="votes" element={<BalanceGameVotes />} />
+                  <Route path="written" element={<BalanceGameWritten />} />
+                </Route>
+                <Route index element={<TalkPickBookmarks />} />
               </Route>
-              <Route path="balancegame" element={<BalanceGameLayout />}>
-                <Route path="bookmarks" element={<BalanceGameBookmarks />} />
-                <Route path="votes" element={<BalanceGameVotes />} />
-                <Route path="written" element={<BalanceGameWritten />} />
-              </Route>
-              <Route index element={<TalkPickBookmarks />} />
-            </Route>
+            )}
           </Route>
           <Route path="/" element={<Layout />}>
             <Route path={PATH.CREATE.TALK_PICK} element={<CreatePostPage />} />

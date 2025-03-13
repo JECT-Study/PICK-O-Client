@@ -8,33 +8,24 @@ export interface MyCommentTransformedPage extends Omit<MyComment, 'content'> {
   content: InfoItem[];
 }
 
-export const useMyTalkPickCommentsQuery = () => {
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-    useInfiniteScroll<MyComment, InfiniteData<MyCommentTransformedPage>>(
-      ['myComments'],
-      async ({ pageParam = 0 }) => {
-        return getMyComment(pageParam, 20);
-      },
-      (infiniteData) => {
-        const newPages = infiniteData.pages.map((page) => ({
-          ...page,
-          content: page.content.map((item) => transformCommentItem(item)),
-        }));
-
-        const newInfiniteData: InfiniteData<MyCommentTransformedPage> = {
-          ...infiniteData,
-          pages: newPages,
-        };
-
-        return newInfiniteData;
-      },
-    );
-
-  return {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    isLoading,
-  };
+export const useMyTalkPickCommentsQuery = (
+  options?: Parameters<
+    typeof useInfiniteScroll<MyComment, InfiniteData<MyCommentTransformedPage>>
+  >[3],
+) => {
+  return useInfiniteScroll<MyComment, InfiniteData<MyCommentTransformedPage>>(
+    ['myComments'] as const,
+    async ({ pageParam = 0 }) => getMyComment(pageParam, 20),
+    (infiniteData: InfiniteData<MyComment>) => {
+      const newPages = infiniteData.pages.map((page) => ({
+        ...page,
+        content: page.content.map((item) => transformCommentItem(item)),
+      }));
+      return {
+        ...infiniteData,
+        pages: newPages,
+      };
+    },
+    options,
+  );
 };

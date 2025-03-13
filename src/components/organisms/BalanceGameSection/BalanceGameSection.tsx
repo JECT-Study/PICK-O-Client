@@ -132,10 +132,12 @@ const BalanceGameSection = ({
   );
 
   const myGameItem: MenuItem[] = [
-    { label: '수정', onClick: onEdit },
-    { label: '삭제', onClick: onDelete },
+    { id: 0, label: '수정', onClick: onEdit },
+    { id: 1, label: '삭제', onClick: onDelete },
   ];
-  const otherGameItem: MenuItem[] = [{ label: '신고', onClick: onReport }];
+  const otherGameItem: MenuItem[] = [
+    { id: 0, label: '신고', onClick: onReport },
+  ];
 
   return (
     <div css={S.balanceGameStyling}>

@@ -43,6 +43,7 @@ export const Default: Story = {
     bookmarkCount: 34,
     menuData: [
       {
+        id: 0,
         label: '회원정보 수정',
         onClick: () => console.log('회원정보 수정 클릭됨'),
       },
@@ -62,6 +63,7 @@ export const All: Story = {
           bookmarkCount={34}
           menuData={[
             {
+              id: 0,
               label: '회원정보 수정',
               onClick: () => console.log('Aycho 회원정보 수정 클릭됨'),
             },
@@ -77,6 +79,7 @@ export const All: Story = {
           bookmarkCount={22}
           menuData={[
             {
+              id: 1,
               label: '회원정보 수정',
               onClick: () => console.log('김안녕 회원정보 수정 클릭됨'),
             },

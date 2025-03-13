@@ -9,31 +9,30 @@ export interface GameBookmarkTransformedPage
   content: MyBalanceGameItem[];
 }
 
-export const useMyGameBookmarksQuery = () => {
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-    useInfiniteScroll<GameBookmark, InfiniteData<GameBookmarkTransformedPage>>(
-      ['gameBookmark'],
-      async ({ pageParam = 0 }) => {
-        return getGameBookmark(pageParam, 20);
-      },
-      (infiniteData: InfiniteData<GameBookmark>) => {
-        const newPages = infiniteData.pages.map((page) => ({
-          ...page,
-          content: page.content.map((item) => transformBalanceGameItem(item)),
-        }));
-
-        return {
-          ...infiniteData,
-          pages: newPages,
-        };
-      },
-    );
-
-  return {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    isLoading,
-  };
+export const useMyGameBookmarksQuery = (
+  options?: Parameters<
+    typeof useInfiniteScroll<
+      GameBookmark,
+      InfiniteData<GameBookmarkTransformedPage>
+    >
+  >[3],
+) => {
+  return useInfiniteScroll<
+    GameBookmark,
+    InfiniteData<GameBookmarkTransformedPage>
+  >(
+    ['gameBookmark'] as const,
+    async ({ pageParam = 0 }) => getGameBookmark(pageParam, 20),
+    (infiniteData: InfiniteData<GameBookmark>) => {
+      const newPages = infiniteData.pages.map((page) => ({
+        ...page,
+        content: page.content.map((item) => transformBalanceGameItem(item)),
+      }));
+      return {
+        ...infiniteData,
+        pages: newPages,
+      };
+    },
+    options,
+  );
 };

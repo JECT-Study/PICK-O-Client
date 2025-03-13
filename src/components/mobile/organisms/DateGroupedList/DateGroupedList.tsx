@@ -5,7 +5,7 @@ import * as S from './DateGroupedList.style';
 export interface DateGroupedListItem {
   id: number;
   title: string;
-  imgUrl: string;
+  imgUrl?: string;
 }
 
 export interface DateGroupedListProps {
@@ -19,7 +19,11 @@ const DateGroupedList = ({ date, items }: DateGroupedListProps) => (
     <ul css={S.listStyle}>
       {items.map(({ id, title, imgUrl }) => (
         <li key={id} css={S.listItemStyle}>
-          <ProfileListItem title={title} imgUrl={imgUrl} />
+          <ProfileListItem
+            title={title}
+            imgUrl={imgUrl}
+            to={`/talkpick/${id}`}
+          />
         </li>
       ))}
     </ul>

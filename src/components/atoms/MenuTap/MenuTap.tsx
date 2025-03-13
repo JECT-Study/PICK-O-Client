@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, ReactNode } from 'react';
 import { Menu } from '@/assets';
 import {
   menuIconStlying,
@@ -8,7 +8,8 @@ import {
 } from './MenuTap.style';
 
 export type MenuItem = {
-  label?: string;
+  id: number;
+  label?: ReactNode;
   onClick?: () => void;
 };
 
@@ -43,7 +44,7 @@ const MenuTap = ({ menuData }: MenuTapProps) => {
           {menuData.map((item) => (
             <button
               type="button"
-              key={item.label}
+              key={item.id}
               css={menuItemStyling}
               onClick={item?.onClick}
             >

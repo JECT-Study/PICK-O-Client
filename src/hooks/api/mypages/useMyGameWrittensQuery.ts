@@ -9,31 +9,30 @@ export interface GameWrittenTransformedPage
   content: MyBalanceGameItem[];
 }
 
-export const useMyGameWrittensQuery = () => {
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-    useInfiniteScroll<GameWritten, InfiniteData<GameWrittenTransformedPage>>(
-      ['gameWritten'],
-      async ({ pageParam = 0 }) => {
-        return getGameWritten(pageParam, 20);
-      },
-      (infiniteData: InfiniteData<GameWritten>) => {
-        const newPages = infiniteData.pages.map((page) => ({
-          ...page,
-          content: page.content.map((item) => transformGameWrittenItem(item)),
-        }));
-
-        return {
-          ...infiniteData,
-          pages: newPages,
-        };
-      },
-    );
-
-  return {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    isLoading,
-  };
+export const useMyGameWrittensQuery = (
+  options?: Parameters<
+    typeof useInfiniteScroll<
+      GameWritten,
+      InfiniteData<GameWrittenTransformedPage>
+    >
+  >[3],
+) => {
+  return useInfiniteScroll<
+    GameWritten,
+    InfiniteData<GameWrittenTransformedPage>
+  >(
+    ['gameWritten'] as const,
+    async ({ pageParam = 0 }) => getGameWritten(pageParam, 20),
+    (infiniteData: InfiniteData<GameWritten>) => {
+      const newPages = infiniteData.pages.map((page) => ({
+        ...page,
+        content: page.content.map((item) => transformGameWrittenItem(item)),
+      }));
+      return {
+        ...infiniteData,
+        pages: newPages,
+      };
+    },
+    options,
+  );
 };

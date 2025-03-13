@@ -8,33 +8,26 @@ export interface MyWrittenTransformedPage extends Omit<MyWritten, 'content'> {
   content: MyContentItem[];
 }
 
-export const useMyTalkPickWrittensQuery = () => {
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-    useInfiniteScroll<MyWritten, InfiniteData<MyWrittenTransformedPage>>(
-      ['myWritten'],
-      async ({ pageParam = 0 }) => {
-        return getMyWritten(pageParam, 20);
-      },
-      (infiniteData) => {
-        const newPages = infiniteData.pages.map((page) => ({
-          ...page,
-          content: page.content.map((item) => transformWrittenItem(item)),
-        }));
-
-        const newInfiniteData: InfiniteData<MyWrittenTransformedPage> = {
-          ...infiniteData,
-          pages: newPages,
-        };
-
-        return newInfiniteData;
-      },
-    );
-
-  return {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    isLoading,
-  };
+export const useMyTalkPickWrittensQuery = (
+  options?: Parameters<
+    typeof useInfiniteScroll<MyWritten, InfiniteData<MyWrittenTransformedPage>>
+  >[3],
+) => {
+  return useInfiniteScroll<MyWritten, InfiniteData<MyWrittenTransformedPage>>(
+    ['myWritten'] as const,
+    async ({ pageParam = 0 }) => {
+      return getMyWritten(pageParam, 20);
+    },
+    (infiniteData: InfiniteData<MyWritten>) => {
+      const newPages = infiniteData.pages.map((page) => ({
+        ...page,
+        content: page.content.map((item) => transformWrittenItem(item)),
+      }));
+      return {
+        ...infiniteData,
+        pages: newPages,
+      };
+    },
+    options,
+  );
 };

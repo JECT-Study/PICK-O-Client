@@ -81,12 +81,14 @@ const TalkPickSection = ({
 
   const myTalkPickItem: MenuItem[] = [
     {
+      id: 0,
       label: '수정',
       onClick: () => {
         navigate(`/${PATH.CREATE.TALK_PICK}`, { state: { talkPick } });
       },
     },
     {
+      id: 1,
       label: '삭제',
       onClick: () => {
         setActiveModal('deleteText');
@@ -96,6 +98,7 @@ const TalkPickSection = ({
 
   const otherTalkPickItem: MenuItem[] = [
     {
+      id: 0,
       label: '신고',
       onClick: () => {
         setActiveModal('reportText');

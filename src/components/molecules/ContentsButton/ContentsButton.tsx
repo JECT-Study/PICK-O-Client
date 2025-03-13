@@ -17,7 +17,7 @@ export interface ContentsButtonProps extends ComponentPropsWithRef<'button'> {
   title: string;
   mainTag: string;
   subTag?: string;
-  images: string[];
+  images?: string[];
   bookmarked?: BookmarkProps['bookmarked'];
   showBookmark?: boolean;
   size?: 'large' | 'medium' | 'small' | 'extraSmall';

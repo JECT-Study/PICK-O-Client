@@ -8,35 +8,27 @@ export interface GameVoteTransformedPage extends Omit<GameVote, 'content'> {
   content: MyBalanceGameItem[];
 }
 
-export const useMyGameVotesQuery = (memberId: number) => {
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-    useInfiniteScroll<GameVote, InfiniteData<GameVoteTransformedPage>>(
-      ['gameVote'],
-      async ({ pageParam = 0 }) => {
-        return getGameVote(pageParam, 20);
-      },
-      (infiniteData: InfiniteData<GameVote>) => {
-        const newPages = infiniteData.pages.map((page) => ({
-          ...page,
-          content: page.content.map((item) =>
-            transformGameVoteItem(item, memberId),
-          ),
-        }));
-
-        const newInfiniteData: InfiniteData<GameVoteTransformedPage> = {
-          ...infiniteData,
-          pages: newPages,
-        };
-
-        return newInfiniteData;
-      },
-    );
-
-  return {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    isLoading,
-  };
+export const useMyGameVotesQuery = (
+  memberId: number,
+  options?: Parameters<
+    typeof useInfiniteScroll<GameVote, InfiniteData<GameVoteTransformedPage>>
+  >[3],
+) => {
+  return useInfiniteScroll<GameVote, InfiniteData<GameVoteTransformedPage>>(
+    ['gameVote'] as const,
+    async ({ pageParam = 0 }) => getGameVote(pageParam, 20),
+    (infiniteData: InfiniteData<GameVote>) => {
+      const newPages = infiniteData.pages.map((page) => ({
+        ...page,
+        content: page.content.map((item) =>
+          transformGameVoteItem(item, memberId),
+        ),
+      }));
+      return {
+        ...infiniteData,
+        pages: newPages,
+      };
+    },
+    options,
+  );
 };

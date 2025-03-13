@@ -103,12 +103,14 @@ const CommentItem = ({
 
   const myComment: MenuItem[] = [
     {
+      id: 0,
       label: '수정',
       onClick: () => {
         setEditCommentClicked(true);
       },
     },
     {
+      id: 1,
       label: '삭제',
       onClick: () => {
         setActiveModal('deleteText');
@@ -118,6 +120,7 @@ const CommentItem = ({
 
   const reportComment: MenuItem[] = [
     {
+      id: 0,
       label: '신고',
       onClick: () => {
         setActiveModal('reportText');
