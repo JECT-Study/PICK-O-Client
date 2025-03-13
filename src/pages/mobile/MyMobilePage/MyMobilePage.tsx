@@ -160,7 +160,7 @@ const MyMobilePage = () => {
             item.optionAImg && item.optionBImg
               ? [item.optionAImg, item.optionBImg]
               : [],
-          mainTag: item.mainTagName || '기본메인',
+          mainTag: item.mainTagName || '',
           subTag: item.subTag || '',
           onClick: () => {},
           onBookmarkClick: () => {},
