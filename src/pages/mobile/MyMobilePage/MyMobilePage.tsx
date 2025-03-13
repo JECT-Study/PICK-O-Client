@@ -167,7 +167,7 @@ const MyMobilePage = () => {
               : [],
           mainTag: item.mainTagName || '',
           subTag: item.subTag || '',
-          onClick: () => {},
+          onClick: () => navigate(`/balancegame/${item.gameId}`),
           onBookmarkClick: () => {},
           bookmarked: item.bookmarked ?? false,
           showBookmark: activeButton === 'saved' || activeButton === 'voted',
