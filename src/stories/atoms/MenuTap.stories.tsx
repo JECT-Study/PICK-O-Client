@@ -4,11 +4,15 @@ import MenuTap, { MenuItem } from '@/components/atoms/MenuTap/MenuTap';
 import type { Meta, StoryObj } from '@storybook/react';
 import { storyContainer, storyInnerRowContainer } from '@/stories/story.styles';
 
-const menuOne: MenuItem[] = [{ label: 'ONE' }];
-const menuOneTwo: MenuItem[] = [{ label: 'ONE' }, { label: 'TWO' }];
+const menuOne: MenuItem[] = [{ id: 0, label: 'ONE' }];
+const menuOneTwo: MenuItem[] = [
+  { id: 0, label: 'ONE' },
+  { id: 1, label: 'TWO' },
+];
 
 const reportMenu: MenuItem[] = [
   {
+    id: 0,
     label: '신고',
     onClick: () => {
       alert('게시글 신고');
@@ -18,12 +22,14 @@ const reportMenu: MenuItem[] = [
 
 const myCommentMenu: MenuItem[] = [
   {
+    id: 0,
     label: '수정',
     onClick: () => {
       alert('댓글 수정');
     },
   },
   {
+    id: 1,
     label: '삭제',
     onClick: () => {
       alert('댓글 삭제');
@@ -33,12 +39,14 @@ const myCommentMenu: MenuItem[] = [
 
 const otherCommentMenu: MenuItem[] = [
   {
+    id: 0,
     label: '신고',
     onClick: () => {
       alert('댓글 신고');
     },
   },
   {
+    id: 1,
     label: '차단',
     onClick: () => {
       alert('댓글 차단');
