@@ -74,12 +74,14 @@ const ReplyItem = ({
 
   const myReply: MenuItem[] = [
     {
+      id: 0,
       label: '수정',
       onClick: () => {
         setEditReplyClicked(true);
       },
     },
     {
+      id: 1,
       label: '삭제',
       onClick: () => {
         setActiveModal('deleteText');
@@ -89,6 +91,7 @@ const ReplyItem = ({
 
   const reportReply: MenuItem[] = [
     {
+      id: 0,
       label: '신고',
       onClick: () => {
         setActiveModal('reportText');

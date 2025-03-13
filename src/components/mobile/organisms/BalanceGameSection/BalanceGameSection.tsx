@@ -132,12 +132,14 @@ const BalanceGameSection = ({
 
   const myGameItem: MenuItem[] = [
     {
+      id: 0,
       label: '수정',
       onClick: () => {
         navigate(`/${PATH.CREATE.GAME}`, { state: { game, gameSetId } });
       },
     },
     {
+      id: 1,
       label: '삭제',
       onClick: () => {
         setActiveModal('deleteText');
@@ -146,6 +148,7 @@ const BalanceGameSection = ({
   ];
   const otherGameItem: MenuItem[] = [
     {
+      id: 0,
       label: '신고',
       onClick: () => {
         setActiveModal('reportText');

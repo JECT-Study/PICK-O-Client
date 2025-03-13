@@ -10,7 +10,7 @@ export interface ProfileInfoCardProps {
   username: string;
   postCount: number;
   bookmarkCount: number;
-  menuData: { label: string; onClick: () => void }[];
+  menuData: { id: number; label: string; onClick: () => void }[];
 }
 
 const ProfileInfoCard = ({
