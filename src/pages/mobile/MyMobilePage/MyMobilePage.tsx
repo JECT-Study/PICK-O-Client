@@ -258,7 +258,7 @@ const MyMobilePage = () => {
         ) : (
           <p />
         )}
-        <div ref={infiniteRef} style={{ marginTop: '16px' }}>
+        <div ref={infiniteRef} css={S.observerWrapper}>
           {isFetchingAnyNextPage && <div />}
         </div>
       </div>

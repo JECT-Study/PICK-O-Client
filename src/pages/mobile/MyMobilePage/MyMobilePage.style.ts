@@ -35,3 +35,8 @@ export const menuDataBox = css(typo.Mobile.Text.Medium_12, {
   alignItems: 'center',
   gap: '12px',
 });
+
+export const observerWrapper = css({
+  display: 'flex',
+  marginTop: '2px',
+});
