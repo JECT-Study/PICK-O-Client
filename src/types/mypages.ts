@@ -83,3 +83,8 @@ export interface GameVote extends PaginationType {
 export interface GameBookmark extends PaginationType {
   content: MyBalanceGameItem[];
 }
+
+/** 모바일 마이페이지 */
+export type TabType = 'talkPick' | 'balanceGame';
+
+export type ButtonType = 'saved' | 'voted' | 'commented' | 'created';
