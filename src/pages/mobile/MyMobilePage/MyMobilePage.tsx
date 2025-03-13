@@ -28,6 +28,8 @@ import DateGroupedCard from '@/components/mobile/organisms/DateGroupedCard/DateG
 import SelectGroup, {
   SelectGroupItem,
 } from '@/components/mobile/atoms/SelectGroup/SelectGroup';
+import { useNavigate } from 'react-router-dom';
+import { SmileEmoji } from '@/assets';
 import * as S from './MyMobilePage.style';
 
 type InfiniteQueryOrNull<T> = UseInfiniteQueryResult<T, Error> | null;
@@ -37,6 +39,8 @@ type DateGroupedDataItem =
   | { date: string; items: ContentsButtonProps[] };
 
 const MyMobilePage = () => {
+  const navigate = useNavigate();
+
   const [activeTab, setActiveTab] = useState<TabType>('talkPick');
   const [activeButton, setActiveButton] = useState<ButtonType>('saved');
   const { member, isLoading: isMemberLoading } = useMemberQuery();
@@ -196,6 +200,13 @@ const MyMobilePage = () => {
     return <div />;
   }
 
+  const editMenuLabel = (
+    <span css={S.menuDataBox}>
+      회원정보 수정
+      <SmileEmoji />
+    </span>
+  );
+
   return (
     <div css={S.pageStyle}>
       <ProfileInfoCard
@@ -203,7 +214,13 @@ const MyMobilePage = () => {
         username={member?.nickname ?? ''}
         postCount={member?.postsCount ?? 0}
         bookmarkCount={member?.bookmarkedPostsCount ?? 0}
-        menuData={[]}
+        menuData={[
+          {
+            id: 0,
+            label: editMenuLabel,
+            onClick: () => navigate('/change/profile'),
+          },
+        ]}
       />
       <div css={S.selectGroupWrapper}>
         <SelectGroup<TabType>
