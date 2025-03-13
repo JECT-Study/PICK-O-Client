@@ -31,6 +31,7 @@ import SelectGroup, {
 import { useNavigate } from 'react-router-dom';
 import { SmileEmoji } from '@/assets';
 import { PATH } from '@/constants/path';
+import { useBalanceGameBookmark } from '@/hooks/mypages/useBalanceGameBookmark';
 import * as S from './MyMobilePage.style';
 
 type InfiniteQueryOrNull<T> = UseInfiniteQueryResult<T, Error> | null;
@@ -45,6 +46,8 @@ const MyMobilePage = () => {
   const [activeTab, setActiveTab] = useState<TabType>('talkPick');
   const [activeButton, setActiveButton] = useState<ButtonType>('saved');
   const { member, isLoading: isMemberLoading } = useMemberQuery();
+
+  const { handleBookmarkClick } = useBalanceGameBookmark();
 
   const gameBookmarksQ = useMyGameBookmarksQuery({
     enabled: activeTab === 'balanceGame' && activeButton === 'saved',
@@ -166,7 +169,9 @@ const MyMobilePage = () => {
           mainTag: item.mainTagName || '',
           subTag: item.subTag || '',
           onClick: () => navigate(`/balancegame/${item.gameId}`),
-          onBookmarkClick: () => {},
+          onBookmarkClick: () => {
+            handleBookmarkClick(item);
+          },
           bookmarked: item.bookmarked ?? false,
           showBookmark: activeButton === 'saved' || activeButton === 'voted',
           size: 'extraSmall',
