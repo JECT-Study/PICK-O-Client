@@ -27,6 +27,9 @@ export const getModalSize = (action: Required<ModalProps>['action']) => {
     tempGame: css({
       padding: '24px 20px',
     }),
+    report: css({
+      padding: '33px 21px 20px 21px',
+    }),
   };
 
   return style[action];

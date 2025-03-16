@@ -1,21 +1,22 @@
 import { css } from '@emotion/react';
 import color from '@/styles/color';
+import typo from '@/styles/typo';
 
 export const commentsSectionContainer = css({
   display: 'flex',
   flexDirection: 'column',
-  paddingTop: '5px',
-  paddingBottom: '100px',
-  margin: '0 auto',
+  paddingTop: '13px',
+  // paddingBottom: '85px',
   backgroundColor: color.WT,
   overflowY: 'auto',
-  gap: '23px',
+  gap: '10px',
 });
 
-export const commentTopWrapper = css({
+export const commentTopWrapper = css(typo.Mobile.Text.SemiBold_14, {
   display: 'flex',
-  justifyContent: 'space-between',
-  padding: '0 5px',
+  margin: '0 11px 0 20px',
+  alignItems: 'flex-start',
+  color: color.GY[7],
 });
 
 export const loggedInBackground = css({
@@ -26,6 +27,14 @@ export const loggedInBackground = css({
   flexDirection: 'column',
   gap: '29px',
   position: 'relative',
+});
+
+export const toastModalWrapper = css({
+  position: 'absolute',
+  top: '76px',
+  left: '50%',
+  transform: 'translateX(-50%)',
+  zIndex: 10,
 });
 
 export const loggedOutBackground = css({
@@ -49,21 +58,21 @@ export const commentsWrapper = css({
   padding: 0,
   margin: 0,
   height: 'auto',
+  gap: '17px',
 });
 
-export const paginationWrapper = css({
+export const nonCommentsWrapper = css(typo.Text.Regular, {
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+  padding: '68px 0 24px 0',
+  color: color.GY[1],
+});
+
+export const nonCommentsTopWrapper = css({
   display: 'flex',
   justifyContent: 'center',
-  marginTop: '17px',
-  width: '100%',
-  height: '40px',
-  flexShrink: 0,
-});
-
-export const toastModalWrapper = css({
-  position: 'absolute',
-  top: '76px',
-  left: '50%',
-  transform: 'translateX(-50%)',
-  zIndex: 10,
+  alignItems: 'center',
+  gap: '4px',
 });
